@@ -465,8 +465,8 @@ class Meta_boxes {
 					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value; ?>"
-					pattern="https://.*"
-					required="required"
+					pattern="<?php echo $params[ 'pattern' ]; ?>"
+					required="<?php echo $params[ 'required' ] ? 'required' : ''; ?>"
 				/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
