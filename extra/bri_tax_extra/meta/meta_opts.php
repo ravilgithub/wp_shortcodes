@@ -84,7 +84,9 @@ $opts = [
 					'type' => 'url',
 					'title' => 'Опция 9',
 					'desc' => 'Описание опции 9',
-					'value' => 'http://yandex.ru'
+					'value' => 'https://yandex.ru',
+					'pattern' => 'https://.*',
+					'required' => true
 				],
 				'option_10' => [
 					'type' => 'wp_editor',
