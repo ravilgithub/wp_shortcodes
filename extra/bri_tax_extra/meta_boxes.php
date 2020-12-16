@@ -242,6 +242,9 @@ class Meta_boxes {
 				display: block;
 				width: 100%;
 			}
+			#briz_meta_box input[type=url]:-moz-ui-invalid {
+				box-shadow: 0px 0px 1.5px 1px #5cff00;
+			}
 		</style>
 <?php
 	}
@@ -462,6 +465,8 @@ class Meta_boxes {
 					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value; ?>"
+					pattern="https://.*"
+					required="required"
 				/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
