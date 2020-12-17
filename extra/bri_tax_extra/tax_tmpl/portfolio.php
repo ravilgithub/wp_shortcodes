@@ -96,7 +96,7 @@
 		public function get_before() {
 			// Helper::debug( $this->atts );
 			extract( $this->atts );
-?>			
+?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
 				class="bri-portfolio-tmpl showcase section portfolio-page <?php echo $class ?>"
@@ -122,9 +122,9 @@
 			echo '<br />show more - '     . $show_more;
 
 			$childrens = Bri_Tax_Shortcode::get_term_childrens( $this->curr_term_id, $term[ $this->curr_term_id ][ 'taxonomy' ], $this->atts );
-			
+
 			// Helper::debug( $childrens, '200px' );
-			
+
 			if ( $children || $grandchildren ) :?>
 				<div class="isotop-filter-wrap">
 					<ul class="filter clearfix">
@@ -278,7 +278,7 @@
 							</figcaption> <!-- .showcase-item-hover -->
 						</figure> <!-- .showcase-item -->
 					</div>
-					
+
 	<?php 
 				endwhile;
 				wp_reset_postdata();
