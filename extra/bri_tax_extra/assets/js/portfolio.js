@@ -172,8 +172,6 @@
 										opacity: 1,
 									} );
 
-									// this.filterIsotopeItems()
-									// 	.then( resolve );
 									resolve();
 								} );
 					} );
