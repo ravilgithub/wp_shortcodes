@@ -196,7 +196,7 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 							<?php if ( ! empty( $atts[ 'author_meta' ] ) ) : ?>
 								<em class="shortcode_bri_blockquote_author_meta"><?php _e( $atts[ 'author_meta' ], $lang_domain ) ?></em>
 							<?php endif ?>
-							
+
 						</span>
 					</span>
 
