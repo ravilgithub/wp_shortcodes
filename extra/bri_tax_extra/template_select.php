@@ -16,7 +16,7 @@ namespace Bri_Shortcodes;
 class Tax_TMPL extends Meta_boxes {
 	public $files = [ 'None' => -1 ];
 	public $dir;
-	
+
 
 	/**
 	 * Constructor.
@@ -96,8 +96,6 @@ class Tax_TMPL extends Meta_boxes {
 
 		// Helper::debug( $tmpls_path, '200px' );
 
-		// return;
-		// $tmpls_path = get_template_directory() . '/' . $this->dir;
 		$it = new \RecursiveIteratorIterator( 
 			new \RecursiveDirectoryIterator( $tmpls_path )
 		);
@@ -193,7 +191,7 @@ class Tax_TMPL extends Meta_boxes {
 					<?php endforeach; ?>
 
 				</select>
-				
+
 				<p class="description">
 					<?php _e( 'Шаблон, согласно которому будет формироваться вывод категории и записей относящихся к ней.' ); ?>
 				</p>
