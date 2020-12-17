@@ -8,68 +8,6 @@ class Meta_boxes {
 
 	public $opts = [];
 
-	/*public $opts = [
-		'category' => [
-			'portfolio' => [
-				'fields' => [
-					'option_1' => [
-						'type' => 'text',
-						'title' => 'Опция 1',
-						'desc' => 'Описание опции 1',
-						'value' => 'Значение по умолчанию опции 1'
-					],
-					'option_2' => [
-						'type' => 'textarea',
-						'title' => 'Опция 2',
-						'desc' => 'Описание опции 2',
-						'value' => 'Значение по умолчанию опции 2'
-					],
-					'option_3' => [
-						'type' => 'color',
-						'title' => 'Опция 3',
-						'desc' => 'Описание опции 3',
-						'value' => '#00cccc'
-					],
-					'option_4' => [
-						'type' => 'number',
-						'title' => 'Опция 4',
-						'desc' => 'Описание опции 4',
-						'value' => 5,
-						'min' => 1,
-						'max' => 10
-					],
-					'option_5' => [
-						'type' => 'select',
-						'title' => 'Опция 5',
-						'desc' => 'Описание опции 5',
-						'value' => 'red',
-						'options' => [
-							'red' => 'Red',
-							'green' => 'Green',
-							'blue' => 'Blue'
-						]
-					],
-				],
-			],
-			'about' => [
-				'fields' => [
-					'option_1' => [
-						'type' => 'text',
-						'title' => 'Опция 1',
-						'desc' => 'Описание опции 1',
-						'value' => 'Значение по умолчанию опции 1'
-					],
-					'option_2' => [
-						'type' => 'textarea',
-						'title' => 'Опция 2',
-						'desc' => 'Описание опции 2',
-						'value' => 'Значение по умолчанию опции 2'
-					],
-				],
-			],
-		],
-	];*/
-
 	public function __construct( $taxs ) {
 		// Helper::debug( __CLASS__, '200px' );
 		$this->taxs = $taxs;
@@ -88,7 +26,7 @@ class Meta_boxes {
 		// Helper::debug( $taxs, '200px' );
 
 		$term_info = [];
-		
+
 		foreach ( $taxs as $tax ) {
 			if ( in_array( $tax, $this->taxs ) ) {
 				$term_info[ 'tmpl' ] = [];
@@ -125,7 +63,7 @@ class Meta_boxes {
 				// Helper::debug( $post_terms, '200px' );
 			}
 		}
-		
+
 		// Helper::debug( $term_info, '200px' );
 		return $term_info;
 	}
@@ -145,7 +83,7 @@ class Meta_boxes {
 		if ( ! in_array( $post_type, $screens ) ) {
 			return;
 		}
-		
+
 		$n = 0;
 		foreach ( $terms_info[ 'tmpl' ] as $tmpl ) {
 			$n++;
@@ -495,8 +433,6 @@ class Meta_boxes {
 			],
 			$params[ 'options' ]
 		);
-
-
 ?>
 		<tr>
 			<td>
