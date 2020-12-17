@@ -67,12 +67,12 @@ class Bri_Highlight_Shortcode extends Bri_Shortcodes {
 		$id            = $default_class . '_' . self::$n++;
 
 		$content = wp_kses( $content, 'post' );
-		
+
 		if ( empty( $content ) )
 			return false;
 
 		$atts = $this->prepare_atts( $atts );
-		
+
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
 		if ( ! empty( $atts[ 'color' ] ) ) {
@@ -84,7 +84,7 @@ class Bri_Highlight_Shortcode extends Bri_Shortcodes {
 		}
 
 		$this->add_shortcode_style( $id, $atts );
-			
+
 		return $this->display_highlight( $content, $atts, $id );
 	}
 
@@ -105,7 +105,7 @@ class Bri_Highlight_Shortcode extends Bri_Shortcodes {
 	public function display_highlight( $content, $atts, $id ) {
 
 		$lang_domain = apply_filters( 'bri_shortcode_lang_domain', $this->lang_domain );
-		
+
 		ob_start();
 ?>
 		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"><?php _e( $content, $lang_domain ) ?></span>
