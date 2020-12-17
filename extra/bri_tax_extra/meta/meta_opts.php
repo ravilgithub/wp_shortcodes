@@ -94,9 +94,7 @@ $opts = [
 					'desc' => 'Описание опции 10',
 					'value' => '<h1>Title</h1>',
 					'options' => [
-						// 'textarea_name'    => $name, //нужно указывать!
 						'editor_class'     => 'editor-class',
-						// изменяемое
 						'wpautop'          => 1,
 						'textarea_rows'    => 5,
 						'tabindex'         => null,
