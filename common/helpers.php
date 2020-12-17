@@ -150,12 +150,6 @@ class Helper {
 			foreach ( $data as $item ) {
 
 				extract( $item );
-				
-				// Если файлы не будут найдены то цикл будет бесконечен !!!
-				/*if ( get_headers( $src )[ 0 ] != 'HTTP/1.1 200 OK' ) {
-					continue;
-					// die( get_headers( $src )[ 0 ] );
-				}*/
 
 				if ( 'css' == $type ) {
 					if ( ! wp_style_is( $id, 'registered' ) )
