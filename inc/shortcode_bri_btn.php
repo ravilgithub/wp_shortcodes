@@ -118,7 +118,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 		$onclick       = '';
 
 		$content = wp_kses( $content, 'post' );
-		
+
 		if ( empty( $content ) )
 			return false;
 
@@ -241,7 +241,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 		if ( ( int ) $atts[ 'btn' ] ) :
 ?>
 			<button id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" <?php echo $onclick ?>>
-		
+
 <?php else : ?>
 
 			<a href="<?php echo $atts[ 'link' ] ?>" id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" <?php echo $rel, $target, $onclick, $download ?>>
