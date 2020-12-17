@@ -108,13 +108,10 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
     $onclick       = '';
 
     $content = wp_kses( $content, 'post' );
-    
-    /*if ( empty( $content ) )
-      return false;*/
 
     $atts = $this->prepare_atts( $atts );
     $type = ( int ) $atts[ 'type' ];
-    
+
     $atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
     if ( $type ) {
@@ -126,15 +123,15 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
     }
 
     if ( ! empty( $atts[ 'target' ] ) ) {
-      $target = 'target="' . $atts[ 'target' ] . '"'; 
+      $target = 'target="' . $atts[ 'target' ] . '"';
     }
 
     if ( ! empty( $atts[ 'rel' ] ) ) {
-      $rel = 'rel="' . $atts[ 'rel' ] . '"';  
+      $rel = 'rel="' . $atts[ 'rel' ] . '"';
     }
 
     if ( ! empty( $atts[ 'onclick' ] ) ) {
-      $onclick = 'onclick="' . $atts[ 'onclick' ] . ';"'; 
+      $onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';
     }
 
     if ( ! empty( $atts[ 'width' ] ) ) {
@@ -144,8 +141,7 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
 
     if ( ! empty( $atts[ 'border_width' ] ) ) {
       $atts[ 'class' ] .= " {$default_class}_border";
-      
-      // $bd_width_parts = preg_split( '/(?<=[0-9])(?=[a-z]+)/i', $atts[ 'border_width' ] );
+
       $matches = array();
       $exp = '/^([0-9]+\.?[0-9]*)([a-z]{2,}|\%)$/i'; // результат от 1px - $matches[ '1px' ][ 1 ][ 'px' ]
 
@@ -153,7 +149,7 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
         /*echo '<pre>';
         print_r( $matches );
         echo '</pre>';*/
-        
+
         $num = min( 24, max( 12, $matches[ 1 ] ) );
         $label_top_padding = $num . $matches[ 2 ];
         $label_bottom_padding = ( $num - $matches[ 1 ] ) . $matches[ 2 ];
@@ -164,15 +160,15 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
         // .shortcode_bri_image_inner_wrapper .shortcode_bri_image_label { padding-bottom }
         $this->add_inline_styles( '.shortcode_bri_image_inner_wrapper .shortcode_bri_image_label', 'padding-bottom', $label_bottom_padding );
       }
-      
+
       if ( 1 === $type ) {
         // .shortcode_bri_image_inner_wrapper { border-width }
-        $this->add_inline_styles( "&.{$default_class}_border .shortcode_bri_image_inner_wrapper", 'border-width', $atts[ 'border_width' ] );        
+        $this->add_inline_styles( "&.{$default_class}_border .shortcode_bri_image_inner_wrapper", 'border-width', $atts[ 'border_width' ] );
       }
 
       if ( 2 === $type ) {
         // .shortcode_bri_image_inner_wrapper { padding }
-        $this->add_inline_styles( '.shortcode_bri_image_inner_wrapper', 'padding', $atts[ 'border_width' ] );       
+        $this->add_inline_styles( '.shortcode_bri_image_inner_wrapper', 'padding', $atts[ 'border_width' ] );
       }
 
       if ( ! empty( $atts[ 'border' ] ) ) {
@@ -205,7 +201,6 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
     $this->add_shortcode_style( $id, $atts );
     $this->add_shortcode_script();
 
-
     return $this->display_image( $content, $atts, $id, $rel, $target, $onclick );
   }
 
@@ -235,11 +230,11 @@ class Bri_Image_Shortcode extends Bri_Shortcodes {
     <figure  id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
       <span class="shortcode_bri_image_inner_wrapper">
         <span class="shortcode_bri_image_image_box">
-          
+
           <?php if ( wp_http_validate_url( $atts[ 'img_url' ] ) ) : ?>
             <img src="<?php echo esc_url( $atts[ 'img_url' ] ) ?>" alt="ALT" />
           <?php endif; ?>
-          
+
           <span class="shortcode_bri_image_image_mask"></span>
 
           <span class="shortcode_bri_image_icons_box">
