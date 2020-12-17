@@ -32,72 +32,11 @@ abstract class Bri_Shortcodes {
 	public function __construct( $obj ) {
 		$obj = ! empty( $obj ) ? $obj : $this;
 		add_shortcode( $this->name, array( $obj, $this->get_full_name() ) );
-		// add_action( 'wp_enqueue_scripts', array( $this, 'register_shortcode_css' ) );
-		// add_action( 'wp_enqueue_scripts', array( $this, 'add_shortcode_js' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'merge_shortcode_assets' ) );
 
 		$this->set_lang_domain();
 	}
-
-
-	/**
-	 * Register Shortcode JS ( file ).
-	 *
-	 * Регистрируем JS файл, только в том случае шорткод,
-	 * был вызван в редакторе поста.
-	 *
-	 * @return void.
-	 * @since	 0.0.1
-	 * @author Ravil
-	 */
-	/*public function add_shortcode_js() {
-		global $post;
-		if( has_shortcode( $post->post_content, $this->name ) ) {
-			$js_url = self::JS_PATH . $this->get_full_name() . '.js';
-			if ( file_exists( plugin_dir_path( __FILE__ ) . $js_url ) ) {
-				// echo plugin_dir_path( __FILE__ ) . $js_url . '<br />';
-				$js_url = apply_filters( $this->get_full_name() . '_js_url', $js_url );
-				wp_enqueue_script( "{$this->name}-shortcode-js", plugins_url( $js_url, __FILE__ ), array( 'jquery' ), 1.0, true );
-			}
-		}
-	}*/
-
-
-	/**
-	 * Register Shortcode CSS ( file ).
-	 *
-	 * Регистрируем файл стилей, только в том случае шорткод,
-	 * был вызван в редакторе поста.
-	 *
-	 * @return void.
-	 * @since	 0.0.1
-	 * @author Ravil
-	 */
-	/*public function register_shortcode_css() {
-		global $post;
-		if( has_shortcode( $post->post_content, $this->name ) ) {
-			$css_url = self::CSS_PATH . $this->get_full_name() . '.min.css';
-			if ( file_exists( plugin_dir_path( __FILE__ ) . $css_url ) ) {
-				// echo plugin_dir_path( __FILE__ ) . $css_url . '<br />';
-				$css_url = apply_filters( $this->get_full_name() . '_css_url', $css_url );
-				wp_register_style( "{$this->name}-shortcode-css", plugins_url( $css_url, __FILE__ ) );
-			}
-		}
-	}*/
-
-
-	/*public function register_shortcode_css() {
-		$css_id = "{$this->name}-shortcode-css";
-		$css_url = PLUGIN_URL . self::CSS_PATH . $this->get_full_name() . '.min.css';
-		$css_url = apply_filters( $this->get_full_name() . '_css_url', $css_url );
-		
-		// if ( @get_headers( $css_url )[ 0 ] != 'HTTP/1.1 200 OK' || wp_style_is( $css_id, 'registered' ) )
-		if ( wp_style_is( $css_id, 'registered' ) )
-			return;
-		
-		wp_register_style( $css_id, $css_url, [], '1.0.0' );
-	}*/
 
 
 	/**
