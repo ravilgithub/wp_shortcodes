@@ -73,7 +73,7 @@ class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 		$id            = $default_class . '_' . self::$n++;
 
 		$content = wp_kses( $content, 'post' );
-		
+
 		if ( empty( $content ) )
 			return false;
 
@@ -111,7 +111,7 @@ class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 		}
 
 		$this->add_shortcode_style( $id, $atts );
-			
+
 		return $this->display_dropcap( $content, $atts, $id );
 	}
 
@@ -136,7 +136,7 @@ class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 		ob_start();
 ?>
 		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"><?php _e( $content, $lang_domain ) ?></span>
-<?php		
+<?php
 		return trim( ob_get_clean() );
 	}
 }
