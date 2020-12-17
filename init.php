@@ -18,8 +18,6 @@ namespace Bri_Shortcodes;
 define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once 'common/helpers.php';
-/*use Bri_Shortcodes_Helpers as BSH;
-new BSH\Helper();*/
 
 require_once 'extra/bri_tax_extra/meta_boxes.php';
 require_once 'extra/bri_tax_extra/template_select.php';
