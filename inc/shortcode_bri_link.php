@@ -99,7 +99,7 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 		$download      = '';
 
 		$content = wp_kses( $content, 'post' );
-		
+
 		if ( empty( $content ) )
 			return false;
 
@@ -151,7 +151,7 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 				// :before, :after { bgc } +
 				$this->add_inline_styles( ':before', 'background-color', $atts[ 'border' ] );
 				$this->add_inline_styles( ':after', 'background-color', $atts[ 'border' ] );
-			}				
+			}
 
 			if ( 6 === $type ) {
 				// :after { border-bottom-color } +
@@ -247,7 +247,7 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 		ob_start();
 ?>
 		<a href="<?php echo $atts[ 'link' ] ?>" id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" data-hover="<?php _e( $content, $lang_domain ) ?>" <?php echo $rel, $target, $onclick, $download ?>>
-				
+
 			<?php if ( ! empty( $atts[ 'icon_name' ] ) and 9 === ( int ) $atts[ 'type' ] ) : ?>
 				<span class="shortcode_bri_link_icon">
 					<i class="fa fa-<?php echo $atts[ 'icon_name' ] ?>" aria-hidden="true"></i>
