@@ -88,12 +88,9 @@ class Bri_Separator_Shortcode extends Bri_Shortcodes {
     $id            = $default_class . '_' . self::$n++;
 
     $content = wp_kses( $content, 'post' );
-    
-    /*if ( empty( $content ) )
-      return false;*/
 
     $atts = $this->prepare_atts( $atts );
-    
+
     $atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
     if ( ! empty( $atts[ 'width' ] ) ) {
@@ -138,7 +135,7 @@ class Bri_Separator_Shortcode extends Bri_Shortcodes {
         if ( ! empty( $atts[ 'border_color' ] ) ) {
           // .shortcode_bri_separator_content_wrap .shortcode_bri_separator_diamond { border-color }
           $this->add_inline_styles( '.shortcode_bri_separator_content_wrap .shortcode_bri_separator_diamond', 'border-color', $atts[ 'border_color' ] );
-        }        
+        }
       }
     }
 
