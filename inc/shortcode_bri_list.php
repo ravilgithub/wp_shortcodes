@@ -82,7 +82,7 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 		$prefix        = '';
 
 		// $content = wp_kses_post( $content );
-		
+
 		if ( empty( $content ) )
 			return false;
 
