@@ -68,9 +68,6 @@ class Bri_Spacer_Shortcode extends Bri_Shortcodes {
     $id            = $default_class . '_' . self::$n++;
 
     $content = wp_kses( $content, 'post' );
-    
-    /*if ( empty( $content ) )
-      return false;*/
 
     $atts = $this->prepare_atts( $atts );
     
