@@ -132,9 +132,9 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 			$download = 'download';
 		}
 
-    if ( ! empty( $atts[ 'position' ] ) ) {
-      $atts[ 'class' ] .= " {$default_class}_{$atts[ 'position' ]}";
-    }
+		if ( ! empty( $atts[ 'position' ] ) ) {
+			$atts[ 'class' ] .= " {$default_class}_{$atts[ 'position' ]}";
+		}
 
 		if ( ! empty( $atts[ 'width' ] ) and 3 === $type ) {
 			// { min-width } +
