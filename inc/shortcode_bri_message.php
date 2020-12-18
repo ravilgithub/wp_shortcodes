@@ -107,12 +107,12 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 		$onclick       = '';
 
 		$content = wp_kses( $content, 'post' );
-		
+
 		if ( empty( $content ) )
 			return false;
 
 		$atts = $this->prepare_atts( $atts );
-		
+
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
 		if ( ( int ) $atts[ 'type' ] ) {
@@ -230,11 +230,11 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 <?php if ( ! empty( $atts[ 'icon_name' ] ) ) : ?>
 				<i class="fa fa-<?php echo $atts[ 'icon_name' ] ?>" aria-hidden="true"></i>
 <?php endif ?>
-				
+
 <?php if ( 2 !== ( int ) $atts[ 'type' ] ) : ?>
 				<?php _e( $content, $lang_domain ) ?>
 <?php endif ?>
-				
+
 <?php if ( ! empty( $atts[ 'link' ] ) ) : ?>
 				<a href="<?php echo $atts[ 'link' ] ?>" <?php echo $rel, $target, $onclick, $download ?>>
 
