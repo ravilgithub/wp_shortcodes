@@ -148,8 +148,6 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	public function add_ajax() {
 		wp_localize_script(
 			'jquery',
-			// 'new-portfolio-tmpl-js',
-			// 'portfolio-tmpl-js',
 			'bri_tax_tmpl_ajax',
 			[
 				'url'   => admin_url( 'admin-ajax.php' ),
@@ -222,12 +220,9 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		$id            = $default_class . '_' . self::$n++;
 
 		$content = wp_kses( $content, 'post' );
-		
-		/*if ( empty( $content ) )
-			return false;*/
 
 		$atts = $this->prepare_atts( $atts );
-		
+
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
 		$atts[ 'offset' ] = absint( $atts[ 'offset' ] ) ?: 0;
@@ -301,8 +296,6 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	public function display_tax( $content, $atts, $id ) {
 		if ( empty( $atts[ 'term' ] ) )
 			return;
-
-		// extract( $atts );
 
 		$lang_domain = apply_filters( 'bri_shortcode_lang_domain', $this->lang_domain );
 
@@ -379,16 +372,6 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		if ( ! $atts[ 'self' ] && ! $atts[ 'children' ] && ! $atts[ 'grandchildren' ] ) {
 			$parent = $parent_term;
 		}
-
-		// 3.1
-		/*if ( ! $atts[ 'self' ] && ! $atts[ 'children' ] && $atts[ 'grandchildren' ] ) {
-			$child_of = $parent_term;
-		}*/
-
-		// 3.2
-		/*if ( ! $atts[ 'self' ] && $atts[ 'children' ] && $atts[ 'grandchildren' ] ) {
-			$child_of = $parent_term;
-		}*/
 
 		// 4
 		if ( $atts[ 'self' ] && $atts[ 'children' ] && ! $atts[ 'grandchildren' ] ) {
@@ -564,7 +547,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		foreach ( $childrens as $child ) {
 
 			// Helper::debug( $child );
-			
+
 			$args = [
 				'tax_query' => [
 					[
