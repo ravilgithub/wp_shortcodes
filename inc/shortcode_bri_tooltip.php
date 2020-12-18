@@ -74,7 +74,7 @@ class Bri_Tooltip_Shortcode extends Bri_Shortcodes {
 
 		$content = wp_kses( $content, 'post' );
 		$atts = $this->prepare_atts( $atts );
-		
+
 		if ( empty( $content ) || empty( $atts[ 'hint' ] ) )
 			return false;
 
