@@ -254,7 +254,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 			$tmpl_path = get_term_meta( $term_id, 'tmpl', 1 );
 
-			if ( -1 != $tmpl_path ) {
+			if ( $tmpl_path && -1 != $tmpl_path ) {
 				$term = get_term( $term_id );
 				$p_info = pathinfo( $tmpl_path );
 
@@ -304,9 +304,14 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		ob_start();
 
 		foreach ( $atts[ 'term' ] as $term_id => $term_data ) {
+			$tmpl_source = $this->get_tmpl_source( $term_data );
+			if ( ! $tmpl_source )
+				continue;
+
+			// Helper::debug( $term_data );
+
 			$posts = $this->get_posts( $id, $term_id );
 
-			$tmpl_source = $this->get_tmpl_source( $term_data );
 			$instance = new $tmpl_source( $content, $atts, $id, $lang_domain, $term_id );
 			$instance->add_tmpl_assets();
 			$instance->get_before();
@@ -329,6 +334,9 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 * @author Ravil
 	 */
 	public function get_tmpl_source( $term_data ) {
+		if ( ! file_exists( $term_data[ 'tmpl_path' ] ) )
+			return false;
+
 		include_once $term_data[ 'tmpl_path' ];
 		$tmpl_source = 'Bri_Shortcodes\\'. ucfirst( $term_data[ 'tmpl_name' ] );
 		return $tmpl_source;
