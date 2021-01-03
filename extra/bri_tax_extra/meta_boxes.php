@@ -17,8 +17,58 @@ class Meta_boxes {
 		require_once( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php' );
 		$this->opts = $opts;
 
+		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ], 10, 2 );
 		add_action( 'save_post', [ $this, 'meta_box_save' ], 1, 2 );
+	}
+
+	/**
+	 * Registering Styles and Scripts of metaboxes.
+	 * 
+	 * Регистрация стилей и скриптов метабоксов.
+	 * 
+	 * @see Helper::register_assets()
+	 * @link ~/common/helpers.php
+	 * 
+	 * @return void.
+	 * 
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function add_assets() {
+		$assets = [
+			'css' => [
+				/************ TMPL CSS ************/
+				'id'   => 'metabox-tmpl-css',
+				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
+				'deps' => [],
+				'ver'  => '1.0.0'
+			],
+			'js' => [
+				/************ TMPL SCRIPTS ************/
+				'id'   => 'metabox-tmpl-js',
+				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
+				'deps' => [ 'jquery' ],
+				'ver'  => '1.0.0',
+				'in_footer' => true
+			]
+		];
+
+		$assets = apply_filters( "briz_metabox_assets", $assets );
+
+		// Helper::debug( $assets );
+
+		foreach ( $assets as $type => $data ) {
+			extract( $data );
+
+			if ( 'css' == $type ) {
+				if ( ! wp_style_is( $id, 'enqueued' ) )
+					wp_enqueue_style( $id, $src, $deps, $ver );
+			} else {
+				if ( ! wp_script_is( $id, 'enqueued' ) )
+					wp_enqueue_script( $id, $src, $deps, $ver, $in_footer );
+			}
+		}
 	}
 
 	public function get_terms_info( $post ) {
@@ -144,6 +194,8 @@ class Meta_boxes {
 								case 'url': $this->url_field( $field_key, $field_value, $field_params );
 									break;
 								case 'wp_editor': $this->wp_editor( $field_key, $field_value, $field_params );
+									break;
+								case 'media_button': $this->media_button( $field_key, $field_value, $field_params );
 									break;
 								default: $this->text_field( $field_key, $field_value, $field_params );
 									break;
@@ -448,6 +500,35 @@ class Meta_boxes {
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
+			</td>
+		</tr>
+<?php
+	}
+
+	public function media_button( $key, $value, $params ) {
+?>
+		<tr>
+			<td>
+				<label>
+					<?php echo $params[ 'title' ]; ?>
+				</label>
+			</td>
+			<td>
+				<button
+					type="button"
+					id="<?php echo $key; ?>"
+					class="button insert-media add_media briz-media-button"
+				>
+					<span class="wp-media-buttons-icon"></span>
+					Добавить медиафайл
+				</button>
+				<small>
+					<em><?php echo $params[ 'desc' ]; ?></em>
+				</small>
+				<figure>
+					<span id="<?php echo $key; ?>-media"></span>
+					<figcaption></figcaption>
+				</figure>
 			</td>
 		</tr>
 <?php

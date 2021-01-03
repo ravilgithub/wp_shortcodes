@@ -107,6 +107,18 @@ $opts = [
 						'drag_drop_upload' => false
 					]
 				],
+				'option_11' => [
+					'type' => 'media_button',
+					'title' => 'Опция 11',
+					'desc' => 'Описание опции 11',
+					'value' => 'Add my media',
+					'options' => [
+						'title' => 'Insert a media',
+						'library' => [ 'type' => 'image' ],
+						'multiple' => false,
+						'button' => [ 'text' => 'Insert' ]
+					]
+				],
 			],
 		],
 		'about' => [
