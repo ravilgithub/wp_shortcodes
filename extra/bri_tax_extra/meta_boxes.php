@@ -517,7 +517,7 @@ class Meta_boxes {
 				<button
 					type="button"
 					id="<?php echo $key; ?>"
-					class="button insert-media add_media briz-media-button"
+					class="button briz-media-button"
 				>
 					<span class="wp-media-buttons-icon"></span>
 					Добавить медиафайл
