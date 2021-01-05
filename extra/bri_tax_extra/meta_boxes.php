@@ -526,7 +526,7 @@ class Meta_boxes {
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
 				<figure>
-					<span id="<?php echo $key; ?>-media"></span>
+					<span class="briz-media-place"></span>
 					<figcaption></figcaption>
 				</figure>
 			</td>
