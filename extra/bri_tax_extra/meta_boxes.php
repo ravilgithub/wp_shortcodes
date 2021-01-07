@@ -506,6 +506,15 @@ class Meta_boxes {
 	}
 
 	public function media_button( $key, $value, $params ) {
+		$defaults = [
+									'title' => 'Insert a media',
+									'library' => [ 'type' => 'image' ],
+									'multiple' => false,
+									'button' => [ 'text' => 'Insert' ]
+								];
+
+		$opts = wp_parse_args( $params[ 'options' ], $defaults );
+		extract( $opts );
 ?>
 		<tr>
 			<td>
@@ -518,6 +527,10 @@ class Meta_boxes {
 					type="button"
 					id="<?php echo $key; ?>"
 					class="button briz-media-button"
+					data-title="<?php echo $title; ?>"
+					data-library-type="<?php echo $library[ 'type' ]; ?>"
+					data-multiple="<?php echo $multiple; ?>"
+					data-button-text="<?php echo $button[ 'text' ]; ?>"
 				>
 					<span class="wp-media-buttons-icon"></span>
 					Добавить медиафайл
