@@ -115,7 +115,7 @@ $opts = [
 					'options' => [
 						'title' => 'Insert a media',
 						'library' => [ 'type' => 'image' ],
-						'multiple' => false,
+						'multiple' => 0,
 						'button' => [ 'text' => 'Insert' ]
 					]
 				],
