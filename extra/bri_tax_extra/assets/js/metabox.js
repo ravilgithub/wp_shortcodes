@@ -18,7 +18,7 @@
 			win = wp.media( args );
 
 			win.on( 'select', () => {
-				let res, imagePlace, img;
+				let res, img;
 				
 				res = win
 				        .state()
