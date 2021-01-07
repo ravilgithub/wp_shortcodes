@@ -9,10 +9,10 @@
 			btn = $( evt.target );
 			
 			args = {
-				title: 'Insert a media',
-				library: { type: 'image' },
-				multiple: false,
-				button: { text: 'Insert' }
+				title: btn.data( 'title' ),
+				library: { type: btn.data( 'library-type' ) },
+				multiple: btn.data( 'multiple' ),
+				button: { text: btn.data( 'button-text' ) }
 			};
 
 			win = wp.media( args );
