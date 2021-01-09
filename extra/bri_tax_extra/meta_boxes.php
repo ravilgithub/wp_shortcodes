@@ -15,7 +15,8 @@ class Meta_boxes {
 		// Helper::debug( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php', '200px' );
 
 		require_once( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php' );
-		$this->opts = $opts;
+		$this->opts = apply_filters( 'briz_meta_opts', $opts );
+		// Helper::debug( $this->opts );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ], 10, 2 );
