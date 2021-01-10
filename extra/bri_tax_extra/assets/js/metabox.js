@@ -18,21 +18,27 @@
 			win = wp.media( args );
 
 			win.on( 'select', () => {
-				let res, img;
+				let selected, imgs = [];
 				
-				res = win
+				selected = win
 				        .state()
 				        .get( 'selection' )
-				        .first();
+				        .toArray();
 
-				img = $( '<img />', {
-					src: res.attributes.url
-				} );
+				// console.log( selected );
+
+				for ( let i in selected ) {
+					imgs[ i ] = $( '<img />', {
+						src: selected[ i ].attributes.url
+					} );
+				}
+
+				// console.log( imgs );
 
 				btn
 				  .parent()
 				  .find( '.briz-media-place' )
-				  .html( img );
+				  .html( imgs );
 			} );
 
 			win.open();
