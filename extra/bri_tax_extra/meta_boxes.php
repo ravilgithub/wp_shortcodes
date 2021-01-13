@@ -524,9 +524,14 @@ class Meta_boxes {
 				</label>
 			</td>
 			<td>
+				<input
+					type="hidden"
+					id="<?php echo $key; ?>"
+					name="<?php echo $key; ?>"
+					value="<?php echo $value ?>"
+				/>
 				<button
 					type="button"
-					id="<?php echo $key; ?>"
 					class="button briz-media-button"
 					data-title="<?php echo $title; ?>"
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
@@ -540,7 +545,18 @@ class Meta_boxes {
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
 				<figure>
-					<span class="briz-media-place"></span>
+					<span class="briz-media-place">
+						<?php
+							if ( $value ) {
+								$value = json_decode( $value );
+								if ( ! empty( $value ) ) {
+									foreach ( $value as $media_id ) {
+										echo wp_get_attachment_image( $media_id, 'full' );
+									}
+								}
+							}
+						?>
+					</span>
 					<figcaption></figcaption>
 				</figure>
 			</td>
