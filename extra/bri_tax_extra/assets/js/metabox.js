@@ -18,16 +18,19 @@
 			win = wp.media( args );
 
 			win.on( 'select', () => {
-				let selected, imgs = [];
+				let selected,
+				    imgs = [],
+				    ids = [];
 				
 				selected = win
-				        .state()
-				        .get( 'selection' )
-				        .toArray();
+				            .state()
+				            .get( 'selection' )
+				            .toArray();
 
 				// console.log( selected );
 
 				for ( let i in selected ) {
+					ids[ i ] = selected[ i ].attributes.id;
 					imgs[ i ] = $( '<img />', {
 						src: selected[ i ].attributes.url
 					} );
@@ -38,7 +41,10 @@
 				btn
 				  .parent()
 				  .find( '.briz-media-place' )
-				  .html( imgs );
+				    .html( imgs )
+				    .end()
+				  .find( 'input[type=hidden]' )
+				    .attr( 'value', JSON.stringify( ids ) );
 			} );
 
 			win.open();
