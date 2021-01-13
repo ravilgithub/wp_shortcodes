@@ -111,7 +111,7 @@ $opts = [
 					'type' => 'media_button',
 					'title' => 'Опция 11',
 					'desc' => 'Описание опции 11',
-					'value' => 'Add my media',
+					'value' => '',
 					'options' => [
 						'title' => 'Insert a media',
 						'library' => [ 'type' => 'image' ],
