@@ -30,9 +30,11 @@
 				// console.log( selected );
 
 				for ( let i in selected ) {
-					ids[ i ] = selected[ i ].attributes.id;
+					let atts = selected[ i ].attributes;
+					ids[ i ] = atts.id;
 					imgs[ i ] = $( '<img />', {
-						src: selected[ i ].attributes.url
+						src: atts.url,
+						alt: atts.alt
 					} );
 				}
 
