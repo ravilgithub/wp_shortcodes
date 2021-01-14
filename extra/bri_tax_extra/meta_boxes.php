@@ -546,16 +546,28 @@ class Meta_boxes {
 				</small>
 				<figure>
 					<span class="briz-media-place">
-						<?php
-							if ( $value ) {
+<?php
+							if ( $value ) :
 								$value = json_decode( $value );
-								if ( ! empty( $value ) ) {
-									foreach ( $value as $media_id ) {
-										echo wp_get_attachment_image( $media_id, 'full' );
-									}
-								}
-							}
-						?>
+								if ( ! empty( $value ) ) :
+									foreach ( $value as $media_id ) :
+
+										// Image
+										if ( 'image' == $library[ 'type' ] ) :
+											$src = wp_get_attachment_url( $media_id );
+											$alt = trim( strip_tags( get_post_meta( $media_id, '_wp_attachment_image_alt', true ) ) );
+?>
+											<img
+												src="<?php echo $src; ?>"
+												alt="<?php echo $alt; ?>"
+											/>
+<?php
+										endif;
+
+									endforeach;
+								endif;
+							endif;
+?>
 					</span>
 					<figcaption></figcaption>
 				</figure>
