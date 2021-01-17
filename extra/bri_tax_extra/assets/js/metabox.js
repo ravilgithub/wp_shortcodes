@@ -4,7 +4,7 @@
 	$( document ).ready( () => {
 
 		$( '.briz-media-button' ).on( 'click', evt => {
-			let args, win, btn;
+			let args, wpm, btn;
 			
 			btn = $( evt.target );
 			
@@ -15,22 +15,20 @@
 				button: { text: btn.data( 'button-text' ) }
 			};
 
-			win = wp.media( args );
+			wpm = wp.media( args );
 
-			win.on( 'select', () => {
-				let selected,
-				    imgs = [],
-				    ids = [];
+			wpm.on( 'select', () => {
+				let sel,
+						imgs = [],
+						ids = [];
 				
-				selected = win
-				            .state()
-				            .get( 'selection' )
-				            .toArray();
+				sel = wpm
+				        .state()
+				        .get( 'selection' )
+				        .toArray();
 
-				// console.log( selected );
-
-				for ( let i in selected ) {
-					let atts = selected[ i ].attributes;
+				for ( let i in sel ) {
+					let atts = sel[ i ].attributes;
 					ids[ i ] = atts.id;
 					imgs[ i ] = $( '<img />', {
 						src: atts.url,
@@ -38,18 +36,31 @@
 					} );
 				}
 
-				// console.log( imgs );
-
 				btn
-				  .parent()
-				  .find( '.briz-media-place' )
-				    .html( imgs )
-				    .end()
-				  .find( 'input[type=hidden]' )
-				    .attr( 'value', JSON.stringify( ids ) );
+					.parent()
+					.find( '.briz-media-place' )
+						.html( imgs )
+						.end()
+					.find( 'input[type=hidden]' )
+						.attr( 'value', JSON.stringify( ids ) );
 			} );
 
-			win.open();
+			wpm.on( 'open', () => {
+				let sel = wpm.state().get( 'selection' ),
+						ids = btn
+										.parent()
+										.find( 'input[type=hidden]' )
+										.val();
+
+				JSON.parse( ids )
+					.forEach( id => {
+						let attachment = wp.media.attachment( id );
+						attachment.fetch();
+						sel.add( attachment ? [ attachment ] : [] );
+					} );
+			} );
+
+			wpm.open();
 		} );
 
 	} );
