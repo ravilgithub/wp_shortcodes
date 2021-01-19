@@ -516,6 +516,13 @@ class Meta_boxes {
 
 		$opts = wp_parse_args( $params[ 'options' ], $defaults );
 		extract( $opts );
+
+		$class = 'addidable';
+		$btn_action_txt = __( 'Add' );
+		if ( $value ) {
+			$class = 'editable';
+			$btn_action_txt = __( 'Edit' );
+		}
 ?>
 		<tr>
 			<td>
@@ -523,7 +530,7 @@ class Meta_boxes {
 					<?php echo $params[ 'title' ]; ?>
 				</label>
 			</td>
-			<td>
+			<td class="briz-<?php echo $class; ?>-media-files">
 				<input
 					type="hidden"
 					id="<?php echo $key; ?>"
@@ -539,7 +546,13 @@ class Meta_boxes {
 					data-button-text="<?php echo $button[ 'text' ]; ?>"
 				>
 					<span class="wp-media-buttons-icon"></span>
-					Добавить медиафайл
+					<?php echo $btn_action_txt; ?> медиафайл
+				</button>
+				<button
+					type="button"
+					class="button briz-del-media-button"
+				>
+					Удалить медиафайлы
 				</button>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
