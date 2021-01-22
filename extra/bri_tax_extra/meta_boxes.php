@@ -518,10 +518,12 @@ class Meta_boxes {
 		extract( $opts );
 
 		$class = 'addidable';
-		$btn_action_txt = __( 'Add' );
+		$add_action_txt = __( 'Add медиафайлы' );
+		$edit_action_txt = __( 'Edit медиафайлы' );
+		$btn_action_txt = $add_action_txt;
 		if ( $value ) {
 			$class = 'editable';
-			$btn_action_txt = __( 'Edit' );
+			$btn_action_txt = $edit_action_txt;
 		}
 ?>
 		<tr>
@@ -544,15 +546,17 @@ class Meta_boxes {
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
 					data-multiple="<?php echo $multiple; ?>"
 					data-button-text="<?php echo $button[ 'text' ]; ?>"
+					data-add-text="<?php echo $add_action_txt; ?>"
+					data-edit-text="<?php echo $edit_action_txt; ?>"
 				>
 					<span class="wp-media-buttons-icon"></span>
-					<?php echo $btn_action_txt; ?> медиафайл
+					<?php echo $btn_action_txt; ?>
 				</button>
 				<button
 					type="button"
 					class="button briz-del-media-button"
 				>
-					Удалить медиафайлы
+					<?php echo __( 'Удалить медиафайлы' ); ?>
 				</button>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
