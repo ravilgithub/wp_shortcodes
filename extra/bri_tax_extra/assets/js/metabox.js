@@ -1,96 +1,101 @@
 ;( $ => {
 	'use strict';
-	
+
 	$( document ).ready( () => {
-		let add_action_txt,
-		    edit_action_txt;
 
-		let getBtnActionTxt = ( btn, action ) => {
-			if ( 'del' === action ) {
-				btn = btn.parent().find( '.briz-media-button' );
-				console.log( btn );
-			}
-			add_action_txt = btn.data( 'add-text' );
-			edit_action_txt = btn.data( 'edit-text' );
-		};
+		let media = {
+			add() {
+				$( '.briz-media-button' ).on( 'click', evt => {
+					let args,
+					    wpm,
+					    btn = $( evt.target );
 
-		let btnHandler = ( btn, action ) => {
-			getBtnActionTxt( btn, action );
+					args = {
+						title: btn.data( 'title' ),
+						library: { type: btn.data( 'library-type' ) },
+						multiple: btn.data( 'multiple' ),
+						button: { text: btn.data( 'button-text' ) }
+					};
 
-			if ( 'add' === action ) {
-				console.log( edit_action_txt );
-			} else {
-				console.log( add_action_txt );
-			}
-		};
+					wpm = wp.media( args );
 
-		$( '.briz-del-media-button' ).on( 'click', evt => {
-			let btn = $( evt.target );
-			btnHandler( btn, 'del' );
-		} );
+					this.select( wpm, btn );
+					this.open( wpm, btn );
+					wpm.open();
+				} );
+			},
 
-		$( '.briz-media-button' ).on( 'click', evt => {
-			let args, wpm, btn;
+			select( wpm, btn ) {
+				wpm.on( 'select', () => {
+					let sel,
+							imgs = [],
+							ids = [];
 
-			btn = $( evt.target );
+					sel = wpm
+					        .state()
+					        .get( 'selection' )
+					        .toArray();
 
-			args = {
-				title: btn.data( 'title' ),
-				library: { type: btn.data( 'library-type' ) },
-				multiple: btn.data( 'multiple' ),
-				button: { text: btn.data( 'button-text' ) }
-			};
+					for ( let i in sel ) {
+						let atts = sel[ i ].attributes;
+						ids[ i ] = atts.id;
+						imgs[ i ] = $( '<img />', {
+							src: atts.url,
+							alt: atts.alt
+						} );
+					}
 
-			wpm = wp.media( args );
+					btn
+						.parent()
+						.find( '.briz-media-place' )
+							.html( () => { 
+								this.btnHandler( btn, 'add' );
+								return imgs;
+							} )
+							.end()
+						.find( 'input[type=hidden]' )
+							.attr( 'value', JSON.stringify( ids ) );
+				} );
+			},
 
-			wpm.on( 'select', () => {
-				let sel,
-						imgs = [],
-						ids = [];
-				
-				sel = wpm
-				        .state()
-				        .get( 'selection' )
-				        .toArray();
+			open( wpm, btn ) {
+				wpm.on( 'open', () => {
+					let sel = wpm.state().get( 'selection' ),
+							ids = btn
+											.parent()
+											.find( 'input[type=hidden]' )
+											.val();
 
-				for ( let i in sel ) {
-					let atts = sel[ i ].attributes;
-					ids[ i ] = atts.id;
-					imgs[ i ] = $( '<img />', {
-						src: atts.url,
-						alt: atts.alt
-					} );
+					JSON.parse( ids )
+						.forEach( id => {
+							let attachment = wp.media.attachment( id );
+							attachment.fetch();
+							sel.add( attachment ? [ attachment ] : [] );
+						} );
+				} );
+			},
+
+			del() {
+				$( '.briz-del-media-button' ).on( 'click', evt => {
+					let btn = $( evt.target );
+					this.btnHandler( btn, 'del' );
+				} );		
+			},
+
+			btnHandler( btn, action ) {
+				if ( 'add' === action ) {
+					console.log( 'edit' );
+				} else {
+					console.log( 'add' );
 				}
+			},
 
-				btn
-					.parent()
-					.find( '.briz-media-place' )
-						.html( () => { 
-							btnHandler( btn, 'add' );
-							return imgs;
-						} )
-						.end()
-					.find( 'input[type=hidden]' )
-						.attr( 'value', JSON.stringify( ids ) );
-			} );
+			init() {
+				this.add();
+				this.del();
+			}
+		};
 
-			wpm.on( 'open', () => {
-				let sel = wpm.state().get( 'selection' ),
-						ids = btn
-										.parent()
-										.find( 'input[type=hidden]' )
-										.val();
-
-				JSON.parse( ids )
-					.forEach( id => {
-						let attachment = wp.media.attachment( id );
-						attachment.fetch();
-						sel.add( attachment ? [ attachment ] : [] );
-					} );
-			} );
-
-			wpm.open();
-		} );
-
+		media.init();
 	} );
 } )( jQuery );
