@@ -517,13 +517,15 @@ class Meta_boxes {
 		$opts = wp_parse_args( $params[ 'options' ], $defaults );
 		extract( $opts );
 
-		$class = 'addidable';
+		$stage = 'addidable';
 		$add_action_txt = __( 'Add медиафайлы' );
 		$edit_action_txt = __( 'Edit медиафайлы' );
 		$btn_action_txt = $add_action_txt;
+		$delBtnClass = '';
 		if ( $value ) {
-			$class = 'editable';
+			$stage = 'editable';
 			$btn_action_txt = $edit_action_txt;
+			$delBtnClass = 'briz-del-media-button-active';
 		}
 ?>
 		<tr>
@@ -532,7 +534,7 @@ class Meta_boxes {
 					<?php echo $params[ 'title' ]; ?>
 				</label>
 			</td>
-			<td class="briz-<?php echo $class; ?>-media-files">
+			<td>
 				<input
 					type="hidden"
 					id="<?php echo $key; ?>"
@@ -546,15 +548,16 @@ class Meta_boxes {
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
 					data-multiple="<?php echo $multiple; ?>"
 					data-button-text="<?php echo $button[ 'text' ]; ?>"
-					data-add-text="<?php echo $add_action_txt; ?>"
-					data-edit-text="<?php echo $edit_action_txt; ?>"
+					data-action-text="<?php echo $edit_action_txt; ?>"
+					data-stage="<?php echo $stage; ?>"
 				>
-					<span class="wp-media-buttons-icon"></span>
+					<!-- <span class="wp-media-buttons-icon"></span> -->
 					<?php echo $btn_action_txt; ?>
 				</button>
 				<button
 					type="button"
-					class="button briz-del-media-button"
+					class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+					data-action-text="<?php echo $add_action_txt; ?>"
 				>
 					<?php echo __( 'Удалить медиафайлы' ); ?>
 				</button>

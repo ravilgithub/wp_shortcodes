@@ -28,8 +28,8 @@
 			select( wpm, btn ) {
 				wpm.on( 'select', () => {
 					let sel,
-							imgs = [],
-							ids = [];
+					    imgs = [],
+					    ids = [];
 
 					sel = wpm
 					        .state()
@@ -45,16 +45,8 @@
 						} );
 					}
 
-					btn
-						.parent()
-						.find( '.briz-media-place' )
-							.html( () => { 
-								this.btnHandler( btn, 'add' );
-								return imgs;
-							} )
-							.end()
-						.find( 'input[type=hidden]' )
-							.attr( 'value', JSON.stringify( ids ) );
+					ids = JSON.stringify( ids );
+					this.setMedia( btn, 'add', imgs, ids );
 				} );
 			},
 
@@ -62,31 +54,61 @@
 				wpm.on( 'open', () => {
 					let sel = wpm.state().get( 'selection' ),
 							ids = btn
-											.parent()
-											.find( 'input[type=hidden]' )
-											.val();
+							        .parent()
+							        .find( 'input[type=hidden]' )
+							        .val();
 
-					JSON.parse( ids )
-						.forEach( id => {
-							let attachment = wp.media.attachment( id );
-							attachment.fetch();
-							sel.add( attachment ? [ attachment ] : [] );
-						} );
+					if ( ids ) {
+						JSON.parse( ids )
+							.forEach( id => {
+								let attachment = wp.media.attachment( id );
+								attachment.fetch();
+								sel.add( attachment ? [ attachment ] : [] );
+							} );
+					}
 				} );
+			},
+
+			setMedia( btn, action, imgs = '', ids = '' ) {
+				btn
+					.parent()
+					.find( '.briz-media-place' )
+						.html( () => {
+							this.btnHandler( btn, action );
+							return imgs;
+						} )
+						.end()
+					.find( 'input[type=hidden]' )
+						.attr( 'value', ids );
 			},
 
 			del() {
 				$( '.briz-del-media-button' ).on( 'click', evt => {
 					let btn = $( evt.target );
-					this.btnHandler( btn, 'del' );
-				} );		
+					this.setMedia( btn, 'del' );
+				} );
 			},
 
 			btnHandler( btn, action ) {
-				if ( 'add' === action ) {
-					console.log( 'edit' );
+				let btnTxt = btn.data( 'action-text' );
+
+				if ( 'add' == action ) {
+					let stage = btn.data( 'stage' );
+					if ( 'addidable' == stage ) {
+						btn
+						  .data( 'stage', 'edidable' )
+						  .text( btnTxt )
+						  .parent()
+						  .find( '.briz-del-media-button' )
+						    .addClass( 'briz-del-media-button-active' );
+					}
 				} else {
-					console.log( 'add' );
+					btn
+					  .removeClass( 'briz-del-media-button-active' )
+					  .parent()
+					  .find( '.briz-media-button' )
+					    .data( 'stage', 'addidable' )
+					    .text( btnTxt );
 				}
 			},
 

@@ -1,3 +1,7 @@
-#briz_meta_box .briz-addidable-media-files .briz-del-media-button {
+#briz_meta_box .briz-del-media-button {
 	display: none;
+}
+
+#briz_meta_box .briz-del-media-button-active {
+	display: inline-block;
 }
