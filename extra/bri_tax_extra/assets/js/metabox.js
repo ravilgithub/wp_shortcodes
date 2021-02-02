@@ -25,10 +25,40 @@
 				} );
 			},
 
+			createEl( wpm, atts ) {
+				let type = atts.type,
+						tag = '',
+						atrs = { src: atts.url },
+						html = '';
+
+				if ( 'image' == type ) {
+					tag = '<img />';
+					atrs[ 'alt' ] = atts.alt;
+				} else if ( 'audio' == type ) {
+					tag = '<audio />';
+					atrs[ 'controls' ] = 'controls';
+				} else if ( 'video' == type ) {
+					tag = '<video />'
+					atrs[ 'controls' ] = 'controls';
+				}
+
+				if ( atts.caption ) {
+					html = $( '<figcaption />', { text: atts.caption } )
+					        .get( 0 )
+					        .outerHTML;
+				}
+
+				html += $( tag, atrs )
+				          .get( 0 )
+				          .outerHTML;
+
+				return html;
+			},
+
 			select( wpm, btn ) {
 				wpm.on( 'select', () => {
 					let sel,
-					    imgs = [],
+					    els = [],
 					    ids = [];
 
 					sel = wpm
@@ -36,17 +66,16 @@
 					        .get( 'selection' )
 					        .toArray();
 
+					console.log( sel );
+
 					for ( let i in sel ) {
 						let atts = sel[ i ].attributes;
 						ids[ i ] = atts.id;
-						imgs[ i ] = $( '<img />', {
-							src: atts.url,
-							alt: atts.alt
-						} );
+						els[ i ] = this.createEl( wpm, atts );
 					}
 
 					ids = JSON.stringify( ids );
-					this.setMedia( btn, 'add', imgs, ids );
+					this.setMedia( btn, 'add', els, ids );
 				} );
 			},
 
@@ -69,13 +98,13 @@
 				} );
 			},
 
-			setMedia( btn, action, imgs = '', ids = '' ) {
+			setMedia( btn, action, els = '', ids = '' ) {
 				btn
 					.parent()
 					.find( '.briz-media-place' )
 						.html( () => {
 							this.btnHandler( btn, action );
-							return imgs;
+							return els;
 						} )
 						.end()
 					.find( 'input[type=hidden]' )

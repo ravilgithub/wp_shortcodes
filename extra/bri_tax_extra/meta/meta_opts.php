@@ -119,6 +119,30 @@ $opts = [
 						'button' => [ 'text' => 'Insert' ]
 					]
 				],
+				'option_12' => [
+					'type' => 'media_button',
+					'title' => 'Опция 12',
+					'desc' => 'Описание опции 12',
+					'value' => '',
+					'options' => [
+						'title' => 'Insert a media',
+						'library' => [ 'type' => 'audio' ],
+						'multiple' => 1,
+						'button' => [ 'text' => 'Insert' ]
+					]
+				],
+				'option_13' => [
+					'type' => 'media_button',
+					'title' => 'Опция 13',
+					'desc' => 'Описание опции 13',
+					'value' => '',
+					'options' => [
+						'title' => 'Insert a media',
+						'library' => [ 'type' => 'video' ],
+						'multiple' => 1,
+						'button' => [ 'text' => 'Insert' ]
+					]
+				],
 			],
 		],
 		'about' => [
