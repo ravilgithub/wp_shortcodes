@@ -119,7 +119,8 @@
 			},
 
 			btnHandler( btn, action ) {
-				let btnTxt = btn.data( 'action-text' );
+				let btnTxt = btn.data( 'action-text' ),
+				    activeClassName = 'briz-del-media-button-active';
 
 				if ( 'add' == action ) {
 					let stage = btn.data( 'stage' );
@@ -129,11 +130,11 @@
 						  .text( btnTxt )
 						  .parent()
 						  .find( '.briz-del-media-button' )
-						    .addClass( 'briz-del-media-button-active' );
+						    .addClass( activeClassName );
 					}
 				} else {
 					btn
-					  .removeClass( 'briz-del-media-button-active' )
+					  .removeClass( activeClassName )
 					  .parent()
 					  .find( '.briz-media-button' )
 					    .data( 'stage', 'addidable' )
