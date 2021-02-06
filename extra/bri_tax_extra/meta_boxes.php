@@ -521,12 +521,8 @@ class Meta_boxes {
 								$value = json_decode( $value );
 								if ( ! empty( $value ) ) :
 									foreach ( $value as $media_id ) :
-										// $src = wp_get_attachment_url( $media_id );
 										$details = wp_prepare_attachment_for_js( $media_id );
 										$src = $details[ 'url' ];
-
-										// Helper::debug( get_post_meta( $media_id ) );
-										// Helper::debug( wp_prepare_attachment_for_js( $media_id ) );
 
 										if ( $caption = $details[ 'caption' ] ) :
 ?>
@@ -538,17 +534,18 @@ class Meta_boxes {
 
 										// Image
 										if ( 'image' == $library[ 'type' ] ) :
-											// $alt = trim( strip_tags( get_post_meta( $media_id, '_wp_attachment_image_alt', true ) ) );
 ?>
 											<img
 												src="<?php echo $src; ?>"
 												alt="<?php echo $details[ 'alt' ]; ?>"
 											/>
 <?php
+										// Audio
 										elseif ( 'audio' == $library[ 'type' ] ) :
 ?>
 											<audio src="<?php echo $src; ?>" controls></audio>
 <?php
+										// Video
 										elseif ( 'video' == $library[ 'type' ] ) :
 ?>
 											<video src="<?php echo $src; ?>" controls></video>
