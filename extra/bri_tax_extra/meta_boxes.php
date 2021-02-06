@@ -207,36 +207,6 @@ class Meta_boxes {
 				</tbody>
 			</table>
 		</div>
-
-		<style>
-			#briz_meta_box table {
-				width: 100%;
-			}
-			#briz_meta_box td {
-				padding-top: 10px;
-			}
-			#briz_meta_box td:first-child {
-				width: 25%;
-			}
-			#briz_meta_box td:last-child {
-				width: 75%;
-			}
-			#briz_meta_box th,
-			#briz_meta_box td {
-				vertical-align: top;
-				text-align: left;
-			}
-			#briz_meta_box label,
-			#briz_meta_box small,
-			#briz_meta_box textarea,
-			#briz_meta_box input[type=text] {
-				display: block;
-				width: 100%;
-			}
-			#briz_meta_box input[type=url]:-moz-ui-invalid {
-				box-shadow: 0px 0px 1.5px 1px #5cff00;
-			}
-		</style>
 <?php
 	}
 
