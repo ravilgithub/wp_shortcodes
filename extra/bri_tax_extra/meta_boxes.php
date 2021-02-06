@@ -177,29 +177,9 @@ class Meta_boxes {
 
 							$field_key = $this->id . "[$field_key]";
 
-							switch ( $field_params[ 'type' ] ) {
-								case 'textarea': $this->textarea_field( $field_key, $field_value, $field_params );
-									break;
-								case 'color': $this->color_field( $field_key, $field_value, $field_params );
-									break;
-								case 'number': $this->number_field( $field_key, $field_value, $field_params );
-									break;
-								case 'select': $this->select( $field_key, $field_value, $field_params );
-									break;
-								case 'checkbox': $this->checkbox( $field_key, $field_value, $field_params );
-									break;
-								case 'range': $this->range_field( $field_key, $field_value, $field_params );
-									break;
-								case 'radio': $this->radio( $field_key, $field_value, $field_params );
-									break;
-								case 'url': $this->url_field( $field_key, $field_value, $field_params );
-									break;
-								case 'wp_editor': $this->wp_editor( $field_key, $field_value, $field_params );
-									break;
-								case 'media_button': $this->media_button( $field_key, $field_value, $field_params );
-									break;
-								default: $this->text_field( $field_key, $field_value, $field_params );
-									break;
+							$method = $field_params[ 'type' ];
+							if ( method_exists( $this, $method ) ) {
+								$this->$method( $field_key, $field_value, $field_params );
 							}
 						}
 					?>
@@ -210,7 +190,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function text_field( $key, $value, $params ) {
+	public function text( $key, $value, $params ) {
 ?>
 		<tr>
 			<td>
@@ -229,7 +209,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function textarea_field( $key, $value, $params ) {
+	public function textarea( $key, $value, $params ) {
 ?>
 		<tr>
 			<td>
@@ -247,7 +227,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function color_field( $key, $value, $params ) {
+	public function color( $key, $value, $params ) {
 ?>
 		<tr>
 			<td>
@@ -266,7 +246,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function number_field( $key, $value, $params ) {
+	public function number( $key, $value, $params ) {
 		extract( $params[ 'options' ] );
 ?>
 		<tr>
@@ -353,7 +333,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function range_field( $key, $value, $params ) {
+	public function range( $key, $value, $params ) {
 		extract( $params[ 'options' ] );
 ?>
 		<tr>
@@ -411,7 +391,7 @@ class Meta_boxes {
 <?php
 	}
 
-	public function url_field( $key, $value, $params ) {
+	public function url( $key, $value, $params ) {
 ?>
 		<tr>
 			<td>
