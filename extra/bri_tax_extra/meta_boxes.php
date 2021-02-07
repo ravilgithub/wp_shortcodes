@@ -1,21 +1,40 @@
 <?php
-
 namespace Bri_Shortcodes;
 
+/**
+ * The class adds meta boxes for posts.
+ *
+ * Класс добавляет метабоксы для записей.
+ *
+ * @property Array $taxs - таксономии к записям которых добавляются метабоксы.
+ * @property String $id - префикс идентификатора метабокса и его полей. Default: "briz";
+ * @property Array $opts - параметры полей по умолчанию.
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
 class Meta_boxes {
 	public $taxs;
-	public $id = 'briz';
-
+	public $id_prefix = 'briz';
 	public $opts = [];
 
-	public function __construct( $taxs ) {
+
+	/**
+	 * Constructor
+	 *
+	 * @param Array $taxs - таксономии к записям которых добавляются метабоксы.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function __construct( Array $taxs ) {
 		// Helper::debug( __CLASS__, '200px' );
 		$this->taxs = $taxs;
 
 		// Helper::debug( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php', '200px' );
 
 		require_once( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php' );
-		$this->opts = apply_filters( 'briz_meta_opts', $opts );
+		$this->opts = apply_filters( "{$this->id_prefix}_meta_opts", $opts );
 		// Helper::debug( $this->opts );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
@@ -25,14 +44,14 @@ class Meta_boxes {
 
 	/**
 	 * Registering Styles and Scripts of metaboxes.
-	 * 
+	 *
 	 * Регистрация стилей и скриптов метабоксов.
-	 * 
+	 *
 	 * @see Helper::register_assets()
 	 * @link ~/common/helpers.php
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -55,7 +74,7 @@ class Meta_boxes {
 			]
 		];
 
-		$assets = apply_filters( "briz_metabox_assets", $assets );
+		$assets = apply_filters( "{$this->id_prefix}_metabox_assets", $assets );
 
 		// Helper::debug( $assets );
 
@@ -72,6 +91,24 @@ class Meta_boxes {
 		}
 	}
 
+
+	/**
+	 * Collection of template names according to which the output of term posts is formed,
+	 * including the names of templates of parent terms, if any.
+	 *
+	 * Сбор имён шаблонов согласно которым формируется вывод записей терминов,
+	 * в том числе имена шаблонов родительских терминов если они есть.
+	 *
+	 * @param Object $post - Объект записи: объект WP_Post.
+	 *
+	 * @return Array $term_info {
+	 *   @type Array $tmpl - массив имён шаблонов.
+	 *   @type String $taxonomy - имя таксономии к которой относятся термины.
+	 * }
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function get_terms_info( $post ) {
 		$taxs = get_object_taxonomies( $post );
 		// Helper::debug( $taxs, '200px' );
@@ -119,6 +156,20 @@ class Meta_boxes {
 		return $term_info;
 	}
 
+
+	/**
+	 * Collecting data for the formation of the metabox.
+	 *
+	 * Сбор данных для формирования метабокса.
+	 *
+	 * @param String $post_type - Название типа записи, на странице редактирования которого вызывается хук.
+	 * @param Object $post - Объект записи: объект WP_Post.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function add_meta_box( $post_type, $post ) {
 		// Helper::debug( __METHOD__, '200px' );
 		// Helper::debug( $post_type, '200px' );
@@ -147,10 +198,25 @@ class Meta_boxes {
 
 			// Helper::debug( $tmpl, '200px' );
 
-			add_meta_box( "briz_meta_box_{$n}", $title, $callback, $screens, 'advanced', 'default', $callback_args );
+			add_meta_box( "{$this->id_prefix}_meta_box_{$n}", $title, $callback, $screens, 'advanced', 'default', $callback_args );
 		}
 	}
 
+
+	/**
+	 * HTML output meta box content.
+	 *
+	 * Вывод HTML содержание метабокса.
+	 *
+	 * @param Object $post - Объект записи: объект WP_Post.
+	 * @param Array $meta - данные поста (объект $post) и аргументы переданные в этот параметр.
+	 *   @see add_meta_box( ...$callback_args )
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function meta_box( $post, $meta ) {
 		// Helper::debug( __METHOD__, '200px' );
 		// Helper::debug( $post, '200px' );
@@ -175,7 +241,7 @@ class Meta_boxes {
 							$field_value = get_post_meta( $post->ID, $field_key, true );
 							$field_value = $field_value ? $field_value : $field_params[ 'value' ];
 
-							$field_key = $this->id . "[$field_key]";
+							$field_key = $this->id_prefix . "[$field_key]";
 
 							$method = $field_params[ 'type' ];
 							if ( method_exists( $this, $method ) ) {
@@ -501,7 +567,6 @@ class Meta_boxes {
 					data-action-text="<?php echo $edit_action_txt; ?>"
 					data-stage="<?php echo $stage; ?>"
 				>
-					<!-- <span class="wp-media-buttons-icon"></span> -->
 					<?php echo $btn_action_txt; ?>
 				</button>
 				<button
@@ -557,11 +622,24 @@ class Meta_boxes {
 ?>
 					</span>
 				</figure>
+
+				<?php
+					// global $wp_meta_boxes;
+					// Helper::debug( $wp_meta_boxes );
+				?>
 			</td>
 		</tr>
 <?php
 	}
 
+
+	/**
+	 *
+	 *
+	 *
+	 *
+	 *
+	 */
 	public function meta_box_save( $post_id, $post ) {
 		// Helper::debug( __METHOD__, '200px' );
 		// Helper::debug( $post_id, '200px' );
