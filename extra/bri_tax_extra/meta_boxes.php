@@ -162,7 +162,7 @@ class Meta_boxes {
 	 *
 	 * Сбор данных для формирования метабокса.
 	 *
-	 * @param String $post_type - Название типа записи, на странице редактирования которого вызывается хук.
+	 * @param String $post_type - Название типа записи, на странице редактирования которой вызывается хук.
 	 * @param Object $post - Объект записи: объект WP_Post.
 	 *
 	 * @return void
@@ -256,6 +256,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function text( $key, $value, $params ) {
 ?>
 		<tr>
@@ -275,6 +290,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function textarea( $key, $value, $params ) {
 ?>
 		<tr>
@@ -293,6 +323,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function color( $key, $value, $params ) {
 ?>
 		<tr>
@@ -311,6 +356,22 @@ class Meta_boxes {
 		</tr>
 <?php
 	}
+
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 
 	public function number( $key, $value, $params ) {
 		extract( $params[ 'options' ] );
@@ -340,6 +401,22 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+
 	public function select( $key, $value, $params ) {
 ?>
 		<tr>
@@ -363,6 +440,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function checkbox( $key, $value, $params ) {
 ?>
 		<tr>
@@ -399,6 +491,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function range( $key, $value, $params ) {
 		extract( $params[ 'options' ] );
 ?>
@@ -427,6 +534,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function radio( $key, $value, $params ) {
 ?>
 		<tr>
@@ -457,6 +579,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function url( $key, $value, $params ) {
 ?>
 		<tr>
@@ -483,6 +620,21 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function wp_editor( $key, $value, $params ) {
 		$args = array_merge( 
 			[
@@ -522,13 +674,28 @@ class Meta_boxes {
 <?php
 	}
 
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function media_button( $key, $value, $params ) {
 		$defaults = [
-									'title' => 'Insert a media',
-									'library' => [ 'type' => 'image' ],
-									'multiple' => false,
-									'button' => [ 'text' => 'Insert' ]
-								];
+			'title'    => 'Insert a media',
+			'library'  => [ 'type' => 'image' ],
+			'multiple' => false,
+			'button'   => [ 'text' => 'Insert' ]
+		];
 
 		$opts = wp_parse_args( $params[ 'options' ], $defaults );
 		extract( $opts );
@@ -634,11 +801,17 @@ class Meta_boxes {
 
 
 	/**
+	 * Saving, changing or deleting the values of the meta fields of the posts.
 	 *
+	 * Сохранение, изменение или удаление значений мета полей записи.
 	 *
+	 * @param String $post_id - ID записи, которая обновляется.
+	 * @param Object $post - Объект записи: объект WP_Post.
 	 *
+	 * @return void
 	 *
-	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public function meta_box_save( $post_id, $post ) {
 		// Helper::debug( __METHOD__, '200px' );
