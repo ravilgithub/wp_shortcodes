@@ -275,13 +275,13 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
-				<input type="text" id="<?php echo $key; ?>" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
+				<input type="text" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
@@ -309,12 +309,12 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
-				<textarea id="<?php echo $key; ?>" name="<?php echo $key; ?>"><?php echo $value; ?></textarea>
+				<textarea name="<?php echo $key; ?>"><?php echo $value; ?></textarea>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
@@ -342,13 +342,13 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>>
 			</td>
 			<td>
 				<?php echo $value; ?>
-				<input type="color" id="<?php echo $key; ?>" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
+				<input type="color" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
 				</small>
@@ -378,15 +378,14 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
 				<input
 					type="number"
-					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value; ?>"
 					step="<?php echo $step; ?>"
@@ -421,13 +420,13 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
-				<select name="<?php echo $key; ?>" id="<?php echo $key; ?>">
+				<select name="<?php echo $key; ?>">
 					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>	
 						<option value="<?php echo $k; ?>"><?php echo $v; ?></option>
 					<?php endforeach; ?>
@@ -459,9 +458,9 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label>
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 
@@ -471,10 +470,9 @@ class Meta_boxes {
 				<?php Helper::debug( (array) $value ); ?>
 
 				<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
-					<label for="<?php echo $k; ?>">
+					<label>
 						<input
 							type="checkbox"
-							id="<?php echo $k; ?>"
 							name="<?php echo $key . '[]'; ?>"
 							value="<?php echo $v; ?>"
 							<?php checked( true, in_array( $v, (array) $value ) ); ?>
@@ -511,15 +509,14 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
 				<input
 					type="range"
-					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value; ?>"
 					step="<?php echo $step; ?>"
@@ -553,13 +550,15 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<?php echo $params[ 'title' ]; ?>
+				<span class="briz_meta_field_title">
+					<?php echo $params[ 'title' ]; ?>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
 
 					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
-						<label id="<?php echo $key; ?>">
+						<label>
 							<input
 								type="radio"
 								name="<?php echo $key; ?>"
@@ -598,15 +597,14 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label for="<?php echo $key; ?>">
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
 				<input
 					type="url"
-					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value; ?>"
 					pattern="<?php echo $params[ 'pattern' ]; ?>"
@@ -657,7 +655,9 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<?php echo $params[ 'title' ]; ?>
+				<span class="briz_meta_field_title">
+					<?php echo $params[ 'title' ]; ?>
+				</span>
 			</td>
 			<td>
 				<?php
@@ -713,14 +713,13 @@ class Meta_boxes {
 ?>
 		<tr>
 			<td>
-				<label>
+				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</label>
+				</span>
 			</td>
 			<td>
 				<input
 					type="hidden"
-					id="<?php echo $key; ?>"
 					name="<?php echo $key; ?>"
 					value="<?php echo $value ?>"
 				/>
