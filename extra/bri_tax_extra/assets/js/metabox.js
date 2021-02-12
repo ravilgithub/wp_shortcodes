@@ -50,9 +50,9 @@
 			 */
 			createEl( wpm, atts ) {
 				let type = atts.type,
-						tag = '',
-						atrs = { src: atts.url },
-						html = '';
+				    tag = '',
+				    atrs = { src: atts.url },
+				    html = '';
 
 				if ( 'image' == type ) {
 					tag = '<img />';
@@ -99,8 +99,6 @@
 					        .get( 'selection' )
 					        .toArray();
 
-					// console.log( sel );
-
 					for ( let i in sel ) {
 						let atts = sel[ i ].attributes;
 						ids[ i ] = atts.id;
@@ -125,10 +123,10 @@
 			open( wpm, btn ) {
 				wpm.on( 'open', () => {
 					let sel = wpm.state().get( 'selection' ),
-							ids = btn
-							        .parent()
-							        .find( 'input[type=hidden]' )
-							        .val();
+					    ids = btn
+					            .parent()
+					            .find( 'input[type=hidden]' )
+					            .val();
 
 					if ( ids ) {
 						JSON.parse( ids )
