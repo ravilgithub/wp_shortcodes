@@ -3,7 +3,21 @@
 
 	$( document ).ready( () => {
 
+		/**
+		 * Функционал описывающий работу с медиа файлами.
+		 * Добавление, изменение и удаление медиа файлов в мета полях.
+		 *
+		 * @since 0.0.1
+		 * @autor Ravil
+		 */
 		let media = {
+
+			/**
+			 * Создаём объект wp.media и
+			 * передаём ему первоначальные данные.
+			 *
+			 * @return void
+			 */
 			add() {
 				$( '.briz-media-button' ).on( 'click', evt => {
 					let args,
@@ -25,6 +39,15 @@
 				} );
 			},
 
+
+			/**
+			 * Формирование HTML выбранных медиа файлов.
+			 *
+			 * @param Object wpm - WP Media Object.
+			 * @param Object atts - свойства выбранного медиа файла.
+			 *
+			 * @return String html - разметка медиа файлa и подпись к нему если имеется.
+			 */
 			createEl( wpm, atts ) {
 				let type = atts.type,
 						tag = '',
@@ -55,6 +78,16 @@
 				return html;
 			},
 
+
+			/**
+			 * Обработчик выбора медиа данных в библиотеке.
+			 * Формирование данных о выбранных медиа файлах.
+			 *
+			 * @param Object wpm - WP Media Object.
+			 * @param jQuery Object btn - кнопка Add/Edit media.
+			 *
+			 * @return void
+			 */
 			select( wpm, btn ) {
 				wpm.on( 'select', () => {
 					let sel,
@@ -66,7 +99,7 @@
 					        .get( 'selection' )
 					        .toArray();
 
-					console.log( sel );
+					// console.log( sel );
 
 					for ( let i in sel ) {
 						let atts = sel[ i ].attributes;
@@ -79,6 +112,16 @@
 				} );
 			},
 
+
+			/**
+			 * Обработчик открыия медиа библиотеки.
+			 * Помечаем раннее выбранные медиа файлы если они есть.
+			 *
+			 * @param Object wpm - WP Media Object.
+			 * @param jQuery Object btn - кнопка Add/Edit media.
+			 *
+			 * @return void
+			 */
 			open( wpm, btn ) {
 				wpm.on( 'open', () => {
 					let sel = wpm.state().get( 'selection' ),
@@ -98,6 +141,17 @@
 				} );
 			},
 
+
+			/**
+			 * Добавление медиа данных.
+			 *
+			 * @param jQuery Object btn - кнопка Add/Edit или Delete media.
+			 * @param String action - действие которое нужно выполнить - добавить или удалить медиа файлы.
+			 * @param Array els - HTML добавляемых элементов.
+			 * @param Array ids - WP идентификаторы добавляемых медиа файлов.
+			 *
+			 * @return void
+			 */
 			setMedia( btn, action, els = '', ids = '' ) {
 				btn
 					.parent()
@@ -111,6 +165,12 @@
 						.attr( 'value', ids );
 			},
 
+
+			/**
+			 * Удаление медиа данных.
+			 *
+			 * @return void
+			 */
 			del() {
 				$( '.briz-del-media-button' ).on( 'click', evt => {
 					let btn = $( evt.target );
@@ -118,6 +178,15 @@
 				} );
 			},
 
+
+			/**
+			 * Изменение текста кнопок при нажатии на них.
+			 *
+			 * @param jQuery Object btn - кнопка Add/Edit или Delete media.
+			 * @param String action - действие которое нужно выполнить - добавить или удалить медиа файлы.
+			 *
+			 * @return void
+			 */
 			btnHandler( btn, action ) {
 				let btnTxt = btn.data( 'action-text' ),
 				    activeClassName = 'briz-del-media-button-active';
@@ -142,6 +211,10 @@
 				}
 			},
 
+
+			/**
+			 * Инициализация основных методов.
+			 */
 			init() {
 				this.add();
 				this.del();
@@ -149,5 +222,6 @@
 		};
 
 		media.init();
+
 	} );
 } )( jQuery );
