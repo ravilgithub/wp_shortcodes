@@ -10,7 +10,7 @@
 		 * @since 0.0.1
 		 * @autor Ravil
 		 */
-		let media = {
+		const media = {
 
 			/**
 			 * Создаём объект wp.media и
@@ -20,18 +20,14 @@
 			 */
 			add() {
 				$( '.briz-media-button' ).on( 'click', evt => {
-					let args,
-					    wpm,
-					    btn = $( evt.target );
-
-					args = {
-						title: btn.data( 'title' ),
-						library: { type: btn.data( 'library-type' ) },
-						multiple: btn.data( 'multiple' ),
-						button: { text: btn.data( 'button-text' ) }
-					};
-
-					wpm = wp.media( args );
+					const btn = $( evt.target ),
+					      args = {
+					        title: btn.data( 'title' ),
+					        library: { type: btn.data( 'library-type' ) },
+					        multiple: btn.data( 'multiple' ),
+					        button: { text: btn.data( 'button-text' ) }
+					      },
+					      wpm = wp.media( args );
 
 					this.select( wpm, btn );
 					this.open( wpm, btn );
@@ -49,8 +45,9 @@
 			 * @return String html - разметка медиа файлa и подпись к нему если имеется.
 			 */
 			createEl( wpm, atts ) {
-				let type = atts.type,
-				    tag = '',
+				const type = atts.type;
+
+				let tag = '',
 				    atrs = { src: atts.url },
 				    html = '';
 
@@ -90,17 +87,16 @@
 			 */
 			select( wpm, btn ) {
 				wpm.on( 'select', () => {
-					let sel,
-					    els = [],
+					let els = [],
 					    ids = [];
 
-					sel = wpm
+					const sel = wpm
 					        .state()
 					        .get( 'selection' )
 					        .toArray();
 
-					for ( let i in sel ) {
-						let atts = sel[ i ].attributes;
+					for ( const i in sel ) {
+						const atts = sel[ i ].attributes;
 						ids[ i ] = atts.id;
 						els[ i ] = this.createEl( wpm, atts );
 					}
@@ -122,16 +118,16 @@
 			 */
 			open( wpm, btn ) {
 				wpm.on( 'open', () => {
-					let sel = wpm.state().get( 'selection' ),
-					    ids = btn
-					            .parent()
-					            .find( 'input[type=hidden]' )
-					            .val();
+					const sel = wpm.state().get( 'selection' ),
+					      ids = btn
+					              .parent()
+					              .find( 'input[type=hidden]' )
+					              .val();
 
 					if ( ids ) {
 						JSON.parse( ids )
 							.forEach( id => {
-								let attachment = wp.media.attachment( id );
+								const attachment = wp.media.attachment( id );
 								attachment.fetch();
 								sel.add( attachment ? [ attachment ] : [] );
 							} );
@@ -171,7 +167,7 @@
 			 */
 			del() {
 				$( '.briz-del-media-button' ).on( 'click', evt => {
-					let btn = $( evt.target );
+					const btn = $( evt.target );
 					this.setMedia( btn, 'del' );
 				} );
 			},
@@ -186,11 +182,11 @@
 			 * @return void
 			 */
 			btnHandler( btn, action ) {
-				let btnTxt = btn.data( 'action-text' ),
-				    activeClassName = 'briz-del-media-button-active';
+				const btnTxt = btn.data( 'action-text' ),
+				      activeClassName = 'briz-del-media-button-active';
 
 				if ( 'add' == action ) {
-					let stage = btn.data( 'stage' );
+					const stage = btn.data( 'stage' );
 					if ( 'addidable' == stage ) {
 						btn
 						  .data( 'stage', 'edidable' )
