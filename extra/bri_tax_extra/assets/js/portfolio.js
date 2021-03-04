@@ -1,13 +1,10 @@
-'use strict';
+;( $ => {
+	'use strict';
 
-/**
- * Portfolio Actions.
- */
-;( function( $ ) {
-	$( document ).ready( function() {
-		
+	$( document ).ready( () => {
+
 		/**
-		 * Главный объект.
+		 * Portfolio Actions.
 		 * 
 		 * @param {Object} iso - объект создающийся для каждого шаблона "portfolio".
 		 * 
@@ -31,6 +28,7 @@
 				dom: {},
 				filter: '*',
 
+
 				/**
 				 * Получаем количество отображенных записей
 				 * если активный фильтер не "*",
@@ -42,18 +40,19 @@
 				 */
 				getActivePosts() {
 					let cnt = 0,
-							selector = '.isotope-item';
+					    selector = '.isotope-item';
 
 					if ( '*' != this.filter ) {
 						selector += ':visible';
 					}
 
 					cnt = this.dom.grid.find( selector ).length;
-					
-					console.log( 'visible items', cnt );
-					
+
+					// console.log( 'visible items', cnt );
+
 					return cnt;
 				},
+
 
 				/**
 				 * Получаем количество записей
@@ -80,10 +79,11 @@
 					cnt = parseInt( cnt, 10 );
 					cnt = ! Number.isNaN( cnt ) ? cnt : 0;
 
-					console.log( 'max posts', cnt );
+					// console.log( 'max posts', cnt );
 
 					return cnt;
 				},
+
 
 				/**
 				 * Скрываем или показываем кнопку "show more"
@@ -97,7 +97,7 @@
 				 */
 				moreTrigger() {
 					const maxPosts    = this.getMaxPosts(),
-								activePosts = this.getActivePosts();
+					      activePosts = this.getActivePosts();
 
 					if ( activePosts < maxPosts ) {
 						this.dom.more.show( 100 );
@@ -105,6 +105,7 @@
 						this.dom.more.hide( 100 );
 					}
 				},
+
 
 				/**
 				 * Показываем записи которые соответствуют фильтру.
@@ -117,8 +118,8 @@
 					await new Promise( ( resolve, reject ) => {
 						const self = this;
 						let ids = [];
-						
-						console.log( 2 ); // log
+
+						// console.log( 2 ); // log
 
 						const iso = this.dom.grid.isotope( {
 							filter() {
@@ -127,7 +128,7 @@
 
 									if ( -1 === ids.indexOf( postId ) ) {
 										ids.push( postId );
-										console.log( ids );
+										// console.log( ids );
 										return true;
 									}
 								} else if ( $( this ).hasClass( self.filter ) ) {
@@ -140,10 +141,14 @@
 					} );				
 				},
 
+
 				/**
 				 * Добавляем новые записи полученные методом Ajax.
 				 * 
 				 * @see "getMorePosts".
+				 *
+				 * @param Array items - HTML .isotope-item element,
+				 * @see bri_shortcodes_extends/extra/bri_tax_extra/tax_tmpl/portfolio.php
 				 * 
 				 * @return {void}
 				 * 
@@ -154,6 +159,8 @@
 						return;
 					}
 
+					console.log( items );
+
 					await new Promise( ( resolve, reject ) => {
 						$( items ).css( {
 							opacity: 0,
@@ -163,8 +170,8 @@
 							.append( items )
 							.imagesLoaded()
 								.done( instance => {
-									console.log( 1 ); // log
-									
+									// console.log( 1 ); // log
+
 									// После события "appended" вызывается "filter" подписанный в методе "filterIsotopeItems"
 									this.dom.grid.isotope( 'appended', items );
 
@@ -176,6 +183,7 @@
 								} );
 					} );
 				},
+
 
 				/**
 				 * Обработчик события:
@@ -194,13 +202,13 @@
 
 						$link = ( $link[ 0 ] == '#' ) ? $link.substr( 1 ) : $link;
 						this.filter = ( $link != '' ) ? $link : '*';
-						console.log( 'filter', this.filter ); // log
+						// console.log( 'filter', this.filter ); // log
 
 						this.filterIsotopeItems()
 							.then( () => {
-								console.log( 10 ); // log
+								// console.log( 10 ); // log
 								this.setMagnificPopup();
-								
+
 								this.moreTrigger();
 							} );
 
@@ -208,6 +216,7 @@
 						$el.parent().addClass( 'active' );
 					} );
 				},
+
 
 				/**
 				 * Инициализация основных функций.
@@ -220,13 +229,14 @@
 					await new Promise( ( resolve, reject ) => {
 						this.dom.grid.imagesLoaded()
 							.done( () => {
-								console.log( 10 ); // log
+								// console.log( 10 ); // log
 								this.filterIsotopeItems();
 								this.setIsotopeTabs();
 								resolve();
 							} );
 					} );
 				},
+
 
 				/**
 				 * Показ миниатюр ввиде всплывающих окон.
@@ -236,8 +246,8 @@
 				 * @since 0.0.1
 				 */
 				setMagnificPopup() {
-					console.log( 11 ); // log
-					
+					// console.log( 11 ); // log
+
 					$( '.isotope-item:visible .portfolio-img-zoom', this.dom.tmpl ).magnificPopup( {
 						type: 'image',
 						preloader: true,
@@ -245,7 +255,7 @@
 						gallery: {
 							enabled: true
 						},
-						
+
 						// Zoom ( CSS - Begin MFP Zoom )
 						mainClass: 'mfp-with-zoom',
 						zoom: {
@@ -269,7 +279,8 @@
 						},
 					} );
 				},
-				
+
+
 				/**
 				 * Анимация миниатюры при наведении на неё.
 				 * 
@@ -292,6 +303,7 @@
 						} );
 				},
 
+
 				/**
 				 * Получаем записи из базы данных.
 				 * 
@@ -302,13 +314,13 @@
 				getMorePosts() {
 					this.dom.more.on( 'click', evt => {
 						let self = this,
-								activeTermId = $( 'li.active', this.dom.filter ).data( 'term-id' );
+						    activeTermId = $( 'li.active', this.dom.filter ).data( 'term-id' );
 
 						const shortcodeId = this.dom.tmpl.attr( 'id' ),
-									shortcodeTermId = this.dom.tmpl.data( 'shortcode-term-id' );
+						      shortcodeTermId = this.dom.tmpl.data( 'shortcode-term-id' );
 
 						if ( 'undefined' == typeof activeTermId ) {
-							console.log( 'activeTermId:', 'undefined' ); // log
+							// console.log( 'activeTermId:', 'undefined' ); // log
 							activeTermId = '';
 						}
 
@@ -325,16 +337,16 @@
 							},
 
 							beforeSend() {
-								console.log( 'Loading...');
+								// console.log( 'Loading...');
 							},
 
 							success( response ) {
-								console.log( 'Success:' ); // log
+								// console.log( 'Success:' ); // log
 								response = $.parseHTML( response.trim() );
 
 								self.addIsotopeItems( response )
 									.then( () => {
-										console.log( 'filter', self.filter ); // log
+										// console.log( 'filter', self.filter ); // log
 										self.hoverHandler();
 										self.setMagnificPopup();
 
@@ -343,12 +355,13 @@
 							},
 
 							error( error ) {
-								console.log( 'Error:' );
-								console.log( error );
+								// console.log( 'Error:' );
+								// console.log( error );
 							}
 						} );
 					} );
 				},
+
 
 				/**
 				 * Добавление jQuery объекты элементов
@@ -363,8 +376,9 @@
 					this.dom[ 'grid' ] = this.dom.tmpl.find( '.isotope' );
 					this.dom[ 'more' ] = this.dom.tmpl.find( '.show-more' );
 					this.dom[ 'filter' ] = this.dom.tmpl.find( '.filter' );
-					console.log( 'dom', this.dom );
+					// console.log( 'dom', this.dom );
 				},
+
 
 				/**
 				 * Let's go.
@@ -384,7 +398,8 @@
 					this.getMorePosts();
 				}
 			},
-			
+
+
 			/**
 			 * Создание независимого объекта "iso"
 			 * для каждого шаблона "portfolio".
