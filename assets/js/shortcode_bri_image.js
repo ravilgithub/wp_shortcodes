@@ -1,8 +1,11 @@
-;( function( $ ) {
-	$( document ).ready( function() {
+;( $ => {
+	'use_strict';
 
-		var $setShortcodeBriImageActions = {
-			setMagnificPopup: function() {
+	$( document ).ready( () => {
+
+		const $setShortcodeBriImageActions = {
+
+			setMagnificPopup() {
 				$( '.shortcode_bri_image' ).magnificPopup( {
 					delegate: 'a.shortcode_bri_image_mfp_popup_icon',
 					type: 'image',
@@ -10,15 +13,15 @@
 					// gallery: {
 					// 	enabled: true
 					// },
-					
+
 					// Zoom ( CSS - Begin MFP Zoom )
 					mainClass: 'mfp-with-zoom',
 					zoom: {
 						enabled: true,
 						duration: 300,
 						easing: 'ease-in-out',
-						opener: function( $openerElement ) {
-							let $parent = $openerElement.parents( '.shortcode_bri_image' );
+						opener( $openerElement ) {
+							const $parent = $openerElement.parents( '.shortcode_bri_image' );
 							return $( 'img', $parent );
 						}
 					},
@@ -28,15 +31,15 @@
 					// mainClass: 'mfp-fade',
 
 					callbacks: {
-						beforeOpen: function( attr ) {
+						beforeOpen( attr ) {
 							// console.log( attr );
 							// console.log( arguments );
 							// console.log( this );
 							// this.delegate = 'img';
 						},
-						open: function() {},
-						close: function() {},
-						elementParse: function( item ) {}
+						open() {},
+						close() {},
+						elementParse( item ) {}
 					},
 				} );
 			},
@@ -47,6 +50,6 @@
 		};
 
 		$setShortcodeBriImageActions.init();
+
 	} );
 } )( jQuery );
-		
