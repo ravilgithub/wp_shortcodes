@@ -3,8 +3,21 @@
 
 	$( document ).ready( () => {
 
+		/**
+		 * Функционал картинок шорткода bri_image.
+		 *
+		 * @since 0.0.1
+		 * @autor Ravil
+		 */
 		const $setShortcodeBriImageActions = {
 
+			/**
+			 * Показ миниатюр ввиде всплывающих окон.
+			 * 
+			 * @return {void}
+			 * 
+			 * @since 0.0.1
+			 */
 			setMagnificPopup() {
 				$( '.shortcode_bri_image' ).magnificPopup( {
 					delegate: 'a.shortcode_bri_image_mfp_popup_icon',
@@ -44,6 +57,9 @@
 				} );
 			},
 
+			/**
+			 * Инициализация.
+			 */
 			init: function() {
 				this.setMagnificPopup();
 			}
