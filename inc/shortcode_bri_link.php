@@ -1,46 +1,79 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_link",
  * который позволяет формировать
  * HTML разметку элемента.
  *
- * Доступные атрибуты:
- * @class         - дополнительные классы.
- * @type          - тип оформления ( 1 | 9 )
- * @link          - ссылка ( http | https ) на страницу или файл.
- * @width         - минимальная ширина элемента.
- * @border        - CSS цвет рамки
- * @border_width  - CSS ширина рамки
- * @back          - CSS цвет фона
- * @text_color    - CSS цвет текста по умолчанию для всего блока
- * @text_size     - CSS размер шрифта и зависимые от него внутренние отступы.
- * @icon_name     - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
- * @icon_right    - позиция иконки: 0 - слева | 1 - справа.
- * @position      - обтeкание ( left | right )
- * @target        - как открывать ссылку ( _self | _parent | _blank )
- * @rel           - отношения между ссылками ( https://developer.mozilla.org/ru/docs/Web/HTML/Element
- * @download      - для скачивания файла ( 0 | 1 )
- * @onklick       - обработчик события. onclick='..."string"...'
- * 
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class        - дополнительные классы.
+ *   @type         - тип оформления ( 1 | 9 )
+ *   @link         - ссылка ( http | https ) на страницу или файл.
+ *   @width        - минимальная ширина элемента.
+ *   @border       - CSS цвет рамки
+ *   @border_width - CSS ширина рамки
+ *   @back         - CSS цвет фона
+ *   @text_color   - CSS цвет текста по умолчанию для всего блока
+ *   @text_size    - CSS размер шрифта и зависимые от него внутренние отступы.
+ *   @icon_name    - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
+ *   @icon_right   - позиция иконки: 0 - слева | 1 - справа.
+ *   @position     - обтeкание ( left | right )
+ *   @target       - как открывать ссылку ( _self | _parent | _blank )
+ *   @rel          - отношения между ссылками ( https://developer.mozilla.org/ru/docs/Web/HTML/Element
+ *   @download     - для скачивания файла ( 0 | 1 )
+ *   @onklick      - обработчик события. onclick='..."string"...'
+ * }
+ *
  * Пример:
- * [bri_link type="1" class="custom-class-1 custom-class-2" position="right" link="http://wordpress/wpfirst/wp-content/uploads/2017/02/portfolio-13.jpg" width="200px" border="#f00" border_width="21px" back="#f5f5f5" text_color="#90c948" text_size="1em" icon_name="angle-right" icon_right="1" target="_blank" rel="void" onclick="this.parentNode.submit()" download="1"]type_1 link[/bri_link]
+ * [bri_link type="1"
+ *  class="custom-class-1 custom-class-2"
+ *  position="right"
+ *  link="http://wordpress/wpfirst/wp-content/uploads/2017/02/portfolio-13.jpg"
+ *  width="200px"
+ *  border="#f00"
+ *  border_width="21px"
+ *  back="#f5f5f5"
+ *  text_color="#90c948"
+ *  text_size="1em"
+ *  icon_name="angle-right"
+ *  icon_right="1"
+ *  target="_blank"
+ *  rel="void"
+ *  onclick="this.parentNode.submit()"
+ *  download="1"
+ * ]
+ *  type_1 link
+ * [/bri_link]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Link_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_link';
 	public $assets = [
-    'css' => [
-      'bri_link' => [
-        'deps' => [],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_link' => [
+				'deps' => [],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'        => '',
 		'type'         => 1,
 		'link'         => '',
@@ -57,7 +90,7 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 		'rel'          => '',
 		'onclick'      => '',
 		'download'     => 0,
-	);
+	];
 
 
 	/**
@@ -105,7 +138,7 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 
 		$atts = $this->prepare_atts( $atts );
 		$type = ( int ) $atts[ 'type' ];
-		
+
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
 		if ( $type ) {
@@ -121,11 +154,11 @@ class Bri_Link_Shortcode extends Bri_Shortcodes {
 		}
 
 		if ( ! empty( $atts[ 'rel' ] ) ) {
-			$rel = 'rel="' . $atts[ 'rel' ] . '"';	
+			$rel = 'rel="' . $atts[ 'rel' ] . '"';
 		}
 
 		if ( ! empty( $atts[ 'onclick' ] ) ) {
-			$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';	
+			$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';
 		}
 
 		if ( ! empty( $atts[ 'download' ] ) ) {
