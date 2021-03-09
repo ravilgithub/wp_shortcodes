@@ -1,24 +1,51 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_list",
  * который позволяет формировать
  * HTML разметку тегов "UL / OL / DL".
  *
- * Доступные атрибуты:
- * @class        - дополнительные классы.
- * @position     - обтeкание ( left | right )
- * @cursive      - текст курсивом ( 0 | 1 )
- * @back         - цвет фона
- * @border       - цвет рамки
- * @border_width - ширина рамки
- * @color        - цвет ссылки при собвтии :hover
- * @icon_color   - цвет иконки
- * @number_color - цвет нумерации
- * @dt_width     - ширина блока "dt"
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class        - дополнительные классы.
+ *   @position     - обтeкание ( left | right )
+ *   @cursive      - текст курсивом ( 0 | 1 )
+ *   @back         - цвет фона
+ *   @border       - цвет рамки
+ *   @border_width - ширина рамки
+ *   @color        - цвет ссылки при собвтии :hover
+ *   @icon_color   - цвет иконки
+ *   @number_color - цвет нумерации
+ *   @dt_width     - ширина блока "dt"
+ * }
+ *
+ * Пример:
+ * [bri_list
+ *  back="#dcfba0"
+ *  border_width="1px"
+ *  border="#000"
+ *  number_color="#aaf"
+ * ]
+ *  <ol>
+ *   <li>Velit, odio tenetur.</li>
+ *    <li>A magni, ipsum.</li>
+ *    <li>Quo, delectus, modi.</li>
+ *  </ol>
+ * [/bri_list]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_List_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_list';
 	public $assets = [
@@ -29,11 +56,13 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 				],
 				'ver'  => '1.0.0'
 			],
-		]
+		],
+
+		'js' => []
 	];
-	public $inline_styles = array();
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'        => '',
 		'position'     => '',
 		'cursive'      => 0,
@@ -44,7 +73,7 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 		'icon_color'   => '',
 		'number_color' => '',
 		'dt_width'     => '120px',
-	);
+	];
 
 
 	/**
@@ -52,7 +81,8 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Вызываем родительскую функцию __construct.
 	 *
-	 * @param Object $obj - может принять другой объект в котором будет обрабатываться шорткод.
+	 * @param Object $obj - может принять другой объект в
+	 *                      котором будет обрабатываться шорткод.
 	 *
 	 * @return void.
 	 * @since	 0.0.1
@@ -70,8 +100,8 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 	 *
 	 * @param Array  $atts    - атрибуты переданные в шорткод.
 	 * @param String $content - контент переданный между парными тегами шорткода.
-	 * @param String $tag     - имя шорткода указанный первым параметром в фукции "add_shortcode".
-	 *
+	 * @param String $tag     - имя шорткода указанный первым
+	 *                          параметром в фукции "add_shortcode".
 	 * @return String HTML    - разметка сформированного шорткода.
 	 * @since	 0.0.1
 	 * @author Ravil
@@ -102,11 +132,11 @@ class Bri_List_Shortcode extends Bri_Shortcodes {
 			$this->add_inline_styles( 'li', "border-bottom-width", $atts[ 'border_width' ] );
 			$this->add_inline_styles( 'dt', "border-top-width", $atts[ 'border_width' ] );
 			$this->add_inline_styles( 'dd', "border-top-width", $atts[ 'border_width' ] );
-			
+
 			$this->add_inline_styles( 'li', "border-bottom-color", $atts[ 'border' ] );
 			$this->add_inline_styles( 'dt', "border-top-color", $atts[ 'border' ] );
 			$this->add_inline_styles( 'dd', "border-top-color", $atts[ 'border' ] );
-			
+
 			$atts[ 'class' ] .= " {$default_class}_line";
 		}
 
