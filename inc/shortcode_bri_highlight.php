@@ -1,36 +1,58 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_highlight",
  * который позволяет выделить к примеру слово параграфа.
  *
- * Доступные атрибуты:
- * @class - классы
- * @color - цвет шрифта
- * @back  - цвет фона
- * 
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class - классы
+ *   @color - цвет шрифта
+ *   @back  - цвет фона
+ * }
+ *
  * Пример формирования:
- * Enim [bri_highlight color="#8f8" back="#404040"]necessitatibus[/bri_highlight], explicabo...
+ * Enim
+ * [bri_highlight
+ *  color="#8f8"
+ *  back="#404040"
+ * ]
+ *  necessitatibus
+ * [/bri_highlight]
+ * , explicabo...
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Highlight_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_highlight';
 	public $assets = [
-    'css' => [
-      'bri_highlight' => [
-        'deps' => [],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_highlight' => [
+				'deps' => [],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class' => '',
 		'color' => '',
 		'back'  => ''
-	);
+	];
 
 
 	/**
