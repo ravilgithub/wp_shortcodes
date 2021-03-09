@@ -1,53 +1,75 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_message",
  * который позволяет формировать
  * HTML разметку элемента.
  *
- * Доступные атрибуты:
- * @class            - классы ( дополнительные )
- * @type             - тип оформления ( 1 - default | 2 )
- * 								   	- 1 - link текст
- * 								   	- 2 - link ввиде кнопки
- * @link             - ссылка ( http | https ) на страницу или файл.
- * @link_text        - текст ссылки
- * @link_color       - CSS цвет ссылки
- * @link_back        - CSS цвет фона ссылки если @type == 2
- * @border           - CSS цвет рамки элемента и кнопки если @type == 2
- * @border_width     - CSS ширина рамки элемента и кнопки если @type == 2
- * @border_top       - CSS цвет верхней рамки элемента
- * @border_top_width - CSS ширина верхней рамки элемента
- * @back             - CSS цвет фона элемента
- * @text_color       - CSS цвет текста по умолчанию для всего блока
- * @text_size        - CSS размер шрифта и зависимые от него внутренние отступы.
- * @icon_name        - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
- * @target           - как открывать ссылку ( _self | _parent | _blank )
- * @rel              - отношения между ссылками ( https://developer.mozilla.org/ru/docs/Web/HTML/Element
- * @download         - для скачивания файла ( 0 | 1 )
- * @onklick          - обработчик события. onclick='..."string"...'
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class            - классы ( дополнительные )
+ *   @type             - тип оформления ( 1 - default | 2 )
+ *                     - 1 - link текст
+ *                     - 2 - link ввиде кнопки
+ *   @link             - ссылка ( http | https ) на страницу или файл.
+ *   @link_text        - текст ссылки
+ *   @link_color       - CSS цвет ссылки
+ *   @link_back        - CSS цвет фона ссылки если @type == 2
+ *   @border           - CSS цвет рамки элемента и кнопки если @type == 2
+ *   @border_width     - CSS ширина рамки элемента и кнопки если @type == 2
+ *   @border_top       - CSS цвет верхней рамки элемента
+ *   @border_top_width - CSS ширина верхней рамки элемента
+ *   @back             - CSS цвет фона элемента
+ *   @text_color       - CSS цвет текста по умолчанию для всего блока
+ *   @text_size        - CSS размер шрифта и зависимые от него внутренние отступы.
+ *   @icon_name        - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
+ *   @target           - как открывать ссылку ( _self | _parent | _blank )
+ *   @rel              - отношения между ссылками
+ *                       ( https://developer.mozilla.org/ru/docs/Web/HT ML/Element )
+ *   @download         - для скачивания файла ( 0 | 1 )
+ *   @onklick          - обработчик события. onclick='..."string"...'
+ * }
  * 
  * Пример:
- * 
+ * [bri_message
+ *  type="2"
+ *  link="https"
+ *  link_text="yandex"
+ * ]
+ *  Message text.
+ * [/bri_message]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Message_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_message';
 	public $assets = [
-    'css' => [
-      'bri_message' => [
-        'deps' => [
-          'bri-fontawesome-css',
-          // 'bri-bootstrap-css'
-        ],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_message' => [
+				'deps' => [
+					'bri-fontawesome-css',
+					// 'bri-bootstrap-css'
+				],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'            => '',
 		'type'             => 1,
 		'link'             => '',
@@ -66,7 +88,7 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 		'rel'              => '',
 		'download'         => 0,
 		'onclick'          => '',
-	);
+	];
 
 
 	/**
@@ -92,7 +114,8 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 	 *
 	 * @param Array  $atts    - атрибуты переданные в шорткод.
 	 * @param String $content - контент переданный между парными тегами шорткода.
-	 * @param String $tag     - имя шорткода указанный первым параметром в фукции "add_shortcode".
+	 * @param String $tag     - имя шорткода указанный первым
+	 *                          параметром в фукции "add_shortcode".
 	 *
 	 * @return String HTML    - разметка сформированного шорткода.
 	 * @since	 0.0.1
@@ -149,15 +172,15 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 		}
 
 		if ( ! empty( $atts[ 'onclick' ] ) ) {
-			$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';	
+			$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';
 		}
 
 		if ( ! empty( $atts[ 'rel' ] ) ) {
-			$rel = 'rel="' . $atts[ 'rel' ] . '"';	
+			$rel = 'rel="' . $atts[ 'rel' ] . '"';
 		}
 
 		if ( ! empty( $atts[ 'target' ] ) ) {
-			$target = 'target="' . $atts[ 'target' ] . '"';	
+			$target = 'target="' . $atts[ 'target' ] . '"';
 		}
 
 		if ( ! empty( $atts[ 'download' ] ) ) {
@@ -206,15 +229,15 @@ class Bri_Message_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Формирует разметку элемента.
 	 *
-	 * @param Array  $content    - текст элемента.
-	 * @param Array  $atts       - атрибуты переданные в шорткод.
-	 * @param String $id         - атрибут элемента.
-	 * @param String $rel        - атрибут "rel".
-	 * @param String $target     - атрибут "target".
-	 * @param String $download   - атрибут "download".
-	 * @param String $onclick    - атрибут "onclick" ( в значении не допустимы символы "[" и "]" ).
+	 * @param Array  $content  - текст элемента.
+	 * @param Array  $atts     - атрибуты переданные в шорткод.
+	 * @param String $id       - атрибут элемента.
+	 * @param String $rel      - атрибут "rel".
+	 * @param String $target   - атрибут "target".
+	 * @param String $download - атрибут "download".
+	 * @param String $onclick  - атрибут "onclick" ( в значении не допустимы символы "[" и "]" ).
 	 *
-	 * @return String HTML       - разметка элемента.
+	 * @return String HTML     - разметка элемента.
 	 * @since	 0.0.1
 	 * @author Ravil
 	 */
