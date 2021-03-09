@@ -1,46 +1,78 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_blockquote",
  * который позволяет формировать
  * HTML разметку цитаты.
  *
- * Доступные атрибуты:
- * @class             - классы ( дополнительные - left, right )
- * @position          - обтeкание ( left | right )
- * @border            - CSS цвет рамки
- * @border_width      - CSS ширина рамки
- * @back              - CSS цвет фона
- * @text_color        - CSS цвет текста по умолчанию для всего блока
- * @decor_icon_name   - часть класса декоративной иконки ( полный класс .fa.fa-{$icon_name} )
- * @decor_icon_color  - CSS цвет декоративной иконки
- * @author_icon_name  - часть класса иконки автора ( полный класс .fa.fa-{$icon_name} )
- * @author_icon_color - CSS цвет иконки автора
- * @author_name       - имя автора
- * @author_name_color - CSS цвет имени автора
- * @author_meta       - дополнительная информация об авторе
- * @author_link       - ссылка на автора ( http | https )
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class             - классы ( дополнительные - left, right )
+ *   @position          - обтeкание ( left | right )
+ *   @border            - CSS цвет рамки
+ *   @border_width      - CSS ширина рамки
+ *   @back              - CSS цвет фона
+ *   @text_color        - CSS цвет текста по умолчанию для всего блока
+ *   @decor_icon_name   - часть класса декоративной иконки ( полный класс .fa.fa-{$icon_name} )
+ *   @decor_icon_color  - CSS цвет декоративной иконки
+ *   @author_icon_name  - часть класса иконки автора ( полный класс .fa.fa-{$icon_name} )
+ *   @author_icon_color - CSS цвет иконки автора
+ *   @author_name       - имя автора
+ *   @author_name_color - CSS цвет имени автора
+ *   @author_meta       - дополнительная информация об авторе
+ *   @author_link       - ссылка на автора ( http | https )
+ * }
  * 
  * Пример:
- * [bri_blockquote class="left custom_class col-lg-6" border="#aa4" border_width="1px" back="#efe" text_color="" decor_icon_name="" decor_icon_color="#c0c" author_icon_name="user-o" author_icon_color="magenta" author_name="John Smith" author_meta="Repairing Manager" author_name_color="#3cc" author_link="http://ya.ru"]Content[/bri_blockquote]
+ * [bri_blockquote
+ *  class="left custom_class col-lg-6"
+ *  position=""
+ *  border="#aa4"
+ *  border_width="1px"
+ *  back="#efe"
+ *  text_color=""
+ *  decor_icon_name=""
+ *  decor_icon_color="#c0c"
+ *  author_icon_name="user-o"
+ *  author_icon_color="magenta"
+ *  author_name="John Smith"
+ *  author_meta="Repairing Manager"
+ *  author_name_color="#3cc"
+ *  author_link="http://ya.ru"
+ * ]
+ *  Content
+ * [/bri_blockquote]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_blockquote';
 	public $assets = [
-    'css' => [
-      'bri_blockquote' => [
-        'deps' => [
-          'bri-fontawesome-css'
-        ],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_blockquote' => [
+				'deps' => [
+					'bri-fontawesome-css'
+				],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'             => '',
 		'position'          => '',
 		'border'            => '#ccc',
@@ -55,7 +87,7 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 		'author_name_color' => '#90c948',
 		'author_meta'       => '',
 		'author_link'       => '',
-	);
+	];
 
 
 	/**
@@ -88,8 +120,8 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_bri_blockquote( $atts, $content, $tag ) {
-		$default_class     = $this->get_full_name();
-		$id                = $default_class . '_' . self::$n++;
+		$default_class = $this->get_full_name();
+		$id            = $default_class . '_' . self::$n++;
 
 		$content = wp_kses( $content, 'post' );
 		
@@ -138,7 +170,7 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 		}
 
 		$this->add_shortcode_style( $id, $atts );
-			
+
 		return $this->display_blockquote( $content, $id, $atts );
 	}
 
@@ -148,11 +180,11 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Формирует разметку цитаты.
 	 *
-	 * @param Array  $content      			- текст цитаты.
-	 * @param Array  $atts         			- атрибуты переданные в шорткод.
-	 * @param String $id                - атрибут элемента.
+	 * @param Array  $content - текст цитаты.
+	 * @param Array  $atts    - атрибуты переданные в шорткод.
+	 * @param String $id      - атрибут элемента.
 	 *
-	 * @return String HTML         			- разметка цитаты.
+	 * @return String HTML    - разметка цитаты.
 	 * @since	 0.0.1
 	 * @author Ravil
 	 */
@@ -203,7 +235,7 @@ class Bri_Blockquote_Shortcode extends Bri_Shortcodes {
 				<?php endif ?>
 
 			</span>
-		</q>		
+		</q>
 <?php
 		return trim( ob_get_clean() );
 	}
