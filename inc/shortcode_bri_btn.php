@@ -1,61 +1,94 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_btn",
  * который позволяет формировать
  * HTML разметку элемента.
  *
- * Доступные атрибуты:
- * @class         - классы ( дополнительные - left, right )
- * @btn           - 0 - <a> | 1 - <button>
- * @type         - тип оформления ( 1 | 2 )
- * @link          - ссылка ( http | https ) на страницу или файл.
- * @width         - минимальная ширина элемента.
- * @border        - CSS цвет рамки
- * @border_width  - CSS ширина рамки
- * @back          - CSS цвет фона
- * @text_color    - CSS цвет текста по умолчанию для всего блока
- * @text_size     - CSS размер шрифта и зависимые от него внутренние отступы.
- * @shadow        - тень ( 0 | 1 )
- * @rounded       - закругление краёв ( 0 | 1 )
- * @animation     - анимация при наведении курсора ( fade | slide )
- * @icon_name     - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
- * @icon_right    - позиция иконки: 0 - слева | 1 - справа.
- * @icon_separate - иконка как отдельный элемент ( 0 | 1 )
- * @position      - обтeкание ( left | right )
- * @target        - как открывать ссылку ( _self | _parent | _blank )
- * @rel           - отношения между ссылками ( https://developer.mozilla.org/ru/docs/Web/HTML/Element
- * @download      - для скачивания файла ( 0 | 1 )
- * @onklick       - обработчик события. onclick='..."string"...'
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class         - классы ( дополнительные - left, right )
+ *   @btn           - 0 - <a> | 1 - <button>
+ *   @type         - тип оформления ( 1 | 2 )
+ *   @link          - ссылка ( http | https ) на страницу или файл.
+ *   @width         - минимальная ширина элемента.
+ *   @border        - CSS цвет рамки
+ *   @border_width  - CSS ширина рамки
+ *   @back          - CSS цвет фона
+ *   @text_color    - CSS цвет текста по умолчанию для всего блока
+ *   @text_size     - CSS размер шрифта и зависимые от него внутренние отступы.
+ *   @shadow        - тень ( 0 | 1 )
+ *   @rounded       - закругление краёв ( 0 | 1 )
+ *   @animation     - анимация при наведении курсора ( fade | slide )
+ *   @icon_name     - часть класса иконки ( полный класс .fa.fa-{$icon_name} )
+ *   @icon_right    - позиция иконки: 0 - слева | 1 - справа.
+ *   @icon_separate - иконка как отдельный элемент ( 0 | 1 )
+ *   @position      - обтeкание ( left | right )
+ *   @target        - как открывать ссылку ( _self | _parent | _blank )
+ *   @rel           - отношения между ссылками ( https://developer.mozilla.org/ru/docs/Web/HTML/Element
+ *   @download      - для скачивания файла ( 0 | 1 )
+ *   @onklick       - обработчик события. onclick='..."string"...'
+ * }
  * 
  * Пример:
  *
  * Download file:
- * [bri_btn class="custom-class" type="2" link="http://wordpress/wpfirst/wp-content/uploads/2017/02/portfolio-13.jpg" icon_separate="1" text_size="1.5em" text_color="#cc5" border="" back="#cc5" icon_name="plus-square-o" rel="void" download="1"]Download file[/bri_btn]
- *
+ * [bri_btn
+ *  class="custom-class"
+ *  type="2"
+ *  link="http://wordpress/wpfirst/wp-content/uploads/2017/02/portfolio-13.jpg"
+ *  icon_separate="1"
+ *  text_size="1.5em"
+ *  text_color="#cc5"
+ *  border=""
+ *  back="#cc5"
+ *  icon_name="plus-square-o"
+ *  rel="void"
+ *  download="1"
+ * ]
+ *  Download file
+ * [/bri_btn]
  *
  * Button type="submit":
- * <form id="bri-form" action="./" method="GET" name="my-form-1"><input name="my-input" type="text" value="asdf" />
-		[bri_btn width="250px" rel="void" target="_blank" onclick="this.parentNode.submit()"]Send[/bri_btn]
-	</form>
+ * [bri_btn
+ *  width="250px"
+ *  rel="void"
+ *  target="_blank"
+ *  onclick="this.parentNode.submit()"
+ * ]
+ *  Send
+ * [/bri_btn]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Btn_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_btn';
 	public $assets = [
-    'css' => [
-      'bri_btn' => [
-        'deps' => [
-          'bri-fontawesome-css'
-        ],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_btn' => [
+				'deps' => [
+					'bri-fontawesome-css'
+				],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'         => '',
 		'btn'           => 0, // <button> - false
 		'type'          => 1,
@@ -77,7 +110,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 		'rel'           => '',
 		'download'      => 0,
 		'onclick'       => '',
-	);
+	];
 
 
 	/**
@@ -123,7 +156,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 			return false;
 
 		$atts = $this->prepare_atts( $atts );
-		
+
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
 		if ( ( int ) $atts[ 'type' ] ) {
@@ -136,15 +169,15 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 			}
 
 			if ( ! empty( $atts[ 'onclick' ] ) ) {
-				$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';	
+				$onclick = 'onclick="' . $atts[ 'onclick' ] . ';"';
 			}
 
 			if ( ! empty( $atts[ 'rel' ] ) ) {
-				$rel = 'rel="' . $atts[ 'rel' ] . '"';	
+				$rel = 'rel="' . $atts[ 'rel' ] . '"';
 			}
 
 			if ( ! empty( $atts[ 'target' ] ) ) {
-				$target = 'target="' . $atts[ 'target' ] . '"';	
+				$target = 'target="' . $atts[ 'target' ] . '"';
 			}
 
 			if ( ! empty( $atts[ 'download' ] ) ) {
@@ -153,8 +186,8 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 		}
 
 		if ( ! empty( $atts[ 'position' ] ) ) {
-      $atts[ 'class' ] .= " {$default_class}_{$atts[ 'position' ]}";
-    }
+			$atts[ 'class' ] .= " {$default_class}_{$atts[ 'position' ]}";
+		}
 
 		if ( ! empty( $atts[ 'width' ] ) ) {
 			// { min-width } +
@@ -247,7 +280,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 			<a href="<?php echo $atts[ 'link' ] ?>" id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" <?php echo $rel, $target, $onclick, $download ?>>
 
 <?php endif; ?>
-				
+
 				<?php if ( ! empty( $atts[ 'icon_name' ] ) ) : ?>
 					<span class="shortcode_bri_btn_icon">
 						<i class="fa fa-<?php echo $atts[ 'icon_name' ] ?>" aria-hidden="true"></i>
@@ -256,7 +289,7 @@ class Bri_Btn_Shortcode extends Bri_Shortcodes {
 
 				<span class="shortcode_bri_btn_label"><?php _e( $content, $lang_domain ) ?></span>
 
-<?php if ( ( int ) $atts[ 'btn' ] ) : ?>	
+<?php if ( ( int ) $atts[ 'btn' ] ) : ?>
 			</button>
 <?php else : ?>
 			</a>
