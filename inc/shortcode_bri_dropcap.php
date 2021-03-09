@@ -1,42 +1,63 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_dropcap",
  * который позволяет выделить к примеру первый символ параграфа.
  *
- * Доступные атрибуты:
- * @class  - классы
- * @size   - размер символа ( 1, 2, 3 )
- * @circle - скруглённые края блока ( 0 | 1 )
- * @border - цвет рамки
- * @back   - цвет фона
- * @color  - цвет символа
- * 
- * Пример формирования :
- * [bri_dropcap size="2" circle="1" color="#fff" border="" back="#90c948"]L[/bri_dropcap]orem ipsum dolor sit amet.
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class  - классы
+ *   @size   - размер символа ( 1, 2, 3 )
+ *   @circle - скруглённые края блока ( 0 | 1 )
+ *   @border - цвет рамки
+ *   @back   - цвет фона
+ *   @color  - цвет символа
+ * }
+ *
+ * Пример:
+ * [bri_dropcap
+ *  size="2"
+ *  circle="1"
+ *  color="#fff"
+ *  border=""
+ *  back="#90c948"
+ * ]
+ *  L
+ * [/bri_dropcap]
+ * orem ipsum dolor sit amet.
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 	public $name   = 'bri_dropcap';
 	public $assets = [
-    'css' => [
-      'bri_dropcap' => [
-        'deps' => [],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
-	public $inline_styles = array();
+		'css' => [
+			'bri_dropcap' => [
+				'deps' => [],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
+	public $inline_styles = [];
 	public static $n      = 1;
-	public $default_atts  = array(
+	public $default_atts  = [
 		'class'  => '',
 		'size'   => 1,
 		'circle' => 0,
 		'border' => '#ccc',
 		'back'   => '#fafafa',
 		'color'  => '#333'
-	);
+	];
 
 
 	/**
@@ -82,7 +103,7 @@ class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ? " $default_class" : $default_class );
 
 		$size = abs( ( int ) $atts[ 'size' ] );
-		
+
 		if ( $size ) {
 			if ( $size > 3 )
 				$size = 3;
@@ -121,16 +142,16 @@ class Bri_Dropcap_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Формирует разметку акцентирования первого символа.
 	 *
-	 * @param Array  $content  - акцентируемый символ.
-	 * @param Array  $atts     - атрибуты переданные в шорткод.
-	 * @param String $id       - атрибут элемента.
+	 * @param Array  $content - акцентируемый символ.
+	 * @param Array  $atts    - атрибуты переданные в шорткод.
+	 * @param String $id      - атрибут элемента.
 	 *
-	 * @return String HTML     - разметка акцентированого первого символа.
+	 * @return String HTML    - разметка акцентированого первого символа.
 	 * @since	 0.0.1
 	 * @author Ravil
 	 */
 	public function display_dropcap( $content, $atts, $id ) {
-		
+
 		$lang_domain = apply_filters( 'bri_shortcode_lang_domain', $this->lang_domain );
 
 		ob_start();
