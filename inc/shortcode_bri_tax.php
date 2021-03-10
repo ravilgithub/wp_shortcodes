@@ -16,10 +16,10 @@ namespace Bri_Shortcodes;
  *
  *  @type String  $class         - дополнительные классы шорткода.
  *                                 Default: ''.
-
+ *
  *  @type String  $term_id       - id терминов через запятую не повторяясь.
  *                                 Default: ''.
-
+ *
  *  @type String  $operator      - как сравнивать указанные термины.
  *                                 Default: 'IN' - записи из указанных терминов.
  *                                 Accepts:
@@ -30,54 +30,64 @@ namespace Bri_Shortcodes;
  *                                  указанным терминам.
  *                                  'EXISTS' - записи из таксономии.
  *                                  'NOT EXISTS' - записи НЕ из таксономии.
-
- *  @type Integer $self          - показвать ли записи родительского 
+ *
+ *  @type Integer $self          - показвать ли записи родительского
  *                                  термина переданного в параметр $term_id.
  *                                  Default: 0.
  *                                  Accepts: 0, 1.
-
+ *
  *  @type Integer $children      - показывать ли записи дочерних терминов
  *                                  термина переданного в параметр $term_id.
  *                                  Default: 0.
  *                                  Accepts: 0, 1.
-
+ *
  *  @type Integer $grandchildren - показывать ли записи терминов потомков
  *                                  термина переданного в параметр $term_id.
  *                                  Default: 0.
  *                                  Accepts: 0, 1.
-
+ *
  *  @type Integer $limit         - сколько выводить записей.
  *                                  Default: -1 ( все записи ).
-
+ *
  *  @type Integer $offset        - сколько записей из запроса пропустить.
  *                                  Default: 0.
-
+ *
  *  @type String  $orderby       - поля по которым можно сортировать записи.
  *                                  Default: 'id'
- *                                  Accepts: 
+ *                                  Accepts:
  *                                   @see https://wp-kama.ru/function/wp_query#orderby
-
+ *
  *  @type String  $order         - направление сортировки.
  *                                 Default: 'ASC'.
  *                                 Accepts: 'ASC', 'DESC'.
-
+ *
  *  @type String  $meta_key      - !!! НЕ РЕАЛИЗОВАНО.
  *                                 получаем записи по ключам произвольных полей.
  *                                 Default: ''.
  *                                 Accepts:
  *                                  @see https://wp-kama.ru/function/wp_query#meta_query
-
+ *
  *  @type Integer $show_more     - показывать ли кнопку "Показать ещё".
  *                                 Default: 0.
  *                                 Accepts: 0, 1.
-
  * }
- * 
- * 
- * Пример:
  *
- * [bri_tax term_id="44" operator="in" self="1" children="0" grandchildren="0" limit="1" offset="0" orderby="ID" order="ASC" meta_key="_wc_average_rating" show_more="1" class="tax-section"]
- * 
+ * Пример:
+ * [bri_tax
+ *  term_id="44"
+ *  operator="in"
+ *  self="1"
+ *  children="0"
+ *  grandchildren="0"
+ *  limit="1"
+ *  offset="0"
+ *  orderby="ID"
+ *  order="ASC"
+ *  meta_key="_wc_average_rating"
+ *  show_more="1"
+ *  class="tax-section"
+ * ]
+ *
  * @since 0.0.1
  * @author Ravil
  */
@@ -122,10 +132,10 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 	/**
 	 * Add an Ajax handler to add the remaining posts on button click "Show more".
-	 * 
+	 *
 	 * Добавляем Ajax обработчик для добавления оставшихся записей при нажатии кнопки
 	 * "Показать ещё".
-	 * 
+	 *
 	 * @return void.
 	 * @since Ravil.
 	 */
@@ -137,9 +147,9 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 	/**
 	 * Define JS variable 'bri_tax_tmpl_ajax' in the frontend for Ajax requests.
-	 * 
+	 *
 	 * Определяем JS переменную 'bri_tax_tmpl_ajax' во фронтэнде для работы Ajax запросов.
-	 * 
+	 *
 	 * @return void.
 	 *
 	 * @since 0.0.1
@@ -159,14 +169,14 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 	/**
 	 * Registering Styles and Scripts of templates.
-	 * 
+	 *
 	 * Регистрация стилей и скриптов шаблонов.
-	 * 
+	 *
 	 * @see Helper::register_assets()
 	 * @link ~/common/helpers.php
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -181,6 +191,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 					'ver'  => '1.0.0'
 				]
 			],
+
 			'js' => [
 				/************ TMPL SCRIPTS ************/
 				'portfolio' => [
@@ -242,7 +253,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		$atts[ 'self' ] = ( bool ) $atts[ 'self' ];
 
 		$atts[ 'children' ] = ( bool ) $atts[ 'children' ];
-		
+
 		$atts[ 'grandchildren' ] = ( bool ) $atts[ 'grandchildren' ];
 
 		$term_ids = explode( ',', $atts[ 'term_id' ] );
@@ -327,9 +338,9 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 * Get a link to the term template class.
 	 *
 	 * Получаем ссылку на класс шаблона термина.
-	 * 
+	 *
 	 * @return String $tmpl_source.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -349,16 +360,16 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	/**
 	 * Get child terms, descendant terms depending on the search criteria.
 	 * It is also possible to add a parent term to the list of child terms.
-	 * 
+	 *
 	 * Получаем дочерние термины, термины потомков в зависимости от критериев поиска.
 	 * Также есть возможность добавить родительский термин в список дочерних терминов.
-	 * 
+	 *
 	 * @param Integer $parent_term - родительский термин.
-	 * @param String $taxonomy - таксономия родительского термина.
-	 * @param Array $atts - параметры переданные в шорткод.
-	 * 
-	 * @return Array $res - массив терминов.
-	 * 
+	 * @param String $taxonomy     - таксономия родительского термина.
+	 * @param Array $atts          - параметры переданные в шорткод.
+	 *
+	 * @return Array $res          - массив терминов.
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -396,14 +407,13 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 			$add_self = true;
 		}
 
-
 		$res = get_terms( [
 			'taxonomy' => $taxonomy,
 			'child_of' => $parent_term, // дочерние + потомки
 			'parent' => $parent,
 			// 'hide_empty' => false
 		] );
-		
+
 		if ( $add_self ) {
 			// добавление родителя ( portfolio )
 			array_unshift( $res, get_term( $parent_term ) );
@@ -418,19 +428,19 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	/**
 	 * Determination of the primary indentation of posts, based on the value specified
 	 * in the "offset" parameter when calling the shortcode.
-	 * 
+	 *
 	 * Определение первичного отступа записей, основываясь на значении указанном в
 	 * параметре "offset" при вызове шорткода.
-	 * 
+	 *
 	 * @param Integer $term_id - id термина.
 	 * @param String $taxonomy - таксономия родительского термина.
-	 * @param Array $atts - параметры переданные в шорткод.
-	 * 
+	 * @param Array $atts      - параметры переданные в шорткод.
+	 *
 	 * @return Array $all_offsets {
-	 *  @type Integer $key - id термина.
+	 *  @type Integer $key   - id термина.
 	 *  @type Integer $value - количество отступаемых записей термина.
 	 * }
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -453,19 +463,19 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 * Determination of indentation of posts based on
 	 * the parameters "offset" and "limit"
 	 * passed during the call shortcode.
-	 * 
+	 *
 	 * Определение отступа записей основываясь на
-	 * параметре "offset" и "limit" переданных при вызовешорткода.
-	 * 
+	 * параметре "offset" и "limit" переданных при вызове шорткода.
+	 *
 	 * @param String $shortcode_id - id шорткода.
 	 * @param Integer $shortcode_term_id - id термина.
-	 * @param String/Integer $active_term_id - id активного шорткода. Accepts '', -1, id. 
-	 * 
+	 * @param String/Integer $active_term_id - id активного шорткода. Accepts '', -1, id.
+	 *
 	 * @see Helper::add_to_session()
 	 * @link ~/common/helpers.php
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -507,23 +517,23 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 	/**
 	 * Getting term posts.
-	 * 
+	 *
 	 * Получаем записи терминов.
-	 * 
-	 * @param String $shortcode_id - id шорткода.
+	 *
+	 * @param String $shortcode_id       - id шорткода.
 	 * @param Integer $shortcode_term_id - id термина.
-	 * @param Integer $active_term_id - id активного шорткода.
+	 * @param Integer $active_term_id    - id активного шорткода.
 	 *        Default: 0.
 	 *        Accepts: 0, -1, id.
-	 * 
+	 *
 	 * @return Array $result {
-   *   @type Array $atts - параметры шорткода.
-   *   @type Array {
-   *    @type WP_Term Object $child - объект термина. 
-   *    @type WP_Query Object $query - объект запроса.
-   *   }
+	 *   @type Array $atts - параметры шорткода.
+	 *   @type Array {
+	 *    @type WP_Term Object $child  - объект термина.
+	 *    @type WP_Query Object $query - объект запроса.
+	 *   }
 	 * }
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -539,7 +549,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		}
 
 		// Helper::debug( $atts );
-		
+
 		$taxonomy = $term[ $shortcode_term_id ][ 'taxonomy' ];
 		$all_offsets = $term[ $shortcode_term_id ][ 'all_offsets' ];
 
@@ -584,7 +594,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 			];
 			$result[ 'data' ][] = $data;
 		}
-		
+
 		// Helper::debug( $result );
 
 		return $result;
@@ -596,12 +606,12 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Handle an Ajax request to get the remaining records
 	 * of all terms or a selected term and return them.
-	 * 
+	 *
 	 * Обработка Ajax запроса на получение оставшихся записей
 	 * всех терминов или выбраного термина и возврат их.
-	 * 
+	 *
 	 * @return JSON String.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -628,7 +638,6 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		} else {
 			wp_die( 'Shortcode id is out' );
 		}
-
 
 		if ( ! empty( $_GET[ 'shortcode_term_id' ] ) && is_numeric( $_GET[ 'shortcode_term_id' ] ) ) {
 			$shortcode_term_id = absint( $_GET[ 'shortcode_term_id' ] );
