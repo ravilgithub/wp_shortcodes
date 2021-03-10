@@ -26,7 +26,15 @@ namespace Bri_Shortcodes;
  * [bri_spacer
  *  height="50px"
  *  back="#add76f"
- * ][/bri_spacer]
+ * /]
+ *
+ * [bri_spacer
+ *  class="class-name"
+ *  height="50px"
+ *  back="#add76f"
+ * ]
+ *  Spacer content
+ * [/bri_spacer]
  *
  * @since 0.0.1
  * @author Ravil
@@ -126,7 +134,11 @@ class Bri_Spacer_Shortcode extends Bri_Shortcodes {
 
 		ob_start();
 ?>
-		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"></div>
+		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
+<?php if ( ! empty( $content ) ) : ?>
+			<span class="shortcode_bri_spacer_content"><?php _e( $content, $lang_domain ) ?></span>
+<?php endif; ?>
+		</div>
 <?php
 		return trim( ob_get_clean() );
 	}
