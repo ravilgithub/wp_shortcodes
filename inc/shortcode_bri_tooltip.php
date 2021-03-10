@@ -1,33 +1,55 @@
 <?php
+namespace Bri_Shortcodes;
+
 /**
  * Класс реализует шорткод "bri_tooltip",
  * который позволяет создать всплывающую подсказку.
  *
- * Доступные атрибуты:
- * @class   - классы.
- * @hint    - текст подсказки.
- * @img_url - адрес картинки.
- 						  Ссылку на файл можно найти здесь - "медиафайлы -> библиотека -> любая картинка -> изменить -> ссылка на файл".
- 						  Пример - http://wordpress/wpfirst/wp-content/uploads/2019/04/shortcode_bri_tooltip_1.png
- * @back    - цвет фона.
- * @color   - цвет текста.
- * 
- * Пример формирования :
- * [bri_tooltip hint="Architecto alias esse sapiente" img_url="http://wordpress/wpfirst/wp-content/uploads/2019/04/shortcode_bri_tooltip_1.png" color="#8f8" back="#404040"]necessitatibus[/bri_tooltip]
+ * @property String $name - Имя шорткода.
+ * @property Array $assets - {
+ *  ... Array $deps - Массив идентификаторов других стилей/скриптов,
+ *                    от которых зависит подключаемый файл стилей/скрипт.
+ *                    Указанные тут стили, будут подключены до текущего.
+ *  ... String $ver - Строка определяющая версию стилей/скрипта.
+ * }
+ * @property Array $inline_styles - инлайн стили образованные из атрибутов шорткода.
+ * @property Integer $n - порядковый номер шордкода.
+ * @property Array $default_atts {
+ *  Доступные атрибуты:
+ *   @class   - классы.
+ *   @hint    - текст подсказки.
+ *   @img_url - адрес картинки.
+ *              Ссылку на файл можно найти здесь -
+ *              "медиафайлы -> библиотека -> любая картинка -> изменить -> ссылка на файл".
+ *              Пример - http://wordpress/wpfirst/wp-content/uploads/2019/04/shortcode_bri_tooltip_1.png
+ *   @back    - цвет фона.
+ *   @color   - цвет текста.
+ *
+ * Пример:
+ * [bri_tooltip
+ *  hint="Architecto alias esse sapiente"
+ *  img_url="http://wordpress/wpfirst/wp-content/uploads/2019/04/shortcode_bri_tooltip_1.png"
+ *  color="#8f8"
+ *  back="#404040"
+ * ]
+ *  necessitatibus
+ * [/bri_tooltip]
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
-
-namespace Bri_Shortcodes;
-
 class Bri_Tooltip_Shortcode extends Bri_Shortcodes {
-	public $name          = 'bri_tooltip';
+	public $name   = 'bri_tooltip';
 	public $assets = [
-    'css' => [
-      'bri_tooltip' => [
-        'deps' => [],
-        'ver'  => '1.0.0'
-      ],
-    ]
-  ];
+		'css' => [
+			'bri_tooltip' => [
+				'deps' => [],
+				'ver'  => '1.0.0'
+			],
+		],
+
+		'js' => []
+	];
 	public $inline_styles = array();
 	public static $n      = 1;
 	public $default_atts  = array(
@@ -93,7 +115,7 @@ class Bri_Tooltip_Shortcode extends Bri_Shortcodes {
 		}
 
 		$this->add_shortcode_style( $id, $atts );
-			
+
 		return $this->display_dropcap( $content, $atts, $id );
 	}
 
@@ -114,7 +136,7 @@ class Bri_Tooltip_Shortcode extends Bri_Shortcodes {
 	public function display_dropcap( $content, $atts, $id ) {
 
 		$lang_domain = apply_filters( 'bri_shortcode_lang_domain', $this->lang_domain );
-		
+
 		ob_start();
 ?>
 		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
