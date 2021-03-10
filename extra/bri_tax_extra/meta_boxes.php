@@ -827,6 +827,9 @@ class Meta_boxes {
 		// Helper::debug( $_POST[ 'briz' ] );
 		// exit;
 
+		if ( ! isset( $_POST[ 'briz' ] ) )
+			return;
+
 		foreach ( $_POST[ 'briz' ] as $key => $val ) {
 			if ( ! $val && $val !== '0' ) {
 				delete_post_meta( $post_id, $key );
