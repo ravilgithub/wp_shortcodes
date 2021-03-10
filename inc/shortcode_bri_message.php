@@ -39,7 +39,7 @@ namespace Bri_Shortcodes;
  *   @download         - для скачивания файла ( 0 | 1 )
  *   @onklick          - обработчик события. onclick='..."string"...'
  * }
- * 
+ *
  * Пример:
  * [bri_message
  *  type="2"
