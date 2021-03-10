@@ -130,7 +130,7 @@ class Meta_boxes {
 						do {
 							$tmpl_path = get_term_meta( $term_id, 'tmpl', $tax );
 
-							if ( -1 != $tmpl_path ) {
+							if ( '' !== $tmpl_path && -1 != $tmpl_path ) {
 								$tmpl_info = pathinfo( $tmpl_path );
 								$tmpl_name = $tmpl_info[ 'filename' ];
 
