@@ -29,8 +29,8 @@ class Tax_TMPL extends Meta_boxes {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function __construct( $dir, Array $taxs ) {
-		parent::__construct( $taxs );
+	public function __construct( $dir, Array $screens, Array $taxs ) {
+		parent::__construct( $screens, $taxs );
 		$this->dir = $dir;
 		$this->get_tmpl();
 		$this->add_hooks( $taxs );
@@ -248,8 +248,9 @@ class Tax_TMPL extends Meta_boxes {
  * @author Ravil
  */
 function tax_tmpl_init() {
+	$screens    = [ 'post', 'product' ];
 	$taxonomies = [ 'category', 'product_cat' ];
-	$tax_tmpl = new Tax_TMPL( 'tax_tmpl', $taxonomies );
+	$tax_tmpl   = new Tax_TMPL( 'tax_tmpl', $screens, $taxonomies );
 }
 
 add_action( 'admin_init', __NAMESPACE__ . '\\tax_tmpl_init' );

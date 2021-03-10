@@ -6,30 +6,34 @@ namespace Bri_Shortcodes;
  *
  * Класс добавляет метабоксы для записей.
  *
- * @property Array $taxs - таксономии к записям которых добавляются метабоксы.
- * @property String $id - префикс идентификатора метабокса и его полей. Default: "briz";
- * @property Array $opts - параметры полей по умолчанию.
+ * @property Array $screens - типам записи к которым допустимо добавлять метаблок.
+ * @property Array $taxs    - таксономии к записям которых добавляются метабоксы.
+ * @property String $id     - префикс идентификатора метабокса и его полей. Default: "briz";
+ * @property Array $opts    - параметры полей по умолчанию.
  *
  * @since 0.0.1
  * @author Ravil
  */
 class Meta_boxes {
+	public $screens;
 	public $taxs;
 	public $id_prefix = 'briz';
-	public $opts = [];
+	public $opts      = [];
 
 
 	/**
 	 * Constructor
 	 *
-	 * @param Array $taxs - таксономии к записям которых добавляются метабоксы.
+	 * @param Array $screens - типам записи к которым допустимо добавлять метаблок.
+	 * @param Array $taxs    - таксономии к записям которых добавляются метабоксы.
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function __construct( Array $taxs ) {
+	public function __construct( $screens, $taxs ) {
 		// Helper::debug( __CLASS__, '200px' );
 		$this->taxs = $taxs;
+		$this->screens = $screens;
 
 		// Helper::debug( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php', '200px' );
 
@@ -175,14 +179,13 @@ class Meta_boxes {
 		// Helper::debug( $post_type, '200px' );
 		// Helper::debug( $post, '200px' );
 
-		$screens = [ 'post', 'product' ];
 		$callback = [ $this, 'meta_box' ];
 		$terms_info = $this->get_terms_info( $post );
 
 		/**
 		 * Добавляем метаблок только указанным типам записи.
 		 */
-		if ( ! in_array( $post_type, $screens ) ) {
+		if ( ! in_array( $post_type, $this->screens ) ) {
 			return;
 		}
 
@@ -198,7 +201,7 @@ class Meta_boxes {
 
 			// Helper::debug( $tmpl, '200px' );
 
-			add_meta_box( "{$this->id_prefix}_meta_box_{$n}", $title, $callback, $screens, 'advanced', 'default', $callback_args );
+			add_meta_box( "{$this->id_prefix}_meta_box_{$n}", $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 		}
 	}
 
