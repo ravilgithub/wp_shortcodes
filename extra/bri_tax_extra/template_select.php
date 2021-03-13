@@ -248,9 +248,19 @@ class Tax_TMPL extends Meta_boxes {
  * @author Ravil
  */
 function tax_tmpl_init() {
-	$screens    = [ 'post', 'product' ];
-	$taxonomies = [ 'category', 'product_cat' ];
-	$tax_tmpl   = new Tax_TMPL( 'tax_tmpl', $screens, $taxonomies );
+	$atts = [
+		'tmpls_dir'  => 'tax_tmpl',
+		'screens'    => [ 'post', 'product' ],
+		'taxonomies' => [ 'category', 'product_cat' ]
+	];
+
+	$atts = apply_filters( 'BRI_Tax_TMPL_Atts', $atts );
+
+	if ( empty( $atts ) )
+		return;
+
+	extract( $atts );
+	$tax_tmpl = new Tax_TMPL( $tmpls_dir, $screens, $taxonomies );
 }
 
 add_action( 'admin_init', __NAMESPACE__ . '\\tax_tmpl_init' );
