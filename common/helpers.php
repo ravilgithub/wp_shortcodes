@@ -3,9 +3,9 @@ namespace Bri_Shortcodes;
 
 /**
  * Helper class for "bri_tax" shortcodes.
- * 
+ *
  * Вспомогательный класс для "bri_tax" шорткодов.
- * 
+ *
  * @since 0.0.1
  * @author Ravil.
  */
@@ -13,9 +13,9 @@ class Helper {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
@@ -27,11 +27,11 @@ class Helper {
 
 	/**
 	 * Create session.
-	 * 
+	 *
 	 * Создаём сессию.
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
@@ -45,12 +45,12 @@ class Helper {
 	/**
 	 * We register the libraries necessary for
 	 * the correct operation of the shortcodes.
-	 * 
+	 *
 	 * Регистрируем библиотеки необходимые для
 	 * корректной работы шорткодов.
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
@@ -113,9 +113,9 @@ class Helper {
 
 	/**
 	 * Registration of styles and scripts.
-	 * 
+	 *
 	 * Регистрация стилей и скриптов.
-	 * 
+	 *
 	 * @param Array $assets {
 	 *  @type Array $css {
 	 *   @type String $id   - id стилей.
@@ -133,22 +133,21 @@ class Helper {
 	 *   @type Boolean $in_footer - где выводить скрипт: в head или footer.
 	 *  }
 	 * }
-	 * 
+	 *
 	 * @see Bri_Shortcodes::merge_shortcode_assets()
 	 *  @link ~/main_class.php
-	 * 
+	 *
 	 * @see Bri_Tax_Shortcode::register_assets()
 	 *  @link ~/inc/shortcode_bri_tax.php
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
 	public static function register_assets( $assets ) {
 		foreach ( $assets as $type => $data ) {
 			foreach ( $data as $item ) {
-
 				extract( $item );
 
 				if ( 'css' == $type ) {
@@ -165,20 +164,20 @@ class Helper {
 
 	/**
 	 * Adding shortcode parameters to the session.
-	 * 
+	 *
 	 * Добавление параметров шорткода в сессию.
-	 * 
+	 *
 	 * @param String $shortcode_id - id шорткода.
 	 * @param Array $atts - параметры шорткода.
-	 * 
+	 *
 	 * @see Bri_Tax_Shortcode::shortcode_bri_tax()
 	 *  @link ~/inc/shortcode_bri_tax.php
-	 * 
+	 *
 	 * @see Bri_Tax_Shortcode::set_post_offset()
 	 *  @link ~/inc/shortcode_bri_tax.php
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
@@ -189,13 +188,13 @@ class Helper {
 
 	/**
 	 * Debug.
-	 * 
+	 *
 	 * @param Mixed $data - отладочная информация которую надо вывести на экран.
 	 * @param String $pl - значение свойства "padding-left".
 	 * @param String $text - префикс.
-	 * 
+	 *
 	 * @return void.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
@@ -209,7 +208,7 @@ class Helper {
 
 
 	/**
-	* Debug Only. 
+	* Debug Only.
 	*/
 	public static function get_registered_styles () {
 		$registered_styles = array_keys( $GLOBALS['wp_styles']->registered );
@@ -219,7 +218,7 @@ class Helper {
 
 
 	/**
-	* Debug Only. 
+	* Debug Only.
 	*/
 	public static function get_registered_scripts () {
 		$registered_scripts = array_keys( $GLOBALS['wp_scripts']->registered );
