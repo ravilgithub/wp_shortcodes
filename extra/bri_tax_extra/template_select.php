@@ -8,7 +8,7 @@ namespace Bri_Shortcodes;
  *
  * @property Array $files - опции( имена файлов ) выпадающего списка позволяющий 
  *                          выбрать нужный шаблон для записей термина.
- * @property String $dir - директория шаблонов.
+ * @property String $dir  - директория шаблонов.
  *
  * @since 0.0.1
  * @author Ravil
@@ -21,8 +21,10 @@ class Tax_TMPL extends Meta_boxes {
 	/**
 	 * Constructor.
 	 *
-	 * @param String $dir - директория шаблонов.
-	 * @param Array $taxs - таксономии к терминам которых добавляется возможность выбора шаблона.
+	 * @param String $dir    - директория шаблонов.
+	 * @param Array $screens - типы записей к которым допустимо добавлять метаблок.
+	 * @param Array $taxs    - таксономии к терминам которых добавляется
+	 *                         возможность выбора шаблона.
 	 *
 	 * @return void.
 	 *
