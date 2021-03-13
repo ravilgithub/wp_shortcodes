@@ -1,13 +1,13 @@
 <?php
 namespace Bri_Shortcodes;
 
-
 /**
  * The class adds a selection of available templates for the terms being created or modified.
  *
  * Класс добавляет выбор доступных шаблонов для создаваемых или изменяемых терминов.
  *
- * @property Array $files - опции( имена файлов ) выпадающего списка позволяющий выбрать нужный шаблон для записей термина.
+ * @property Array $files - опции( имена файлов ) выпадающего списка позволяющий 
+ *                          выбрать нужный шаблон для записей термина.
  * @property String $dir - директория шаблонов.
  *
  * @since 0.0.1
@@ -54,7 +54,7 @@ class Tax_TMPL extends Meta_boxes {
 			// Helper::debug( $tax_name, '200px' );
 
 			// Поля при добавлении элемента( термина ) таксономии.
-			add_action( "{$tax_name}_add_form_fields", [ 
+			add_action( "{$tax_name}_add_form_fields", [
 				$this,
 				'bri_add_term_template_select'
 			] );
@@ -68,13 +68,13 @@ class Tax_TMPL extends Meta_boxes {
 			// Сохранение при добавлении элемента( термина ) таксономии.
 			add_action( "create_{$tax_name}", [
 				$this,
-			 'bri_save_term_template_select'
+				'bri_save_term_template_select'
 			] );
 
 			// Сохранение при редактировании элемента( термина ) таксономии.
 			add_action( "edited_{$tax_name}", [
 				$this,
-			 'bri_save_term_template_select'
+				'bri_save_term_template_select'
 			] );
 		}
 	}
@@ -117,13 +117,13 @@ class Tax_TMPL extends Meta_boxes {
 
 	/**
 	 * Adding additional form fields for taxonomy terms when creating them.
-	 * 
+	 *
 	 * Добавляем дополнительные поля формы терминов таксономии при их создании.
-	 * 
+	 *
 	 * @param String $taxonomy_slug - ярлык таксономии.
-	 * 
+	 *
 	 * @return void
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -133,7 +133,7 @@ class Tax_TMPL extends Meta_boxes {
 			<label for="tmpl">
 				<?php _e( 'Termin template' ); ?>
 			</label>
-			
+
 			<select name="tmpl" id="tmpl">
 
 				<?php foreach( $this->files as $file_name => $path ) : ?>
@@ -154,13 +154,13 @@ class Tax_TMPL extends Meta_boxes {
 
 	/**
 	 * Add additional form fields for the taxonomy term on the edit page.
-	 * 
+	 *
 	 * Добавляем дополнительные поля формы термина таксономи на странице редактирования.
-	 * 
+	 *
 	 * @param Object $term - WP_Term Object.
-	 * 
+	 *
 	 * @return void
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -203,13 +203,13 @@ class Tax_TMPL extends Meta_boxes {
 
 	/**
 	 * Save changes made to the taxonomy term form.
-	 * 
+	 *
 	 * Сохраняем изменения внесённые в форму термина таксономии.
-	 * 
+	 *
 	 * @param Integer $term_id - id сохраняемого термина.
-	 * 
+	 *
 	 * @return Integer $term_id - id сохраняемого термина.
-	 * 
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
@@ -217,8 +217,10 @@ class Tax_TMPL extends Meta_boxes {
 		if ( ! isset( $_POST[ 'tmpl' ] ) ) return;
 		if ( ! current_user_can( 'edit_term', $term_id ) ) return;
 		if (
-			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) && // wp_nonce_field( 'update-tag_' . $tag_ID );
-			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' ) // wp_nonce_field('add-tag', '_wpnonce_add-tag');
+			// wp_nonce_field( 'update-tag_' . $tag_ID );
+			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) &&
+			// wp_nonce_field('add-tag', '_wpnonce_add-tag');
+			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' )
 		) return;
 
 		// Все ОК! Теперь, нужно сохранить/удалить данные
@@ -239,11 +241,11 @@ class Tax_TMPL extends Meta_boxes {
 
 /**
  * Initializing Class Tax_TMPL.
- * 
+ *
  * Инициализация класса Tax_TMPL.
- * 
+ *
  * @return void
- * 
+ *
  * @since 0.0.1
  * @author Ravil
  */
