@@ -35,9 +35,9 @@ class Meta_boxes {
 		$this->taxs = $taxs;
 		$this->screens = $screens;
 
-		// Helper::debug( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php', '200px' );
+		// Helper::debug( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php', '200px' );
 
-		require_once( plugin_dir_path( __FILE__ ) . 'meta/meta_opts.php' );
+		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_meta_opts", $opts );
 		// Helper::debug( $this->opts );
 
