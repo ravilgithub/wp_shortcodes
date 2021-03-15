@@ -7,7 +7,7 @@
  * @see ~/extra/bri_tax_extra/meta_boxes.php
  *      Meta_boxes::__construct()
  *
- * @param Array $opts {
+ * @var Array $opts {
  *  @type Array $taxonomy_name {
  *   @type Array $term_name {
  *    @type Array $fields {
