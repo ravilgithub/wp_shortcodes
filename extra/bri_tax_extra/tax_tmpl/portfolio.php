@@ -6,45 +6,24 @@
 	 *
 	 * Формирование вывода шаблона "portfolio".
 	 *
+	 * @property String $content          - контент шорткода.
+	 * @property Array $atts              - параметры шорткода.
+	 * @property String $id               - id шорткода.
+	 * @property String $lang_domain      - id перевода шорткода.
+	 * @property Integer $curr_term_id    - id активного термина( tab'a ).
+	 * @property Integer $all_posts_count - количество записей термина или всех терминов.
+	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
 	class Portfolio {
-		/**
-		 * Type string.
-		 * Контент шорткода.
-		 */
 		public $content;
-
-		/**
-		 * Type array.
-		 * Параметры шорткода.
-		 */
 		public $atts;
-
-		/**
-		 * Type string.
-		 * id шорткода.
-		 */
 		public $id;
-
-		/**
-		 * Type string.
-		 * id перевода шорткода.
-		 */
 		public $lang_domain;
-
-		/**
-		 * Type integer.
-		 * id активного термина( tab'a ).
-		 */
 		public $curr_term_id;
-
-		/**
-		* Type integer.
-		* Количество записей термина или всех терминов.
-		*/
 		public $all_posts_count = 0;
+
 
 		/**
 		 * Constructor
@@ -54,7 +33,7 @@
 		 * @param String $id - id шорткода.
 		 * @param String $lang_domain - id перевода шорткода.
 		 * @param Integer $curr_term_id - id активного термина( tab'a ).
-		 * 
+		 *
 		 * @return void
 		 *
 		 * @since 0.0.1
@@ -106,20 +85,20 @@
 					<div class="section-content">
 			<?php
 
-			echo '<br />term id - '       . $this->curr_term_id;
-			echo '<br />term name - '     . $term[ $this->curr_term_id ][ 'tmpl_name' ];
-			echo '<br />term path - '     . $term[ $this->curr_term_id ][ 'tmpl_path' ];
-			echo '<br />taxonomy - '      . $term[ $this->curr_term_id ][ 'taxonomy' ];
-			echo '<br />operator - '      . $operator;
-			echo '<br />self - '          . $self;
-			echo '<br />children - '      . $children;
-			echo '<br />grandchildren - ' . $grandchildren;
-			echo '<br />limit - '         . $limit;
-			echo '<br />offset - '        . $offset;
-			echo '<br />orderby - '       . $orderby;
-			echo '<br />order - '         . $order;
-			echo '<br />meta key - '      . $meta_key;
-			echo '<br />show more - '     . $show_more;
+			// echo '<br />term id - '       . $this->curr_term_id;
+			// echo '<br />term name - '     . $term[ $this->curr_term_id ][ 'tmpl_name' ];
+			// echo '<br />term path - '     . $term[ $this->curr_term_id ][ 'tmpl_path' ];
+			// echo '<br />taxonomy - '      . $term[ $this->curr_term_id ][ 'taxonomy' ];
+			// echo '<br />operator - '      . $operator;
+			// echo '<br />self - '          . $self;
+			// echo '<br />children - '      . $children;
+			// echo '<br />grandchildren - ' . $grandchildren;
+			// echo '<br />limit - '         . $limit;
+			// echo '<br />offset - '        . $offset;
+			// echo '<br />orderby - '       . $orderby;
+			// echo '<br />order - '         . $order;
+			// echo '<br />meta key - '      . $meta_key;
+			// echo '<br />show more - '     . $show_more;
 
 			$childrens = Bri_Tax_Shortcode::get_term_childrens( $this->curr_term_id, $term[ $this->curr_term_id ][ 'taxonomy' ], $this->atts );
 
@@ -191,7 +170,7 @@
 		 * Контент шаблона.
 		 *
 		 * @param Array $posts
-		 *  Array $posts[ 'atts' ] - параметры шорткода.
+		 *  Array $posts[ 'atts' ]  - параметры шорткода.
 		 *  Array $posts[ 'child' ] - термин записи которого выводятся.
 		 *  Array $posts[ 'query' ] - WP Query Object.
 		 *
@@ -213,13 +192,14 @@
 					$post_id = get_the_id();
 
 					if ( 515 === $post_id ) {
-						// echo '<br />option 1 - '     . get_post_meta( $post_id, '_category_portfolio_option_1', true );
-						// echo '<br />option 2 - '     . get_post_meta( $post_id, '_category_portfolio_option_2', true );
-						// echo '<br />option 3 - '     . get_post_meta( $post_id, '_category_portfolio_option_3', true );
-						// echo '<br />option 4 - '     . get_post_meta( $post_id, '_category_portfolio_option_4', true );
-						// echo '<br />option 5 - '     . get_post_meta( $post_id, '_category_portfolio_option_5', true );
-						echo '<br />option 6 - ';
-						print_r( get_post_meta( $post_id, '_category_portfolio_option_6', true ) );
+						// echo '<br />option 1 - ' . get_post_meta( $post_id, '_category_portfolio_option_1', true );
+						// echo '<br />option 2 - ' . get_post_meta( $post_id, '_category_portfolio_option_2', true );
+						// echo '<br />option 3 - ' . get_post_meta( $post_id, '_category_portfolio_option_3', true );
+						// echo '<br />option 4 - ' . get_post_meta( $post_id, '_category_portfolio_option_4', true );
+						// echo '<br />option 5 - ' . get_post_meta( $post_id, '_category_portfolio_option_5', true );
+
+						// echo '<br />option 6 - ';
+						// print_r( get_post_meta( $post_id, '_category_portfolio_option_6', true ) );
 					}
 
 	?>
@@ -246,20 +226,20 @@
 								<div class="showcase-item-info">
 									<div class="showcase-item-title">
 										<h6>
-											<a 
+											<a
 												href="<?php esc_attr( the_permalink() ); ?>"
 												class="portfolio-post-link"
 											><?php echo get_the_title(); ?></a> <!-- .portfolio-post-link -->
 										</h6>
 									</div> <!-- .showcase-item-title -->
-									
+
 									<div class="showcase-item-category">
 										<ul>
 
 	<?php
 										$post_terms = get_the_terms( $query->ID, $child->taxonomy );
 										if ( is_array( $post_terms ) ) :
-											foreach ( $post_terms as $post_term ) : 
+											foreach ( $post_terms as $post_term ) :
 	?>
 												<li>
 													<a
