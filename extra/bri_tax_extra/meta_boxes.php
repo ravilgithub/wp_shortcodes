@@ -195,9 +195,18 @@ class Meta_boxes {
 			$title = __( "Options for term template: " ) . ucfirst( $tmpl );
 
 			$tax = $terms_info[ 'taxonomy' ];
+
+			if (
+				! array_key_exists( $tax, $this->opts ) ||
+				! array_key_exists( $tmpl, $this->opts[ $tax ] ) ||
+				empty( $this->opts[ $tax ][ $tmpl ][ 'fields' ] )
+			) {
+				continue;
+			}
+
+			$callback_args[ 'fields' ] = $this->opts[ $tax ][ $tmpl ][ 'fields' ];
 			$callback_args[ 'taxonomy' ] = $tax;
 			$callback_args[ 'tmpl' ] = $tmpl;
-			$callback_args[ 'fields' ] = $this->opts[ $tax ][ $tmpl ][ 'fields' ];
 
 			// Helper::debug( $tmpl, '200px' );
 
