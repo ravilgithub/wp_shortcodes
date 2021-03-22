@@ -7,7 +7,13 @@ $assets = [
 			'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/portfolio.min.css',
 			'deps' => [ 'bri-bootstrap-css', 'bri-magnific-popup-css', 'bri-fontawesome-css' ],
 			'ver'  => '1.0.0'
-		]
+		],
+		'services' => [
+			'id'   => 'services-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/services.min.css',
+			'deps' => [ 'bri-bootstrap-css', 'bri-fontawesome-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
