@@ -103,6 +103,22 @@ class Helper {
 					'ver'  => '3.0.1',
 					'in_footer' => true
 				],
+
+				'masonry' => [
+					'id'   => 'bri-masonry-js',
+					'src'  => PLUGIN_URL . 'assets/vendors/masonry/masonry.pkgd.min.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '3.3.2',
+					'in_footer' => true
+				],
+
+				'imagesloaded' => [
+					'id'   => 'bri-imagesloaded-js',
+					'src'  => PLUGIN_URL . 'assets/vendors/imagesloaded/imagesloaded.pkgd.min.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '3.3.2',
+					'in_footer' => true
+				],
 			]
 		];
 
