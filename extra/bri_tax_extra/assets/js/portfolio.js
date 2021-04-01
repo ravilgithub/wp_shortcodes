@@ -6,14 +6,14 @@
 		/**
 		 * Portfolio Actions.
 		 * 
-		 * @param {Object} iso - объект создающийся для каждого шаблона "portfolio".
-		 * 
-		 * @return {void}
+		 * @property String ctx   - селектор каждого шаблона "portfolio".
+		 * @property {Object} iso - объект создающийся для каждого шаблона "portfolio".
 		 * 
 		 * @since 0.0.1
 		 * @author Ravil.
 		 */
 		const $setPortfolioActions = {
+			ctx: '.bri-portfolio-tmpl',
 
 			/**
 			 * Объект создающийся для каждого шаблона "portfolio".
@@ -27,7 +27,6 @@
 			iso: {
 				dom: {},
 				filter: '*',
-
 
 				/**
 				 * Получаем количество отображенных записей
@@ -409,7 +408,7 @@
 			 * @since 0.0.1
 			 */
 			init() {
-				$( '.bri-portfolio-tmpl' ).each( ( idx, el ) => {
+				$( this.ctx ).each( ( idx, el ) => {
 					let newIso = { dom: {} };
 					newIso.dom[ 'tmpl' ] = $( el );
 
