@@ -2,9 +2,9 @@
 namespace Bri_Shortcodes;
 
 /**
- * Portfolio template.
+ * Services template.
  *
- * Формирование вывода шаблона "portfolio".
+ * Формирование вывода шаблона "services".
  *
  * @property String $content          - контент шорткода.
  * @property Array $atts              - параметры шорткода.
@@ -28,10 +28,10 @@ class Services {
 	/**
 	 * Constructor
 	 *
-	 * @param String $content - контент шорткода.
-	 * @param Array $atts - параметры шорткода.
-	 * @param String $id - id шорткода.
-	 * @param String $lang_domain - id перевода шорткода.
+	 * @param String $content       - контент шорткода.
+	 * @param Array $atts           - параметры шорткода.
+	 * @param String $id            - id шорткода.
+	 * @param String $lang_domain   - id перевода шорткода.
 	 * @param Integer $curr_term_id - id активного термина( tab'a ).
 	 *
 	 * @return void
@@ -59,7 +59,6 @@ class Services {
 	 */
 	public function add_tmpl_assets() {
 		wp_enqueue_style( 'services-tmpl-css' );
-		// wp_enqueue_script( 'portfolio-tmpl-js' );
 	}
 
 	/**
@@ -67,12 +66,17 @@ class Services {
 	 *
 	 * Часть шаблона выводимая перед контентом.
 	 *
+	 * @param Array $posts
+	 *  Array $posts[ 'atts' ]  - параметры шорткода.
+	 *  Array $posts[ 'child' ] - термин записи которого выводятся.
+	 *  Array $posts[ 'query' ] - WP Query Object.
+	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function get_before() {
+	public function get_before( $posts ) {
 		// Helper::debug( $this->atts );
 		extract( $this->atts );
 ?>
@@ -91,12 +95,17 @@ class Services {
 	 *
 	 * Часть шаблона выводимая после контента.
 	 *
+	 * @param Array $posts
+	 *  Array $posts[ 'atts' ]  - параметры шорткода.
+	 *  Array $posts[ 'child' ] - термин записи которого выводятся.
+	 *  Array $posts[ 'query' ] - WP Query Object.
+	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function get_after() {
+	public function get_after( $posts ) {
 ?>
 				</div> <!-- .row -->
 			</div> <!-- .container -->
