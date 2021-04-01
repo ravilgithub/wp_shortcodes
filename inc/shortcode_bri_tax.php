@@ -303,9 +303,9 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 			$instance = new $tmpl_source( $content, $atts, $id, $lang_domain, $term_id );
 			$instance->add_tmpl_assets();
-			$instance->get_before();
+			$instance->get_before( $posts );
 			$instance->get_content( $posts );
-			$instance->get_after();
+			$instance->get_after( $posts );
 		}
 
 		return trim( ob_get_clean() );
