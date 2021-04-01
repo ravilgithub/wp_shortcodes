@@ -67,6 +67,11 @@
 		 *
 		 * Часть шаблона выводимая перед контентом.
 		 *
+		 * @param Array $posts
+		 *  Array $posts[ 'atts' ]  - параметры шорткода.
+		 *  Array $posts[ 'child' ] - термин записи которого выводятся.
+		 *  Array $posts[ 'query' ] - WP Query Object.
+		 *
 		 * @return void
 		 *
 		 * @since 0.0.1
@@ -137,6 +142,11 @@
 		 * After content part of template.
 		 *
 		 * Часть шаблона выводимая после контента.
+		 *
+		 * @param Array $posts
+		 *  Array $posts[ 'atts' ]  - параметры шорткода.
+		 *  Array $posts[ 'child' ] - термин записи которого выводятся.
+		 *  Array $posts[ 'query' ] - WP Query Object.
 		 *
 		 * @return void
 		 *
