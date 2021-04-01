@@ -28,10 +28,10 @@
 		/**
 		 * Constructor
 		 *
-		 * @param String $content - контент шорткода.
-		 * @param Array $atts - параметры шорткода.
-		 * @param String $id - id шорткода.
-		 * @param String $lang_domain - id перевода шорткода.
+		 * @param String $content       - контент шорткода.
+		 * @param Array $atts           - параметры шорткода.
+		 * @param String $id            - id шорткода.
+		 * @param String $lang_domain   - id перевода шорткода.
 		 * @param Integer $curr_term_id - id активного термина( tab'a ).
 		 *
 		 * @return void
@@ -40,11 +40,11 @@
 		 * @author Ravil
 		 */
 		public function __construct( $content = '', $atts = [], $id = '', $lang_domain = '', $curr_term_id = null ) {
-			 $this->content = $content;
-			 $this->atts = $atts;
-			 $this->id = $id;
-			 $this->lang_domain = $lang_domain;
-			 $this->curr_term_id = $curr_term_id;
+			$this->content = $content;
+			$this->atts = $atts;
+			$this->id = $id;
+			$this->lang_domain = $lang_domain;
+			$this->curr_term_id = $curr_term_id;
 		}
 
 		/**
@@ -72,7 +72,7 @@
 		 * @since 0.0.1
 		 * @author Ravil
 		 */
-		public function get_before() {
+		public function get_before( $posts ) {
 			// Helper::debug( $this->atts );
 			extract( $this->atts );
 ?>
@@ -143,7 +143,7 @@
 		 * @since 0.0.1
 		 * @author Ravil
 		 */
-		public function get_after() {
+		public function get_after( $posts ) {
 			extract( $this->atts );
 ?>
 			</div> <!-- .isotope.js-gallery -->
