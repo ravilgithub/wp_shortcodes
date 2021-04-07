@@ -327,7 +327,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 			return false;
 
 		include_once $term_data[ 'tmpl_path' ];
-		$tmpl_source = 'Bri_Shortcodes\\'. ucfirst( $term_data[ 'tmpl_name' ] );
+		$tmpl_source = __NAMESPACE__ . '\\'. ucfirst( $term_data[ 'tmpl_name' ] );
 		if ( ! class_exists( $tmpl_source ) )
 			return false;
 
