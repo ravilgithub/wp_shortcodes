@@ -45,7 +45,8 @@
 					const img = this.wpm.state().get( 'selection' ).first().toJSON();
 
 					if ( img ) {
-						this.setAtts( img.id, img.sizes.thumbnail.url );
+						const size = img.sizes.thumbnail || img.sizes.full;
+						this.setAtts( img.id, size.url );
 						this.btn( 'select' );
 					}
 				} );
