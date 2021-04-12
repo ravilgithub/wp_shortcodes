@@ -2,7 +2,8 @@
 namespace Bri_Shortcodes;
 
 class Term_img {
-	public $holder = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABSUlEQVRoge2aSw6DMAxEe/+zecsFkOAQbKYLZAQ0HyexS+J2JKSoBHteBcEkeRERlmUZ+iAivLgxqogI67ruIPzDaGLPF5DziRF09voBcu/Qq+4egyChjj0p5C0KErvgacU8JUFSFz6hlJcsSC7At5TzIAKRBLKUJLcYRBpQW9KcRSAlgTVUkqsYpDRBrUpzVIHUJLKOXQ1Sm9AqZhNIS2LtWM0grQa0YqiAtBrR+CPUQIA6Q1q3pioIUGZM8/lSBwFkBrVHPBMQIG3UYtg2AwHChq1epKYgwNW4ZTVgDgLsANb12R9EKhe3louH3cXw6+KF6KJEcVE0uijjXXxYufjUdTH54GI6yMUEnYspUxeT2E8uK0zTlO3zOws9PUCw5nmOnhtuMTQG43t5umcIVnbDwAgQrG3bjra/TTUjQrCObU7cGPkgIrwB11J3MEekPv4AAAAASUVORK5CYII=';
+	public $meta_key = 'briz-term-img-id';
+	public $default = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABSUlEQVRoge2aSw6DMAxEe/+zecsFkOAQbKYLZAQ0HyexS+J2JKSoBHteBcEkeRERlmUZ+iAivLgxqogI67ruIPzDaGLPF5DziRF09voBcu/Qq+4egyChjj0p5C0KErvgacU8JUFSFz6hlJcsSC7At5TzIAKRBLKUJLcYRBpQW9KcRSAlgTVUkqsYpDRBrUpzVIHUJLKOXQ1Sm9AqZhNIS2LtWM0grQa0YqiAtBrR+CPUQIA6Q1q3pioIUGZM8/lSBwFkBrVHPBMQIG3UYtg2AwHChq1epKYgwNW4ZTVgDgLsANb12R9EKhe3louH3cXw6+KF6KJEcVE0uijjXXxYufjUdTH54GI6yMUEnYspUxeT2E8uK0zTlO3zOws9PUCw5nmOnhtuMTQG43t5umcIVnbDwAgQrG3bjra/TTUjQrCObU7cGPkgIrwB11J3MEekPv4AAAAASUVORK5CYII=';
 
 	public function __construct( Array $taxs ) {
 		$this->add_assets();
@@ -80,20 +81,29 @@ class Term_img {
 	public function add_term_img ( $tax_slug ) {
 ?>
 		<div id="briz-term-img-wrap" class="form-field">
-			<input type="hidden" name="briz-term-img-id" value="">
-
 			<label><?php _e( 'Image' ); ?></label>
 
 			<figure>
 				<a href="#">
-					<img src="<?php echo esc_attr( $this->holder ); ?>" alt="Alt" />
+					<img
+						src="<?php echo esc_attr( $this->default ); ?>"
+						data-default="<?php echo esc_attr( $this->default ); ?>"
+						alt="Alt"
+					/>
 				</a>
-				<button type="button" class="button">
+
+				<button type="button" class="button hidden">
 					<?php _e( 'Remove' ); ?>
 				</button>
 			</figure>
 
 			<p><?php _e( 'Description' ); ?></p>
+
+			<input
+				type="hidden"
+				name="<?php echo esc_attr( $this->meta_key ); ?>"
+				value=""
+			/>
 		</div>
 <?php
 	}
