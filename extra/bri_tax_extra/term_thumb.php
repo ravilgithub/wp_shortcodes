@@ -109,18 +109,77 @@ class Term_img {
 	}
 
 	public function edit_term_img ( $term ) {
-		
+		$img_id = ( int ) get_term_meta( $term->term_id, $this->meta_key, true );
+		$img_url = $this->default;
+		$btn_class = 'hidden';
+
+		if ( $img_id ) {
+			$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
+			$btn_class = '';
+		}
+?>
+		<tr id="briz-term-img-wrap" class="form-field term-image-wrap">
+			<th scope="row">
+				<label for="description">
+					<?php _e( 'Term image' ); ?>
+				</label>
+			</th>
+			<td>
+				<figure>
+					<a href="#">
+						<img
+							src="<?php echo esc_attr( $img_url ); ?>"
+							data-default="<?php echo esc_attr( $this->default ); ?>"
+							alt="Alt"
+						/>
+					</a>
+
+					<button type="button" class="button <?php echo esc_attr( $btn_class ); ?>">
+						<?php _e( 'Remove' ); ?>
+					</button>
+				</figure>
+
+				<p><?php _e( 'Description' ); ?></p>
+
+				<input
+					type="hidden"
+					name="<?php echo esc_attr( $this->meta_key ); ?>"
+					value="<?php echo esc_attr( $img_id ); ?>"
+				/>
+			</td>
+		</tr>
+<?php
 	}
 
 	public function save_term_img ( $term_id ) {
-		
+		if ( ! isset( $_POST[ $this->meta_key ] ) ) return;
+		if ( ! current_user_can( 'edit_term', $term_id ) ) return;
+		if (
+			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) &&
+			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' )
+		) return;
+
+		$val = ( int ) sanitize_text_field( wp_unslash( $_POST[ $this->meta_key ] ) );
+
+		if ( ! $val )
+			delete_term_meta( $term_id, $this->meta_key );
+		else
+			update_term_meta( $term_id, $this->meta_key, $val );
 	}
 
 	public function add_img_column ( $cols ) {
-		return $cols;
+		$col_name = __( 'Image' );
+		return array_slice( $cols, 0, 1 ) + [ 'briz-col-term-img' => $col_name ] + $cols;
 	}
 
 	public function fill_img_column ( $str, $col_name, $term_id ) {
+		$img_id = ( int ) get_term_meta( $term_id, $this->meta_key, true );
+
+		if ( 'briz-col-term-img' === $col_name && $img_id ) {
+			$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
+			$str = '<img src="' . $img_url . '" />';
+		}
+
 		return $str;
 	}
 }
