@@ -4,6 +4,7 @@
 }
 
 #briz-term-img-wrap figure a {
+	display: flex;
 	width: 60px;
 	height: 60px;
 	margin-right: 10px;
@@ -13,10 +14,16 @@
 	display: block;
 	width: 100%;
 	height: auto;
+	align-self: center;
 }
 
 #briz-term-img-wrap figure button {
 	align-self: center;
+}
+
+.briz-col-term-img {
+	width: 60px;
+	text-align: center;
 }
 
 #briz-term-img-wrap figure button.hidden {
