@@ -1,0 +1,24 @@
+#briz-term-img-wrap figure {
+	display: flex;
+	margin: 0;
+}
+
+#briz-term-img-wrap figure a {
+	width: 60px;
+	height: 60px;
+	margin-right: 10px;
+}
+
+#briz-term-img-wrap figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+#briz-term-img-wrap figure button {
+	align-self: center;
+}
+
+#briz-term-img-wrap figure button.hidden {
+	display: none;
+}
