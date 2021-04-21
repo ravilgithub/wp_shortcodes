@@ -81,6 +81,13 @@
 		public function get_before( $posts ) {
 			// Helper::debug( $posts );
 			extract( $this->atts );
+
+			$bg_img = '';
+			$img_id = ( int ) get_term_meta( $term_id, 'briz-term-img-id', true );
+			if ( $img_id ) {
+				$img_url = wp_get_attachment_image_url( $img_id, 'full' );
+				$bg_img = 'background-image: url(' . $img_url . ')';
+			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
@@ -89,7 +96,7 @@
 			>
 				<div class="stickers-wrap">
 					<div class="stickers-inner-wrap">
-						<div class="stickers-content clearfix" style="background-image: url(http://wordpress/clear/wp-content/uploads/2021/04/PEXELS-PHOTO-29629_1920_1279.jpg);"> <!-- Fixed -->
+						<div class="stickers-content clearfix" style="<?php echo esc_attr( $bg_img ); ?>"> <!-- Fixed -->
 							<div class="container">
 								<div class="row">
 									<div class="stickers-content-grid col-sm-12">
