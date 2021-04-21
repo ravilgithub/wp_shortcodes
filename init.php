@@ -20,7 +20,7 @@ define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
 require_once 'common/helpers.php';
 
-require_once 'extra/bri_tax_extra/meta_boxes.php';
+require_once 'extra/bri_tax_extra/meta/meta_boxes.php';
 require_once 'extra/bri_tax_extra/template_select.php';
 require_once 'extra/bri_tax_extra/term_thumb.php';
 

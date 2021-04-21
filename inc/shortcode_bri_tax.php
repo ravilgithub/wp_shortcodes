@@ -181,7 +181,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 * @author Ravil
 	 */
 	public function register_assets() {
-		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/assets_paths.php' );
+		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/assets_paths.php' );
 		$assets = apply_filters( "bri_tax_tmpls_assets", $assets );
 
 		// Helper::debug( $assets );
