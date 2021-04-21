@@ -173,11 +173,15 @@ class Term_img {
 	}
 
 	public function fill_img_column ( $str, $col_name, $term_id ) {
-		$img_id = ( int ) get_term_meta( $term_id, $this->meta_key, true );
+		if ( 'briz-col-term-img' === $col_name ) {
+			$img_id = ( int ) get_term_meta( $term_id, $this->meta_key, true );
 
-		if ( 'briz-col-term-img' === $col_name && $img_id ) {
-			$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
-			$str = '<img src="' . $img_url . '" />';
+			if ( $img_id ) {
+				$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
+				$str = '<img src="' . $img_url . '" />';
+			} else {
+				$str = '<span aria-hidden="true">—</span><span class="screen-reader-text">' . __( 'No image' ) . '</span>';
+			}
 		}
 
 		return $str;
