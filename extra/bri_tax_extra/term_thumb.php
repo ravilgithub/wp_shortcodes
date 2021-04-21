@@ -169,7 +169,7 @@ class Term_img {
 
 	public function add_img_column ( $cols ) {
 		$col_name = __( 'Image' );
-		return array_slice( $cols, 0, 1 ) + [ 'briz-col-term-img' => $col_name ] + $cols;
+		return array_slice( $cols, 0, 2 ) + [ 'briz-col-term-img' => $col_name ] + $cols;
 	}
 
 	public function fill_img_column ( $str, $col_name, $term_id ) {
