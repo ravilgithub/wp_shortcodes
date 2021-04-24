@@ -237,7 +237,7 @@ class Meta_boxes {
 		$tax = $meta[ 'args' ][ 'taxonomy' ];
 		$tmpl = $meta[ 'args' ][ 'tmpl' ];
 ?>
-		<div id="briz_meta_box">
+		<div class="briz_meta_box_wrap">
 			<table width="100%">
 				<thead>
 				<tr>
