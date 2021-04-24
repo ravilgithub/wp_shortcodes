@@ -356,7 +356,7 @@ class Meta_boxes {
 			<td>
 				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
-				</span>>
+				</span>
 			</td>
 			<td>
 				<?php echo $value; ?>
