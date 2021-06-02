@@ -68,7 +68,7 @@ namespace Bri_Shortcodes;
  *                                  @see https://wp-kama.ru/function/wp_query#meta_query
  *
  *  @type Integer $show_more     - показывать ли кнопку "Показать ещё".
- *                                 Default: 0.
+ *                                 Default: 1.
  *                                 Accepts: 0, 1.
  * }
  *
@@ -100,7 +100,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		'class'       => '',
 		'term_id'     => '',
 		'operator'    => 'IN',
-		'self'        => 0,
+		'self'        => 1,
 		'children'    => 0,
 		'grandchildren' => 0,
 		'limit'       => -1,
@@ -108,7 +108,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 		'orderby'     => 'id',
 		'order'       => 'ASC',
 		'meta_key'    => '',
-		'show_more'   => 0
+		'show_more'   => 1
 	];
 
 
@@ -216,7 +216,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 		$atts[ 'offset' ] = absint( $atts[ 'offset' ] ) ?: 0;
 
-		$atts[ 'limit' ] = absint( $atts[ 'limit' ] ) ?: -1;
+		$atts[ 'limit' ] = ( int ) $atts[ 'limit' ] ?: -1;
 
 		$atts[ 'show_more' ] = absint( $atts[ 'show_more' ] ) ?: 0;
 
