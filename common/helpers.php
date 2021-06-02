@@ -119,6 +119,30 @@ class Helper {
 					'ver'  => '3.3.2',
 					'in_footer' => true
 				],
+
+				'animatenumber' => [
+					'id'   => 'bri-animatenumber-js',
+					'src'  => PLUGIN_URL . 'assets/vendors/animateNumber/jquery.animateNumber.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '0.0.12',
+					'in_footer' => true
+				],
+
+				'wow' => [
+					'id'   => 'bri-wow-js',
+					'src'  => PLUGIN_URL . 'assets/vendors/wow/wow.min.js',
+					'deps' => [],
+					'ver'  => '1.1.2',
+					'in_footer' => true
+				],
+
+				'parallax' => [
+					'id'   => 'bri-parallax-js',
+					'src'  => PLUGIN_URL . 'assets/vendors/parallax/parallax.min.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '1.4.2',
+					'in_footer' => true
+				],
 			]
 		];
 

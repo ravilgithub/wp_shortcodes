@@ -26,6 +26,12 @@ $assets = [
 			'deps' => [ 'bri-bootstrap-css' ],
 			'ver'  => '1.0.0'
 		],
+		'facts' => [
+			'id'   => 'facts-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/facts.min.css',
+			'deps' => [ 'bri-bootstrap-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -50,6 +56,13 @@ $assets = [
 			'deps'      => [ 'jquery', 'bri-bootstrap-js', 'bri-masonry-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
-		]
+		],
+		'facts' => [
+			'id'        => 'facts-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/facts.js',
+			'deps'      => [ 'jquery', 'bri-bootstrap-js', 'bri-masonry-js', 'bri-animatenumber-js', 'bri-wow-js', 'bri-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
 	]
 ];
