@@ -31,7 +31,7 @@ $args = [
 $query = new WP_Query( $args );
 
 
-Bri_Shortcodes\Helper::debug( $query );
+// Bri_Shortcodes\Helper::debug( $query );
 
 
 if ( $query->have_posts() ) :
