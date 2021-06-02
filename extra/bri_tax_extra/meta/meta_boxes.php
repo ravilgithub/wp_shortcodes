@@ -216,6 +216,124 @@ class Meta_boxes {
 
 
 	/**
+	 * Enumeration of meta fields obtained from the database or from the "meta_opts.php" file.
+	 *
+	 * Перебор мета полей полученных из базы данных или из файла "meta_opts.php".
+	 *
+	 * @param Object $post - Объект записи: объект WP_Post.
+	 * @param Array $meta - Данные поста ( объект $post ) и аргументы переданные в этот параметр.
+	 *   @see add_meta_box( ...$callback_args )
+	 * @param Array $fields - Массив мета полей. Default: null.
+	 * @param String $group_name - Имя группы верхнего уровня
+	 *                             ( группа находящаяся в массиве "fields" в файле "meta_opts.php" ).
+	 *                             Default: ''.
+	 * @param Array $path - Массив имён групп полей начиная от родительской к дочерней,
+	 *                      которые в свою очередь находятся в группе верхнего
+	 *                      уровня( группа находящаяся в массиве "fields" )
+	 *                      в файле "meta_opts.php".
+	 *                      Служат для нахождения группы после выборки из базы данных.
+	 *                      Default: empty Array.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function fields_iterator( $post, $meta, $fields = null, $group_name = '', $path = [] ) {
+		$tax = $meta[ 'args' ][ 'taxonomy' ];
+		$tmpl = $meta[ 'args' ][ 'tmpl' ];
+		$fields = $fields ?: $meta[ 'args' ][ 'fields' ];
+
+		foreach ( $fields as $field_name => $field_params ) {
+			if ( 'group' == $field_params[ 'type' ] ) {
+				// echo '<tr style="background: #ffeeee; padding: 20px 0 10px;"><td colspan="2">' . $field_params[ 'title' ] . '</td></tr>';
+
+				/**
+				* Переменный $gn и $pth созданы для того что бы
+				* не переписывать переменные $group_name и $path
+				* используемые в текущем вызове функции fields_iterator.
+				*/
+				$gn = $group_name ?: $field_name;
+				$pth = $path;
+
+				// Собераем имена дочерних групп "группы верхнуго уровня".
+				if ( $group_name && $field_name != $group_name ) {
+					$pth[] = $field_name;
+				}
+
+				$this->fields_iterator( $post, $meta, $field_params[ 'value' ], $gn, $pth );
+
+				// echo '<tr style="height: 1px; line-height: 1px; background: #000; padding: 10px 0 20px;"><td colspan="2"></td></tr>';
+				continue;
+			}
+
+			// Имя мета поля или группы мета полей верхнего уровня( группа находящаяся в массиве "fields" )
+			$fn = $group_name ?: $field_name;
+
+			$field_key = '_' . $tax . '_' . $tmpl;
+			$field_value = get_post_meta( $post->ID, $field_key, true );
+
+			if ( $field_value ) {
+				if ( is_array( $field_value ) && array_key_exists( $fn, $field_value ) ) {
+					$field_value = $field_value[ $fn ];
+				} else {
+					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
+					$field_value = $field_params[ 'value' ];
+				}
+			} else {
+				// Если в БД ничего нет. Файл "meta_opts.php".
+				$field_value = $field_params[ 'value' ];
+			}
+
+			// В этом блоке работаем с данными пришедшими из БД.
+			if (
+				! empty( $field_value ) &&
+				is_array( $field_value ) &&
+				 // Так узнаём, что значение является ассоциативным массивам т.е. группой.
+				'{' === json_encode( $field_value )[ 0 ]
+			) {
+				if ( ! empty( $field_value[ $field_name ] ) && ( empty( $path ) || ! is_array( $field_value[ $field_name ] ) ) ) {
+					// Значение поля не являющейся группой.
+					$field_value = $field_value[ $field_name ];
+				} else {
+					$group = null;
+
+					// Находим группу в выборке из базы данных, если её нет, то значит это новая группа( $field_params ).
+					for ( $n = 0; $n < count( $path ); $n++ ) {
+						if ( ! $group ) {
+							$group = array_key_exists( $path[ $n ], $field_value ) ? $field_value[ $path[ $n ] ] : $field_params;
+						} else {
+							$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $field_params;
+						}
+					}
+
+					// Получаем значение поля группы.
+					if ( is_array( $group ) && array_key_exists( $field_name, $group ) ) {
+						$field_value = $group[ $field_name ];
+					} else {
+						// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "meta_opts.php".
+						$field_value = $field_params[ 'value' ];
+					}
+				}
+			}
+
+			// Создаём значения атрибутов "name" мета полей.
+			if ( $group_name ) {
+				$part = ! empty( $path ) ? '[' . implode( '][', $path ) . ']' : '';
+				$field_key = $this->id_prefix . "[$field_key][$fn]" . $part . "[$field_name]";
+			} else {
+				$field_key = $this->id_prefix . "[$field_key][$fn]";
+			}
+
+			$method = $field_params[ 'type' ];
+			if ( method_exists( $this, $method ) ) {
+				$this->$method( $field_key, $field_value, $field_params );
+			}
+		}
+	}
+
+
+	/**
 	 * HTML output meta box content.
 	 *
 	 * Вывод HTML содержание метабокса.
@@ -233,9 +351,6 @@ class Meta_boxes {
 		// Helper::debug( __METHOD__, '200px' );
 		// Helper::debug( $post, '200px' );
 		// Helper::debug( $meta, '200px' );
-
-		$tax = $meta[ 'args' ][ 'taxonomy' ];
-		$tmpl = $meta[ 'args' ][ 'tmpl' ];
 ?>
 		<div class="briz_meta_box_wrap">
 			<table width="100%">
@@ -246,22 +361,9 @@ class Meta_boxes {
 				</tr>
 				</thead>
 				<tbody>
-
 					<?php
-						foreach ( $meta[ 'args' ][ 'fields' ] as $field_name => $field_params ) {
-							$field_key = '_' . $tax . '_' . $tmpl . '_' . $field_name;
-							$field_value = get_post_meta( $post->ID, $field_key, true );
-							$field_value = $field_value ? $field_value : $field_params[ 'value' ];
-
-							$field_key = $this->id_prefix . "[$field_key]";
-
-							$method = $field_params[ 'type' ];
-							if ( method_exists( $this, $method ) ) {
-								$this->$method( $field_key, $field_value, $field_params );
-							}
-						}
+						$this->fields_iterator( $post, $meta );
 					?>
-
 				</tbody>
 			</table>
 		</div>
@@ -284,7 +386,9 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function text( $key, $value, $params ) {
+		// $bg_color = $params[ 'color' ] ?: '';
 ?>
+		<!-- <tr style="background-color: <?php // echo esc_attr( $bg_color ); ?>;"> -->
 		<tr>
 			<td>
 				<span class="briz_meta_field_title">
@@ -440,7 +544,7 @@ class Meta_boxes {
 				<?php echo $value; ?>
 				<select name="<?php echo $key; ?>">
 					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>	
-						<option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+						<option value="<?php echo $k; ?>" <?php selected( $value, $k, true ); ?>><?php echo $v; ?></option>
 					<?php endforeach; ?>
 				</select>
 				<small>
@@ -486,8 +590,8 @@ class Meta_boxes {
 						<input
 							type="checkbox"
 							name="<?php echo $key . '[]'; ?>"
-							value="<?php echo $v; ?>"
-							<?php checked( true, in_array( $v, (array) $value ) ); ?>
+							value="<?php echo $k; ?>"
+							<?php checked( true, in_array( $k, (array) $value ) ); ?>
 						/>
 						<?php echo $v; ?>
 					</label>
