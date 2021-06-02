@@ -158,7 +158,7 @@
 ?>
 			</div> <!-- .isotope.js-gallery -->
 
-			<?php if ( $show_more ) : ?>
+			<?php if ( $show_more && -1 !== $limit && ( $limit < $this->all_posts_count - $offset ) ) : ?>
 						<div class="show-more-wrap">
 							<button
 								class="show-more"
