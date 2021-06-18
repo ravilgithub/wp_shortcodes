@@ -13,7 +13,8 @@ namespace Bri_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Tax_TMPL extends Meta_boxes {
+// class Tax_TMPL extends Meta_boxes {
+class Tax_TMPL {
 	public $files = [ 'None' => -1 ];
 	public $dir;
 
@@ -31,8 +32,9 @@ class Tax_TMPL extends Meta_boxes {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function __construct( $dir, Array $screens, Array $taxs ) {
-		parent::__construct( $screens, $taxs );
+	// public function __construct( $dir, Array $screens, Array $taxs ) {
+	public function __construct( $dir, Array $taxs ) {
+		// parent::__construct( $screens, $taxs );
 		$this->dir = $dir;
 		$this->get_tmpl();
 		$this->add_hooks( $taxs );
@@ -254,7 +256,7 @@ class Tax_TMPL extends Meta_boxes {
 function tax_tmpl_init() {
 	$atts = [
 		'tmpls_dir'  => 'tax_tmpl',
-		'screens'    => [ 'post', 'product' ],
+		// 'screens'    => [ 'post', 'product' ],
 		'taxonomies' => [ 'category', 'product_cat' ]
 	];
 
@@ -264,7 +266,8 @@ function tax_tmpl_init() {
 		return;
 
 	extract( $atts );
-	$tax_tmpl = new Tax_TMPL( $tmpls_dir, $screens, $taxonomies );
+	// $tax_tmpl = new Tax_TMPL( $tmpls_dir, $screens, $taxonomies );
+	$tax_tmpl = new Tax_TMPL( $tmpls_dir, $taxonomies );
 }
 
 add_action( 'admin_init', __NAMESPACE__ . '\\tax_tmpl_init' );
