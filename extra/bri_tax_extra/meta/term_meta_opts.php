@@ -143,7 +143,7 @@ class Term_Meta_Opts {
 
 			$field_type = $edit ? $field_params[ 'type' ] . '_edit' : $field_params[ 'type' ];
 
-			Helper::debug( $field_type );
+			// Helper::debug( $field_type );
 
 			if ( method_exists( $this, $field_type ) ) {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
@@ -169,7 +169,7 @@ class Term_Meta_Opts {
 
 
 	public function edit_term_fields ( $term ) {
-		Helper::debug( $term );
+		// Helper::debug( $term );
 
 		$tax_slug = $term->taxonomy;
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
@@ -180,7 +180,7 @@ class Term_Meta_Opts {
 
 
 	public function save_term_fields( $term_id ) {
-		Helper::debug( $term_id );
+		// Helper::debug( $term_id );
 		Helper::debug( $_POST );
 		exit;
 
@@ -201,8 +201,8 @@ class Term_Meta_Opts {
 
 
 	public function text( $field_params, $field_key, $field_value ) {
-		Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );
+		/*Helper::debug( 'Text ------------------------------------' );
+		Helper::debug( $field_params );*/
 ?>
 		<div class="form-field">
 			<label
@@ -225,8 +225,8 @@ class Term_Meta_Opts {
 
 
 	public function text_edit( $field_params, $field_key, $field_value ) {
-		Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );
+		/*Helper::debug( 'Text ------------------------------------' );
+		Helper::debug( $field_params );*/
 ?>
 		<tr class="form-field term-briz-text-wrap">
 			<th scope="row">
@@ -241,6 +241,104 @@ class Term_Meta_Opts {
 					type="text"
 					value="<?php echo esc_attr( $field_value ); ?>"
 					size="40"
+					aria-required="false"
+				/>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	public function textarea( $field_params, $field_key, $field_value ) {
+		/*Helper::debug( 'Textarea ------------------------------------' );
+		Helper::debug( $field_params );*/
+?>
+		<div class="form-field">
+			<label
+				for="<?php echo esc_attr( $field_key ); ?>"
+			><?php _e( $field_params[ 'title' ] ); ?></label>
+
+			<textarea
+				name="<?php echo esc_attr( $field_key ); ?>"
+				id="<?php echo esc_attr( $field_key ); ?>"
+				rows="5"
+				cols="50"
+				class="large-text"
+			><?php _e( $field_value ); ?></textarea>
+
+			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function textarea_edit( $field_params, $field_key, $field_value ) {
+		/*Helper::debug( 'Textarea edit ------------------------------------' );
+		Helper::debug( $field_params );*/
+?>
+		<tr class="form-field term-briz-textarea-wrap">
+			<th scope="row">
+				<label
+					for="<?php echo esc_attr( $field_key ); ?>"
+				><?php _e( $field_params[ 'title' ] ); ?></label>
+			</th>
+			<td>
+				<textarea
+					name="<?php echo esc_attr( $field_key ); ?>"
+					id="<?php echo esc_attr( $field_key ); ?>"
+					rows="5"
+					cols="50"
+					class="large-text"
+				><?php _e( $field_value ); ?></textarea>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	public function color( $field_params, $field_key, $field_value ) {
+		/*Helper::debug( 'Text ------------------------------------' );
+		Helper::debug( $field_params );*/
+?>
+		<div class="form-field">
+			<label
+				for="<?php echo esc_attr( $field_key ); ?>"
+			><?php _e( $field_params[ 'title' ] ); ?></label>
+
+			<input
+				id="<?php echo esc_attr( $field_key ); ?>"
+				name="<?php echo esc_attr( $field_key ); ?>"
+				type="color"
+				value="<?php echo esc_attr( $field_value ); ?>"
+				aria-required="false"
+			/>
+
+			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function color_edit( $field_params, $field_key, $field_value ) {
+		/*Helper::debug( 'Text ------------------------------------' );
+		Helper::debug( $field_params );*/
+?>
+		<tr class="form-field term-briz-color-wrap">
+			<th scope="row">
+				<label
+					for="<?php echo esc_attr( $field_key ); ?>"
+				><?php _e( $field_params[ 'title' ] ); ?></label>
+			</th>
+			<td>
+				<input
+					id="<?php echo esc_attr( $field_key ); ?>"
+					name="<?php echo esc_attr( $field_key ); ?>"
+					type="color"
+					value="<?php echo esc_attr( $field_value ); ?>"
 					aria-required="false"
 				/>
 
