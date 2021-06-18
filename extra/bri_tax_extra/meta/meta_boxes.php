@@ -6,7 +6,7 @@ namespace Bri_Shortcodes;
  *
  * Класс добавляет метабоксы для записей.
  *
- * @property Array $screens - типам записи к которым допустимо добавлять метаблок.
+ * @property Array $screens - типы записей к которым допустимо добавлять метаблок.
  * @property Array $taxs    - таксономии к записям которых добавляются метабоксы.
  * @property String $id     - префикс идентификатора метабокса и его полей. Default: "briz";
  * @property Array $opts    - параметры полей по умолчанию.
@@ -952,3 +952,33 @@ class Meta_boxes {
 		}
 	}
 }
+
+
+/**
+ * Initializing Class Meta_Boxes.
+ *
+ * Инициализация класса Meta_Boxes.
+ *
+ * @return void
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
+function meta_boxes_init() {
+	$atts = [
+		// 'tmpls_dir'  => 'Meta_Boxes',
+		'screens'    => [ 'post', 'product' ],
+		'taxonomies' => [ 'category', 'product_cat' ]
+	];
+
+	$atts = apply_filters( 'BRI_Meta_Boxes_Atts', $atts );
+
+	if ( empty( $atts ) )
+		return;
+
+	extract( $atts );
+	// $meta_boxes = new Meta_Boxes( $tmpls_dir, $screens, $taxonomies );
+	$meta_boxes = new Meta_Boxes( $screens, $taxonomies );
+}
+
+add_action( 'admin_init', __NAMESPACE__ . '\\meta_boxes_init' );
