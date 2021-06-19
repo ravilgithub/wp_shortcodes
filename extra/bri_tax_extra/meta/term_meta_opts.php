@@ -131,7 +131,8 @@ class Term_Meta_Opts {
 
 	public function get_value( $term, $field_key ) {
 		$field_value = get_term_meta( $term->term_id, $field_key, true );
-		return $field_value ?: $field_params[ 'value' ];
+		return $field_value;
+		// return $field_value ?: $field_params[ 'value' ];
 	}
 
 
@@ -149,10 +150,11 @@ class Term_Meta_Opts {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
 
 				if ( $edit && $term ) {
-					$field_value = $this->get_value( $term, $field_key );
+					$field_value = $this->get_value( $term, $this->id_prefix, $field_params );
+					// $field_value = $this->get_value( $term, $field_key, $field_params );
 				}
 
-				$field_value = $field_params[ 'value' ];
+				// $field_value = $field_params[ 'value' ];
 				$this->$field_type( $field_params, $field_key, $field_value );
 			}
 		}
@@ -180,23 +182,34 @@ class Term_Meta_Opts {
 
 
 	public function save_term_fields( $term_id ) {
+		$term = get_term( $term_id );
+		$tax_name = $term->taxonomy;
 		// Helper::debug( $term_id );
-		Helper::debug( $_POST );
-		exit;
+		// Helper::debug( $tax );
+		// Helper::debug( $_POST );
+		// Helper::debug( $_POST[ $this->id_prefix ][ $tax_name ] );
+		// exit;
 
-		/*if ( ! isset( $_POST[ $this->meta_key ] ) ) return;
+		if ( ! isset( $_POST[ $this->id_prefix ][ $tax_name ] ) ) return;
+
+		$term_fields = $_POST[ $this->id_prefix ][ $tax_name ];
+		if ( empty( $term_fields ) ) return;
+
 		if ( ! current_user_can( 'edit_term', $term_id ) ) return;
 		if (
 			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) &&
 			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' )
 		) return;
 
-		$val = ( int ) sanitize_text_field( wp_unslash( $_POST[ $this->meta_key ] ) );
+		foreach ( $term_fields as $field_name => $field_value ) {
+			$field_value = sanitize_text_field( wp_unslash( $field_value ) );
+			$term_fields[ $field_name ] = $field_value;
+		}
 
-		if ( ! $val )
-			delete_term_meta( $term_id, $this->meta_key );
+		if ( ! $term_fields )
+			delete_term_meta( $term_id, $this->id_prefix ); // Полей нет.
 		else
-			update_term_meta( $term_id, $this->meta_key, $val );*/
+			update_term_meta( $term_id, $this->id_prefix, $term_fields );
 	}
 
 
