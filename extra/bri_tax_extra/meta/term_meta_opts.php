@@ -138,24 +138,41 @@ class Term_Meta_Opts {
 
 	public function field_iterator( $tax_slug, $edit = false, $term = null ) {
 		$fields = $this->opts[ $tax_slug ];
-		foreach ( $fields as $field_name => $field_params ) {
-			if ( ! array_key_exists( 'type', $field_params ) )
-				continue;
 
-			$field_type = $edit ? $field_params[ 'type' ] . '_edit' : $field_params[ 'type' ];
+		if ( $edit && $term ) {
+			$fields = $this->get_value( $term, $this->id_prefix );
+		}
 
-			// Helper::debug( $field_type );
+		Helper::debug( $fields );
+		// exit;
+
+		foreach ( $fields as $field_name => $field_value ) {
+			/*if (
+				! array_key_exists( 'type', $field_params ) && // из бд
+				! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) // из файла
+			) continue;*/
+
+			if ( ! is_array( $field_value ) || ! array_key_exists( 'type', $field_value ) ) {
+				if ( ! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) )
+					continue;
+				$default_params = $this->opts[ $tax_slug ][ $field_name ];
+			} else {
+				$default_params = $field_value;
+			}
+
+			$field_type = $edit ? $default_params[ 'type' ] . '_edit' : $default_params[ 'type' ];
 
 			if ( method_exists( $this, $field_type ) ) {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
 
 				if ( $edit && $term ) {
-					$field_value = $this->get_value( $term, $this->id_prefix, $field_params );
-					// $field_value = $this->get_value( $term, $field_key, $field_params );
+					if ( ! $field_value && '' !== $field_value && '0' !== $field_value )
+						$field_value = $default_params[ 'value' ];
+				} else {
+					$field_value = $default_params[ 'value' ];
 				}
 
-				// $field_value = $field_params[ 'value' ];
-				$this->$field_type( $field_params, $field_key, $field_value );
+				$this->$field_type( $default_params, $field_key, $field_value );
 			}
 		}
 	}
