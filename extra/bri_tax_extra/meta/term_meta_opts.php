@@ -141,11 +141,6 @@ class Term_Meta_Opts {
 	public function field_iterator( $tax_slug, $edit = false, $term = null ) {
 		$fields = $this->get_value( $term, $this->id_prefix, $this->opts[ $tax_slug ] );
 
-		Helper::debug( '--------------------' );
-		Helper::debug( gettype( $fields ) );
-		Helper::debug( $fields );
-		// exit;
-
 		foreach ( $fields as $field_name => $field_value ) {
 			if ( ! is_array( $field_value ) || ! array_key_exists( 'type', $field_value ) ) {
 				if ( ! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) )
@@ -160,18 +155,6 @@ class Term_Meta_Opts {
 
 			if ( method_exists( $this, $field_type ) ) {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
-
-				/*if ( $edit && $term ) {
-					// if ( ! $field_value && '' !== $field_value && '0' !== $field_value )
-					if ( ! $field_value && '' !== $field_value && '0' !== $field_value )
-						$field_value = $default_params[ 'value' ];
-				} else {
-					$field_value = $default_params[ 'value' ];
-				}*/
-
-				Helper::debug( $field_value );
-				Helper::debug( '+++++++++++++' );
-
 				$this->$field_type( $default_params, $field_key, $field_value );
 			}
 		}
