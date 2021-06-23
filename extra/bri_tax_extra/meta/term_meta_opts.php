@@ -6,7 +6,7 @@ class Term_Meta_Opts {
 	// public $meta_key = 'briz-term-img-id';
 
 	public $meta_key  = '';
-	public $id_prefix = 'briz';
+	public $id_prefix = 'briz_term_meta';
 	public $taxs      = [];
 	public $opts      = [];
 	public $prepared_opts = [];
@@ -129,35 +129,31 @@ class Term_Meta_Opts {
 	}
 
 
-	public function get_value( $term, $field_key ) {
+	public function get_value( $term, $field_key, $default_params ) {
+		if ( ! $term )
+			return $default_params;
+
 		$field_value = get_term_meta( $term->term_id, $field_key, true );
-		return $field_value;
-		// return $field_value ?: $field_params[ 'value' ];
+		return ! empty( $field_value ) ? $field_value : $default_params;
 	}
 
 
 	public function field_iterator( $tax_slug, $edit = false, $term = null ) {
-		$fields = $this->opts[ $tax_slug ];
+		$fields = $this->get_value( $term, $this->id_prefix, $this->opts[ $tax_slug ] );
 
-		if ( $edit && $term ) {
-			$fields = $this->get_value( $term, $this->id_prefix );
-		}
-
+		Helper::debug( '--------------------' );
+		Helper::debug( gettype( $fields ) );
 		Helper::debug( $fields );
 		// exit;
 
 		foreach ( $fields as $field_name => $field_value ) {
-			/*if (
-				! array_key_exists( 'type', $field_params ) && // из бд
-				! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) // из файла
-			) continue;*/
-
 			if ( ! is_array( $field_value ) || ! array_key_exists( 'type', $field_value ) ) {
 				if ( ! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) )
 					continue;
 				$default_params = $this->opts[ $tax_slug ][ $field_name ];
 			} else {
 				$default_params = $field_value;
+				$field_value = $default_params[ 'value' ];
 			}
 
 			$field_type = $edit ? $default_params[ 'type' ] . '_edit' : $default_params[ 'type' ];
@@ -165,12 +161,16 @@ class Term_Meta_Opts {
 			if ( method_exists( $this, $field_type ) ) {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
 
-				if ( $edit && $term ) {
+				/*if ( $edit && $term ) {
+					// if ( ! $field_value && '' !== $field_value && '0' !== $field_value )
 					if ( ! $field_value && '' !== $field_value && '0' !== $field_value )
 						$field_value = $default_params[ 'value' ];
 				} else {
 					$field_value = $default_params[ 'value' ];
-				}
+				}*/
+
+				Helper::debug( $field_value );
+				Helper::debug( '+++++++++++++' );
 
 				$this->$field_type( $default_params, $field_key, $field_value );
 			}
