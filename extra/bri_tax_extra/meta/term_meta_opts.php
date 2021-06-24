@@ -129,6 +129,23 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * We get the meta fields of the term from the database,
+	 * if there are none, then we return the parameters related
+	 * to this field from the file "term / opts.php".
+	 *
+	 * Получаем мета поля термина из БД, если таковых нет то возвращаем
+	 * параметры относящиеся к этому полю из файла "term/opts.php".
+	 *
+	 * @param WP_Term Object $term  - Объект термина.
+	 * @param String $field_key     - Ключ поля термина.
+	 * @param Array $default_params - Параметры полей по умолчанию.
+	 *
+	 * @return Array $field_value   - мета поля термина.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function get_value( $term, $field_key, $default_params ) {
 		if ( ! $term )
 			return $default_params;
@@ -138,10 +155,34 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Enumeration of term meta fields obtained from
+	 * the database or from the "term/opts.php" file.
+	 *
+	 * Перебор мета полей темина полученных из базы
+	 * данных или из файла "term/opts.php".
+	 *
+	 * @param String $tax_slug     - Ярлык термина.
+	 * @param String $edit         - Флаг указывающий на то, что метод
+	 *                               вызван для формы на странице редактирования
+	 *                               мета полей термина.
+	 * @param WP_Term Object $term - Объект термина.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function field_iterator( $tax_slug, $edit = false, $term = null ) {
 		$fields = $this->get_value( $term, $this->id_prefix, $this->opts[ $tax_slug ] );
 
 		foreach ( $fields as $field_name => $field_value ) {
+
+			/**
+			 * Если значения мета полей получены из БД ( String $field_value ),
+			 * то для формирования полей формы нужны параметры,
+			 * относящиеся к этому полю из файла "term/opts.php".
+			 */
 			if ( ! is_array( $field_value ) || ! array_key_exists( 'type', $field_value ) ) {
 				if ( ! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) )
 					continue;
