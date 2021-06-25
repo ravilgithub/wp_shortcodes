@@ -1,10 +1,7 @@
 <?php
 namespace Bri_Shortcodes;
 
-// trait Meta_Extra {
 class Term_Meta_Opts {
-	// public $meta_key = 'briz-term-img-id';
-
 	public $meta_key  = '';
 	public $id_prefix = 'briz_term_meta';
 	public $taxs      = [];
@@ -12,20 +9,13 @@ class Term_Meta_Opts {
 	public $prepared_opts = [];
 
 
-	// public function __construct( $screens, $taxs ) {
 	public function __construct( Array $taxs ) {
-		// Helper::debug( __CLASS__, '200px' );
 		$this->taxs = $taxs;
-		// $this->screens = $screens;
-
-		// Helper::debug( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php', '200px' );
 
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/term/opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_term_meta_opts", $opts );
-		// Helper::debug( $this->opts );
 
 		// $this->add_assets();
-		// $this->field_iterator();
 		$this->add_hooks( $taxs );
 	}
 
@@ -51,8 +41,6 @@ class Term_Meta_Opts {
 
 		$assets = apply_filters( "{$this->id_prefix}_metabox_assets", $assets );
 
-		// Helper::debug( $assets );
-
 		foreach ( $assets as $type => $data ) {
 			extract( $data );
 
@@ -65,33 +53,6 @@ class Term_Meta_Opts {
 			}
 		}
 	}
-
-	// Нет возможность передать параметры в callback функцию.
-	/*public function field_iterator() {
-		if ( empty( $this->opts ) )
-			return;
-
-		foreach ( $this->opts as $tax_name => $fields ) {
-			if ( ! in_array( $tax_name, $this->taxs ) )
-				continue;
-
-			foreach ( $fields as $field_name => $field_opts ) {
-				if ( ! empty( $field_opts ) ) {
-					$meta_key = $this->id_prefix . '[' . $tax_name . '][' . $field_name . ']';
-					
-					// $this->prepared_opts[] = [
-					// 	$meta_key => $field_opts
-					// ];
-
-					$this->prepared_opts[ $meta_key ] = $field_opts;
-				}
-			}
-		}
-
-		// Helper::debug( $this->opts );
-		Helper::debug( $this->taxs, '200px' );
-		Helper::debug( $this->prepared_opts[ 'briz[category][option_1]' ], '200px' );
-	}*/
 
 
 	public function add_hooks( $taxs ) {
@@ -125,79 +86,6 @@ class Term_Meta_Opts {
 				$this,
 				'fill_field_column'
 			], 10, 3 );*/
-		}
-	}
-
-
-	/**
-	 * We get the meta fields of the term from the database,
-	 * if there are none, then we return the parameters related
-	 * to this field from the file "term / opts.php".
-	 *
-	 * Получаем мета поля термина из БД, если таковых нет то возвращаем
-	 * параметры относящиеся к этому полю из файла "term/opts.php".
-	 *
-	 * @param WP_Term Object $term  - Объект термина.
-	 * @param String $field_key     - Ключ поля термина.
-	 * @param Array $default_params - Параметры полей по умолчанию.
-	 *
-	 * @return Array $field_value   - мета поля термина.
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function get_value( $term, $field_key, $default_params ) {
-		if ( ! $term )
-			return $default_params;
-
-		$field_value = get_term_meta( $term->term_id, $field_key, true );
-		return ! empty( $field_value ) ? $field_value : $default_params;
-	}
-
-
-	/**
-	 * Enumeration of term meta fields obtained from
-	 * the database or from the "term/opts.php" file.
-	 *
-	 * Перебор мета полей темина полученных из базы
-	 * данных или из файла "term/opts.php".
-	 *
-	 * @param String $tax_slug     - Ярлык термина.
-	 * @param String $edit         - Флаг указывающий на то, что метод
-	 *                               вызван для формы на странице редактирования
-	 *                               мета полей термина.
-	 * @param WP_Term Object $term - Объект термина.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function field_iterator_back( $tax_slug, $edit = false, $term = null ) {
-		$fields = $this->get_value( $term, $this->id_prefix, $this->opts[ $tax_slug ] );
-
-		foreach ( $fields as $field_name => $field_value ) {
-
-			/**
-			 * Если значения мета полей получены из БД ( String $field_value ),
-			 * то для формирования полей формы нужны параметры,
-			 * относящиеся к этому полю из файла "term/opts.php".
-			 */
-			if ( ! is_array( $field_value ) || ! array_key_exists( 'type', $field_value ) ) {
-				if ( ! array_key_exists( 'type', $this->opts[ $tax_slug ][ $field_name ] ) )
-					continue;
-				$default_params = $this->opts[ $tax_slug ][ $field_name ];
-			} else {
-				$default_params = $field_value;
-				$field_value = $default_params[ 'value' ];
-			}
-
-			$field_type = $edit ? $default_params[ 'type' ] . '_edit' : $default_params[ 'type' ];
-
-			if ( method_exists( $this, $field_type ) ) {
-				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
-				$this->$field_type( $default_params, $field_key, $field_value );
-			}
 		}
 	}
 
@@ -255,13 +143,10 @@ class Term_Meta_Opts {
 
 
 	public function edit_term_fields ( $term ) {
-		// Helper::debug( $term );
-
 		$tax_slug = $term->taxonomy;
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
 			return;
 
-		// $this->field_iterator( $tax_slug, 'edit', $term );
 		$this->field_iterator( $tax_slug, $term );
 	}
 
@@ -551,9 +436,6 @@ function term_meta_opt_init() {
 	];
 
 	$taxs = apply_filters( 'BRI_Term_meta_opt_atts', $taxs );
-
-	/*Helper::debug( $taxs );
-	exit;*/
 
 	if ( ! empty( $taxs ) )
 		new Term_Meta_Opts( $taxs );
