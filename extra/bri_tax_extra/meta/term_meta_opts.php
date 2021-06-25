@@ -387,6 +387,64 @@ class Term_Meta_Opts {
 	}
 
 
+public function select( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Select ------------------------------------' );
+		// Helper::debug( $field_params );
+?>
+		<div class="form-field term-briz-select-wrap">
+			<label
+				for="<?php echo esc_attr( $field_key ); ?>"
+			><?php _e( $field_params[ 'title' ] ); ?></label>
+
+			<select
+				id="<?php echo esc_attr( $field_key ); ?>"
+				name="<?php echo esc_attr( $field_key ); ?>"
+			>
+				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+					<option
+						value="<?php echo $k; ?>"
+						<?php selected( $field_value, $k, true ); ?>
+					><?php echo $v; ?></option>
+				<?php endforeach; ?>
+			</select>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function select_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Select ------------------------------------' );
+		// Helper::debug( $field_params );
+?>
+		<tr class="form-field term-briz-select-wrap">
+			<th scope="row" valign="top">
+				<label
+					for="<?php echo esc_attr( $field_key ); ?>"
+				><?php _e( $field_params[ 'title' ] ); ?></label>
+			</th>
+			<td>
+
+				<select
+					id="<?php echo esc_attr( $field_key ); ?>"
+					name="<?php echo esc_attr( $field_key ); ?>"
+				>
+					<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+						<option
+							value="<?php echo $k; ?>"
+							<?php selected( $field_value, $k, true ); ?>
+						><?php echo $v; ?></option>
+					<?php endforeach; ?>
+				</select>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
 	public function image ( $tax_slug ) {
 		// Helper::debug( $tax_slug );
 ?>
