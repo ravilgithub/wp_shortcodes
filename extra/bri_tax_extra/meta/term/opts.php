@@ -21,7 +21,7 @@ $opts = [
 			'desc'  => 'Описание опции 3',
 			'value' => '#00cccc'
 		],
-		/*'option_4' => [
+		'option_4' => [
 			'type'  => 'number',
 			'title' => 'Опция 4',
 			'desc'  => 'Описание опции 4',
@@ -31,8 +31,8 @@ $opts = [
 				'min'  => 0,
 				'max'  => 10
 			]
-		],*/
-		/*'option_5' => [
+		],
+		'option_5' => [
 			'type'  => 'select',
 			'title' => 'Опция 5',
 			'desc'  => 'Описание опции 5',
@@ -42,8 +42,8 @@ $opts = [
 				'green' => 'Green',
 				'blue'  => 'Blue'
 			]
-		],*/
-		/*'option_6' => [
+		],
+		'option_6' => [
 			'type'  => 'checkbox',
 			'title' => 'Опция 6',
 			'desc'  => 'Описание опции 6',
@@ -56,8 +56,8 @@ $opts = [
 				'green' => 'Green',
 				'blue'  => 'Blue'
 			]
-		],*/
-		/*'option_7' => [
+		],
+		'option_7' => [
 			'type'  => 'range',
 			'title' => 'Опция 7',
 			'desc'  => 'Описание опции 7',
@@ -67,8 +67,8 @@ $opts = [
 				'min'  => 0,
 				'max'  => 10
 			]
-		],*/
-		/*'option_8' => [
+		],
+		'option_8' => [
 			'type'  => 'radio',
 			'title' => 'Опция 8',
 			'desc'  => 'Описание опции 8',
@@ -78,16 +78,16 @@ $opts = [
 				'green' => 'Green',
 				'blue'  => 'Blue'
 			]
-		],*/
-		/*'option_9' => [
+		],
+		'option_9' => [
 			'type'     => 'url',
 			'title'    => 'Опция 9',
 			'desc'     => 'Описание опции 9',
 			'value'    => 'https://yandex.ru',
 			'pattern'  => 'https://.*',
 			'required' => true
-		],*/
-		/*'option_10' => [
+		],
+		'option_10' => [
 			'type'  => 'wp_editor',
 			'title' => 'Опция 10',
 			'desc'  => 'Описание опции 10',
@@ -105,20 +105,20 @@ $opts = [
 				'media_buttons'    => true,
 				'drag_drop_upload' => false
 			]
-		],*/
-		/*'option_11' => [
+		],
+		'option_11' => [
 			'type'  => 'media_button',
 			'title' => 'Опция 11',
 			'desc'  => 'Описание опции 11',
-			'value' => '',
+			'value' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABjElEQVRoge2bWQ6DMAxEe/+z+RAICQ7Bz/SjStWFkM02IcNISFEJ9rwKhawPEcGyLBSXiOARCqNLRLCu6ws4/DCqAtsX8OeNkfTJ9Af8W+Hq+mXZBd6reEXtMUSBYw9cRTHvh8BHD/asI89J4FSA3pTymgWcE6gH5XjMBs4NeJZyvRUBlwT2VImnYuDSBNYq9VIFXJPIQjUeqoFrE2qpNncTcEviFrXkbAZuNeCdSwVYw4hXDjVgwBZaK7YqMGADrRlTHRjQNaj9B5oAAzpGLd4WM2CgzbBVe2AKDNQZt2z8zIGBMgDrz5sLMJAH4vEtdwMGjoG8emuuwMA+mGfX1B0Y+Ab0HnycAgy8QM8Yad3AHqJ6pakaLarPElXHg6prSTV4oBoeUk0AUE3xUE3iUU3TUk3EUy21UC2mUS2XUi2I9wAbZL7loSfYILNNLT3CBqlvW+oZNmiapmSde+thaYAeNc9z9N6w24dj0PcG8VjFqyp5BGAk2KBt295l3mM8I8MGvQ9qhQLDJSJ4AsaVfzhlR3kRAAAAAElFTkSuQmCC',
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
 				'multiple' => 0,
 				'button'   => [ 'text' => 'Insert' ]
 			]
-		],*/
-		/*'option_12' => [
+		],
+		'option_12' => [
 			'type'  => 'media_button',
 			'title' => 'Опция 12',
 			'desc'  => 'Описание опции 12',
@@ -129,8 +129,8 @@ $opts = [
 				'multiple' => 1,
 				'button'   => [ 'text' => 'Insert' ]
 			]
-		],*/
-		/*'option_13' => [
+		],
+		'option_13' => [
 			'type'  => 'media_button',
 			'title' => 'Опция 13',
 			'desc'  => 'Описание опции 13',
@@ -141,6 +141,6 @@ $opts = [
 				'multiple' => 1,
 				'button'   => [ 'text' => 'Insert' ]
 			]
-		]*/
+		]
 	]
 ];
