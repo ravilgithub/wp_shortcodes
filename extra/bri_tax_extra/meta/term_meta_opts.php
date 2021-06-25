@@ -173,7 +173,7 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function field_iterator( $tax_slug, $edit = false, $term = null ) {
+	public function field_iterator_back( $tax_slug, $edit = false, $term = null ) {
 		$fields = $this->get_value( $term, $this->id_prefix, $this->opts[ $tax_slug ] );
 
 		foreach ( $fields as $field_name => $field_value ) {
@@ -202,6 +202,49 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Iteration of the theme's meta fields obtained
+	 * from the file "term / opts.php".
+	 *
+	 * Перебор мета полей темина полученных из файла "term/opts.php".
+	 *
+	 * @param String $tax_slug     - Ярлык термина.
+	 * @param WP_Term Object $term - Объект термина.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function field_iterator( $tax_slug, $term = null ) {
+		$method_suffix = '';
+		if ( is_object( $term ) ) {
+			$stored = get_term_meta( $term->term_id, $this->id_prefix, true );
+			$method_suffix = '_edit';
+		}
+
+		foreach ( $this->opts[ $tax_slug ] as $field_name => $field_params ) {
+			if (
+				! array_key_exists( 'value', $field_params ) ||
+				! array_key_exists( 'type', $field_params )
+			) continue;
+
+			$field_value = $field_params[ 'value' ];
+			$field_type = $field_params[ 'type' ] . $method_suffix;
+
+			if (
+				( ! empty( $stored ) && array_key_exists( $field_name, $stored ) ) &&
+				( $stored[ $field_name ] || '0' === $stored[ $field_name ] )
+			) $field_value = $stored[ $field_name ];
+
+			if ( method_exists( $this, $field_type ) ) {
+				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
+				$this->$field_type( $field_params, $field_key, $field_value );
+			}
+		}
+	}
+
+
 	// Нет возможность подписаться на хуки "manage_edit-{$tax_name}_columns" и "manage_{$tax_name}_custom_column"
 	public function add_term_fields ( $tax_slug ) {
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
@@ -218,7 +261,8 @@ class Term_Meta_Opts {
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
 			return;
 
-		$this->field_iterator( $tax_slug, 'edit', $term );
+		// $this->field_iterator( $tax_slug, 'edit', $term );
+		$this->field_iterator( $tax_slug, $term );
 	}
 
 
@@ -393,6 +437,61 @@ class Term_Meta_Opts {
 					name="<?php echo esc_attr( $field_key ); ?>"
 					type="color"
 					value="<?php echo esc_attr( $field_value ); ?>"
+					aria-required="false"
+				/>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	public function number( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Number ------------------------------------' );
+		// Helper::debug( $field_params );
+?>
+		<div class="form-field">
+			<label
+				for="<?php echo esc_attr( $field_key ); ?>"
+			><?php _e( $field_params[ 'title' ] ); ?></label>
+
+			<input
+				id="<?php echo esc_attr( $field_key ); ?>"
+				name="<?php echo esc_attr( $field_key ); ?>"
+				type="number"
+				value="<?php echo esc_attr( $field_value ); ?>"
+				step="<?php echo esc_attr( $field_params[ 'options' ][ 'step' ] ); ?>"
+				min="<?php echo esc_attr( $field_params[ 'options' ][ 'min' ] ); ?>"
+				max="<?php echo esc_attr( $field_params[ 'options' ][ 'max' ] ); ?>"
+				aria-required="false"
+			/>
+
+			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function number_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Number ------------------------------------' );
+		// Helper::debug( $field_params );
+?>
+		<tr class="form-field term-briz-number-wrap">
+			<th scope="row">
+				<label
+					for="<?php echo esc_attr( $field_key ); ?>"
+				><?php _e( $field_params[ 'title' ] ); ?></label>
+			</th>
+			<td>
+				<input
+					id="<?php echo esc_attr( $field_key ); ?>"
+					name="<?php echo esc_attr( $field_key ); ?>"
+					type="number"
+					value="<?php echo esc_attr( $field_value ); ?>"
+					step="<?php echo esc_attr( $field_params[ 'options' ][ 'step' ] ); ?>"
+					min="<?php echo esc_attr( $field_params[ 'options' ][ 'min' ] ); ?>"
+					max="<?php echo esc_attr( $field_params[ 'options' ][ 'max' ] ); ?>"
 					aria-required="false"
 				/>
 
