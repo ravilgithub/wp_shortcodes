@@ -154,6 +154,7 @@ class Term_Meta_Opts {
 	public function save_term_fields( $term_id ) {
 		$term = get_term( $term_id );
 		$tax_name = $term->taxonomy;
+
 		// Helper::debug( $term_id );
 		// Helper::debug( $tax );
 		// Helper::debug( $_POST );
@@ -387,7 +388,7 @@ class Term_Meta_Opts {
 	}
 
 
-public function select( $field_params, $field_key, $field_value ) {
+	public function select( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Select ------------------------------------' );
 		// Helper::debug( $field_params );
 ?>
@@ -437,6 +438,74 @@ public function select( $field_params, $field_key, $field_value ) {
 						><?php echo $v; ?></option>
 					<?php endforeach; ?>
 				</select>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	public function checkbox( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Checkbox ------------------------------------' );
+?>
+		<div class="form-field term-briz-checkbox-wrap">
+			<span>
+				<?php _e( $field_params[ 'title' ] ); ?>
+			</span>
+
+			<!--
+				Если checkbox'ы не выбраны то в $_POST будет пустое поле,
+				что позволит удалить его из БД.
+			-->
+			<input type="hidden" name="<?php echo $field_key; ?>" value="">
+
+			<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+				<label>
+					<input
+						name="<?php echo $field_key . '[]'; ?>"
+						type="checkbox"
+						value="<?php echo $k; ?>"
+						<?php checked( true, in_array( $k, (array) $field_value ) ); ?>
+					/>
+					<?php echo $v; ?>
+				</label>
+			<?php endforeach; ?>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function checkbox_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'Checkbox ------------------------------------' );
+?>
+		<tr class="form-field term-briz-checkbox-wrap">
+			<th scope="row" valign="top">
+				<span>
+					<?php _e( $field_params[ 'title' ] ); ?>
+				</span>
+			</th>
+			<td>
+
+				<!--
+					Если checkbox'ы не выбраны то в $_POST будет пустое поле,
+					что позволит удалить его из БД.
+				-->
+				<input type="hidden" name="<?php echo $field_key; ?>" value="">
+
+				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+					<label>
+						<input
+							name="<?php echo $field_key . '[]'; ?>"
+							type="checkbox"
+							value="<?php echo $k; ?>"
+							<?php checked( true, in_array( $k, (array) $field_value ) ); ?>
+						/>
+						<?php echo $v; ?>
+					</label>
+				<?php endforeach; ?>
 
 				<p><?php _e( $field_params[ 'desc'] ); ?></p>
 			</td>
