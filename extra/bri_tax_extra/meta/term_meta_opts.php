@@ -173,7 +173,14 @@ class Term_Meta_Opts {
 		) return;
 
 		foreach ( $term_fields as $field_name => $field_value ) {
-			$field_value = sanitize_text_field( wp_unslash( $field_value ) );
+			if ( ! is_array( $field_value ) ) {
+				$field_value = sanitize_text_field( wp_unslash( $field_value ) );
+			} else {
+				foreach ( $field_value as $k => $v ) {
+					$field_value[ $k ] = sanitize_text_field( wp_unslash( $v ) );
+				}
+			}
+
 			$term_fields[ $field_name ] = $field_value;
 		}
 
