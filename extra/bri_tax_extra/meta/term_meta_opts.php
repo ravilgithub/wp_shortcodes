@@ -15,7 +15,7 @@ class Term_Meta_Opts {
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/term/opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_term_meta_opts", $opts );
 
-		// $this->add_assets();
+		$this->add_assets();
 		$this->add_hooks( $taxs );
 	}
 
@@ -513,6 +513,70 @@ class Term_Meta_Opts {
 						<?php echo $v; ?>
 					</label>
 				<?php endforeach; ?>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	public function range( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'range ------------------------------------' );
+?>
+		<div class="form-field term-briz-range-wrap">
+			<span>
+				<?php _e( $field_params[ 'title' ] ); ?>
+			</span>
+
+			<p>
+				<?php _e( 'Current value' ); ?>:
+				<span class="briz-range-current-value">
+					<?php echo $field_value; ?>
+				</span>
+			</p>
+
+			<input
+				name="<?php echo $field_key; ?>"
+				type="range"
+				value="<?php echo $field_value; ?>"
+				step="<?php echo $field_params[ 'options' ][ 'step' ]; ?>"
+				min="<?php echo $field_params[ 'options' ][ 'min' ]; ?>"
+				max="<?php echo $field_params[ 'options' ][ 'max' ]; ?>"
+			/>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function range_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'range ------------------------------------' );
+?>
+		<tr class="form-field term-briz-range-wrap">
+			<th scope="row" valign="top">
+				<span>
+					<?php _e( $field_params[ 'title' ] ); ?>
+				</span>
+			</th>
+			<td>
+
+				<p>
+					<?php _e( 'Current value' ); ?>:
+					<span class="briz-range-current-value">
+						<?php echo $field_value; ?>
+					</span>
+				</p>
+
+				<input
+					name="<?php echo $field_key; ?>"
+					type="range"
+					value="<?php echo $field_value; ?>"
+					step="<?php echo $field_params[ 'options' ][ 'step' ]; ?>"
+					min="<?php echo $field_params[ 'options' ][ 'min' ]; ?>"
+					max="<?php echo $field_params[ 'options' ][ 'max' ]; ?>"
+				/>
 
 				<p><?php _e( $field_params[ 'desc'] ); ?></p>
 			</td>
