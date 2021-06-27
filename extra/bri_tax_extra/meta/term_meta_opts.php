@@ -585,6 +585,63 @@ class Term_Meta_Opts {
 	}
 
 
+	public function radio( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'radio ------------------------------------' );
+?>
+		<div class="form-field term-briz-radio-wrap">
+			<span>
+				<?php _e( $field_params[ 'title' ] ); ?>
+			</span>
+
+			<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+				<label>
+					<input
+						type="radio"
+						name="<?php echo $field_key; ?>"
+						value="<?php echo $k; ?>"
+						<?php checked( $k, $field_value ); ?>
+					/>
+
+					<?php echo $v; ?>
+				</label>
+			<?php endforeach; ?>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function radio_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'radio ------------------------------------' );
+?>
+		<tr class="form-field term-briz-radio-wrap">
+			<th scope="row" valign="top">
+				<span>
+					<?php _e( $field_params[ 'title' ] ); ?>
+				</span>
+			</th>
+			<td>
+
+				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
+					<label>
+						<input
+							type="radio"
+							name="<?php echo $field_key; ?>"
+							value="<?php echo $k; ?>"
+							<?php checked( $k, $field_value ); ?>
+						/>
+
+						<?php echo $v; ?>
+					</label>
+				<?php endforeach; ?>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
 	public function image ( $tax_slug ) {
 		// Helper::debug( $tax_slug );
 ?>
