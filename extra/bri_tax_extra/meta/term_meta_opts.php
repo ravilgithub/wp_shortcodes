@@ -642,6 +642,54 @@ class Term_Meta_Opts {
 <?php
 	}
 
+
+	public function url( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'url ------------------------------------' );
+?>
+		<div class="form-field term-briz-url-wrap">
+			<span>
+				<?php _e( $field_params[ 'title' ] ); ?>
+			</span>
+
+			<input
+				type="url"
+				name="<?php echo $field_key; ?>"
+				value="<?php echo $field_value; ?>"
+				pattern="<?php echo $field_params[ 'pattern' ]; ?>"
+				required="<?php echo $field_params[ 'required' ] ? 'required' : ''; ?>"
+			/>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function url_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'url ------------------------------------' );
+?>
+		<tr class="form-field term-briz-url-wrap">
+			<th scope="row" valign="top">
+				<span>
+					<?php _e( $field_params[ 'title' ] ); ?>
+				</span>
+			</th>
+			<td>
+
+				<input
+					type="url"
+					name="<?php echo $field_key; ?>"
+					value="<?php echo $field_value; ?>"
+					pattern="<?php echo $field_params[ 'pattern' ]; ?>"
+					required="<?php echo $field_params[ 'required' ] ? 'required' : ''; ?>"
+				/>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
 	public function image ( $tax_slug ) {
 		// Helper::debug( $tax_slug );
 ?>
