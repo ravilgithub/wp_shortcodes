@@ -217,5 +217,27 @@
 
 		media.init();
 
+
+		const range = {
+			ctx: '.term-briz-range-wrap',
+
+			numShow() {
+				$( this.ctx ).each( ( idx, box ) => {
+					const input = $( box ).find( 'input' ),
+					      em    = $( box ).find( '.briz-range-current-value' );
+
+					input.on( 'input', evt => {
+						em.text( evt.target.value );
+					} );
+				} );
+			},
+
+			init() {
+				this.numShow();
+			}
+		}
+
+		range.init();
+
 	} );
 } )( jQuery );
