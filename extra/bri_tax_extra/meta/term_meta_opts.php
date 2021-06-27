@@ -690,6 +690,87 @@ class Term_Meta_Opts {
 <?php
 	}
 
+
+	public function wp_editor( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'wp editor ------------------------------------' );
+		$args = array_merge(
+			[
+				'textarea_name'    => $field_key, //нужно указывать!
+				'editor_class'     => 'editor-class',
+				// изменяемое
+				'wpautop'          => 1,
+				'textarea_rows'    => 5,
+				'tabindex'         => null,
+				'editor_css'       => '',
+				'teeny'            => 0,
+				'dfw'              => 0,
+				'tinymce'          => 1,
+				'quicktags'        => 1,
+				'media_buttons'    => false,
+				'drag_drop_upload' => false
+			],
+			$field_params[ 'options' ]
+		);
+?>
+		<div class="form-field term-briz-wp-editor-wrap">
+			<span>
+				<?php _e( $field_params[ 'title' ] ); ?>
+			</span>
+
+			<?php
+				echo $field_value;
+
+				wp_editor( $field_value, $field_key, $args );
+			?>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+		</div>
+<?php
+	}
+
+
+	public function wp_editor_edit( $field_params, $field_key, $field_value ) {
+		// Helper::debug( 'wp editor ------------------------------------' );
+		$args = array_merge(
+			[
+				'textarea_name'    => $field_key, //нужно указывать!
+				'editor_class'     => 'editor-class',
+				// изменяемое
+				'wpautop'          => 1,
+				'textarea_rows'    => 5,
+				'tabindex'         => null,
+				'editor_css'       => '',
+				'teeny'            => 0,
+				'dfw'              => 0,
+				'tinymce'          => 1,
+				'quicktags'        => 1,
+				'media_buttons'    => false,
+				'drag_drop_upload' => false
+			],
+			$field_params[ 'options' ]
+		);
+?>
+		<tr class="form-field term-briz-wp-editor-wrap">
+			<th scope="row" valign="top">
+				<span>
+					<?php _e( $field_params[ 'title' ] ); ?>
+				</span>
+			</th>
+			<td>
+
+				<?php
+					echo $field_value;
+
+					wp_editor( $field_value, $field_key, $args );
+				?>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+			</td>
+		</tr>
+<?php
+	}
+
+
 	public function image ( $tax_slug ) {
 		// Helper::debug( $tax_slug );
 ?>
