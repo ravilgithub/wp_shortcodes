@@ -219,7 +219,7 @@
 
 
 		const range = {
-			ctx: '.term-briz-range-wrap',
+			ctx: '.briz-meta-field-range-wrap',
 
 			numShow() {
 				$( this.ctx ).each( ( idx, box ) => {
