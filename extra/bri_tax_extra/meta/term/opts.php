@@ -1,4 +1,31 @@
 <?php
+/**
+ * Array of parameters for creating meta fields for taxonomy terms.
+ *
+ * Массив параметров для создания мета полей терминов таксономии.
+ *
+ * @see ~/extra/bri_tax_extra/meta/term_meta_opts.php
+ *      Term_Meta_Opts::__construct()
+ *
+ * @var Array $opts {
+ *  @type Array $taxonomy_name {
+ *   @type Array $option_name {
+ *    @type String $type        - Тип мета поля.
+ *                                Required.
+ *    @type String $title       - Название мета поля.
+ *    @type String $desc        - Описание мета поля.
+ *    @type String/Array $value - Значение мета поля по умолчанию.
+ *                                Required.
+ *                                Default: ''
+ *    @type Array $options      - Параметры мета поля.
+ *    @type Boolean $manage     - Показывать ли значение поля в таблице
+ *                                на странице создания термина.
+ *                                Default: false
+ *   }
+ *  }
+ * }
+ *
+ */
 
 $opts = [
 	'category' => [
@@ -6,8 +33,7 @@ $opts = [
 			'type'  => 'text',
 			'title' => 'Опция 1',
 			'desc'  => 'Описание опции 1',
-			'value' => 'Значение по умолчанию опции 1',
-			'manage' => 0
+			'value' => 'Значение по умолчанию опции 1'
 		],
 		'option_2' => [
 			'type'  => 'textarea',
@@ -61,7 +87,7 @@ $opts = [
 			'type'  => 'range',
 			'title' => 'Опция 7',
 			'desc'  => 'Описание опции 7',
-			'value' => '5',
+			'value' => '4',
 			'options' => [
 				'step' => 2,
 				'min'  => 0,
@@ -107,9 +133,21 @@ $opts = [
 			]
 		],
 		'option_11' => [
-			'type'  => 'media_button',
+			'type'  => 'image',
 			'title' => 'Опция 11',
 			'desc'  => 'Описание опции 11',
+			'value' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABjElEQVRoge2bWQ6DMAxEe/+z+RAICQ7Bz/SjStWFkM02IcNISFEJ9rwKhawPEcGyLBSXiOARCqNLRLCu6ws4/DCqAtsX8OeNkfTJ9Af8W+Hq+mXZBd6reEXtMUSBYw9cRTHvh8BHD/asI89J4FSA3pTymgWcE6gH5XjMBs4NeJZyvRUBlwT2VImnYuDSBNYq9VIFXJPIQjUeqoFrE2qpNncTcEviFrXkbAZuNeCdSwVYw4hXDjVgwBZaK7YqMGADrRlTHRjQNaj9B5oAAzpGLd4WM2CgzbBVe2AKDNQZt2z8zIGBMgDrz5sLMJAH4vEtdwMGjoG8emuuwMA+mGfX1B0Y+Ab0HnycAgy8QM8Yad3AHqJ6pakaLarPElXHg6prSTV4oBoeUk0AUE3xUE3iUU3TUk3EUy21UC2mUS2XUi2I9wAbZL7loSfYILNNLT3CBqlvW+oZNmiapmSde+thaYAeNc9z9N6w24dj0PcG8VjFqyp5BGAk2KBt295l3mM8I8MGvQ9qhQLDJSJ4AsaVfzhlR3kRAAAAAElFTkSuQmCC',
+			'options' => [
+				'title'    => 'Insert a media',
+				'library'  => [ 'type' => 'image' ],
+				'multiple' => 0,
+				'button'   => [ 'text' => 'Insert' ]
+			]
+		],
+		'option_11_2' => [
+			'type'  => 'image',
+			'title' => 'Опция 11_2',
+			'desc'  => 'Описание опции 11_2',
 			'value' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABjElEQVRoge2bWQ6DMAxEe/+z+RAICQ7Bz/SjStWFkM02IcNISFEJ9rwKhawPEcGyLBSXiOARCqNLRLCu6ws4/DCqAtsX8OeNkfTJ9Af8W+Hq+mXZBd6reEXtMUSBYw9cRTHvh8BHD/asI89J4FSA3pTymgWcE6gH5XjMBs4NeJZyvRUBlwT2VImnYuDSBNYq9VIFXJPIQjUeqoFrE2qpNncTcEviFrXkbAZuNeCdSwVYw4hXDjVgwBZaK7YqMGADrRlTHRjQNaj9B5oAAzpGLd4WM2CgzbBVe2AKDNQZt2z8zIGBMgDrz5sLMJAH4vEtdwMGjoG8emuuwMA+mGfX1B0Y+Ab0HnycAgy8QM8Yad3AHqJ6pakaLarPElXHg6prSTV4oBoeUk0AUE3xUE3iUU3TUk3EUy21UC2mUS2XUi2I9wAbZL7loSfYILNNLT3CBqlvW+oZNmiapmSde+thaYAeNc9z9N6w24dj0PcG8VjFqyp5BGAk2KBt295l3mM8I8MGvQ9qhQLDJSJ4AsaVfzhlR3kRAAAAAElFTkSuQmCC',
 			'options' => [
 				'title'    => 'Insert a media',
