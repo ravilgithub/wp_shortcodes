@@ -623,14 +623,21 @@ class Meta_boxes {
 	public function range( $key, $value, $params ) {
 		extract( $params[ 'options' ] );
 ?>
-		<tr>
+		<tr class="briz-meta-field-range-wrap">
 			<td>
 				<span class="briz_meta_field_title">
 					<?php echo $params[ 'title' ]; ?>
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+
+				<p>
+					<?php _e( 'Current value' ); ?>:
+					<span class="briz-range-current-value">
+						<?php echo $value; ?>
+					</span>
+				</p>
+
 				<input
 					type="range"
 					name="<?php echo $key; ?>"
