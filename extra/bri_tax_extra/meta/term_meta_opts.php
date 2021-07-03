@@ -24,15 +24,15 @@ class Term_Meta_Opts {
 		$assets = [
 			'css' => [
 				/************ TMPL CSS ************/
-				'id'   => 'metabox-tmpl-css',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
+				'id'   => 'term-meta-css',
+				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/term_meta.min.css',
 				'deps' => [],
 				'ver'  => '1.0.0'
 			],
 			'js' => [
 				/************ TMPL SCRIPTS ************/
-				'id'   => 'metabox-tmpl-js',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
+				'id'   => 'term-meta-js',
+				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/term_meta.js',
 				'deps' => [ 'jquery' ],
 				'ver'  => '1.0.0',
 				'in_footer' => true
@@ -133,7 +133,6 @@ class Term_Meta_Opts {
 	}
 
 
-	// Нет возможность подписаться на хуки "manage_edit-{$tax_name}_columns" и "manage_{$tax_name}_custom_column"
 	public function add_term_fields ( $tax_slug ) {
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
 			return;
@@ -174,8 +173,10 @@ class Term_Meta_Opts {
 
 		foreach ( $term_fields as $field_name => $field_value ) {
 			if ( ! is_array( $field_value ) ) {
-				$field_value = sanitize_text_field( wp_unslash( $field_value ) );
+				// Для "wp_editor" и остальных типов полей.
+				$field_value = wp_kses( wp_unslash( $field_value ), 'post' );
 			} else {
+				// Для полей типа "checkbox".
 				foreach ( $field_value as $k => $v ) {
 					$field_value[ $k ] = sanitize_text_field( wp_unslash( $v ) );
 				}
@@ -771,17 +772,17 @@ class Term_Meta_Opts {
 	}
 
 
-	public function image ( $tax_slug ) {
+	public function image( $field_params, $field_key, $field_value ) {
 		// Helper::debug( $tax_slug );
 ?>
-		<div id="briz-term-img-wrap" class="form-field">
+		<div class="form-field briz-term-img-wrap">
 			<label><?php _e( 'Image' ); ?></label>
 
 			<figure>
 				<a href="#">
 					<img
-						src="<?php echo esc_attr( $this->default ); ?>"
-						data-default="<?php echo esc_attr( $this->default ); ?>"
+						src="<?php echo esc_attr( $field_value ); ?>"
+						data-default="<?php echo esc_attr( $field_params[ 'value' ] ); ?>"
 						alt="Alt"
 					/>
 				</a>
@@ -795,10 +796,66 @@ class Term_Meta_Opts {
 
 			<input
 				type="hidden"
-				name="<?php echo esc_attr( $this->meta_key ); ?>"
+				name="<?php echo esc_attr( $field_key ); ?>"
 				value=""
 			/>
 		</div>
+<?php
+	}
+
+
+/**
+	 * Add additional form fields for the taxonomy term on the edit page.
+	 *
+	 * Добавляем дополнительные поля формы термина таксономи на странице редактирования.
+	 *
+	 * @param Object $term - WP_Term Object.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function image_edit ( $field_params, $field_key, $field_value ) {
+		$img_id = ( int ) $field_value;
+		$img_url = $field_params[ 'value' ];
+		$btn_class = 'hidden';
+
+		if ( $img_id ) {
+			$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
+			$btn_class = '';
+		}
+?>
+		<tr class="form-field briz-term-img-wrap">
+			<th scope="row">
+				<label for="description">
+					<?php _e( 'Term image' ); ?>
+				</label>
+			</th>
+			<td>
+				<figure>
+					<a href="#">
+						<img
+							src="<?php echo esc_attr( $img_url ); ?>"
+							data-default="<?php echo esc_attr( $field_params[ 'value' ] ); ?>"
+							alt="Alt"
+						/>
+					</a>
+
+					<button type="button" class="button <?php echo esc_attr( $btn_class ); ?>">
+						<?php _e( 'Remove' ); ?>
+					</button>
+				</figure>
+
+				<p><?php _e( 'Description' ); ?></p>
+
+				<input
+					type="hidden"
+					name="<?php echo esc_attr( $field_key ); ?>"
+					value="<?php echo esc_attr( $img_id ); ?>"
+				/>
+			</td>
+		</tr>
 <?php
 	}
 }
