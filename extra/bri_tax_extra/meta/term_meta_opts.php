@@ -133,6 +133,18 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Adding additional form fields for taxonomy terms when creating them.
+	 *
+	 * Добавляем дополнительные поля формы терминов таксономии при их создании.
+	 *
+	 * @param String $tax_slug - ярлык таксономии.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function add_term_fields ( $tax_slug ) {
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
 			return;
@@ -141,6 +153,18 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Add additional form fields for the taxonomy term on the edit page.
+	 *
+	 * Добавляем дополнительные поля формы термина таксономи на странице редактирования.
+	 *
+	 * @param Object $term - WP_Term Object.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function edit_term_fields ( $term ) {
 		$tax_slug = $term->taxonomy;
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
@@ -150,6 +174,18 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Save changes made to the taxonomy term form.
+	 *
+	 * Сохраняем изменения внесённые в форму термина таксономии.
+	 *
+	 * @param Integer $term_id - id сохраняемого термина.
+	 *
+	 * @return void.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function save_term_fields( $term_id ) {
 		$term = get_term( $term_id );
 		$tax_name = $term->taxonomy;
@@ -192,6 +228,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function text( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Text ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -216,6 +266,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function text_edit( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Text ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -243,6 +307,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function textarea( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Textarea ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -266,6 +344,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function textarea_edit( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Textarea edit ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -292,6 +384,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function color( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Text ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -315,6 +421,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function color_edit( $field_params, $field_key, $field_value ) {
 		/*Helper::debug( 'Text ------------------------------------' );
 		Helper::debug( $field_params );*/
@@ -341,6 +461,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function number( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Number ------------------------------------' );
 		// Helper::debug( $field_params );
@@ -367,6 +501,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function number_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Number ------------------------------------' );
 		// Helper::debug( $field_params );
@@ -396,6 +544,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function select( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Select ------------------------------------' );
 		// Helper::debug( $field_params );
@@ -423,6 +585,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function select_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Select ------------------------------------' );
 		// Helper::debug( $field_params );
@@ -454,6 +630,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function checkbox( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Checkbox ------------------------------------' );
 ?>
@@ -486,6 +676,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function checkbox_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'Checkbox ------------------------------------' );
 ?>
@@ -522,6 +726,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function range( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'range ------------------------------------' );
 ?>
@@ -552,6 +770,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function range_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'range ------------------------------------' );
 ?>
@@ -586,6 +818,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function radio( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'radio ------------------------------------' );
 ?>
@@ -613,6 +859,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function radio_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'radio ------------------------------------' );
 ?>
@@ -644,6 +904,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function url( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'url ------------------------------------' );
 ?>
@@ -666,6 +940,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function url_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'url ------------------------------------' );
 ?>
@@ -692,6 +980,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function wp_editor( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'wp editor ------------------------------------' );
 		$args = array_merge(
@@ -730,6 +1032,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function wp_editor_edit( $field_params, $field_key, $field_value ) {
 		// Helper::debug( 'wp editor ------------------------------------' );
 		$args = array_merge(
@@ -772,6 +1088,20 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function image( $field_params, $field_key, $field_value ) {
 		// Helper::debug( $tax_slug );
 ?>
@@ -804,12 +1134,14 @@ class Term_Meta_Opts {
 	}
 
 
-/**
-	 * Add additional form fields for the taxonomy term on the edit page.
+	/**
+	 * HTML meta field.
 	 *
-	 * Добавляем дополнительные поля формы термина таксономи на странице редактирования.
+	 * HTML разметка мета поля.
 	 *
-	 * @param Object $term - WP_Term Object.
+	 * @param Array $field_params - параметры мета поля.
+	 * @param String $field_key   - имя мета поля.
+	 * @param String $field_value - значение мета поля.
 	 *
 	 * @return void
 	 *
