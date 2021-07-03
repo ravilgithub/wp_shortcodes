@@ -23,7 +23,7 @@ require_once 'common/helpers.php';
 require_once 'extra/bri_tax_extra/meta/term_meta_opts.php';
 require_once 'extra/bri_tax_extra/meta/meta_boxes.php';
 require_once 'extra/bri_tax_extra/template_select.php';
-require_once 'extra/bri_tax_extra/term_image.php';
+// require_once 'extra/bri_tax_extra/term_image.php';
 
 require_once 'main_class.php';
 
