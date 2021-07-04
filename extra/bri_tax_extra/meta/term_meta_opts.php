@@ -1122,7 +1122,7 @@ class Term_Meta_Opts {
 				</button>
 			</figure>
 
-			<p><?php _e( 'Description' ); ?></p>
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
 
 			<input
 				type="hidden"
@@ -1179,7 +1179,7 @@ class Term_Meta_Opts {
 					</button>
 				</figure>
 
-				<p><?php _e( 'Description' ); ?></p>
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
 
 				<input
 					type="hidden"
