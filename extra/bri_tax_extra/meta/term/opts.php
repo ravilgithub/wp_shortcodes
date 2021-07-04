@@ -163,7 +163,7 @@ $opts = [
 			'value' => '',
 			'options' => [
 				'title'    => 'Insert a media',
-				'library'  => [ 'type' => 'audio' ],
+				'library'  => [ 'type' => 'image' ],
 				'multiple' => 1,
 				'button'   => [ 'text' => 'Insert' ]
 			]
@@ -172,6 +172,18 @@ $opts = [
 			'type'  => 'media_button',
 			'title' => 'Опция 13',
 			'desc'  => 'Описание опции 13',
+			'value' => '',
+			'options' => [
+				'title'    => 'Insert a media',
+				'library'  => [ 'type' => 'audio' ],
+				'multiple' => 1,
+				'button'   => [ 'text' => 'Insert' ]
+			]
+		],
+		'option_14' => [
+			'type'  => 'media_button',
+			'title' => 'Опция 14',
+			'desc'  => 'Описание опции 14',
 			'value' => '',
 			'options' => [
 				'title'    => 'Insert a media',
