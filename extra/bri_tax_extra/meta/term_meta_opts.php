@@ -1190,6 +1190,251 @@ class Term_Meta_Opts {
 		</tr>
 <?php
 	}
+
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function media_button( $field_params, $field_key, $field_value ) {
+		$defaults = [
+			'title'    => 'Insert a media',
+			'library'  => [ 'type' => 'image' ],
+			'multiple' => false,
+			'button'   => [ 'text' => 'Insert' ]
+		];
+
+		$opts = wp_parse_args( $field_params[ 'options' ], $defaults );
+		extract( $opts );
+
+		$stage = 'addidable';
+		$add_action_txt = __( 'Add медиафайлы' );
+		$edit_action_txt = __( 'Edit медиафайлы' );
+		$btn_action_txt = $add_action_txt;
+		$delBtnClass = '';
+
+		if ( $field_value ) {
+			$stage = 'editable';
+			$btn_action_txt = $edit_action_txt;
+			$delBtnClass = 'briz-del-media-button-active';
+		}
+?>
+		<div class="form-field briz-term-img-wrap">
+			<label><?php echo $field_params[ 'title' ]; ?></label>
+
+			<button
+				type="button"
+				class="button briz-media-button"
+				data-title="<?php echo $title; ?>"
+				data-library-type="<?php echo $library[ 'type' ]; ?>"
+				data-multiple="<?php echo $multiple; ?>"
+				data-button-text="<?php echo $button[ 'text' ]; ?>"
+				data-action-text="<?php echo $edit_action_txt; ?>"
+				data-stage="<?php echo $stage; ?>"
+			>
+				<?php echo $btn_action_txt; ?>
+			</button>
+
+			<button
+				type="button"
+				class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+				data-action-text="<?php echo $add_action_txt; ?>"
+			>
+				<?php echo __( 'Удалить медиафайлы' ); ?>
+			</button>
+
+			<p><?php _e( $field_params[ 'desc'] ); ?></p>
+
+			<figure>
+				<span class="briz-media-place">
+<?php
+						if ( $field_value ) :
+							$value = json_decode( $field_value );
+							if ( ! empty( $value ) ) :
+								foreach ( $value as $media_id ) :
+									$details = wp_prepare_attachment_for_js( $media_id );
+									$src = $details[ 'url' ];
+
+									if ( $caption = $details[ 'caption' ] ) :
+?>
+										<figcaption>
+											<?php echo $caption; ?>
+										</figcaption>
+<?php
+									endif;
+
+									// Image
+									if ( 'image' == $library[ 'type' ] ) :
+?>
+										<img
+											src="<?php echo $src; ?>"
+											alt="<?php echo $details[ 'alt' ]; ?>"
+										/>
+<?php
+									// Audio
+									elseif ( 'audio' == $library[ 'type' ] ) :
+?>
+										<audio src="<?php echo $src; ?>" controls></audio>
+<?php
+									// Video
+									elseif ( 'video' == $library[ 'type' ] ) :
+?>
+										<video src="<?php echo $src; ?>" controls></video>
+<?php
+									endif;
+								endforeach;
+							endif;
+						endif;
+?>
+				</span>
+			</figure>
+
+			<input
+				type="hidden"
+				name="<?php echo $field_key; ?>"
+				value="<?php echo $field_value ?>"
+			/>
+		</div>
+<?php
+	}
+
+
+	/**
+	 * HTML meta field.
+	 *
+	 * HTML разметка мета поля.
+	 *
+	 * @param String $key - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function media_button_edit( $field_params, $field_key, $field_value ) {
+		$defaults = [
+			'title'    => 'Insert a media',
+			'library'  => [ 'type' => 'image' ],
+			'multiple' => false,
+			'button'   => [ 'text' => 'Insert' ]
+		];
+
+		$opts = wp_parse_args( $field_params[ 'options' ], $defaults );
+		extract( $opts );
+
+		$stage = 'addidable';
+		$add_action_txt = __( 'Add медиафайлы' );
+		$edit_action_txt = __( 'Edit медиафайлы' );
+		$btn_action_txt = $add_action_txt;
+		$delBtnClass = '';
+
+		if ( $field_value ) {
+			$stage = 'editable';
+			$btn_action_txt = $edit_action_txt;
+			$delBtnClass = 'briz-del-media-button-active';
+		}
+?>
+		<tr>
+			<td>
+				<span class="briz_meta_field_title">
+					<?php echo $field_params[ 'title' ]; ?>
+				</span>
+			</td>
+
+			<td>
+				<button
+					type="button"
+					class="button briz-media-button"
+					data-title="<?php echo $title; ?>"
+					data-library-type="<?php echo $library[ 'type' ]; ?>"
+					data-multiple="<?php echo $multiple; ?>"
+					data-button-text="<?php echo $button[ 'text' ]; ?>"
+					data-action-text="<?php echo $edit_action_txt; ?>"
+					data-stage="<?php echo $stage; ?>"
+				>
+					<?php echo $btn_action_txt; ?>
+				</button>
+
+				<button
+					type="button"
+					class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+					data-action-text="<?php echo $add_action_txt; ?>"
+				>
+					<?php echo __( 'Удалить медиафайлы' ); ?>
+				</button>
+
+				<p><?php _e( $field_params[ 'desc'] ); ?></p>
+
+				<figure>
+					<span class="briz-media-place">
+<?php
+							if ( $field_value ) :
+								$value = json_decode( $field_value );
+								if ( ! empty( $value ) ) :
+									foreach ( $value as $media_id ) :
+										$details = wp_prepare_attachment_for_js( $media_id );
+										$src = $details[ 'url' ];
+
+										if ( $caption = $details[ 'caption' ] ) :
+?>
+											<figcaption>
+												<?php echo $caption; ?>
+											</figcaption>
+<?php
+										endif;
+
+										// Image
+										if ( 'image' == $library[ 'type' ] ) :
+?>
+											<img
+												src="<?php echo $src; ?>"
+												alt="<?php echo $details[ 'alt' ]; ?>"
+											/>
+<?php
+										// Audio
+										elseif ( 'audio' == $library[ 'type' ] ) :
+?>
+											<audio src="<?php echo $src; ?>" controls></audio>
+<?php
+										// Video
+										elseif ( 'video' == $library[ 'type' ] ) :
+?>
+											<video src="<?php echo $src; ?>" controls></video>
+<?php
+										endif;
+									endforeach;
+								endif;
+							endif;
+?>
+					</span>
+				</figure>
+
+				<input
+					type="hidden"
+					name="<?php echo $field_key; ?>"
+					value="<?php echo $field_value ?>"
+				/>
+
+				<?php
+					// global $wp_meta_boxes;
+					// Helper::debug( $wp_meta_boxes );
+				?>
+			</td>
+		</tr>
+<?php
+	}
 }
 
 /**
