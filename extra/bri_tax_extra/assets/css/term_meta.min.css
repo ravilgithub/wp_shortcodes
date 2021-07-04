@@ -28,3 +28,11 @@
 .briz-term-img-wrap figure button.hidden {
 	display: none;
 }
+
+.briz-del-media-button {
+	display: none !important;
+}
+
+.briz-del-media-button-active {
+	display: inline-block !important;
+}
