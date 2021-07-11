@@ -1229,12 +1229,12 @@ class Term_Meta_Opts {
 			$delBtnClass = 'briz-del-media-button-active';
 		}
 ?>
-		<div class="form-field briz-term-img-wrap">
+		<div class="form-field briz-term-media-button-wrap">
 			<label><?php echo $field_params[ 'title' ]; ?></label>
 
 			<button
 				type="button"
-				class="button briz-media-button"
+				class="button briz-term-media-button"
 				data-title="<?php echo $title; ?>"
 				data-library-type="<?php echo $library[ 'type' ]; ?>"
 				data-multiple="<?php echo $multiple; ?>"
@@ -1346,7 +1346,7 @@ class Term_Meta_Opts {
 			$delBtnClass = 'briz-del-media-button-active';
 		}
 ?>
-		<tr>
+		<tr class="form-field briz-term-media-button-wrap">
 			<td>
 				<span class="briz_meta_field_title">
 					<?php echo $field_params[ 'title' ]; ?>
@@ -1356,7 +1356,7 @@ class Term_Meta_Opts {
 			<td>
 				<button
 					type="button"
-					class="button briz-media-button"
+					class="button briz-term-media-button"
 					data-title="<?php echo $title; ?>"
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
 					data-multiple="<?php echo $multiple; ?>"
@@ -1385,7 +1385,11 @@ class Term_Meta_Opts {
 								if ( ! empty( $value ) ) :
 									foreach ( $value as $media_id ) :
 										$details = wp_prepare_attachment_for_js( $media_id );
+
 										$src = $details[ 'url' ];
+										if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
+											$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
+										}
 
 										if ( $caption = $details[ 'caption' ] ) :
 ?>
