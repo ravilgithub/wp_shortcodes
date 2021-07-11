@@ -232,7 +232,7 @@
 			 * @return void
 			 */
 			add() {
-				$( '.briz-media-button' ).on( 'click', evt => {
+				$( '.briz-term-media-button' ).on( 'click', evt => {
 					const btn = $( evt.target ),
 					      args = {
 					        title: btn.data( 'title' ),
@@ -261,12 +261,13 @@
 				const type = atts.type;
 
 				let tag = '',
-				    atrs = { src: atts.url },
+				    atrs = {},
 				    html = '';
 
 				if ( 'image' == type ) {
 					tag = '<img />';
 					atrs[ 'alt' ] = atts.alt;
+					atrs[ 'src' ] = atts.sizes.thumbnail.url || atts.sizes.full.url;
 				} else if ( 'audio' == type ) {
 					tag = '<audio />';
 					atrs[ 'controls' ] = 'controls';
@@ -412,7 +413,7 @@
 					btn
 					  .removeClass( activeClassName )
 					  .parent()
-					  .find( '.briz-media-button' )
+					  .find( '.briz-term-media-button' )
 					    .data( 'stage', 'addidable' )
 					    .text( btnTxt );
 				}
