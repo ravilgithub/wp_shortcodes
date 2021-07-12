@@ -218,6 +218,14 @@
 		media.init();
 
 
+		/**
+		 * Отображение текущего значения мета поля 'range'
+		 *
+		 * @property String ctx - селектор обёртки мета поля.
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 */
 		const range = {
 			ctx: '.briz-meta-field-range-wrap',
 
