@@ -1,14 +1,36 @@
 <?php
 namespace Bri_Shortcodes;
 
+/**
+ * The class implements the ability to add meta fields to a term.
+ *
+ * Класс реализует возможность добавлять мета поля термину.
+ *
+ * @property String $id_refix - префикс идентификатора метабокса и его полей.
+ *                              Default: "briz_term_meta".
+ * @property Array $taxs      - таксономии к записям которых добавляются метабоксы.
+ * @property Array $opts      - параметры полей по умолчанию.
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
 class Term_Meta_Opts {
-	public $meta_key  = '';
 	public $id_prefix = 'briz_term_meta';
 	public $taxs      = [];
 	public $opts      = [];
-	public $prepared_opts = [];
 
 
+	/**
+	* Constructor.
+	*
+	* @param Array $taxs - таксономии к терминам которых добавляются
+	*                      мета поля.
+	*
+	* @return void.
+	*
+	* @since 0.0.1
+	* @author Ravil
+	*/
 	public function __construct( Array $taxs ) {
 		$this->taxs = $taxs;
 
@@ -20,6 +42,16 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	* Add CSS and JS.
+	*
+	* Добавление стилей и скриптов.
+	*
+	* @return void.
+	*
+	* @since 0.0.1
+	* @author Ravil
+	*/
 	public function add_assets() {
 		$assets = [
 			'css' => [
@@ -55,6 +87,18 @@ class Term_Meta_Opts {
 	}
 
 
+	/**
+	 * Add hooks to add|change additional fields of taxonomy elements ( terms ).
+	 *
+	 * Добавляем хуки для добавления|изменения дополнительных полей элементов( терминов ) таксономии.
+	 *
+	 * @param Array $taxs - массив таксономий к терминам которых будут добавленны дополнительные поля.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function add_hooks( $taxs ) {
 		foreach ( $taxs as $tax_name ) {
 			add_action( "{$tax_name}_add_form_fields", [
@@ -190,12 +234,6 @@ class Term_Meta_Opts {
 		$term = get_term( $term_id );
 		$tax_name = $term->taxonomy;
 
-		// Helper::debug( $term_id );
-		// Helper::debug( $tax );
-		// Helper::debug( $_POST );
-		// Helper::debug( $_POST[ $this->id_prefix ][ $tax_name ] );
-		// exit;
-
 		if ( ! isset( $_POST[ $this->id_prefix ][ $tax_name ] ) ) return;
 
 		$term_fields = $_POST[ $this->id_prefix ][ $tax_name ];
@@ -243,8 +281,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function text( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<div class="form-field">
 			<label
@@ -281,8 +317,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function text_edit( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<tr class="form-field term-briz-text-wrap">
 			<th scope="row">
@@ -322,8 +356,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function textarea( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Textarea ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<div class="form-field">
 			<label
@@ -359,8 +391,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function textarea_edit( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Textarea edit ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<tr class="form-field term-briz-textarea-wrap">
 			<th scope="row">
@@ -399,8 +429,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function color( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<div class="form-field">
 			<label
@@ -436,8 +464,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function color_edit( $field_params, $field_key, $field_value ) {
-		/*Helper::debug( 'Text ------------------------------------' );
-		Helper::debug( $field_params );*/
 ?>
 		<tr class="form-field term-briz-color-wrap">
 			<th scope="row">
@@ -476,8 +502,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function number( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Number ------------------------------------' );
-		// Helper::debug( $field_params );
 ?>
 		<div class="form-field">
 			<label
@@ -516,8 +540,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function number_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Number ------------------------------------' );
-		// Helper::debug( $field_params );
 ?>
 		<tr class="form-field term-briz-number-wrap">
 			<th scope="row">
@@ -559,8 +581,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function select( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Select ------------------------------------' );
-		// Helper::debug( $field_params );
 ?>
 		<div class="form-field term-briz-select-wrap">
 			<label
@@ -600,8 +620,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function select_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Select ------------------------------------' );
-		// Helper::debug( $field_params );
 ?>
 		<tr class="form-field term-briz-select-wrap">
 			<th scope="row" valign="top">
@@ -645,7 +663,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function checkbox( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Checkbox ------------------------------------' );
 ?>
 		<div class="form-field term-briz-checkbox-wrap">
 			<span>
@@ -691,7 +708,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function checkbox_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'Checkbox ------------------------------------' );
 ?>
 		<tr class="form-field term-briz-checkbox-wrap">
 			<th scope="row" valign="top">
@@ -741,7 +757,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function range( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'range ------------------------------------' );
 ?>
 		<div class="form-field term-briz-range-wrap">
 			<span>
@@ -785,7 +800,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function range_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'range ------------------------------------' );
 ?>
 		<tr class="form-field term-briz-range-wrap">
 			<th scope="row" valign="top">
@@ -833,7 +847,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function radio( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'radio ------------------------------------' );
 ?>
 		<div class="form-field term-briz-radio-wrap">
 			<span>
@@ -874,7 +887,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function radio_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'radio ------------------------------------' );
 ?>
 		<tr class="form-field term-briz-radio-wrap">
 			<th scope="row" valign="top">
@@ -919,7 +931,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function url( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'url ------------------------------------' );
 ?>
 		<div class="form-field term-briz-url-wrap">
 			<span>
@@ -955,7 +966,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function url_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'url ------------------------------------' );
 ?>
 		<tr class="form-field term-briz-url-wrap">
 			<th scope="row" valign="top">
@@ -995,7 +1005,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function wp_editor( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'wp editor ------------------------------------' );
 		$args = array_merge(
 			[
 				'textarea_name'    => $field_key, //нужно указывать!
@@ -1047,7 +1056,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function wp_editor_edit( $field_params, $field_key, $field_value ) {
-		// Helper::debug( 'wp editor ------------------------------------' );
 		$args = array_merge(
 			[
 				'textarea_name'    => $field_key, //нужно указывать!
@@ -1103,7 +1111,6 @@ class Term_Meta_Opts {
 	 * @author Ravil
 	 */
 	public function image( $field_params, $field_key, $field_value ) {
-		// Helper::debug( $tax_slug );
 ?>
 		<div class="form-field briz-term-img-wrap">
 			<label><?php _e( 'Image' ); ?></label>
@@ -1430,11 +1437,6 @@ class Term_Meta_Opts {
 					name="<?php echo $field_key; ?>"
 					value="<?php echo $field_value ?>"
 				/>
-
-				<?php
-					// global $wp_meta_boxes;
-					// Helper::debug( $wp_meta_boxes );
-				?>
 			</td>
 		</tr>
 <?php
