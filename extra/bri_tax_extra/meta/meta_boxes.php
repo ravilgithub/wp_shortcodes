@@ -6,10 +6,10 @@ namespace Bri_Shortcodes;
  *
  * Класс добавляет метабоксы для записей.
  *
- * @property Array $screens - типы записей к которым допустимо добавлять метаблок.
- * @property Array $taxs    - таксономии к записям которых добавляются метабоксы.
- * @property String $id     - префикс идентификатора метабокса и его полей. Default: "briz";
- * @property Array $opts    - параметры полей по умолчанию.
+ * @property Array $screens    - типы записей к которым допустимо добавлять метаблок.
+ * @property Array $taxs       - таксономии к записям которых добавляются метабоксы.
+ * @property String $id_prefix - префикс идентификатора метабокса и его полей. Default: "briz".
+ * @property Array $opts       - параметры полей по умолчанию.
  *
  * @since 0.0.1
  * @author Ravil
