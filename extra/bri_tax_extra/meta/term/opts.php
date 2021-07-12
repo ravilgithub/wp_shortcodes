@@ -18,9 +18,6 @@
  *                                Required.
  *                                Default: ''
  *    @type Array $options      - Параметры мета поля.
- *    @type Boolean $manage     - Показывать ли значение поля в таблице
- *                                на странице создания термина.
- *                                Default: false
  *   }
  *  }
  * }
