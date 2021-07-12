@@ -23,7 +23,7 @@ class Term_img {
 	* Constructor.
 	*
 	* @param Array $taxs - таксономии к терминам которых добавляется
-	*                      возможность выбора шаблона.
+	*                      изображение.
 	*
 	* @return void.
 	*
