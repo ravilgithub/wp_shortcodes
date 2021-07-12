@@ -3,6 +3,14 @@
 
 	$( document ).ready( () => {
 
+		/**
+		 * Отображение текущего значения мета поля 'range'
+		 *
+		 * @property String ctx - селектор обёртки мета поля.
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 */
 		const range = {
 			ctx: '.term-briz-range-wrap',
 
@@ -36,7 +44,6 @@
 		 */
 		const media = {
 			ctx: '.briz-term-img-wrap',
-			// ctx: '#briz-term-img-wrap',
 
 			/**
 			 * Объект создающийся для каждого мета поля "image".
@@ -261,7 +268,7 @@
 				const type = atts.type;
 
 				let tag = '',
-				    atrs = {},
+				    atrs = { src: atts.url }, // для 'audio' и 'video'.
 				    html = '';
 
 				if ( 'image' == type ) {
