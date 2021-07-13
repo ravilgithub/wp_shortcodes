@@ -83,11 +83,24 @@
 			extract( $this->atts );
 
 			$bg_img = '';
-			$img_id = ( int ) get_term_meta( $term_id, 'briz-term-img-id', true );
-			if ( $img_id ) {
-				$img_url = wp_get_attachment_image_url( $img_id, 'full' );
-				$bg_img = 'background-image: url(' . $img_url . ')';
+			$bg_class = '';
+
+			$term_opts = get_term_meta( $term_id, 'briz_term_meta', true );
+			if ( is_array( $term_opts ) ) {
+				if ( array_key_exists( 'option_11', $term_opts ) ) {
+					if ( $img_id = $term_opts[ 'option_11' ] ) {
+						$img_url = wp_get_attachment_image_url( $img_id, 'full' );
+						$bg_img = 'background-image: url(' . $img_url . ')';
+					}
+				}
+
+				if ( array_key_exists( 'sticker_fix_bg', $term_opts ) ) {
+					if ( 'yes' == $term_opts[ 'sticker_fix_bg' ][ 0 ] ) {
+						$bg_class = 'bg-fixed';
+					}
+				}
 			}
+
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
@@ -96,7 +109,10 @@
 			>
 				<div class="stickers-wrap">
 					<div class="stickers-inner-wrap">
-						<div class="stickers-content clearfix" style="<?php echo esc_attr( $bg_img ); ?>"> <!-- Fixed -->
+						<div
+							class="stickers-content clearfix <?php echo esc_attr( $bg_class ); ?>"
+							style="<?php echo esc_attr( $bg_img ); ?>"
+						>
 							<div class="container">
 								<div class="row">
 									<div class="stickers-content-grid col-sm-12">
