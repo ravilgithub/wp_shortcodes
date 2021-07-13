@@ -188,6 +188,30 @@ $opts = [
 				'multiple' => 1,
 				'button'   => [ 'text' => 'Insert' ]
 			]
+		],
+		'sticker_fix_bg' => [
+			'type'  => 'checkbox',
+			'title' => 'sticker fix bg',
+			'desc'  => 'sticker fixed background',
+			'value' => [],
+			'options' => [
+				'yes'   => 'Yes'
+			]
+		]
+	],
+
+	'product_cat' => [
+		'option_1' => [
+			'type'  => 'text',
+			'title' => 'Опция 1',
+			'desc'  => 'Описание опции 1',
+			'value' => 'Значение по умолчанию опции 1'
+		],
+		'option_2' => [
+			'type'  => 'textarea',
+			'title' => 'Опция 2',
+			'desc'  => 'Описание опции 2',
+			'value' => 'Значение по умолчанию опции 2'
 		]
 	]
 ];
