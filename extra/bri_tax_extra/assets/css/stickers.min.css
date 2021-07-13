@@ -13,6 +13,9 @@
 	background-position: 50% 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+.bri-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content.bg-fixed {
 	background-attachment: fixed;
 }
 
