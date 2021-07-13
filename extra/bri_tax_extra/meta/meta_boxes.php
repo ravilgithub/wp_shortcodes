@@ -876,7 +876,11 @@ class Meta_boxes {
 								if ( ! empty( $value ) ) :
 									foreach ( $value as $media_id ) :
 										$details = wp_prepare_attachment_for_js( $media_id );
+
 										$src = $details[ 'url' ];
+										if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
+											$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
+										}
 
 										if ( $caption = $details[ 'caption' ] ) :
 ?>
