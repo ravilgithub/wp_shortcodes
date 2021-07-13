@@ -48,12 +48,13 @@
 				const type = atts.type;
 
 				let tag = '',
-				    atrs = { src: atts.url },
+				    atrs = { src: atts.url }, // для 'audio' и 'video'.
 				    html = '';
 
 				if ( 'image' == type ) {
 					tag = '<img />';
 					atrs[ 'alt' ] = atts.alt;
+					atrs[ 'src' ] = atts.sizes.thumbnail.url || atts.sizes.full.url;
 				} else if ( 'audio' == type ) {
 					tag = '<audio />';
 					atrs[ 'controls' ] = 'controls';
