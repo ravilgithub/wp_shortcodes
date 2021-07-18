@@ -19,6 +19,7 @@ class Meta_boxes {
 	public $taxs;
 	public $id_prefix = 'briz';
 	public $opts      = [];
+	private $is_group = false;
 
 
 	/**
@@ -216,6 +217,51 @@ class Meta_boxes {
 
 
 	/**
+	 * Decorating groups.
+	 *
+	 * Декорирование групп.
+	 *
+	 * @param String $position    - префикс имени группы.
+	 * @param Array $field_params - параметры и мета поля группы.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function decorate_group( $position, $field_params ) {
+		$rgb = $this->get_random_color();
+		$color = implode( ',', $rgb );
+		$style = 'background: rgb(' . $color . ');';
+		$label = $position . ' ' . $field_params[ 'title' ];
+?>
+		<tr class="briz_meta_box_group_name" style="<?php echo esc_attr( $style ); ?>">
+			<td colspan="2"><?php _e( $label ); ?></td>
+		</tr>
+<?php
+	}
+
+
+	/**
+	 * A random background color to represent the group.
+	 *
+	 * Случайный фоновый цвет для обозначения группы.
+	 *
+	 * @return Array $rgb_color - цвет в формате rgb.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function get_random_color() {
+		$rgb_color = [];
+		foreach( [ 'r', 'g', 'b' ] as $color ) {
+			$rgb_color[ $color ] = mt_rand( 150, 225 );
+		}
+		return $rgb_color;
+	}
+
+
+	/**
 	 * Enumeration of meta fields obtained from the database or from the "meta_opts.php" file.
 	 *
 	 * Перебор мета полей полученных из базы данных или из файла "meta_opts.php".
@@ -246,7 +292,6 @@ class Meta_boxes {
 
 		foreach ( $fields as $field_name => $field_params ) {
 			if ( 'group' == $field_params[ 'type' ] ) {
-				// echo '<tr style="background: #ffeeee; padding: 20px 0 10px;"><td colspan="2">' . $field_params[ 'title' ] . '</td></tr>';
 
 				/**
 				* Переменный $gn и $pth созданы для того что бы
@@ -261,9 +306,16 @@ class Meta_boxes {
 					$pth[] = $field_name;
 				}
 
+				$rgb = $this->get_random_color();
+				$color = implode( ',', $rgb );
+				$style = 'background: rgb(' . $color . ');';
+
+				$this->decorate_group( 'Start', $field_params );
+
 				$this->fields_iterator( $post, $meta, $field_params[ 'value' ], $gn, $pth );
 
-				// echo '<tr style="height: 1px; line-height: 1px; background: #000; padding: 10px 0 20px;"><td colspan="2"></td></tr>';
+				$this->decorate_group( 'End', $field_params );
+
 				continue;
 			}
 
@@ -396,7 +448,7 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 				<input type="text" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
@@ -463,7 +515,7 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 				<input type="color" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
 				<small>
 					<em><?php echo $params[ 'desc' ]; ?></em>
@@ -499,7 +551,7 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 				<input
 					type="number"
 					name="<?php echo $key; ?>"
@@ -541,7 +593,7 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 				<select name="<?php echo $key; ?>">
 					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>	
 						<option value="<?php echo $k; ?>" <?php selected( $value, $k, true ); ?>><?php echo $v; ?></option>
@@ -583,7 +635,7 @@ class Meta_boxes {
 				<!-- Если checkbox'ы не выбраны то в $_POST будет пустое поле, что позволит удалить его из БД. -->
 				<input type="hidden" name="<?php echo $key; ?>" value="">
 
-				<?php Helper::debug( (array) $value ); ?>
+				<?php // Helper::debug( (array) $value ); ?>
 
 				<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
 					<label>
@@ -678,24 +730,24 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 
-					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
-						<label>
-							<input
-								type="radio"
-								name="<?php echo $key; ?>"
-								value="<?php echo $k; ?>"
-								<?php checked( $k, $value ); ?>
-							/>
+				<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
+					<label>
+						<input
+							type="radio"
+							name="<?php echo $key; ?>"
+							value="<?php echo $k; ?>"
+							<?php checked( $k, $value ); ?>
+						/>
 
-							<?php echo $v; ?>
-						</label>						
-					<?php endforeach; ?>
+						<?php echo $v; ?>
+					</label>
+				<?php endforeach; ?>
 
-					<small>
-						<em><?php echo $params[ 'desc' ]; ?></em>
-					</small>
+				<small>
+					<em><?php echo $params[ 'desc' ]; ?></em>
+				</small>
 			</td>
 		</tr>
 <?php
@@ -725,7 +777,7 @@ class Meta_boxes {
 				</span>
 			</td>
 			<td>
-				<?php echo $value; ?>
+				<?php // echo $value; ?>
 				<input
 					type="url"
 					name="<?php echo $key; ?>"
@@ -784,7 +836,7 @@ class Meta_boxes {
 			</td>
 			<td>
 				<?php
-					echo $value;
+					// echo $value;
 
 					wp_editor( $value, $key, $args );
 				?>
