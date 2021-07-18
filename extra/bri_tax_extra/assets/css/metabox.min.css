@@ -1,17 +1,24 @@
 .briz_meta_box_wrap table {
 	width: 100%;
+	/*border-collapse: collapse;*/
+}
+
+.briz_meta_box_wrap .briz_meta_box_group_name td {
+	padding: 15px 0;
+	text-align: center;
+	font-weight: 500;
 }
 
 .briz_meta_box_wrap td {
-	padding-top: 10px;
+	padding: 20px 0;
 }
 
 .briz_meta_box_wrap td:first-child {
-	width: 25%;
+	width: 15%;
 }
 
 .briz_meta_box_wrap td:last-child {
-	width: 75%;
+	width: 85%;
 }
 
 .briz_meta_box_wrap th,
