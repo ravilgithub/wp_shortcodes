@@ -71,7 +71,7 @@ class Term_Meta_Opts {
 			]
 		];
 
-		$assets = apply_filters( "{$this->id_prefix}_metabox_assets", $assets );
+		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
 
 		foreach ( $assets as $type => $data ) {
 			extract( $data );
