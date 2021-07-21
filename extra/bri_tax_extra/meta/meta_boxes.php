@@ -8,7 +8,7 @@ namespace Bri_Shortcodes;
  *
  * @property Array $screens    - типы записей к которым допустимо добавлять метаблок.
  * @property Array $taxs       - таксономии к записям которых добавляются метабоксы.
- * @property String $id_prefix - префикс идентификатора метабокса и его полей. Default: "briz".
+ * @property String $id_prefix - префикс идентификатора метабокса и его полей.
  * @property Array $opts       - параметры полей по умолчанию.
  *
  * @since 0.0.1
@@ -17,7 +17,7 @@ namespace Bri_Shortcodes;
 class Meta_boxes {
 	public $screens;
 	public $taxs;
-	public $id_prefix = 'briz';
+	public $id_prefix = 'briz_meta_box';
 	public $opts      = [];
 	private $is_group = false;
 
@@ -39,13 +39,15 @@ class Meta_boxes {
 		// Helper::debug( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php', '200px' );
 
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php' );
-		$this->opts = apply_filters( "{$this->id_prefix}_meta_opts", $opts );
+		$this->opts = apply_filters( "{$this->id_prefix}_opts", $opts );
 		// Helper::debug( $this->opts );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ], 10, 2 );
 		add_action( 'save_post', [ $this, 'meta_box_save' ], 1, 2 );
+		$this->redefine_script_tag();
 	}
+
 
 	/**
 	 * Registering Styles and Scripts of metaboxes.
@@ -65,7 +67,7 @@ class Meta_boxes {
 			'css' => [
 				/************ CSS ************/
 				[
-					'id'   => 'metabox-tmpl-css',
+					'id'   => $this->id_prefix . '-css',
 					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
 					'deps' => [],
 					'ver'  => '1.0.0'
@@ -74,7 +76,7 @@ class Meta_boxes {
 			'js' => [
 				/************ SCRIPTS ************/
 				[
-					'id'   => 'metabox-tmpl-js',
+					'id'   => $this->id_prefix . '-js',
 					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '1.0.0',
@@ -83,8 +85,51 @@ class Meta_boxes {
 			]
 		];
 
-		$assets = apply_filters( "{$this->id_prefix}_metabox_assets", $assets );
+		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
 		Helper::join_assets( $assets, false );
+	}
+
+
+	/**
+	 * Adding a filter to override the attributes of the 'script' tag.
+	 *
+	 * Добавление фильтра для переопределения атрибутов тега 'script'.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function redefine_script_tag() {
+		add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
+	}
+
+
+	/**
+	 * We indicate that the script is a module and, accordingly
+	 * will be able to import
+	 * functionality from other modules.
+	 *
+	 * Указываем, что скрипт - это модуль и соответственно
+	 * будет иметь возможность импортировать
+	 * функционал из других модулей.
+	 *
+	 * @param String $tag    - HTML код тега <script>.
+	 * @param String $handle - Название скрипта (рабочее название),
+	 *                         указываемое первым параметром в
+	 *                         функции wp_enqueue_script().
+	 * @param String $src    - Ссылка на скрипт.
+	 *
+	 * @return String $tag   - HTML код тега <script>.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function set_module_attr( $tag, $handle, $src ) {
+		$module_handle = $this->id_prefix . '-js';
+		if ( $module_handle === $handle )
+			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
+		return $tag;
 	}
 
 
@@ -202,7 +247,7 @@ class Meta_boxes {
 
 			// Helper::debug( $tmpl, '200px' );
 
-			add_meta_box( "{$this->id_prefix}_meta_box_{$n}", $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
+			add_meta_box( "{$this->id_prefix}_{$n}", $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 		}
 	}
 
@@ -994,10 +1039,10 @@ class Meta_boxes {
 		// Helper::debug( $_POST[ 'briz' ] );
 		// exit;
 
-		if ( ! isset( $_POST[ 'briz' ] ) )
+		if ( ! isset( $_POST[ $this->id_prefix ] ) )
 			return;
 
-		foreach ( $_POST[ 'briz' ] as $key => $val ) {
+		foreach ( $_POST[ $this->id_prefix ] as $key => $val ) {
 			if ( ! $val && $val !== '0' ) {
 				delete_post_meta( $post_id, $key );
 			} else {
