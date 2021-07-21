@@ -82,7 +82,7 @@ abstract class Bri_Shortcodes {
 		
 		// Helper::debug( $assets );
 
-		Helper::register_assets( $assets );
+		Helper::join_assets( $assets );
 	}
 
 

@@ -52,7 +52,7 @@ class Meta_boxes {
 	 *
 	 * Регистрация стилей и скриптов метабоксов.
 	 *
-	 * @see Helper::register_assets()
+	 * @see Helper::join_assets()
 	 * @link ~/common/helpers.php
 	 *
 	 * @return void.
@@ -63,37 +63,28 @@ class Meta_boxes {
 	public function add_assets() {
 		$assets = [
 			'css' => [
-				/************ TMPL CSS ************/
-				'id'   => 'metabox-tmpl-css',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
-				'deps' => [],
-				'ver'  => '1.0.0'
+				/************ CSS ************/
+				[
+					'id'   => 'metabox-tmpl-css',
+					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
+					'deps' => [],
+					'ver'  => '1.0.0'
+				]
 			],
 			'js' => [
-				/************ TMPL SCRIPTS ************/
-				'id'   => 'metabox-tmpl-js',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
-				'deps' => [ 'jquery' ],
-				'ver'  => '1.0.0',
-				'in_footer' => true
+				/************ SCRIPTS ************/
+				[
+					'id'   => 'metabox-tmpl-js',
+					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '1.0.0',
+					'in_footer' => true
+				]
 			]
 		];
 
 		$assets = apply_filters( "{$this->id_prefix}_metabox_assets", $assets );
-
-		// Helper::debug( $assets );
-
-		foreach ( $assets as $type => $data ) {
-			extract( $data );
-
-			if ( 'css' == $type ) {
-				if ( ! wp_style_is( $id, 'enqueued' ) )
-					wp_enqueue_style( $id, $src, $deps, $ver );
-			} else {
-				if ( ! wp_script_is( $id, 'enqueued' ) )
-					wp_enqueue_script( $id, $src, $deps, $ver, $in_footer );
-			}
-		}
+		Helper::join_assets( $assets, false );
 	}
 
 

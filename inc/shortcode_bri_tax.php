@@ -172,7 +172,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 	 *
 	 * Регистрация стилей и скриптов шаблонов.
 	 *
-	 * @see Helper::register_assets()
+	 * @see Helper::join_assets()
 	 * @link ~/common/helpers.php
 	 *
 	 * @return void.
@@ -186,7 +186,7 @@ class Bri_Tax_Shortcode extends Bri_Shortcodes {
 
 		// Helper::debug( $assets );
 
-		Helper::register_assets( $assets );
+		Helper::join_assets( $assets );
 	}
 
 

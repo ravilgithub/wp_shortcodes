@@ -147,14 +147,14 @@ class Helper {
 		];
 
 		$assets = apply_filters( "bri_shortcodes_vendors", $assets );
-		self::register_assets( $assets );
+		self::join_assets( $assets );
 	}
 
 
 	/**
-	 * Registration of styles and scripts.
+	 * Registration or enqueue of styles and scripts.
 	 *
-	 * Регистрация стилей и скриптов.
+	 * Регистрация или подключение стилей и скриптов.
 	 *
 	 * @param Array $assets {
 	 *  @type Array $css {
@@ -174,10 +174,15 @@ class Helper {
 	 *  }
 	 * }
 	 *
+	 * @param String $register - определяет какое действие совершать,
+	 *                           регистрировать или подключать 'CSS' и 'JS'.
+	 *                           Available: 'true' or 'false'
+	 *                           Default: 'true'
+	 *
 	 * @see Bri_Shortcodes::merge_shortcode_assets()
 	 *  @link ~/main_class.php
 	 *
-	 * @see Bri_Tax_Shortcode::register_assets()
+	 * @see Bri_Tax_Shortcode::join_assets()
 	 *  @link ~/inc/shortcode_bri_tax.php
 	 *
 	 * @return void.
@@ -185,17 +190,27 @@ class Helper {
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
-	public static function register_assets( $assets ) {
+	public static function join_assets( $assets, $register = true ) {
 		foreach ( $assets as $type => $data ) {
 			foreach ( $data as $item ) {
 				extract( $item );
 
 				if ( 'css' == $type ) {
-					if ( ! wp_style_is( $id, 'registered' ) )
-						wp_register_style( $id, $src, $deps, $ver );
+					if ( $register ) {
+						if ( ! wp_style_is( $id, 'registered' ) )
+							wp_register_style( $id, $src, $deps, $ver );
+					} else {
+						if ( ! wp_style_is( $id, 'enqueued' ) )
+							wp_enqueue_style( $id, $src, $deps, $ver );
+					}
 				} else {
-					if ( ! wp_script_is( $id, 'registered' ) )
-						wp_register_script( $id, $src, $deps, $ver, $in_footer );
+					if ( $register ) {
+						if ( ! wp_script_is( $id, 'registered' ) )
+							wp_register_script( $id, $src, $deps, $ver, $in_footer );
+					} else {
+						if ( ! wp_script_is( $id, 'enqueued' ) )
+							wp_enqueue_script( $id, $src, $deps, $ver, $in_footer );
+					}
 				}
 			}
 		}

@@ -37,7 +37,7 @@ class Term_Meta_Opts {
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/term/opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_term_meta_opts", $opts );
 
-		$this->add_assets();
+		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		$this->add_hooks( $taxs );
 	}
 
@@ -55,35 +55,28 @@ class Term_Meta_Opts {
 	public function add_assets() {
 		$assets = [
 			'css' => [
-				/************ TMPL CSS ************/
-				'id'   => 'term-meta-css',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/term_meta.min.css',
-				'deps' => [],
-				'ver'  => '1.0.0'
+				/************ CSS ************/
+				[
+					'id'   => 'term-meta-css',
+					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/term_meta.min.css',
+					'deps' => [],
+					'ver'  => '1.0.0'
+				]
 			],
 			'js' => [
-				/************ TMPL SCRIPTS ************/
-				'id'   => 'term-meta-js',
-				'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/term_meta.js',
-				'deps' => [ 'jquery' ],
-				'ver'  => '1.0.0',
-				'in_footer' => true
+				/************ SCRIPTS ************/
+				[
+					'id'   => 'term-meta-js',
+					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/term_meta.js',
+					'deps' => [ 'jquery' ],
+					'ver'  => '1.0.0',
+					'in_footer' => true
+				]
 			]
 		];
 
 		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
-
-		foreach ( $assets as $type => $data ) {
-			extract( $data );
-
-			if ( 'css' == $type ) {
-				if ( ! wp_style_is( $id, 'enqueued' ) )
-					wp_enqueue_style( $id, $src, $deps, $ver );
-			} else {
-				if ( ! wp_script_is( $id, 'enqueued' ) )
-					wp_enqueue_script( $id, $src, $deps, $ver, $in_footer );
-			}
-		}
+		Helper::join_assets( $assets, false );
 	}
 
 
