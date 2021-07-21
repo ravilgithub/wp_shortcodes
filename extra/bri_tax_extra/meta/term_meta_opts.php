@@ -38,6 +38,7 @@ class Term_Meta_Opts {
 		$this->opts = apply_filters( "{$this->id_prefix}_term_meta_opts", $opts );
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
+		$this->redefine_script_tag();
 		$this->add_hooks( $taxs );
 	}
 
@@ -57,7 +58,7 @@ class Term_Meta_Opts {
 			'css' => [
 				/************ CSS ************/
 				[
-					'id'   => 'term-meta-css',
+					'id'   => $this->id_prefix . '-css',
 					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/term_meta.min.css',
 					'deps' => [],
 					'ver'  => '1.0.0'
@@ -66,7 +67,7 @@ class Term_Meta_Opts {
 			'js' => [
 				/************ SCRIPTS ************/
 				[
-					'id'   => 'term-meta-js',
+					'id'   => $this->id_prefix . '-js',
 					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/term_meta.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '1.0.0',
@@ -77,6 +78,49 @@ class Term_Meta_Opts {
 
 		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
 		Helper::join_assets( $assets, false );
+	}
+
+
+	/**
+	 * Adding a filter to override the attributes of the 'script' tag.
+	 *
+	 * Добавление фильтра для переопределения атрибутов тега 'script'.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function redefine_script_tag() {
+		add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
+	}
+
+
+	/**
+	 * We indicate that the script is a module and, accordingly
+	 * will be able to import
+	 * functionality from other modules.
+	 *
+	 * Указываем, что скрипт - это модуль и соответственно
+	 * будет иметь возможность импортировать
+	 * функционал из других модулей.
+	 *
+	 * @param String $tag    - HTML код тега <script>.
+	 * @param String $handle - Название скрипта (рабочее название),
+	 *                         указываемое первым параметром в
+	 *                         функции wp_enqueue_script().
+	 * @param String $src    - Ссылка на скрипт.
+	 *
+	 * @return String $tag   - HTML код тега <script>.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function set_module_attr( $tag, $handle, $src ) {
+		$module_handle = $this->id_prefix . '-js';
+		if ( $module_handle === $handle )
+			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
+		return $tag;
 	}
 
 
