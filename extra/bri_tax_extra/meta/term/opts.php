@@ -91,6 +91,17 @@ $opts = [
 				'max'  => 10
 			]
 		],
+		'option_71' => [
+			'type'  => 'range',
+			'title' => 'Опция 71',
+			'desc'  => 'Описание опции 71',
+			'value' => '2',
+			'options' => [
+				'step' => 2,
+				'min'  => 0,
+				'max'  => 10
+			]
+		],
 		'option_8' => [
 			'type'  => 'radio',
 			'title' => 'Опция 8',
