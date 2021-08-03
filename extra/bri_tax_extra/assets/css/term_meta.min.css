@@ -29,10 +29,10 @@
 	display: none;
 }
 
-.briz-del-media-button {
+.briz-del-media-btn {
 	display: none !important;
 }
 
-.briz-del-media-button-active {
+.briz-del-media-btn-active {
 	display: inline-block !important;
 }
