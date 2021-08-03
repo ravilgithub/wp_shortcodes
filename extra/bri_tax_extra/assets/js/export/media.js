@@ -9,11 +9,9 @@ export default {
 	/**
 	 * Объект создающийся для каждого мета поля "image".
 	 *
-	 * @property {Object} dom   - jQuery объекты элементов мета поля "image".
+	 * @property {Object} dom   - DOM объекты элементов мета поля "image".
 	 * @property Object wpm     - WP Media Object.
 	 * @property Object wpmArgs - параметры передаваемые в WP Media Object.
-	 *
-	 * @since 0.0.1
 	 */
 	image: {
 		dom: {},
@@ -63,8 +61,6 @@ export default {
 				attach.fetch();
 				img.add( attach ? attach : [] );
 			}
-			console.log( 'open' );
-			console.log( this.dom );
 		},
 
 
@@ -74,12 +70,7 @@ export default {
 		 * @return {void}
 		 */
 		select() {
-			console.log( 'select' );
-			console.log( this.dom );
 			const img = this.wpm.state().get( 'selection' ).first().toJSON();
-
-			// console.log( 'first', this.wpm.state().get( 'selection' ).first() );
-			// console.log( 'img', img );
 
 			if ( img ) {
 				const size = img.sizes.thumbnail || img.sizes.full;
@@ -140,8 +131,6 @@ export default {
 		 * в свойство "this.dom" для краткости кода.
 		 *
 		 * @return {void}
-		 *
-		 * @since 0.0.1
 		 */
 		setProps() {
 			this.dom[ 'button' ] = this.dom.tmpl.querySelector( 'button' );
@@ -155,8 +144,6 @@ export default {
 		 * Let's go.
 		 *
 		 * @return {void}
-		 *
-		 * @since 0.0.1
 		 */
 		start() {
 			this.setProps();
@@ -174,7 +161,6 @@ export default {
 	init( selector ) {
 		document.querySelectorAll( selector ).forEach( el => {
 			// Object.assign( {}, this.image, { dom: { tmpl: el } } ).start();
-
 			jQuery.extend( true, { dom: { tmpl: el } }, this.image ).start();
 		} );
 	}
