@@ -919,7 +919,7 @@ class Meta_boxes {
 		if ( $value ) {
 			$stage = 'editable';
 			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-button-active';
+			$delBtnClass = 'briz-del-media-btn-active';
 		}
 ?>
 		<tr>
@@ -936,7 +936,7 @@ class Meta_boxes {
 				/>
 				<button
 					type="button"
-					class="button briz-media-button"
+					class="button briz-add-media-btn"
 					data-title="<?php echo $title; ?>"
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
 					data-multiple="<?php echo $multiple; ?>"
@@ -948,7 +948,7 @@ class Meta_boxes {
 				</button>
 				<button
 					type="button"
-					class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+					class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
 					data-action-text="<?php echo $add_action_txt; ?>"
 				>
 					<?php echo __( 'Удалить медиафайлы' ); ?>
