@@ -26,6 +26,30 @@
 
 $opts = [
 	'category' => [
+		'option_12' => [
+			'type'  => 'media_button',
+			'title' => 'Опция 12',
+			'desc'  => 'Описание опции 12',
+			'value' => '',
+			'options' => [
+				'title'    => 'Insert a media',
+				'library'  => [ 'type' => 'image' ],
+				'multiple' => 1,
+				'button'   => [ 'text' => 'Insert' ]
+			]
+		],
+		'option_12_1' => [
+			'type'  => 'media_button',
+			'title' => 'Опция 12_1',
+			'desc'  => 'Описание опции 12_1',
+			'value' => '',
+			'options' => [
+				'title'    => 'Insert a media',
+				'library'  => [ 'type' => 'image' ],
+				'multiple' => 1,
+				'button'   => [ 'text' => 'Insert' ]
+			]
+		],
 		'option_1' => [
 			'type'  => 'text',
 			'title' => 'Опция 1',
@@ -161,18 +185,6 @@ $opts = [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
 				'multiple' => 0,
-				'button'   => [ 'text' => 'Insert' ]
-			]
-		],
-		'option_12' => [
-			'type'  => 'media_button',
-			'title' => 'Опция 12',
-			'desc'  => 'Описание опции 12',
-			'value' => '',
-			'options' => [
-				'title'    => 'Insert a media',
-				'library'  => [ 'type' => 'image' ],
-				'multiple' => 1,
 				'button'   => [ 'text' => 'Insert' ]
 			]
 		],
