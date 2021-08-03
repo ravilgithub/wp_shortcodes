@@ -1270,15 +1270,15 @@ class Term_Meta_Opts {
 		if ( $field_value ) {
 			$stage = 'editable';
 			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-button-active';
+			$delBtnClass = 'briz-del-media-btn-active';
 		}
 ?>
-		<div class="form-field briz-term-media-button-wrap">
+		<div class="form-field briz-term-media-btn-wrap">
 			<label><?php echo $field_params[ 'title' ]; ?></label>
 
 			<button
 				type="button"
-				class="button briz-term-media-button"
+				class="button briz-add-media-btn"
 				data-title="<?php echo $title; ?>"
 				data-library-type="<?php echo $library[ 'type' ]; ?>"
 				data-multiple="<?php echo $multiple; ?>"
@@ -1291,7 +1291,7 @@ class Term_Meta_Opts {
 
 			<button
 				type="button"
-				class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+				class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
 				data-action-text="<?php echo $add_action_txt; ?>"
 			>
 				<?php echo __( 'Удалить медиафайлы' ); ?>
@@ -1387,10 +1387,10 @@ class Term_Meta_Opts {
 		if ( $field_value ) {
 			$stage = 'editable';
 			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-button-active';
+			$delBtnClass = 'briz-del-media-btn-active';
 		}
 ?>
-		<tr class="form-field briz-term-media-button-wrap">
+		<tr class="form-field briz-term-media-btn-wrap">
 			<td>
 				<span class="briz_meta_field_title">
 					<?php echo $field_params[ 'title' ]; ?>
@@ -1400,7 +1400,7 @@ class Term_Meta_Opts {
 			<td>
 				<button
 					type="button"
-					class="button briz-term-media-button"
+					class="button briz-add-media-btn"
 					data-title="<?php echo $title; ?>"
 					data-library-type="<?php echo $library[ 'type' ]; ?>"
 					data-multiple="<?php echo $multiple; ?>"
@@ -1413,7 +1413,7 @@ class Term_Meta_Opts {
 
 				<button
 					type="button"
-					class="button briz-del-media-button <?php echo $delBtnClass; ?>"
+					class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
 					data-action-text="<?php echo $add_action_txt; ?>"
 				>
 					<?php echo __( 'Удалить медиафайлы' ); ?>
