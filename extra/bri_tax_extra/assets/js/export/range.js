@@ -10,9 +10,7 @@ export default {
 	ctx: '',
 
 	numShow() {
-		let els = document.querySelectorAll( this.ctx );
-
-		els.forEach( el => {
+		document.querySelectorAll( this.ctx ).forEach( el => {
 			const input = el.querySelector( 'input' ),
 			      em    = el.querySelector( '.briz-range-current-value' );
 
