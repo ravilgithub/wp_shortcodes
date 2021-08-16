@@ -1,31 +1,45 @@
 /**
- * Отображение текущего значения мета поля 'range'
+ * Отображение текущего значения мета поля 'range'.
  *
- * @property String ctx - селектор обёртки мета поля.
+ * @property String selector - селектор родительского элемента мета поля "range".
  *
  * @since 0.0.1
  * @author Ravil
  */
 export default {
-	ctx: '',
+	selector: '',
 
+	/**
+	 * Отображение текущего значения мета поля 'range'.
+	 *
+	 * @return {void}
+	 */
 	numShow() {
-		document.querySelectorAll( this.ctx ).forEach( el => {
+		document.querySelectorAll( this.selector ).forEach( el => {
 			const input = el.querySelector( 'input' ),
-			      em    = el.querySelector( '.briz-range-current-value' );
+						em    = el.querySelector( '.briz-meta-range-current-value' );
 
-			input.addEventListener( 'input', evt => {
+			const brizMetaRangeHandler = evt => {
 				em.textContent = evt.target.value;
-			}, false );
+			};
+
+			input.addEventListener( 'input', brizMetaRangeHandler, false );
 		} );
 	},
 
 
-	init( ctx ) {
-		if ( ! ctx )
+	/**
+	 * Инициализация основных методов.
+	 *
+	 * @param String selector - селектор родительского элемента мета поля "range".
+	 *
+	 * @return {void}
+	 */
+	init( selector ) {
+		if ( ! selector )
 			return;
 
-		this.ctx = ctx;
+		this.selector = selector;
 		this.numShow();
 	}
 };
