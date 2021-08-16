@@ -156,6 +156,8 @@ export default {
 	/**
 	 * Инициализация основных методов.
 	 *
+	 * @param String selector - селектор родительского элемента мета поля "image".
+	 *
 	 * @return {void}
 	 */
 	init( selector ) {
