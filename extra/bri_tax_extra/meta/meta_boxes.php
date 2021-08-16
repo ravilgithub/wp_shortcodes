@@ -14,7 +14,7 @@ namespace Bri_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Meta_boxes {
+class Meta_boxes extends Meta {
 	public $screens;
 	public $taxs;
 	public $id_prefix = 'briz_meta_box';
@@ -32,104 +32,16 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function __construct( $screens, $taxs ) {
-		// Helper::debug( __CLASS__, '200px' );
 		$this->taxs = $taxs;
 		$this->screens = $screens;
 
-		// Helper::debug( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php', '200px' );
+		parent::__construct();
 
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/meta_opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_opts", $opts );
-		// Helper::debug( $this->opts );
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ], 10, 2 );
 		add_action( 'save_post', [ $this, 'meta_box_save' ], 1, 2 );
-		$this->redefine_script_tag();
-	}
-
-
-	/**
-	 * Registering Styles and Scripts of metaboxes.
-	 *
-	 * Регистрация стилей и скриптов метабоксов.
-	 *
-	 * @see Helper::join_assets()
-	 * @link ~/common/helpers.php
-	 *
-	 * @return void.
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function add_assets() {
-		$assets = [
-			'css' => [
-				/************ CSS ************/
-				[
-					'id'   => $this->id_prefix . '-css',
-					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/metabox.min.css',
-					'deps' => [],
-					'ver'  => '1.0.0'
-				]
-			],
-			'js' => [
-				/************ SCRIPTS ************/
-				[
-					'id'   => $this->id_prefix . '-js',
-					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/metabox.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '1.0.0',
-					'in_footer' => true
-				]
-			]
-		];
-
-		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
-		Helper::join_assets( $assets, false );
-	}
-
-
-	/**
-	 * Adding a filter to override the attributes of the 'script' tag.
-	 *
-	 * Добавление фильтра для переопределения атрибутов тега 'script'.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 * */
-	public function redefine_script_tag() {
-		add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
-	}
-
-
-	/**
-	 * We indicate that the script is a module and, accordingly
-	 * will be able to import
-	 * functionality from other modules.
-	 *
-	 * Указываем, что скрипт - это модуль и соответственно
-	 * будет иметь возможность импортировать
-	 * функционал из других модулей.
-	 *
-	 * @param String $tag    - HTML код тега <script>.
-	 * @param String $handle - Название скрипта (рабочее название),
-	 *                         указываемое первым параметром в
-	 *                         функции wp_enqueue_script().
-	 * @param String $src    - Ссылка на скрипт.
-	 *
-	 * @return String $tag   - HTML код тега <script>.
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 * */
-	public function set_module_attr( $tag, $handle, $src ) {
-		$module_handle = $this->id_prefix . '-js';
-		if ( $module_handle === $handle )
-			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
-		return $tag;
 	}
 
 
@@ -152,8 +64,6 @@ class Meta_boxes {
 	 */
 	public function get_terms_info( $post ) {
 		$taxs = get_object_taxonomies( $post );
-		// Helper::debug( $taxs, '200px' );
-
 		$term_info = [];
 
 		foreach ( $taxs as $tax ) {
@@ -186,14 +96,9 @@ class Meta_boxes {
 						} while ( $term_id );
 					}
 				}
-
-				// Helper::debug( $terms, '200px' );
-				// Helper::debug( $tax, '200px' );
-				// Helper::debug( $post_terms, '200px' );
 			}
 		}
 
-		// Helper::debug( $term_info, '200px' );
 		return $term_info;
 	}
 
@@ -212,10 +117,6 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function add_meta_box( $post_type, $post ) {
-		// Helper::debug( __METHOD__, '200px' );
-		// Helper::debug( $post_type, '200px' );
-		// Helper::debug( $post, '200px' );
-
 		$callback = [ $this, 'meta_box' ];
 		$terms_info = $this->get_terms_info( $post );
 
@@ -244,8 +145,6 @@ class Meta_boxes {
 			$callback_args[ 'fields' ] = $this->opts[ $tax ][ $tmpl ][ 'fields' ];
 			$callback_args[ 'taxonomy' ] = $tax;
 			$callback_args[ 'tmpl' ] = $tmpl;
-
-			// Helper::debug( $tmpl, '200px' );
 
 			add_meta_box( "{$this->id_prefix}_{$n}", $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 		}
@@ -436,9 +335,6 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function meta_box( $post, $meta ) {
-		// Helper::debug( __METHOD__, '200px' );
-		// Helper::debug( $post, '200px' );
-		// Helper::debug( $meta, '200px' );
 ?>
 		<div class="briz_meta_box_wrap">
 			<table width="100%">
@@ -474,24 +370,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function text( $key, $value, $params ) {
-		// $bg_color = $params[ 'color' ] ?: '';
-?>
-		<!-- <tr style="background-color: <?php // echo esc_attr( $bg_color ); ?>;"> -->
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-				<input type="text" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/text_edit.php';
+		require apply_filters( 'briz_meta_text_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -510,21 +390,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function textarea( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<textarea name="<?php echo $key; ?>"><?php echo $value; ?></textarea>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/textarea_edit.php';
+		require apply_filters( 'briz_meta_textarea_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -543,22 +410,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function color( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-				<input type="color" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/color_edit.php';
+		require apply_filters( 'briz_meta_color_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -578,30 +431,8 @@ class Meta_boxes {
 	 */
 
 	public function number( $key, $value, $params ) {
-		extract( $params[ 'options' ] );
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-				<input
-					type="number"
-					name="<?php echo $key; ?>"
-					value="<?php echo $value; ?>"
-					step="<?php echo $step; ?>"
-					min="<?php echo $min; ?>"
-					max="<?php echo $max; ?>"
-				/>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/number_edit.php';
+		require apply_filters( 'briz_meta_number_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -621,26 +452,8 @@ class Meta_boxes {
 	 */
 
 	public function select( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-				<select name="<?php echo $key; ?>">
-					<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>	
-						<option value="<?php echo $k; ?>" <?php selected( $value, $k, true ); ?>><?php echo $v; ?></option>
-					<?php endforeach; ?>
-				</select>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/select_edit.php';
+		require apply_filters( 'briz_meta_select_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -659,38 +472,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function checkbox( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-
-				<!-- Если checkbox'ы не выбраны то в $_POST будет пустое поле, что позволит удалить его из БД. -->
-				<input type="hidden" name="<?php echo $key; ?>" value="">
-
-				<?php // Helper::debug( (array) $value ); ?>
-
-				<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
-					<label>
-						<input
-							type="checkbox"
-							name="<?php echo $key . '[]'; ?>"
-							value="<?php echo $k; ?>"
-							<?php checked( true, in_array( $k, (array) $value ) ); ?>
-						/>
-						<?php echo $v; ?>
-					</label>
-				<?php endforeach; ?>
-
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/checkbox_edit.php';
+		require apply_filters( 'briz_meta_checkbox_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -709,37 +492,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function range( $key, $value, $params ) {
-		extract( $params[ 'options' ] );
-?>
-		<tr class="briz-meta-field-range-wrap">
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-
-				<p>
-					<?php _e( 'Current value' ); ?>:
-					<span class="briz-range-current-value">
-						<?php echo $value; ?>
-					</span>
-				</p>
-
-				<input
-					type="range"
-					name="<?php echo $key; ?>"
-					value="<?php echo $value; ?>"
-					step="<?php echo $step; ?>"
-					min="<?php echo $min; ?>"
-					max="<?php echo $max; ?>"
-				/>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/range_edit.php';
+		require apply_filters( 'briz_meta_range_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -758,35 +512,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function radio( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-
-				<?php foreach ( $params[ 'options' ] as $k => $v ) : ?>
-					<label>
-						<input
-							type="radio"
-							name="<?php echo $key; ?>"
-							value="<?php echo $k; ?>"
-							<?php checked( $k, $value ); ?>
-						/>
-
-						<?php echo $v; ?>
-					</label>
-				<?php endforeach; ?>
-
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/radio_edit.php';
+		require apply_filters( 'briz_meta_radio_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -805,28 +532,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function url( $key, $value, $params ) {
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php // echo $value; ?>
-				<input
-					type="url"
-					name="<?php echo $key; ?>"
-					value="<?php echo $value; ?>"
-					pattern="<?php echo $params[ 'pattern' ]; ?>"
-					required="<?php echo $params[ 'required' ] ? 'required' : ''; ?>"
-				/>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/url_edit.php';
+		require apply_filters( 'briz_meta_url_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -845,44 +552,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function wp_editor( $key, $value, $params ) {
-		$args = array_merge( 
-			[
-				'textarea_name'    => $key, //нужно указывать!
-				'editor_class'     => 'editor-class',
-				// изменяемое
-				'wpautop'          => 1,
-				'textarea_rows'    => 5,
-				'tabindex'         => null,
-				'editor_css'       => '',
-				'teeny'            => 0,
-				'dfw'              => 0,
-				'tinymce'          => 1,
-				'quicktags'        => 1,
-				'media_buttons'    => false,
-				'drag_drop_upload' => false
-			],
-			$params[ 'options' ]
-		);
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<?php
-					// echo $value;
-
-					wp_editor( $value, $key, $args );
-				?>
-
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/wp_editor_edit.php';
+		require apply_filters( 'briz_meta_wp_editor_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -901,116 +572,8 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function media_button( $key, $value, $params ) {
-		$defaults = [
-			'title'    => 'Insert a media',
-			'library'  => [ 'type' => 'image' ],
-			'multiple' => false,
-			'button'   => [ 'text' => 'Insert' ]
-		];
-
-		$opts = wp_parse_args( $params[ 'options' ], $defaults );
-		extract( $opts );
-
-		$stage = 'addidable';
-		$add_action_txt = __( 'Add медиафайлы' );
-		$edit_action_txt = __( 'Edit медиафайлы' );
-		$btn_action_txt = $add_action_txt;
-		$delBtnClass = '';
-		if ( $value ) {
-			$stage = 'editable';
-			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-btn-active';
-		}
-?>
-		<tr>
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $params[ 'title' ]; ?>
-				</span>
-			</td>
-			<td>
-				<input
-					type="hidden"
-					name="<?php echo $key; ?>"
-					value="<?php echo $value ?>"
-				/>
-				<button
-					type="button"
-					class="button briz-add-media-btn"
-					data-title="<?php echo $title; ?>"
-					data-library-type="<?php echo $library[ 'type' ]; ?>"
-					data-multiple="<?php echo $multiple; ?>"
-					data-button-text="<?php echo $button[ 'text' ]; ?>"
-					data-action-text="<?php echo $edit_action_txt; ?>"
-					data-stage="<?php echo $stage; ?>"
-				>
-					<?php echo $btn_action_txt; ?>
-				</button>
-				<button
-					type="button"
-					class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
-					data-action-text="<?php echo $add_action_txt; ?>"
-				>
-					<?php echo __( 'Удалить медиафайлы' ); ?>
-				</button>
-				<small>
-					<em><?php echo $params[ 'desc' ]; ?></em>
-				</small>
-				<figure>
-					<span class="briz-media-place">
-<?php
-							if ( $value ) :
-								$value = json_decode( $value );
-								if ( ! empty( $value ) ) :
-									foreach ( $value as $media_id ) :
-										$details = wp_prepare_attachment_for_js( $media_id );
-
-										$src = $details[ 'url' ];
-										if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
-											$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
-										}
-
-										if ( $caption = $details[ 'caption' ] ) :
-?>
-											<figcaption>
-												<?php echo $caption; ?>
-											</figcaption>
-<?php
-										endif;
-
-										// Image
-										if ( 'image' == $library[ 'type' ] ) :
-?>
-											<img
-												src="<?php echo $src; ?>"
-												alt="<?php echo $details[ 'alt' ]; ?>"
-											/>
-<?php
-										// Audio
-										elseif ( 'audio' == $library[ 'type' ] ) :
-?>
-											<audio src="<?php echo $src; ?>" controls></audio>
-<?php
-										// Video
-										elseif ( 'video' == $library[ 'type' ] ) :
-?>
-											<video src="<?php echo $src; ?>" controls></video>
-<?php
-										endif;
-									endforeach;
-								endif;
-							endif;
-?>
-					</span>
-				</figure>
-
-				<?php
-					// global $wp_meta_boxes;
-					// Helper::debug( $wp_meta_boxes );
-				?>
-			</td>
-		</tr>
-<?php
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/media_button_edit.php';
+		require apply_filters( 'briz_meta_media_button_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1028,17 +591,6 @@ class Meta_boxes {
 	 * @author Ravil
 	 */
 	public function meta_box_save( $post_id, $post ) {
-		// Helper::debug( __METHOD__, '200px' );
-		// Helper::debug( $post_id, '200px' );
-		// Helper::debug( $post, '200px' );
-
-		// Helper::debug( $_POST );
-		// Helper::debug( $this );
-
-		// var_dump( $post_id );
-		// Helper::debug( $_POST[ 'briz' ] );
-		// exit;
-
 		if ( ! isset( $_POST[ $this->id_prefix ] ) )
 			return;
 
@@ -1065,7 +617,6 @@ class Meta_boxes {
  */
 function meta_boxes_init() {
 	$atts = [
-		// 'tmpls_dir'  => 'Meta_Boxes',
 		'screens'    => [ 'post', 'product' ],
 		'taxonomies' => [ 'category', 'product_cat' ]
 	];
@@ -1076,7 +627,6 @@ function meta_boxes_init() {
 		return;
 
 	extract( $atts );
-	// $meta_boxes = new Meta_Boxes( $tmpls_dir, $screens, $taxonomies );
 	$meta_boxes = new Meta_Boxes( $screens, $taxonomies );
 }
 

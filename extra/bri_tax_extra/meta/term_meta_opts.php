@@ -14,7 +14,7 @@ namespace Bri_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Term_Meta_Opts {
+class Term_Meta_Opts extends Meta {
 	public $id_prefix = 'briz_term_meta';
 	public $taxs      = [];
 	public $opts      = [];
@@ -34,93 +34,12 @@ class Term_Meta_Opts {
 	public function __construct( Array $taxs ) {
 		$this->taxs = $taxs;
 
+		parent::__construct();
+
 		require_once( PLUGIN_PATH . 'extra/bri_tax_extra/meta/term/opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_term_meta_opts", $opts );
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
-		$this->redefine_script_tag();
 		$this->add_hooks( $taxs );
-	}
-
-
-	/**
-	* Add CSS and JS.
-	*
-	* Добавление стилей и скриптов.
-	*
-	* @return void.
-	*
-	* @since 0.0.1
-	* @author Ravil
-	*/
-	public function add_assets() {
-		$assets = [
-			'css' => [
-				/************ CSS ************/
-				[
-					'id'   => $this->id_prefix . '-css',
-					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/css/term_meta.min.css',
-					'deps' => [],
-					'ver'  => '1.0.0'
-				]
-			],
-			'js' => [
-				/************ SCRIPTS ************/
-				[
-					'id'   => $this->id_prefix . '-js',
-					'src'  => PLUGIN_URL . 'extra/bri_tax_extra/assets/js/term_meta.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '1.0.0',
-					'in_footer' => true
-				]
-			]
-		];
-
-		$assets = apply_filters( "{$this->id_prefix}_assets", $assets );
-		Helper::join_assets( $assets, false );
-	}
-
-
-	/**
-	 * Adding a filter to override the attributes of the 'script' tag.
-	 *
-	 * Добавление фильтра для переопределения атрибутов тега 'script'.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 * */
-	public function redefine_script_tag() {
-		add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
-	}
-
-
-	/**
-	 * We indicate that the script is a module and, accordingly
-	 * will be able to import
-	 * functionality from other modules.
-	 *
-	 * Указываем, что скрипт - это модуль и соответственно
-	 * будет иметь возможность импортировать
-	 * функционал из других модулей.
-	 *
-	 * @param String $tag    - HTML код тега <script>.
-	 * @param String $handle - Название скрипта (рабочее название),
-	 *                         указываемое первым параметром в
-	 *                         функции wp_enqueue_script().
-	 * @param String $src    - Ссылка на скрипт.
-	 *
-	 * @return String $tag   - HTML код тега <script>.
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 * */
-	public function set_module_attr( $tag, $handle, $src ) {
-		$module_handle = $this->id_prefix . '-js';
-		if ( $module_handle === $handle )
-			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
-		return $tag;
 	}
 
 
@@ -208,7 +127,7 @@ class Term_Meta_Opts {
 
 			if ( method_exists( $this, $field_type ) ) {
 				$field_key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
-				$this->$field_type( $field_params, $field_key, $field_value );
+				$this->$field_type( $field_key, $field_value, $field_params );
 			}
 		}
 	}
@@ -317,25 +236,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function text( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field">
-			<label
-				for="<?php echo esc_attr( $field_key ); ?>"
-			><?php _e( $field_params[ 'title' ] ); ?></label>
-
-			<input
-				id="<?php echo esc_attr( $field_key ); ?>"
-				name="<?php echo esc_attr( $field_key ); ?>"
-				type="text"
-				value="<?php echo esc_attr( $field_value ); ?>"
-				size="40"
-				aria-required="false"
-			/>
-
-			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
-		</div>
-<?php
+	public function text( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/text.php';
+		require apply_filters( 'briz_meta_text_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -353,28 +256,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function text_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-text-wrap">
-			<th scope="row">
-				<label
-					for="<?php echo esc_attr( $field_key ); ?>"
-				><?php _e( $field_params[ 'title' ] ); ?></label>
-			</th>
-			<td>
-				<input
-					id="<?php echo esc_attr( $field_key ); ?>"
-					name="<?php echo esc_attr( $field_key ); ?>"
-					type="text"
-					value="<?php echo esc_attr( $field_value ); ?>"
-					size="40"
-					aria-required="false"
-				/>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function text_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/text_edit.php';
+		require apply_filters( 'briz_meta_text_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -392,24 +276,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function textarea( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field">
-			<label
-				for="<?php echo esc_attr( $field_key ); ?>"
-			><?php _e( $field_params[ 'title' ] ); ?></label>
-
-			<textarea
-				name="<?php echo esc_attr( $field_key ); ?>"
-				id="<?php echo esc_attr( $field_key ); ?>"
-				rows="5"
-				cols="50"
-				class="large-text"
-			><?php _e( $field_value ); ?></textarea>
-
-			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
-		</div>
-<?php
+	public function textarea( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/textarea.php';
+		require apply_filters( 'briz_meta_textarea_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -427,27 +296,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function textarea_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-textarea-wrap">
-			<th scope="row">
-				<label
-					for="<?php echo esc_attr( $field_key ); ?>"
-				><?php _e( $field_params[ 'title' ] ); ?></label>
-			</th>
-			<td>
-				<textarea
-					name="<?php echo esc_attr( $field_key ); ?>"
-					id="<?php echo esc_attr( $field_key ); ?>"
-					rows="5"
-					cols="50"
-					class="large-text"
-				><?php _e( $field_value ); ?></textarea>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function textarea_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/textarea_edit.php';
+		require apply_filters( 'briz_meta_textarea_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -465,24 +316,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function color( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field">
-			<label
-				for="<?php echo esc_attr( $field_key ); ?>"
-			><?php _e( $field_params[ 'title' ] ); ?></label>
-
-			<input
-				id="<?php echo esc_attr( $field_key ); ?>"
-				name="<?php echo esc_attr( $field_key ); ?>"
-				type="color"
-				value="<?php echo esc_attr( $field_value ); ?>"
-				aria-required="false"
-			/>
-
-			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
-		</div>
-<?php
+	public function color( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/color.php';
+		require apply_filters( 'briz_meta_color_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -500,27 +336,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function color_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-color-wrap">
-			<th scope="row">
-				<label
-					for="<?php echo esc_attr( $field_key ); ?>"
-				><?php _e( $field_params[ 'title' ] ); ?></label>
-			</th>
-			<td>
-				<input
-					id="<?php echo esc_attr( $field_key ); ?>"
-					name="<?php echo esc_attr( $field_key ); ?>"
-					type="color"
-					value="<?php echo esc_attr( $field_value ); ?>"
-					aria-required="false"
-				/>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function color_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/color_edit.php';
+		require apply_filters( 'briz_meta_color_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -538,27 +356,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function number( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field">
-			<label
-				for="<?php echo esc_attr( $field_key ); ?>"
-			><?php _e( $field_params[ 'title' ] ); ?></label>
-
-			<input
-				id="<?php echo esc_attr( $field_key ); ?>"
-				name="<?php echo esc_attr( $field_key ); ?>"
-				type="number"
-				value="<?php echo esc_attr( $field_value ); ?>"
-				step="<?php echo esc_attr( $field_params[ 'options' ][ 'step' ] ); ?>"
-				min="<?php echo esc_attr( $field_params[ 'options' ][ 'min' ] ); ?>"
-				max="<?php echo esc_attr( $field_params[ 'options' ][ 'max' ] ); ?>"
-				aria-required="false"
-			/>
-
-			<p><?php _e( $field_params[ 'desc' ] ); ?></p>
-		</div>
-<?php
+	public function number( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/number.php';
+		require apply_filters( 'briz_meta_number_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -576,30 +376,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function number_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-number-wrap">
-			<th scope="row">
-				<label
-					for="<?php echo esc_attr( $field_key ); ?>"
-				><?php _e( $field_params[ 'title' ] ); ?></label>
-			</th>
-			<td>
-				<input
-					id="<?php echo esc_attr( $field_key ); ?>"
-					name="<?php echo esc_attr( $field_key ); ?>"
-					type="number"
-					value="<?php echo esc_attr( $field_value ); ?>"
-					step="<?php echo esc_attr( $field_params[ 'options' ][ 'step' ] ); ?>"
-					min="<?php echo esc_attr( $field_params[ 'options' ][ 'min' ] ); ?>"
-					max="<?php echo esc_attr( $field_params[ 'options' ][ 'max' ] ); ?>"
-					aria-required="false"
-				/>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function number_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/number_edit.php';
+		require apply_filters( 'briz_meta_number_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -617,28 +396,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function select( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field term-briz-select-wrap">
-			<label
-				for="<?php echo esc_attr( $field_key ); ?>"
-			><?php _e( $field_params[ 'title' ] ); ?></label>
-
-			<select
-				id="<?php echo esc_attr( $field_key ); ?>"
-				name="<?php echo esc_attr( $field_key ); ?>"
-			>
-				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-					<option
-						value="<?php echo $k; ?>"
-						<?php selected( $field_value, $k, true ); ?>
-					><?php echo $v; ?></option>
-				<?php endforeach; ?>
-			</select>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function select( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/select.php';
+		require apply_filters( 'briz_meta_select_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -656,32 +416,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function select_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-select-wrap">
-			<th scope="row" valign="top">
-				<label
-					for="<?php echo esc_attr( $field_key ); ?>"
-				><?php _e( $field_params[ 'title' ] ); ?></label>
-			</th>
-			<td>
-
-				<select
-					id="<?php echo esc_attr( $field_key ); ?>"
-					name="<?php echo esc_attr( $field_key ); ?>"
-				>
-					<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-						<option
-							value="<?php echo $k; ?>"
-							<?php selected( $field_value, $k, true ); ?>
-						><?php echo $v; ?></option>
-					<?php endforeach; ?>
-				</select>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function select_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/select_edit.php';
+		require apply_filters( 'briz_meta_select_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -690,43 +427,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function checkbox( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field term-briz-checkbox-wrap">
-			<span>
-				<?php _e( $field_params[ 'title' ] ); ?>
-			</span>
-
-			<!--
-				Если checkbox'ы не выбраны то в $_POST будет пустое поле,
-				что позволит удалить его из БД.
-			-->
-			<input type="hidden" name="<?php echo $field_key; ?>" value="">
-
-			<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-				<label>
-					<input
-						name="<?php echo $field_key . '[]'; ?>"
-						type="checkbox"
-						value="<?php echo $k; ?>"
-						<?php checked( true, in_array( $k, (array) $field_value ) ); ?>
-					/>
-					<?php echo $v; ?>
-				</label>
-			<?php endforeach; ?>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function checkbox( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/checkbox.php';
+		require apply_filters( 'briz_meta_checkbox_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -735,47 +447,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function checkbox_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-checkbox-wrap">
-			<th scope="row" valign="top">
-				<span>
-					<?php _e( $field_params[ 'title' ] ); ?>
-				</span>
-			</th>
-			<td>
-
-				<!--
-					Если checkbox'ы не выбраны то в $_POST будет пустое поле,
-					что позволит удалить его из БД.
-				-->
-				<input type="hidden" name="<?php echo $field_key; ?>" value="">
-
-				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-					<label>
-						<input
-							name="<?php echo $field_key . '[]'; ?>"
-							type="checkbox"
-							value="<?php echo $k; ?>"
-							<?php checked( true, in_array( $k, (array) $field_value ) ); ?>
-						/>
-						<?php echo $v; ?>
-					</label>
-				<?php endforeach; ?>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function checkbox_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/checkbox_edit.php';
+		require apply_filters( 'briz_meta_checkbox_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -784,41 +467,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function range( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field term-briz-range-wrap">
-			<span>
-				<?php _e( $field_params[ 'title' ] ); ?>
-			</span>
-
-			<p>
-				<?php _e( 'Current value' ); ?>:
-				<span class="briz-range-current-value">
-					<?php echo $field_value; ?>
-				</span>
-			</p>
-
-			<input
-				name="<?php echo $field_key; ?>"
-				type="range"
-				value="<?php echo $field_value; ?>"
-				step="<?php echo $field_params[ 'options' ][ 'step' ]; ?>"
-				min="<?php echo $field_params[ 'options' ][ 'min' ]; ?>"
-				max="<?php echo $field_params[ 'options' ][ 'max' ]; ?>"
-			/>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function range( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/range.php';
+		require apply_filters( 'briz_meta_range_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -827,45 +487,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function range_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-range-wrap">
-			<th scope="row" valign="top">
-				<span>
-					<?php _e( $field_params[ 'title' ] ); ?>
-				</span>
-			</th>
-			<td>
-
-				<p>
-					<?php _e( 'Current value' ); ?>:
-					<span class="briz-range-current-value">
-						<?php echo $field_value; ?>
-					</span>
-				</p>
-
-				<input
-					name="<?php echo $field_key; ?>"
-					type="range"
-					value="<?php echo $field_value; ?>"
-					step="<?php echo $field_params[ 'options' ][ 'step' ]; ?>"
-					min="<?php echo $field_params[ 'options' ][ 'min' ]; ?>"
-					max="<?php echo $field_params[ 'options' ][ 'max' ]; ?>"
-				/>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function range_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/range_edit.php';
+		require apply_filters( 'briz_meta_range_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -874,38 +507,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function radio( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field term-briz-radio-wrap">
-			<span>
-				<?php _e( $field_params[ 'title' ] ); ?>
-			</span>
-
-			<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-				<label>
-					<input
-						type="radio"
-						name="<?php echo $field_key; ?>"
-						value="<?php echo $k; ?>"
-						<?php checked( $k, $field_value ); ?>
-					/>
-
-					<?php echo $v; ?>
-				</label>
-			<?php endforeach; ?>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function radio( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/radio.php';
+		require apply_filters( 'briz_meta_radio_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -914,42 +527,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function radio_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-radio-wrap">
-			<th scope="row" valign="top">
-				<span>
-					<?php _e( $field_params[ 'title' ] ); ?>
-				</span>
-			</th>
-			<td>
-
-				<?php foreach ( $field_params[ 'options' ] as $k => $v ) : ?>
-					<label>
-						<input
-							type="radio"
-							name="<?php echo $field_key; ?>"
-							value="<?php echo $k; ?>"
-							<?php checked( $k, $field_value ); ?>
-						/>
-
-						<?php echo $v; ?>
-					</label>
-				<?php endforeach; ?>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function radio_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/radio_edit.php';
+		require apply_filters( 'briz_meta_radio_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -958,33 +547,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function url( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field term-briz-url-wrap">
-			<span>
-				<?php _e( $field_params[ 'title' ] ); ?>
-			</span>
-
-			<input
-				type="url"
-				name="<?php echo $field_key; ?>"
-				value="<?php echo $field_value; ?>"
-				pattern="<?php echo $field_params[ 'pattern' ]; ?>"
-				required="<?php echo $field_params[ 'required' ] ? 'required' : ''; ?>"
-			/>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function url( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/url.php';
+		require apply_filters( 'briz_meta_url_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -993,37 +567,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function url_edit( $field_params, $field_key, $field_value ) {
-?>
-		<tr class="form-field term-briz-url-wrap">
-			<th scope="row" valign="top">
-				<span>
-					<?php _e( $field_params[ 'title' ] ); ?>
-				</span>
-			</th>
-			<td>
-
-				<input
-					type="url"
-					name="<?php echo $field_key; ?>"
-					value="<?php echo $field_value; ?>"
-					pattern="<?php echo $field_params[ 'pattern' ]; ?>"
-					required="<?php echo $field_params[ 'required' ] ? 'required' : ''; ?>"
-				/>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function url_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/url_edit.php';
+		require apply_filters( 'briz_meta_url_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1032,49 +587,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function wp_editor( $field_params, $field_key, $field_value ) {
-		$args = array_merge(
-			[
-				'textarea_name'    => $field_key, //нужно указывать!
-				'editor_class'     => 'editor-class',
-				// изменяемое
-				'wpautop'          => 1,
-				'textarea_rows'    => 5,
-				'tabindex'         => null,
-				'editor_css'       => '',
-				'teeny'            => 0,
-				'dfw'              => 0,
-				'tinymce'          => 1,
-				'quicktags'        => 1,
-				'media_buttons'    => false,
-				'drag_drop_upload' => false
-			],
-			$field_params[ 'options' ]
-		);
-?>
-		<div class="form-field term-briz-wp-editor-wrap">
-			<span>
-				<?php _e( $field_params[ 'title' ] ); ?>
-			</span>
-
-			<?php
-				echo $field_value;
-
-				wp_editor( $field_value, $field_key, $args );
-			?>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-		</div>
-<?php
+	public function wp_editor( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/wp_editor.php';
+		require apply_filters( 'briz_meta_wp_editor_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1083,53 +607,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function wp_editor_edit( $field_params, $field_key, $field_value ) {
-		$args = array_merge(
-			[
-				'textarea_name'    => $field_key, //нужно указывать!
-				'editor_class'     => 'editor-class',
-				// изменяемое
-				'wpautop'          => 1,
-				'textarea_rows'    => 5,
-				'tabindex'         => null,
-				'editor_css'       => '',
-				'teeny'            => 0,
-				'dfw'              => 0,
-				'tinymce'          => 1,
-				'quicktags'        => 1,
-				'media_buttons'    => false,
-				'drag_drop_upload' => false
-			],
-			$field_params[ 'options' ]
-		);
-?>
-		<tr class="form-field term-briz-wp-editor-wrap">
-			<th scope="row" valign="top">
-				<span>
-					<?php _e( $field_params[ 'title' ] ); ?>
-				</span>
-			</th>
-			<td>
-
-				<?php
-					echo $field_value;
-
-					wp_editor( $field_value, $field_key, $args );
-				?>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-			</td>
-		</tr>
-<?php
+	public function wp_editor_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/wp_editor_edit.php';
+		require apply_filters( 'briz_meta_wp_editor_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1138,43 +627,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function image( $field_params, $field_key, $field_value ) {
-?>
-		<div class="form-field briz-term-img-wrap">
-			<label><?php _e( 'Image' ); ?></label>
-
-			<figure>
-				<a href="#">
-					<img
-						src="<?php echo esc_attr( $field_value ); ?>"
-						data-default="<?php echo esc_attr( $field_params[ 'value' ] ); ?>"
-						alt="Alt"
-					/>
-				</a>
-
-				<button type="button" class="button hidden">
-					<?php _e( 'Remove' ); ?>
-				</button>
-			</figure>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-
-			<input
-				type="hidden"
-				name="<?php echo esc_attr( $field_key ); ?>"
-				value=""
-			/>
-		</div>
-<?php
+	public function image( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/image.php';
+		require apply_filters( 'briz_meta_image_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1183,56 +647,18 @@ class Term_Meta_Opts {
 	 *
 	 * HTML разметка мета поля.
 	 *
-	 * @param Array $field_params - параметры мета поля.
-	 * @param String $field_key   - имя мета поля.
-	 * @param String $field_value - значение мета поля.
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
 	 *
 	 * @return void
 	 *
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function image_edit ( $field_params, $field_key, $field_value ) {
-		$img_id = ( int ) $field_value;
-		$img_url = $field_params[ 'value' ];
-		$btn_class = 'hidden';
-
-		if ( $img_id ) {
-			$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
-			$btn_class = '';
-		}
-?>
-		<tr class="form-field briz-term-img-wrap">
-			<th scope="row">
-				<label for="description">
-					<?php _e( 'Term image' ); ?>
-				</label>
-			</th>
-			<td>
-				<figure>
-					<a href="#">
-						<img
-							src="<?php echo esc_attr( $img_url ); ?>"
-							data-default="<?php echo esc_attr( $field_params[ 'value' ] ); ?>"
-							alt="Alt"
-						/>
-					</a>
-
-					<button type="button" class="button <?php echo esc_attr( $btn_class ); ?>">
-						<?php _e( 'Remove' ); ?>
-					</button>
-				</figure>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-
-				<input
-					type="hidden"
-					name="<?php echo esc_attr( $field_key ); ?>"
-					value="<?php echo esc_attr( $img_id ); ?>"
-				/>
-			</td>
-		</tr>
-<?php
+	public function image_edit ( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/image_edit.php';
+		require apply_filters( 'briz_meta_image_edit_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1250,106 +676,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function media_button( $field_params, $field_key, $field_value ) {
-		$defaults = [
-			'title'    => 'Insert a media',
-			'library'  => [ 'type' => 'image' ],
-			'multiple' => false,
-			'button'   => [ 'text' => 'Insert' ]
-		];
-
-		$opts = wp_parse_args( $field_params[ 'options' ], $defaults );
-		extract( $opts );
-
-		$stage = 'addidable';
-		$add_action_txt = __( 'Add медиафайлы' );
-		$edit_action_txt = __( 'Edit медиафайлы' );
-		$btn_action_txt = $add_action_txt;
-		$delBtnClass = '';
-
-		if ( $field_value ) {
-			$stage = 'editable';
-			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-btn-active';
-		}
-?>
-		<div class="form-field briz-term-media-btn-wrap">
-			<label><?php echo $field_params[ 'title' ]; ?></label>
-
-			<button
-				type="button"
-				class="button briz-add-media-btn"
-				data-title="<?php echo $title; ?>"
-				data-library-type="<?php echo $library[ 'type' ]; ?>"
-				data-multiple="<?php echo $multiple; ?>"
-				data-button-text="<?php echo $button[ 'text' ]; ?>"
-				data-action-text="<?php echo $edit_action_txt; ?>"
-				data-stage="<?php echo $stage; ?>"
-			>
-				<?php echo $btn_action_txt; ?>
-			</button>
-
-			<button
-				type="button"
-				class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
-				data-action-text="<?php echo $add_action_txt; ?>"
-			>
-				<?php echo __( 'Удалить медиафайлы' ); ?>
-			</button>
-
-			<p><?php _e( $field_params[ 'desc'] ); ?></p>
-
-			<figure>
-				<span class="briz-media-place">
-<?php
-						if ( $field_value ) :
-							$value = json_decode( $field_value );
-							if ( ! empty( $value ) ) :
-								foreach ( $value as $media_id ) :
-									$details = wp_prepare_attachment_for_js( $media_id );
-									$src = $details[ 'url' ];
-
-									if ( $caption = $details[ 'caption' ] ) :
-?>
-										<figcaption>
-											<?php echo $caption; ?>
-										</figcaption>
-<?php
-									endif;
-
-									// Image
-									if ( 'image' == $library[ 'type' ] ) :
-?>
-										<img
-											src="<?php echo $src; ?>"
-											alt="<?php echo $details[ 'alt' ]; ?>"
-										/>
-<?php
-									// Audio
-									elseif ( 'audio' == $library[ 'type' ] ) :
-?>
-										<audio src="<?php echo $src; ?>" controls></audio>
-<?php
-									// Video
-									elseif ( 'video' == $library[ 'type' ] ) :
-?>
-										<video src="<?php echo $src; ?>" controls></video>
-<?php
-									endif;
-								endforeach;
-							endif;
-						endif;
-?>
-				</span>
-			</figure>
-
-			<input
-				type="hidden"
-				name="<?php echo $field_key; ?>"
-				value="<?php echo $field_value ?>"
-			/>
-		</div>
-<?php
+	public function media_button( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/media_button.php';
+		require apply_filters( 'briz_meta_media_button_component', $component_path, $key, $value, $params );
 	}
 
 
@@ -1367,116 +696,9 @@ class Term_Meta_Opts {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function media_button_edit( $field_params, $field_key, $field_value ) {
-		$defaults = [
-			'title'    => 'Insert a media',
-			'library'  => [ 'type' => 'image' ],
-			'multiple' => false,
-			'button'   => [ 'text' => 'Insert' ]
-		];
-
-		$opts = wp_parse_args( $field_params[ 'options' ], $defaults );
-		extract( $opts );
-
-		$stage = 'addidable';
-		$add_action_txt = __( 'Add медиафайлы' );
-		$edit_action_txt = __( 'Edit медиафайлы' );
-		$btn_action_txt = $add_action_txt;
-		$delBtnClass = '';
-
-		if ( $field_value ) {
-			$stage = 'editable';
-			$btn_action_txt = $edit_action_txt;
-			$delBtnClass = 'briz-del-media-btn-active';
-		}
-?>
-		<tr class="form-field briz-term-media-btn-wrap">
-			<td>
-				<span class="briz_meta_field_title">
-					<?php echo $field_params[ 'title' ]; ?>
-				</span>
-			</td>
-
-			<td>
-				<button
-					type="button"
-					class="button briz-add-media-btn"
-					data-title="<?php echo $title; ?>"
-					data-library-type="<?php echo $library[ 'type' ]; ?>"
-					data-multiple="<?php echo $multiple; ?>"
-					data-button-text="<?php echo $button[ 'text' ]; ?>"
-					data-action-text="<?php echo $edit_action_txt; ?>"
-					data-stage="<?php echo $stage; ?>"
-				>
-					<?php echo $btn_action_txt; ?>
-				</button>
-
-				<button
-					type="button"
-					class="button briz-del-media-btn <?php echo $delBtnClass; ?>"
-					data-action-text="<?php echo $add_action_txt; ?>"
-				>
-					<?php echo __( 'Удалить медиафайлы' ); ?>
-				</button>
-
-				<p><?php _e( $field_params[ 'desc'] ); ?></p>
-
-				<figure>
-					<span class="briz-media-place">
-<?php
-							if ( $field_value ) :
-								$value = json_decode( $field_value );
-								if ( ! empty( $value ) ) :
-									foreach ( $value as $media_id ) :
-										$details = wp_prepare_attachment_for_js( $media_id );
-
-										$src = $details[ 'url' ];
-										if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
-											$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
-										}
-
-										if ( $caption = $details[ 'caption' ] ) :
-?>
-											<figcaption>
-												<?php echo $caption; ?>
-											</figcaption>
-<?php
-										endif;
-
-										// Image
-										if ( 'image' == $library[ 'type' ] ) :
-?>
-											<img
-												src="<?php echo $src; ?>"
-												alt="<?php echo $details[ 'alt' ]; ?>"
-											/>
-<?php
-										// Audio
-										elseif ( 'audio' == $library[ 'type' ] ) :
-?>
-											<audio src="<?php echo $src; ?>" controls></audio>
-<?php
-										// Video
-										elseif ( 'video' == $library[ 'type' ] ) :
-?>
-											<video src="<?php echo $src; ?>" controls></video>
-<?php
-										endif;
-									endforeach;
-								endif;
-							endif;
-?>
-					</span>
-				</figure>
-
-				<input
-					type="hidden"
-					name="<?php echo $field_key; ?>"
-					value="<?php echo $field_value ?>"
-				/>
-			</td>
-		</tr>
-<?php
+	public function media_button_edit( $key, $value, $params ) {
+		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/media_button_edit.php';
+		require apply_filters( 'briz_meta_media_button_edit_component', $component_path, $key, $value, $params );
 	}
 }
 

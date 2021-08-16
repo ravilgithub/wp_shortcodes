@@ -1,0 +1,29 @@
+/**
+ * BEGIN "media button" meta field
+ */
+.briz-meta-media-btn-wrap figure {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.briz-meta-media-btn-wrap .briz-media-place {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.briz-meta-media-btn-wrap .briz-media-place-item {
+	padding: 0 10px 10px 0;
+	box-sizing: border-box;
+}
+
+.briz-meta-media-btn-wrap .briz-media-place-item figcaption {
+	padding-bottom: 10px;
+}
+
+.briz-meta-media-btn-wrap .briz-del-media-btn {
+	display: none !important;
+}
+
+.briz-meta-media-btn-wrap .briz-del-media-btn-active {
+	display: inline-block !important;
+}

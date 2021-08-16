@@ -1,0 +1,38 @@
+/**
+ * Post meta box
+ */
+.briz_meta_box_wrap table {
+	width: 100%;
+}
+
+.briz_meta_box_wrap .briz_meta_box_group_name td {
+	padding: 15px 0;
+	text-align: center;
+	font-weight: 500;
+}
+
+.briz_meta_box_wrap th,
+.briz_meta_box_wrap td {
+	padding: 20px 0;
+}
+
+.briz_meta_box_wrap td:first-child {
+	width: 20%;
+}
+
+.briz_meta_box_wrap td:last-child {
+	width: 80%;
+}
+
+.briz_meta_box_wrap th,
+.briz_meta_box_wrap td {
+	vertical-align: top;
+	text-align: left;
+}
+
+.briz_meta_box_wrap textarea,
+.briz_meta_box_wrap input[type=text],
+.briz_meta_box_wrap input[type=number] {
+	display: block;
+	width: 100%;
+}

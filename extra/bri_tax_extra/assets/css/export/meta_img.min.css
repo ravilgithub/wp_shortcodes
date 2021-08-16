@@ -1,0 +1,33 @@
+/**
+ *  Image meta field
+ */
+.briz-meta-img-wrap figure {
+	display: flex;
+	margin: 0;
+}
+
+.briz-meta-img-wrap figure a {
+	display: flex;
+	width: 60px;
+	height: 60px;
+	margin-right: 10px;
+}
+
+.briz-meta-img-wrap figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+	align-self: center;
+}
+
+.briz-meta-img-wrap figure button {
+	align-self: center;
+}
+
+.briz-col-term-img img {
+	max-height: 60px;
+}
+
+.briz-meta-img-wrap figure button.hidden {
+	display: none;
+}
