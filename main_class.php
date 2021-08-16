@@ -2,11 +2,18 @@
 namespace Bri_Shortcodes;
 
 /**
+ * The class implements the general functionality of shortcodes.
+ *
+ * Класс реализует общий функционал шорткодов.
+ *
  * @property String CSS_PATH          - путь к "css" файлу.
  * @property String JS_PATH           - путь к "js" файлу.
  * @property String lang_domain       - регистрационное "id" файла
  *                                      переводов для всех шорткодов.
  * @property Array special_atts_types - специфические обработчики атрибутов шорткода.
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
 abstract class Bri_Shortcodes {
 	const CSS_PATH             = 'assets/css/';
