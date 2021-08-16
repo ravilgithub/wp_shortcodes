@@ -30,7 +30,7 @@ $opts = [
 			'type'  => 'media_button',
 			'title' => 'Опция 12',
 			'desc'  => 'Описание опции 12',
-			'value' => '',
+			'value' => '[378,377,291,289,292]',
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
