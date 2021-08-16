@@ -2,6 +2,8 @@
  * Функционал описывающий работу с медиа файлами.
  * Добавление, изменение и удаление медиа файлов в мета полях.
  *
+ * @property Object selectors - селекторы HTML элементов мета поля.
+ *
  * @since 0.0.1
  * @autor Ravil
  */
@@ -53,6 +55,8 @@ export default {
 	 */
 	createEl( wpm, atts ) {
 		const tagName = atts.type;
+		const item = document.createElement( 'span' );
+		item.classList.add( 'briz-media-place-item' );
 
 		let attrs = { src: atts.url }, // для 'audio' и 'video'.
 		    html = '',
@@ -67,19 +71,20 @@ export default {
 			attrs[ 'controls' ] = 'controls';
 		}
 
-		if ( atts.caption ) {
-			const figcaption = document.createElement( 'figcaption' );
-			figcaption.textContent = atts.caption;
-			html = figcaption.outerHTML;
-		}
-
 		media = document.createElement( tagName );
 		for ( let i in attrs ) {
 			media.setAttribute( i, attrs[ i ] );
 		}
 
-		html += media.outerHTML;
-		return html;
+		item.appendChild( media );
+
+		if ( atts.caption ) {
+			const figcaption = document.createElement( 'figcaption' );
+			figcaption.textContent = atts.caption;
+			item.appendChild( figcaption );
+		}
+
+		return item.outerHTML;
 	},
 
 
