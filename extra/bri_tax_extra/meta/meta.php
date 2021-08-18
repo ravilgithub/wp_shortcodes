@@ -111,8 +111,21 @@ abstract class Meta {
 
 
 	/**
-	 * 
-	 * */
+	 * Connecting the HTML component of the meta field.
+	 *
+	 * Подключение HTML комонента мета поля.
+	 *
+	 * @param Array $params - параметры мета поля.
+	 * @param String $key   - имя мета поля.
+	 * @param String $value - значение мета поля.
+	 * @param String $method_suffix - суффикс названия подключаемого компонента.
+	 *                                Possible: '' | '_edit'
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
 	public function require_component( $key, $value, $params, $method_suffix ) {
 		$component_name = $params[ 'type' ] . $method_suffix;
 		$component_path = $this->inc_path . $component_name . '.php';
