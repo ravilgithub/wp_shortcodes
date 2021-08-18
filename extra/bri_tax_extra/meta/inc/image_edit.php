@@ -1,4 +1,19 @@
 <?php
+/**
+ * HTML meta field.
+ *
+ * HTML разметка мета поля.
+ *
+ * @param Array $params - параметры мета поля.
+ * @param String $key   - имя мета поля.
+ * @param String $value - значение мета поля.
+ *
+ * @return void
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
+
 	$img_id = ( int ) $value;
 	$img_url = $params[ 'value' ];
 	$btn_class = 'hidden';

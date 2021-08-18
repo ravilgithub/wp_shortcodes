@@ -1,3 +1,20 @@
+<?php
+/**
+ * HTML meta field.
+ *
+ * HTML разметка мета поля.
+ *
+ * @param Array $params - параметры мета поля.
+ * @param String $key   - имя мета поля.
+ * @param String $value - значение мета поля.
+ *
+ * @return void
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
+?>
+
 <tr class="form-field briz-meta-number-wrap">
 	<th scope="row">
 		<span class="briz-meta-title">

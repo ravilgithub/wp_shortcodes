@@ -1,4 +1,19 @@
 <?php
+/**
+ * HTML meta field.
+ *
+ * HTML разметка мета поля.
+ *
+ * @param Array $params - параметры мета поля.
+ * @param String $key   - имя мета поля.
+ * @param String $value - значение мета поля.
+ *
+ * @return void
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
+
 	$args = array_merge(
 		[
 			'textarea_name'    => $key, //нужно указывать!
@@ -18,6 +33,7 @@
 		$params[ 'options' ]
 	);
 ?>
+
 <div class="form-field briz-meta-wp-editor-wrap">
 	<span class="briz-meta-title">
 		<?php _e( $params[ 'title' ] ); ?>
