@@ -13,6 +13,7 @@ namespace Bri_Shortcodes;
  */
 abstract class Meta {
 	protected $assets_id = 'briz_meta';
+	protected $inc_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/';
 
 	/**
 	 * Constructor.
@@ -106,5 +107,19 @@ abstract class Meta {
 		if ( $module_handle === $handle )
 			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
 		return $tag;
+	}
+
+
+	/**
+	 * 
+	 * */
+	public function require_component( $key, $value, $params, $method_suffix ) {
+		$component_name = $params[ 'type' ] . $method_suffix;
+		$component_path = $this->inc_path . $component_name . '.php';
+		$filter_id = 'briz_meta_' . $component_name . '_component';
+
+		ob_start();
+		require apply_filters( $filter_id, $component_path, $key, $value, $params );
+		return ob_end_flush();
 	}
 }

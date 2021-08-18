@@ -229,77 +229,77 @@ class Meta_boxes extends Meta {
 		$tmpl = $meta[ 'args' ][ 'tmpl' ];
 		$fields = $fields ?: $meta[ 'args' ][ 'fields' ];
 
-		foreach ( $fields as $field_name => $field_params ) {
-			if ( 'group' == $field_params[ 'type' ] ) {
+		foreach ( $fields as $name => $params ) {
+			if ( 'group' == $params[ 'type' ] ) {
 
 				/**
 				* Переменный $gn и $pth созданы для того что бы
 				* не переписывать переменные $group_name и $path
 				* используемые в текущем вызове функции fields_iterator.
 				*/
-				$gn = $group_name ?: $field_name;
+				$gn = $group_name ?: $name;
 				$pth = $path;
 
 				// Собераем имена дочерних групп "группы верхнуго уровня".
-				if ( $group_name && $field_name != $group_name ) {
-					$pth[] = $field_name;
+				if ( $group_name && $name != $group_name ) {
+					$pth[] = $name;
 				}
 
-				$this->decorate_group( 'Start', $field_params );
+				$this->decorate_group( 'Start', $params );
 
-				$this->fields_iterator( $post, $meta, $field_params[ 'value' ], $gn, $pth );
+				$this->fields_iterator( $post, $meta, $params[ 'value' ], $gn, $pth );
 
-				$this->decorate_group( 'End', $field_params );
+				$this->decorate_group( 'End', $params );
 
 				continue;
 			}
 
 			// Имя мета поля или группы мета полей верхнего уровня( группа находящаяся в массиве "fields" )
-			$fn = $group_name ?: $field_name;
+			$fn = $group_name ?: $name;
 
-			$field_key = '_' . $tax . '_' . $tmpl;
-			$field_value = get_post_meta( $post->ID, $field_key, true );
+			$key = '_' . $tax . '_' . $tmpl;
+			$value = get_post_meta( $post->ID, $key, true );
 
-			if ( $field_value ) {
-				if ( is_array( $field_value ) && array_key_exists( $fn, $field_value ) ) {
-					$field_value = $field_value[ $fn ];
+			if ( $value ) {
+				if ( is_array( $value ) && array_key_exists( $fn, $value ) ) {
+					$value = $value[ $fn ];
 				} else {
 					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
-					$field_value = $field_params[ 'value' ];
+					$value = $params[ 'value' ];
 				}
 			} else {
 				// Если в БД ничего нет. Файл "meta_opts.php".
-				$field_value = $field_params[ 'value' ];
+				$value = $params[ 'value' ];
 			}
 
 			// В этом блоке работаем с данными пришедшими из БД.
 			if (
-				! empty( $field_value ) &&
-				is_array( $field_value ) &&
+				! empty( $value ) &&
+				is_array( $value ) &&
 				 // Так узнаём, что значение является ассоциативным массивам т.е. группой.
-				'{' === json_encode( $field_value )[ 0 ]
+				'{' === json_encode( $value )[ 0 ]
 			) {
-				if ( ! empty( $field_value[ $field_name ] ) && ( empty( $path ) || ! is_array( $field_value[ $field_name ] ) ) ) {
+				if ( ! empty( $value[ $name ] ) && ( empty( $path ) || ! is_array( $value[ $name ] ) ) ) {
 					// Значение поля не являющейся группой.
-					$field_value = $field_value[ $field_name ];
+					$value = $value[ $name ];
 				} else {
 					$group = null;
 
-					// Находим группу в выборке из базы данных, если её нет, то значит это новая группа( $field_params ).
+					// Находим группу в выборке из базы данных, если её нет, то значит это новая группа( $params ).
 					for ( $n = 0; $n < count( $path ); $n++ ) {
 						if ( ! $group ) {
-							$group = array_key_exists( $path[ $n ], $field_value ) ? $field_value[ $path[ $n ] ] : $field_params;
+							$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
 						} else {
-							$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $field_params;
+							$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
 						}
 					}
 
 					// Получаем значение поля группы.
-					if ( is_array( $group ) && array_key_exists( $field_name, $group ) ) {
-						$field_value = $group[ $field_name ];
+					if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
+						$value = $group[ $name ];
 					} else {
 						// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "meta_opts.php".
-						$field_value = $field_params[ 'value' ];
+						$value = $params[ 'value' ];
 					}
 				}
 			}
@@ -307,15 +307,12 @@ class Meta_boxes extends Meta {
 			// Создаём значения атрибутов "name" мета полей.
 			if ( $group_name ) {
 				$part = ! empty( $path ) ? '[' . implode( '][', $path ) . ']' : '';
-				$field_key = $this->id_prefix . "[$field_key][$fn]" . $part . "[$field_name]";
+				$key = $this->id_prefix . "[$key][$fn]" . $part . "[$name]";
 			} else {
-				$field_key = $this->id_prefix . "[$field_key][$fn]";
+				$key = $this->id_prefix . "[$key][$fn]";
 			}
 
-			$method = $field_params[ 'type' ];
-			if ( method_exists( $this, $method ) ) {
-				$this->$method( $field_key, $field_value, $field_params );
-			}
+			$this->require_component( $key, $value, $params, '_edit' );
 		}
 	}
 
@@ -352,228 +349,6 @@ class Meta_boxes extends Meta {
 			</table>
 		</div>
 <?php
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function text( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/text_edit.php';
-		require apply_filters( 'briz_meta_text_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function textarea( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/textarea_edit.php';
-		require apply_filters( 'briz_meta_textarea_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function color( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/color_edit.php';
-		require apply_filters( 'briz_meta_color_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-
-	public function number( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/number_edit.php';
-		require apply_filters( 'briz_meta_number_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-
-	public function select( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/select_edit.php';
-		require apply_filters( 'briz_meta_select_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function checkbox( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/checkbox_edit.php';
-		require apply_filters( 'briz_meta_checkbox_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function range( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/range_edit.php';
-		require apply_filters( 'briz_meta_range_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function radio( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/radio_edit.php';
-		require apply_filters( 'briz_meta_radio_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function url( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/url_edit.php';
-		require apply_filters( 'briz_meta_url_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function wp_editor( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/wp_editor_edit.php';
-		require apply_filters( 'briz_meta_wp_editor_edit_component', $component_path, $key, $value, $params );
-	}
-
-
-	/**
-	 * HTML meta field.
-	 *
-	 * HTML разметка мета поля.
-	 *
-	 * @param String $key - имя мета поля.
-	 * @param String $value - значение мета поля.
-	 * @param Array $params - параметры мета поля.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function media_button( $key, $value, $params ) {
-		$component_path = PLUGIN_PATH . 'extra/bri_tax_extra/meta/inc/media_button_edit.php';
-		require apply_filters( 'briz_meta_media_button_edit_component', $component_path, $key, $value, $params );
 	}
 
 
