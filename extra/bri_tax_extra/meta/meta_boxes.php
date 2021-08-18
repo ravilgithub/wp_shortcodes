@@ -165,13 +165,17 @@ class Meta_boxes extends Meta {
 	 * @author Ravil
 	 */
 	public function decorate_group( $position, $field_params ) {
-		$rgb = $this->get_random_color();
-		$color = implode( ',', $rgb );
-		$style = 'background: rgb(' . $color . ');';
-		$label = $position . ' ' . $field_params[ 'title' ];
+		if ( array_key_exists( 'color', $field_params ) && $field_params[ 'color' ] ) {
+			$color = $field_params[ 'color' ];
+		} else {
+			$color = $this->get_random_color();
+		}
+
+		$style = 'background:' . $color . ';';
+		$title = $position . ' ' . $field_params[ 'title' ];
 ?>
 		<tr class="briz_meta_box_group_name" style="<?php echo esc_attr( $style ); ?>">
-			<td colspan="2"><?php _e( $label ); ?></td>
+			<td colspan="2"><?php _e( $title ); ?></td>
 		</tr>
 <?php
 	}
@@ -192,7 +196,7 @@ class Meta_boxes extends Meta {
 		foreach( [ 'r', 'g', 'b' ] as $color ) {
 			$rgb_color[ $color ] = mt_rand( 150, 225 );
 		}
-		return $rgb_color;
+		return 'rgb(' . implode( ',', $rgb_color ) . ')';
 	}
 
 
@@ -240,10 +244,6 @@ class Meta_boxes extends Meta {
 				if ( $group_name && $field_name != $group_name ) {
 					$pth[] = $field_name;
 				}
-
-				$rgb = $this->get_random_color();
-				$color = implode( ',', $rgb );
-				$style = 'background: rgb(' . $color . ');';
 
 				$this->decorate_group( 'Start', $field_params );
 
