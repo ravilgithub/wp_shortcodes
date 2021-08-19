@@ -105,10 +105,10 @@ class Term_Meta_Opts extends Meta {
 	 * @author Ravil
 	 */
 	public function field_iterator( $tax_slug, $term = null ) {
-		$method_suffix = '';
+		$component_suffix = '';
 		if ( is_object( $term ) ) {
 			$stored = get_term_meta( $term->term_id, $this->id_prefix, true );
-			$method_suffix = '_edit';
+			$component_suffix = '_edit';
 		}
 
 		foreach ( $this->opts[ $tax_slug ] as $name => $params ) {
@@ -125,7 +125,7 @@ class Term_Meta_Opts extends Meta {
 				( $stored[ $name ] || '0' === $stored[ $name ] )
 			) $value = $stored[ $name ];
 
-			$this->require_component( $key, $value, $params, $method_suffix );
+			$this->require_component( $key, $value, $params, $component_suffix );
 		}
 	}
 

@@ -126,13 +126,13 @@ abstract class Meta {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function require_component( $key, $value, $params, $method_suffix ) {
-		$component_name = $params[ 'type' ] . $method_suffix;
+	public function require_component( $key, $value, $params, $component_suffix ) {
+		$component_name = $params[ 'type' ] . $component_suffix;
 		$component_path = $this->inc_path . $component_name . '.php';
 		$filter_id = 'briz_meta_' . $component_name . '_component';
 
 		ob_start();
-		require apply_filters( $filter_id, $component_path, $key, $value, $params );
+		require apply_filters( $filter_id, $component_path, $key, $value, $params, $component_suffix );
 		return ob_end_flush();
 	}
 }
