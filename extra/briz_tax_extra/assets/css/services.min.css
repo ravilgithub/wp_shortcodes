@@ -1,0 +1,79 @@
+.briz-services-tmpl {
+	line-height: 1.6;
+	padding: 100px 0;
+}
+
+.briz-services-tmpl .services-item-wrap .icon-wrap {
+	width: 60px;
+	float: left;
+	padding-top: 20px;
+	text-align: center;
+}
+
+.briz-services-tmpl .services-item-wrap .icon-wrap i {
+	font-size: 4em;
+	color: #ccc;
+	-webkit-transition: color 0.2s;
+	transition: color 0.2s;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap {
+	margin-left: 80px;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap h4 {
+	line-height: 1.42857143;
+	color: #333;
+	font-size: 1.27em;
+	text-transform: uppercase;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap p {
+	color: #999;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap a {
+	position: relative;
+	font-size: 1em;
+	text-transform: uppercase;
+	text-decoration: none;
+	-webkit-transition: color 0.2s;
+	transition: color 0.2s;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap a:after {
+	content: "\f105";
+	display: inline-block;
+	position: absolute;
+	top: 2px;
+	right: -11px;
+	font: normal normal normal 16px/1 FontAwesome;
+	font-size: 16px !important;
+}
+
+.briz-services-tmpl .services-item-wrap:hover .icon-wrap i {
+	color: #8033c7;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap a {
+	color: #8033c7;
+}
+
+.briz-services-tmpl .services-item-wrap .content-wrap a:hover {
+	color: #66299e;
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width: 767px) {
+	.briz-services-tmpl .services-item-wrap:not(:first-child) {
+		padding-top: 20px;
+	}
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 479px) {
+	.briz-services-tmpl .services-item-wrap {
+		width: 100%;
+		margin-left: 0;
+	}
+}

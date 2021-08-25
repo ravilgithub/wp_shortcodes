@@ -1,5 +1,5 @@
 <?php
-namespace Bri_Shortcodes;
+namespace Briz_Shortcodes;
 
 /**
  * The class implements the general functionality of shortcodes.
@@ -15,10 +15,10 @@ namespace Bri_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-abstract class Bri_Shortcodes {
+abstract class Briz_Shortcodes {
 	const CSS_PATH             = 'assets/css/';
 	const JS_PATH              = 'assets/js/';
-	public $lang_domain        = 'bri_shortcodes_l10n';
+	public $lang_domain        = 'briz_shortcodes_l10n';
 	public $special_atts_types = array(
 		'js' => array(
 			'atts_names'  => array( 'onclick' ),

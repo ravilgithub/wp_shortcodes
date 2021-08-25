@@ -1,10 +1,10 @@
 <?php
-namespace Bri_Shortcodes;
+namespace Briz_Shortcodes;
 
 /**
- * Helper class for "bri_tax" shortcodes.
+ * Helper class for "briz_tax" shortcodes.
  *
- * Вспомогательный класс для "bri_tax" шорткодов.
+ * Вспомогательный класс для "briz_tax" шорткодов.
  *
  * @since 0.0.1
  * @author Ravil.
@@ -58,21 +58,21 @@ class Helper {
 		$assets = [
 			'css' => [
 				'bootstrap' => [
-					'id'   => 'bri-bootstrap-css',
+					'id'   => 'briz-bootstrap-css',
 					'src'  => PLUGIN_URL . 'assets/vendors/bootstrap/css/bootstrap.min.css',
 					'deps' => [],
 					'ver'  => '3.3.5'
 				],
 
 				'mfp' => [
-					'id'   => 'bri-magnific-popup-css',
+					'id'   => 'briz-magnific-popup-css',
 					'src'  => PLUGIN_URL . 'assets/vendors/magnific-popup/magnific-popup.min.css',
 					'deps' => [],
 					'ver'  => '1.1.0'
 				],
 
 				'fontawesome' => [
-					'id'   => 'bri-fontawesome-css',
+					'id'   => 'briz-fontawesome-css',
 					'src'  => PLUGIN_URL . 'assets/vendors/font-awesome-4.7.0/css/font-awesome.min.css',
 					'deps' => [],
 					'ver'  => '4.7.0'
@@ -81,7 +81,7 @@ class Helper {
 
 			'js' => [
 				'bootstrap' => [
-					'id'   => 'bri-bootstrap-js',
+					'id'   => 'briz-bootstrap-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/bootstrap/js/bootstrap.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '3.3.5',
@@ -89,7 +89,7 @@ class Helper {
 				],
 
 				'mfp' => [
-					'id'   => 'bri-magnific-popup-js',
+					'id'   => 'briz-magnific-popup-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/magnific-popup/jquery.magnific-popup.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '1.1.0',
@@ -97,7 +97,7 @@ class Helper {
 				],
 
 				'isotop' => [
-					'id'   => 'bri-isotop-js',
+					'id'   => 'briz-isotop-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/isotope/isotope.pkgd.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '3.0.1',
@@ -105,7 +105,7 @@ class Helper {
 				],
 
 				'masonry' => [
-					'id'   => 'bri-masonry-js',
+					'id'   => 'briz-masonry-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/masonry/masonry.pkgd.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '3.3.2',
@@ -113,7 +113,7 @@ class Helper {
 				],
 
 				'imagesloaded' => [
-					'id'   => 'bri-imagesloaded-js',
+					'id'   => 'briz-imagesloaded-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/imagesloaded/imagesloaded.pkgd.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '3.3.2',
@@ -121,7 +121,7 @@ class Helper {
 				],
 
 				'animatenumber' => [
-					'id'   => 'bri-animatenumber-js',
+					'id'   => 'briz-animatenumber-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/animateNumber/jquery.animateNumber.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '0.0.12',
@@ -129,7 +129,7 @@ class Helper {
 				],
 
 				'wow' => [
-					'id'   => 'bri-wow-js',
+					'id'   => 'briz-wow-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/wow/wow.min.js',
 					'deps' => [],
 					'ver'  => '1.1.2',
@@ -137,7 +137,7 @@ class Helper {
 				],
 
 				'parallax' => [
-					'id'   => 'bri-parallax-js',
+					'id'   => 'briz-parallax-js',
 					'src'  => PLUGIN_URL . 'assets/vendors/parallax/parallax.min.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '1.4.2',
@@ -146,7 +146,7 @@ class Helper {
 			]
 		];
 
-		$assets = apply_filters( "bri_shortcodes_vendors", $assets );
+		$assets = apply_filters( "briz_shortcodes_vendors", $assets );
 		self::join_assets( $assets );
 	}
 
@@ -179,11 +179,11 @@ class Helper {
 	 *                           Available: 'true' or 'false'
 	 *                           Default: 'true'
 	 *
-	 * @see Bri_Shortcodes::merge_shortcode_assets()
+	 * @see Briz_Shortcodes::merge_shortcode_assets()
 	 *  @link ~/main_class.php
 	 *
-	 * @see Bri_Tax_Shortcode::join_assets()
-	 *  @link ~/inc/shortcode_bri_tax.php
+	 * @see Briz_Tax_Shortcode::join_assets()
+	 *  @link ~/inc/shortcode_briz_tax.php
 	 *
 	 * @return void.
 	 *
@@ -225,11 +225,11 @@ class Helper {
 	 * @param String $shortcode_id - id шорткода.
 	 * @param Array $atts - параметры шорткода.
 	 *
-	 * @see Bri_Tax_Shortcode::shortcode_bri_tax()
-	 *  @link ~/inc/shortcode_bri_tax.php
+	 * @see Briz_Tax_Shortcode::shortcode_briz_tax()
+	 *  @link ~/inc/shortcode_briz_tax.php
 	 *
-	 * @see Bri_Tax_Shortcode::set_post_offset()
-	 *  @link ~/inc/shortcode_bri_tax.php
+	 * @see Briz_Tax_Shortcode::set_post_offset()
+	 *  @link ~/inc/shortcode_briz_tax.php
 	 *
 	 * @return void.
 	 *
