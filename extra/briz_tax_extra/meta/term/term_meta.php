@@ -14,7 +14,7 @@ namespace Briz_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Term_Meta_Opts extends Meta {
+class Term_Meta extends Meta {
 	public $id_prefix = 'briz_term_meta';
 	public $taxs      = [];
 	public $opts      = [];
@@ -220,25 +220,25 @@ class Term_Meta_Opts extends Meta {
 }
 
 /**
- * Initializing Class Term_img.
+ * Initializing Class Term_Meta.
  *
- * Инициализация класса Term_img.
+ * Инициализация класса Term_Meta.
  *
  * @return void
  *
  * @since 0.0.1
  * @author Ravil
  */
-function term_meta_opt_init() {
+function term_meta_init() {
 	$taxs = [
 		'category',
 		'product_cat'
 	];
 
-	$taxs = apply_filters( 'BRIZ_Term_meta_opt_atts', $taxs );
+	$taxs = apply_filters( 'BRIZ_Term_Meta_Atts', $taxs );
 
 	if ( ! empty( $taxs ) )
-		new Term_Meta_Opts( $taxs );
+		new Term_Meta( $taxs );
 }
 
-add_action( 'admin_init', __NAMESPACE__ . '\\term_meta_opt_init' );
+add_action( 'admin_init', __NAMESPACE__ . '\\term_meta_init' );

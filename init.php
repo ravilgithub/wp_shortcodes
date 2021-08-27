@@ -21,8 +21,8 @@ define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 require_once 'common/helpers.php';
 
 require_once 'extra/briz_tax_extra/meta/meta.php';
-require_once 'extra/briz_tax_extra/meta/term_meta_opts.php';
-require_once 'extra/briz_tax_extra/meta/meta_boxes.php';
+require_once 'extra/briz_tax_extra/meta/term/term_meta.php';
+require_once 'extra/briz_tax_extra/meta/post/meta_boxes.php';
 require_once 'extra/briz_tax_extra/template_select.php';
 
 require_once 'main_class.php';

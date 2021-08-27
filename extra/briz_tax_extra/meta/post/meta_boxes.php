@@ -14,7 +14,7 @@ namespace Briz_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Meta_boxes extends Meta {
+class Meta_Boxes extends Meta {
 	public $screens;
 	public $taxs;
 	public $id_prefix = 'briz_meta_box';
@@ -37,7 +37,7 @@ class Meta_boxes extends Meta {
 
 		parent::__construct();
 
-		require_once( PLUGIN_PATH . 'extra/briz_tax_extra/meta/meta_opts.php' );
+		require_once( PLUGIN_PATH . 'extra/briz_tax_extra/meta/post/opts.php' );
 		$this->opts = apply_filters( "{$this->id_prefix}_opts", $opts );
 
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_box' ], 10, 2 );
