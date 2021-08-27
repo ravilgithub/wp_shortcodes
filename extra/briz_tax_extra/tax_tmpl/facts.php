@@ -59,8 +59,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'facts-tmpl-css' );
-			wp_enqueue_script( 'facts-tmpl-js' );
+			wp_enqueue_style( 'briz-facts-tmpl-css' );
+			wp_enqueue_script( 'briz-facts-tmpl-js' );
 		}
 
 

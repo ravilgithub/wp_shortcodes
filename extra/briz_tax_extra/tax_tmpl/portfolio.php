@@ -58,8 +58,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'portfolio-tmpl-css' );
-			wp_enqueue_script( 'portfolio-tmpl-js' );
+			wp_enqueue_style( 'briz-portfolio-tmpl-css' );
+			wp_enqueue_script( 'briz-portfolio-tmpl-js' );
 		}
 
 		/**

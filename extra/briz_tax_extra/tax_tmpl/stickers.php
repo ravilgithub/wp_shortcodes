@@ -58,8 +58,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'stickers-tmpl-css' );
-			wp_enqueue_script( 'stickers-tmpl-js' );
+			wp_enqueue_style( 'briz-stickers-tmpl-css' );
+			wp_enqueue_script( 'briz-stickers-tmpl-js' );
 		}
 
 

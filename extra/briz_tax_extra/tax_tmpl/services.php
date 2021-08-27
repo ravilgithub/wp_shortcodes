@@ -58,7 +58,7 @@ class Services {
 	 * @author Ravil
 	 */
 	public function add_tmpl_assets() {
-		wp_enqueue_style( 'services-tmpl-css' );
+		wp_enqueue_style( 'briz-services-tmpl-css' );
 	}
 
 	/**

@@ -45,7 +45,7 @@ abstract class Meta {
 				/************ CSS ************/
 				[
 					'id'   => $this->assets_id . '-css',
-					'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/meta.min.css',
+					'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/' . $this->assets_id . '.min.css',
 					'deps' => [],
 					'ver'  => '1.0.0'
 				]
@@ -54,7 +54,7 @@ abstract class Meta {
 				/************ SCRIPTS ************/
 				[
 					'id'   => $this->assets_id . '-js',
-					'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/meta.js',
+					'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/' . $this->assets_id . '.js',
 					'deps' => [ 'jquery' ],
 					'ver'  => '1.0.0',
 					'in_footer' => true
