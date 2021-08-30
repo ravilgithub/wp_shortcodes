@@ -1,5 +1,6 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\extra\briz_tax_extra\meta;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * The class implements the general functionality of meta fields.

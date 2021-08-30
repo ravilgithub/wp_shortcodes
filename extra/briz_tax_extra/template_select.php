@@ -1,5 +1,6 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\extra\briz_tax_extra;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * The class adds a selection of available templates for the terms being created or modified.

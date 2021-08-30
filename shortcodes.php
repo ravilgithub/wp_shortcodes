@@ -1,5 +1,6 @@
 <?php
 namespace Briz_Shortcodes;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * The class implements the general functionality of shortcodes.

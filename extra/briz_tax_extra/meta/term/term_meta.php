@@ -1,5 +1,7 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\extra\briz_tax_extra\meta\term;
+use Briz_Shortcodes\extra\briz_tax_extra\meta\Meta;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * The class implements the ability to add meta fields to a term.

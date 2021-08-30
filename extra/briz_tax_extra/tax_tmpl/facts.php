@@ -1,5 +1,6 @@
 <?php
-	namespace Briz_Shortcodes;
+	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
+	use Briz_Shortcodes\common\Helper;
 
 	/**
 	 * Facts template.
@@ -82,7 +83,8 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 			$bg_img = '';
-			$img_id = ( int ) get_term_meta( $term_id, 'briz-term-img-id', true );
+			// $img_id = ( int ) get_term_meta( $term_id, 'briz-term-img-id', true );
+			$img_id = ( int ) get_term_meta( $term_id, 'briz_term_meta', true )[ 'option_11' ];
 
 			if ( $img_id ) {
 				$img_url = wp_get_attachment_image_url( $img_id, 'full' );

@@ -1,5 +1,7 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\inc;
+use Briz_Shortcodes\Shortcodes;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * Класс реализует шорткод "briz_tax",
@@ -93,6 +95,7 @@ namespace Briz_Shortcodes;
  */
 class Briz_Tax_Shortcode extends Shortcodes {
 	public $name          = 'briz_tax';
+	private $tax_tmpl_ns  = 'Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\\';
 	public $assets        = [];
 	public $inline_styles = [];
 	public static $n      = 1;
@@ -327,7 +330,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 			return false;
 
 		include_once $term_data[ 'tmpl_path' ];
-		$tmpl_source = __NAMESPACE__ . '\\'. ucfirst( $term_data[ 'tmpl_name' ] );
+		$tmpl_source = $this->tax_tmpl_ns . ucfirst( $term_data[ 'tmpl_name' ] );
 		if ( ! class_exists( $tmpl_source ) )
 			return false;
 

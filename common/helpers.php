@@ -1,5 +1,5 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\common;
 
 /**
  * Helper class for "briz_tax" shortcodes.
@@ -38,7 +38,6 @@ class Helper {
 	public function create_session() {
 		if ( ! session_id() )
 			session_start();
-		// Helper::debug( session_id() );
 	}
 
 

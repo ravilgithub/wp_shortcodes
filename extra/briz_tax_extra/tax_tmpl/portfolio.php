@@ -1,5 +1,7 @@
 <?php
-	namespace Briz_Shortcodes;
+	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
+	use Briz_Shortcodes\inc\Briz_Tax_Shortcode;
+	use Briz_Shortcodes\common\Helper;
 
 	/**
 	 * Portfolio template.
@@ -78,7 +80,6 @@
 		 * @author Ravil
 		 */
 		public function get_before( $posts ) {
-			// Helper::debug( $this->atts );
 			extract( $this->atts );
 ?>
 			<section
@@ -106,8 +107,6 @@
 			// echo '<br />show more - '     . $show_more;
 
 			$childrens = Briz_Tax_Shortcode::get_term_childrens( $this->curr_term_id, $term[ $this->curr_term_id ][ 'taxonomy' ], $this->atts );
-
-			// Helper::debug( $childrens, '200px' );
 
 			if ( $children || $grandchildren ) :?>
 				<div class="isotop-filter-wrap">
@@ -190,13 +189,9 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
-			// Helper::debug( $posts );
 			foreach ( $posts[ 'data' ] as $data ) :
 				$child = $data[ 'child' ];
 				$query = $data[ 'query' ];
-
-				// Helper::debug( $query );
-				// Helper::debug( $child );
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();

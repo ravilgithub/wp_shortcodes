@@ -14,6 +14,19 @@
  */
 
 namespace Briz_Shortcodes;
+use Briz_Shortcodes\inc\Briz_List_Shortcode;
+use Briz_Shortcodes\inc\Briz_Dropcap_Shortcode;
+use Briz_Shortcodes\inc\Briz_Highlight_Shortcode;
+use Briz_Shortcodes\inc\Briz_Tooltip_Shortcode;
+use Briz_Shortcodes\inc\Briz_Blockquote_Shortcode;
+use Briz_Shortcodes\inc\Briz_Btn_Shortcode;
+use Briz_Shortcodes\inc\Briz_Link_Shortcode;
+use Briz_Shortcodes\inc\Briz_Image_Shortcode;
+use Briz_Shortcodes\inc\Briz_Separator_Shortcode;
+use Briz_Shortcodes\inc\Briz_Spacer_Shortcode;
+use Briz_Shortcodes\inc\Briz_Message_Shortcode;
+use Briz_Shortcodes\inc\Briz_Tax_Shortcode;
+use Briz_Shortcodes\common\Helper;
 
 define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );

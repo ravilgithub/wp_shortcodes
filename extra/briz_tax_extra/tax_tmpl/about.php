@@ -30,10 +30,6 @@ $args = [
 
 $query = new WP_Query( $args );
 
-
-// Briz_Shortcodes\Helper::debug( $query );
-
-
 if ( $query->have_posts() ) :
 	while ( $query->have_posts() ) :
 		$query->the_post();

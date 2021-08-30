@@ -1,5 +1,7 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\inc;
+use Briz_Shortcodes\Shortcodes;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * Класс реализует шорткод "briz_dropcap",

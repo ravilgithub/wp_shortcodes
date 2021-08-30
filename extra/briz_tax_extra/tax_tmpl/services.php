@@ -1,5 +1,6 @@
 <?php
-namespace Briz_Shortcodes;
+namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
+use Briz_Shortcodes\common\Helper;
 
 /**
  * Services template.
@@ -77,7 +78,6 @@ class Services {
 	 * @author Ravil
 	 */
 	public function get_before( $posts ) {
-		// Helper::debug( $this->atts );
 		extract( $this->atts );
 ?>
 		<section
@@ -129,8 +129,6 @@ class Services {
 	 * @author Ravil
 	 */
 	public function get_content( $posts ) {
-		// Helper::debug( $posts );
-
 		if ( empty( $posts[ 'data' ] ) ) {
 			return;
 		}
@@ -138,9 +136,6 @@ class Services {
 		foreach ( $posts[ 'data' ] as $data ) :
 			$child = $data[ 'child' ];
 			$query = $data[ 'query' ];
-
-			// Helper::debug( $query );
-			// Helper::debug( $child );
 
 			if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 				$post_id = get_the_id();
