@@ -15,7 +15,7 @@ namespace Briz_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-abstract class Briz_Shortcodes {
+abstract class Shortcodes {
 	const CSS_PATH             = 'assets/css/';
 	const JS_PATH              = 'assets/js/';
 	public $lang_domain        = 'briz_shortcodes_l10n';

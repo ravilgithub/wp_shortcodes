@@ -56,7 +56,7 @@ namespace Briz_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Briz_Blockquote_Shortcode extends Briz_Shortcodes {
+class Briz_Blockquote_Shortcode extends Shortcodes {
 	public $name   = 'briz_blockquote';
 	public $assets = [
 		'css' => [

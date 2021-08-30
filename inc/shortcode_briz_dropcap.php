@@ -36,7 +36,7 @@ namespace Briz_Shortcodes;
  * [/briz_dropcap]
  * orem ipsum dolor sit amet.
  */
-class Briz_Dropcap_Shortcode extends Briz_Shortcodes {
+class Briz_Dropcap_Shortcode extends Shortcodes {
 	public $name   = 'briz_dropcap';
 	public $assets = [
 		'css' => [

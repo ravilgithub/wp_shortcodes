@@ -59,7 +59,7 @@ namespace Briz_Shortcodes;
  * @since 0.0.1
  * @author Ravil
  */
-class Briz_Link_Shortcode extends Briz_Shortcodes {
+class Briz_Link_Shortcode extends Shortcodes {
 	public $name   = 'briz_link';
 	public $assets = [
 		'css' => [

@@ -25,7 +25,7 @@ require_once 'extra/briz_tax_extra/meta/term/term_meta.php';
 require_once 'extra/briz_tax_extra/meta/post/meta_boxes.php';
 require_once 'extra/briz_tax_extra/template_select.php';
 
-require_once 'main_class.php';
+require_once 'shortcodes.php';
 
 include_once 'inc/shortcode_briz_list.php';
 include_once 'inc/shortcode_briz_dropcap.php';
