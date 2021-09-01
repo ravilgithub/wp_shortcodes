@@ -8,6 +8,7 @@ use Briz_Shortcodes\common\Helper;
  * Класс реализует общий функционал мета полей.
  *
  * @property String $assets_id - префикс id, JS и CSS файлов.
+ * @property String $inc_path  - путь к HTML компонентам - мета полям.
  * 
  * @since 0.0.1
  * @author Ravil

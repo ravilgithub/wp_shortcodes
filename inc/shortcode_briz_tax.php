@@ -9,6 +9,7 @@ use Briz_Shortcodes\common\Helper;
  * HTML разметку элемента.
  *
  * @property String $name         - имя шорткода.
+ * @property String $tax_tmpl_ns  - пространство имён шаблонов записей термина.
  * @property Array $assets        - параметры подключаемых стилей и скриптов.
  * @property Array $inline_styles - inline стили.
  * @property Integer $n           - число участвующее в формировании уникального
