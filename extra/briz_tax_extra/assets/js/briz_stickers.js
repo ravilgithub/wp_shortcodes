@@ -141,6 +141,7 @@
 				start() {
 					this.setProps();
 					this.setMasonry();
+					this.resizeHandler();
 				}
 			},
 
