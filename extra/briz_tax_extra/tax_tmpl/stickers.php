@@ -104,7 +104,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="briz--stickers-tmpl showcase section stickers-page <?php echo $class ?>"
+				class="briz-stickers-tmpl showcase section stickers-page <?php echo $class ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="stickers-wrap">
