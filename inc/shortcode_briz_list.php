@@ -25,7 +25,7 @@ use Briz_Shortcodes\common\Helper;
  *   @back         - цвет фона
  *   @border       - цвет рамки
  *   @border_width - ширина рамки
- *   @color        - цвет ссылки при собвтии :hover
+ *   @color        - цвет ссылки при событии :hover
  *   @icon_color   - цвет иконки
  *   @number_color - цвет нумерации
  *   @dt_width     - ширина блока "dt"
@@ -40,8 +40,8 @@ use Briz_Shortcodes\common\Helper;
  * ]
  *  <ol>
  *   <li>Velit, odio tenetur.</li>
- *    <li>A magni, ipsum.</li>
- *    <li>Quo, delectus, modi.</li>
+ *   <li>A magni, ipsum.</li>
+ *   <li>Quo, delectus, modi.</li>
  *  </ol>
  * [/briz_list]
  *
