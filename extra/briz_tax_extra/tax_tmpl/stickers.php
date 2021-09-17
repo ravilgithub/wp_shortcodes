@@ -171,11 +171,17 @@
 					$post_id = get_the_id();
 
 					$style = '';
+					$bg_only_class = '';
 					if ( has_post_thumbnail( $post_id ) ) {
 						$style = 'background-image: url(' .  get_the_post_thumbnail_url( $post_id, 'full' ) . ')';
+
+						$sticker_opts = get_post_meta( $post_id, '_category_stickers', true );
+						if ( ! empty( $sticker_opts[ 'bg_only' ] ) && is_array( $sticker_opts[ 'bg_only' ] ) && !! $sticker_opts[ 'bg_only' ][ 0 ] ) {
+							$bg_only_class = 'empty';
+						}
 					}
 ?>
-					<div class="stickers-content-item">
+					<div class="stickers-content-item <?php echo esc_attr( $bg_only_class ); ?>">
 						<div class="stickers-content-item-inner" style="<?php echo esc_attr( $style ); ?>">
 							<?php the_title( '<h3>', '</h3>'); ?>
 							<?php the_content( __( 'Readmore...', $this->lang_domain ) ); ?>
