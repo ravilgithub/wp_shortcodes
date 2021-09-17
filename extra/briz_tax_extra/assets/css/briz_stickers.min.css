@@ -32,16 +32,10 @@
 	padding: 113px 60px;
 }
 
-.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner h3 {
-	margin: 0;
-}
-
-.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner p {
-	margin: 0;
-}
-
+.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner h3,
+.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner p,
 .briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner a {
-	margin: 0;
+	display: none;
 }
 
 .briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner {
@@ -95,18 +89,6 @@
 		padding: 113px 60px;
 	}
 
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner h3 {
-		margin: 0;
-	}
-
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner p {
-		margin: 0;
-	}
-
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner a {
-		margin: 0;
-	}
-
 	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner {
 		padding: 30px;
 	}
@@ -116,18 +98,6 @@
 @media only screen and (min-width: 568px) {
 	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner {
 		padding: 143px 60px;
-	}
-
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner h3 {
-		margin: 0;
-	}
-
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner p {
-		margin: 0;
-	}
-
-	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item.empty .stickers-content-item-inner a {
-		margin: 0;
 	}
 
 	.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner {
