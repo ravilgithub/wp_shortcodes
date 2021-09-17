@@ -618,6 +618,19 @@ $opts = [
 				],
 			],
 		],
+		'stickers' => [
+			'fields' => [
+				'bg_only' => [
+					'type'  => 'checkbox',
+					'title' => 'Background only',
+					'desc'  => 'Показывать только миниатюру записи',
+					'value' => [],
+					'options' => [
+						'bg_only' => 'Background only'
+					]
+				]
+			],
+		],
 		'about' => [
 			'fields' => [
 				'option_1' => [
