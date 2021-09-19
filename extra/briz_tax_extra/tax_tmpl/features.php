@@ -141,8 +141,20 @@
 
 									if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 										$post_id = get_the_id();
-										$icon_name = get_post_meta( $post_id, '_category_features_icon', true );
-										$label = get_post_meta( $post_id, '_category_features_label', true );
+
+										$icon_name = '';
+										$label = '';
+										$features_opts = get_post_meta( $post_id, '_category_features', true );
+
+										if ( is_array( $features_opts ) ) {
+											if ( array_key_exists( 'icon', $features_opts )	 ) {
+												$icon_name = $features_opts[ 'icon' ];
+											}
+											if ( array_key_exists( 'label', $features_opts )	 ) {
+												$label = $features_opts[ 'label' ];
+											}
+										}
+
 										$anchor = $this->prepareAnchor( $label );
 										$active = ! $n++ ? ' active' : '';
 ?>
@@ -217,7 +229,14 @@
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
-					$label = get_post_meta( $post_id, '_category_features_label', true );
+
+					$label = '';
+					$features_opts = get_post_meta( $post_id, '_category_features', true );
+
+					if ( is_array( $features_opts ) && array_key_exists( 'label', $features_opts ) ) {
+							$label = $features_opts[ 'label' ];
+					}
+
 					$anchor = $this->prepareAnchor( $label );
 					$active = ! $n++ ? 'active' : '';
 ?>
