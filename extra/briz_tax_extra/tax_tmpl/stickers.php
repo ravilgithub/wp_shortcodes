@@ -95,12 +95,11 @@
 				}
 
 				if ( array_key_exists( 'sticker_fix_bg', $term_opts ) ) {
-					if ( 'yes' == $term_opts[ 'sticker_fix_bg' ][ 0 ] ) {
+					if ( is_array( $term_opts[ 'sticker_fix_bg' ] ) && in_array( 'yes', $term_opts[ 'sticker_fix_bg' ] ) ) {
 						$bg_class = 'bg-fixed';
 					}
 				}
 			}
-
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
