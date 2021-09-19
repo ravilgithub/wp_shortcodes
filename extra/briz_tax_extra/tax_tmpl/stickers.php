@@ -82,21 +82,33 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$bg_img = '';
-			$bg_class = '';
-
+			$bg = '';
+			$add_class = '';
+			$parallax_data = '';
+			$parallax_img_src = '';
 			$term_opts = get_term_meta( $term_id, 'briz_term_meta', true );
-			if ( is_array( $term_opts ) ) {
-				if ( array_key_exists( 'option_11', $term_opts ) ) {
-					if ( $img_id = $term_opts[ 'option_11' ] ) {
-						$img_url = wp_get_attachment_image_url( $img_id, 'full' );
-						$bg_img = 'background-image: url(' . $img_url . ')';
-					}
-				}
 
-				if ( array_key_exists( 'sticker_fix_bg', $term_opts ) ) {
-					if ( is_array( $term_opts[ 'sticker_fix_bg' ] ) && in_array( 'yes', $term_opts[ 'sticker_fix_bg' ] ) ) {
-						$bg_class = 'bg-fixed';
+			if ( is_array( $term_opts ) ) {
+				if ( array_key_exists( 'stickers_background', $term_opts ) ) {
+					$bg_type = $term_opts[ 'stickers_background' ];
+
+					if (
+						'hidden' != $bg_type &&
+						array_key_exists( 'option_11', $term_opts ) &&
+						$img_id = ( int ) $term_opts[ 'option_11' ]
+					) {
+						if ( $img_url = wp_get_attachment_image_url( $img_id, 'full' ) ) {
+							if ( 'fixed' == $bg_type || 'default' == $bg_type ) {
+								$bg = 'background-image: url(' . $img_url . ')';
+								if ( 'fixed' == $bg_type ) {
+									$add_class = 'bg-fixed';
+								}
+							} else {
+								$add_class = 'parallax-window';
+								$parallax_data = 'scroll';
+								$parallax_img_src = $img_url;
+							}
+						}
 					}
 				}
 			}
@@ -109,8 +121,10 @@
 				<div class="stickers-wrap">
 					<div class="stickers-inner-wrap">
 						<div
-							class="stickers-content clearfix <?php echo esc_attr( $bg_class ); ?>"
-							style="<?php echo esc_attr( $bg_img ); ?>"
+							class="stickers-content clearfix <?php echo esc_attr( $add_class ); ?>"
+							style="<?php echo esc_attr( $bg ); ?>"
+							data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+							data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 						>
 							<div class="container">
 								<div class="row">

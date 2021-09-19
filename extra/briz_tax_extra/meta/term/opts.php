@@ -212,13 +212,16 @@ $opts = [
 				'button'   => [ 'text' => 'Insert' ]
 			]
 		],
-		'sticker_fix_bg' => [
-			'type'  => 'checkbox',
-			'title' => 'sticker fix bg',
-			'desc'  => 'sticker fixed background',
-			'value' => [],
+		'stickers_background' => [
+			'type'  => 'select',
+			'title' => 'Stickers back',
+			'desc'  => 'Section background position',
+			'value' => 'default',
 			'options' => [
-				'yes'   => 'Yes'
+				'default'  => 'default',
+				'fixed'    => 'Fixed',
+				'parallax' => 'Parallax',
+				'hidden'   => 'Hidden'
 			]
 		]
 	],
