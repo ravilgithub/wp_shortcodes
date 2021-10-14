@@ -16,6 +16,8 @@
  *                                  Required.
  *      @type String $title       - Название мета поля.
  *      @type String $desc        - Описание мета поля.
+ *      @type Int/Boolean $empty  - Может ли значение поля быть пустым.
+ *                                  Default: false
  *      @type String/Array $value - Значение мета поля по умолчанию.
  *                                  Required.
  *                                  Default: ''
@@ -62,6 +64,161 @@ $opts = [
 									'title' => 'Имя иконки',
 									'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
 									'value' => 'Иконка :)'
+								],
+								'group_insert_2' => [
+									'type'  => 'group',
+									'title' => 'Group insert 2',
+									'desc'  => 'Описание group insert 2',
+									'color' => '#ca0',
+									'value' => [
+										'group_insert_3' => [
+											'type'  => 'group',
+											'title' => 'Group insert 3',
+											'desc'  => 'Описание group insert 3',
+											'color' => '#ca0',
+											'value' => [
+												'icon_insert_3' => [
+													'type'  => 'text',
+													'title' => 'Имя иконки',
+													'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
+													'value' => 'Иконка :)'
+												],
+												'checbox_insert_3' => [
+													'type'  => 'checkbox',
+													'title' => 'Checbox',
+													'desc'  => 'Описание checbox',
+													'value' => [
+														'cat',
+														'mouse'
+													],
+													'options' => [
+														'cat'   => 'Cat',
+														'dog' => 'Dog',
+														'mouse'  => 'mouse'
+													]
+												],
+												'number_insert_3' => [
+													'type'  => 'number',
+													'title' => 'Число',
+													'desc'  => 'Число которое будет анимироваться',
+													'value' => 4,
+													'options' => [
+														'step' => 1,
+														'min'  => '',
+														'max'  => ''
+													]
+												],
+												'group_insert_4' => [
+													'type'  => 'group',
+													'title' => 'Group insert 4',
+													'desc'  => 'Описание group insert 4',
+													'color' => '#ca0',
+													'value' => [
+														'icon_insert_4' => [
+															'type'  => 'text',
+															'title' => 'Имя иконки',
+															'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
+															'value' => 'Иконка :)'
+														],
+														'checbox_insert_4' => [
+															'type'  => 'checkbox',
+															'title' => 'Checbox',
+															'desc'  => 'Описание checbox',
+															'value' => [
+																'cat',
+																'mouse'
+															],
+															'options' => [
+																'cat'   => 'Cat',
+																'dog' => 'Dog',
+																'mouse'  => 'mouse'
+															]
+														],
+														'number_insert_4' => [
+															'type'  => 'number',
+															'title' => 'Число',
+															'desc'  => 'Число которое будет анимироваться',
+															'value' => 4,
+															'options' => [
+																'step' => 1,
+																'min'  => '',
+																'max'  => ''
+															]
+														],
+													]
+												],
+												'group_insert_5' => [
+													'type'  => 'group',
+													'title' => 'Group insert 5',
+													'desc'  => 'Описание group insert 5',
+													'color' => '#2a0',
+													'value' => [
+														'icon_insert_5' => [
+															'type'  => 'text',
+															'title' => 'Имя иконки',
+															'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
+															'value' => 'Иконка :)'
+														],
+														'checbox_insert_5' => [
+															'type'  => 'checkbox',
+															'title' => 'Checbox',
+															'desc'  => 'Описание checbox',
+															'value' => [
+																'mouse'
+															],
+															'options' => [
+																'cat'   => 'Cat',
+																'dog' => 'Dog',
+																'mouse'  => 'mouse'
+															]
+														],
+														'number_insert_5' => [
+															'type'  => 'number',
+															'title' => 'Число',
+															'desc'  => 'Число которое будет анимироваться',
+															'value' => 6,
+															'options' => [
+																'step' => 2,
+																'min'  => '2',
+																'max'  => '8'
+															]
+														],
+													]
+												],
+											]
+										],
+										'icon_insert_2' => [
+											'type'  => 'text',
+											'title' => 'Имя иконки',
+											'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
+											'value' => 'Иконка :)'
+										],
+										'checbox_insert_2' => [
+											'type'  => 'checkbox',
+											'title' => 'Checbox',
+											'desc'  => 'Описание checbox',
+											'value' => [
+												'cat',
+												'mouse'
+											],
+											'options' => [
+												'cat'   => 'Cat',
+												'dog' => 'Dog',
+												'mouse'  => 'mouse'
+											]
+										],
+										'number_insert_2' => [
+											'type'  => 'number',
+											'title' => 'Число',
+											'desc'  => 'Число которое будет анимироваться',
+											'value' => 4,
+											'options' => [
+												'step' => 1,
+												'min'  => '',
+												'max'  => ''
+											]
+										]
+									]
 								],
 								'checbox' => [
 									'type'  => 'checkbox',
@@ -125,10 +282,10 @@ $opts = [
 							'pattern'  => 'https://.*',
 							'required' => true
 						],
-						'option_6' => [
+						'group_1_checkbox' => [
 							'type'  => 'checkbox',
-							'title' => 'Опция 6',
-							'desc'  => 'Описание опции 6',
+							'title' => 'group 1 checkbox',
+							'desc'  => 'Описание group 1 checkbox',
 							'value' => [
 								'green',
 								'blue'
@@ -320,7 +477,7 @@ $opts = [
 											'type'  => 'media_button',
 											'title' => 'Опция 11',
 											'desc'  => 'Описание опции 11',
-											'value' => '',
+											'value' => '[834, 835]',
 											'options' => [
 												'title'    => 'Insert a media',
 												'library'  => [ 'type' => 'image' ],
@@ -505,6 +662,21 @@ $opts = [
 						'blue'  => 'Blue'
 					]
 				],
+				'option_6.2' => [
+					'type'  => 'checkbox',
+					'title' => 'Опция 6.2',
+					'desc'  => 'Описание опции 6.2 Default: green, red',
+					'empty' => true,
+					'value' => [
+						'green',
+						'red'
+					],
+					'options' => [
+						'red'   => 'Red',
+						'green' => 'Green',
+						'blue'  => 'Blue'
+					]
+				],
 				'option_7' => [
 					'type'  => 'range',
 					'title' => 'Опция 7',
@@ -558,7 +730,8 @@ $opts = [
 					'type'  => 'media_button',
 					'title' => 'Опция 11',
 					'desc'  => 'Описание опции 11',
-					'value' => '',
+					'empty' => true,
+					'value' => '[378]',
 					'options' => [
 						'title'    => 'Insert a media',
 						'library'  => [ 'type' => 'image' ],
@@ -837,6 +1010,163 @@ $opts = [
 						]
 					]
 				]
+			]
+		],
+		'solutions' => [
+			'fields' => [
+				'position' => [
+					'type'  => 'radio',
+					'title' => 'Content position',
+					'desc'  => 'Left or right content position',
+					'value' => 'left',
+					'options' => [
+						'left'  => 'Left',
+						'right'  => 'Right'
+					]
+				],
+				'bg_attachment' => [
+					'type'  => 'select',
+					'title' => 'Background type',
+					'desc'  => 'Background type',
+					'value' => 'default',
+					'options' => [
+						'default'  => 'default',
+						'fixed'    => 'Fixed',
+						'parallax' => 'Parallax',
+						'hidden'   => 'Hidden'
+					]
+				],
+				'bg_color' => [
+					'type'  => 'select',
+					'title' => 'Background color',
+					'desc'  => 'Background color',
+					'value' => 'white',
+					'options' => [
+						'white'  => 'White',
+						'black'    => 'Black'
+					]
+				],
+				'glassy' => [
+					'type'  => 'checkbox',
+					'title' => 'Background glassy',
+					'desc'  => 'Background glassy',
+					'empty' => true,
+					'value' => [ 'on' ],
+					'options' => [
+						'on'  => 'On'
+					]
+				],
+				'accordion' => [
+					'type'  => 'group',
+					'title' => 'Accordion',
+					'decs'  => 'Accordion fields',
+					'value' => [
+						'enable' => [
+							'type'  => 'checkbox',
+							'title' => 'Enable?',
+							'desc'  => '',
+							'empty' => true,
+							'value' => [ 'on' ],
+							'options' => [
+								'on'  => 'On'
+							]
+						],
+						'sections' => [
+							'type'  => 'group',
+							'title' => 'Sections',
+							'desc'  => '',
+							'value' => [
+								'section_1' => [
+									'type'  => 'group',
+									'title' => 'Section 1',
+									'desc'  => 'Section 1 desc',
+									'value' => [
+										'enable' => [
+											'type'  => 'checkbox',
+											'title' => 'Enable section?',
+											'desc'  => '',
+											'empty' => true,
+											'value' => [ 'on' ],
+											'options' => [
+												'on'  => 'On'
+											]
+										],
+										'title' => [
+											'type'  => 'text',
+											'title' => 'Accordion title',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										],
+										'content' => [
+											'type'  => 'textarea',
+											'title' => 'Accordion content',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										]
+									]
+								],
+								'section_2' => [
+									'type'  => 'group',
+									'title' => 'Section 2',
+									'desc'  => 'Section 2 desc',
+									'value' => [
+										'enable' => [
+											'type'  => 'checkbox',
+											'title' => 'Enable section?',
+											'desc'  => '',
+											'empty' => true,
+											'value' => [ 'on' ],
+											'options' => [
+												'on'  => 'On'
+											]
+										],
+										'title' => [
+											'type'  => 'text',
+											'title' => 'Accordion title',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										],
+										'content' => [
+											'type'  => 'textarea',
+											'title' => 'Accordion content',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										]
+									]
+								],
+								'section_3' => [
+									'type'  => 'group',
+									'title' => 'Section 3',
+									'desc'  => 'Section 3 desc',
+									'value' => [
+										'enable' => [
+											'type'  => 'checkbox',
+											'title' => 'Enable section?',
+											'desc'  => '',
+											'empty' => true,
+											'value' => [ 'on' ],
+											'options' => [
+												'on'  => 'On'
+											]
+										],
+										'title' => [
+											'type'  => 'text',
+											'title' => 'Accordion title',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										],
+										'content' => [
+											'type'  => 'textarea',
+											'title' => 'Accordion content',
+											'desc'  => 'Some text',
+											'value' => 'Placeholder'
+										]
+									]
+								],
+							],
+						]
+					],
+				],
 			]
 		],
 	],
