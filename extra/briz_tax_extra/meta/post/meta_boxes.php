@@ -233,24 +233,21 @@ class Meta_Boxes extends Meta {
 
 		foreach ( $fields as $name => $params ) {
 			if ( 'group' == $params[ 'type' ] ) {
-
 				/**
 				* Переменный $gn и $pth созданы для того что бы
-				* не переписывать переменные $group_name и $path
+				* не переписывать переменные $group_name и $path ( ссылочная система )
 				* используемые в текущем вызове функции fields_iterator.
 				*/
 				$gn = $group_name ?: $name;
-				$pth = $path;
 
-				// Собераем имена дочерних групп "группы верхнуго уровня".
-				if ( $group_name && $name != $group_name ) {
+				// Собераем имена групп.
+				$pth = $path;
+				if ( $name != $group_name ) {
 					$pth[] = $name;
 				}
 
 				$this->decorate_group( 'Start', $params );
-
 				$this->fields_iterator( $post, $meta, $params[ 'value' ], $gn, $pth );
-
 				$this->decorate_group( 'End', $params );
 
 				continue;
@@ -262,56 +259,65 @@ class Meta_Boxes extends Meta {
 			$key = '_' . $tax . '_' . $tmpl;
 			$value = get_post_meta( $post->ID, $key, true );
 
-			if ( $value ) {
-				if ( is_array( $value ) && array_key_exists( $fn, $value ) ) {
-					$value = $value[ $fn ];
-				} else {
-					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
-					$value = $params[ 'value' ];
-				}
-			} else {
-				// Если в БД ничего нет. Файл "meta_opts.php".
-				$value = $params[ 'value' ];
-			}
+			if ( ! empty( $value ) ) {
+				// В этом блоке работаем с данными пришедшими из БД.
+				if (
+					// Ищем в результате выборки из БД, текущее мета поле или группу полей верхнего уровня +
+					is_array( $value ) &&
+					array_key_exists( $fn, $value ) &&
+					$value = $value[ $fn ] // верхний уровень
+				) {
+					// Так узнаём, что значение является ассоциативным массивам т.е. группой.
+					if ( '{' === json_encode( $value )[ 0 ] ) {
+						$group = null;
 
-			// В этом блоке работаем с данными пришедшими из БД.
-			if (
-				! empty( $value ) &&
-				is_array( $value ) &&
-				 // Так узнаём, что значение является ассоциативным массивам т.е. группой.
-				'{' === json_encode( $value )[ 0 ]
-			) {
-				if ( ! empty( $value[ $name ] ) && ( empty( $path ) || ! is_array( $value[ $name ] ) ) ) {
-					// Значение поля не являющейся группой.
-					$value = $value[ $name ];
-				} else {
-					$group = null;
-
-					// Находим группу в выборке из базы данных, если её нет, то значит это новая группа( $params ).
-					for ( $n = 0; $n < count( $path ); $n++ ) {
-						if ( ! $group ) {
-							$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
+						if ( 1 < count( $path ) ) {
+							// Находим группу в выборке из базы данных, если её нет, то значит текущее мета поле( $params ) принадлежит новой группе.
+							for ( $n = 1; $n < count( $path ); $n++ ) {
+								if ( ! $group ) {
+									$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
+								} else {
+									$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
+								}
+							}
 						} else {
-							$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
+							// Группа верхнего уровня.
+							$group = $value;
+						}
+
+						// Получаем значение поля группы.
+						if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
+							if ( ! $value = $group[ $name ] ) {
+								if ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
+									// Default "opts.php" мета поля НЕ! верхнего уровня.
+									$value = $params[ 'value' ];
+								}
+							}
+						} else {
+							// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "meta_opts.php".
+							$value = $params[ 'value' ];
 						}
 					}
-
-					// Получаем значение поля группы.
-					if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
-						$value = $group[ $name ];
-					} else {
-						// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "meta_opts.php".
+				} else {
+					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
+					// Добавили новое мета поле type=любой +
+					// Default "opts.php" мета поля верхнего уровня.
+					if ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
 						$value = $params[ 'value' ];
 					}
 				}
+			} else {
+				// Если в БД ничего нет. Файл "meta_opts.php".
+				// Значение мета поля ( не группа ) +
+				$value = $params[ 'value' ];
 			}
 
 			// Создаём значения атрибутов "name" мета полей.
 			if ( $group_name ) {
 				$part = ! empty( $path ) ? '[' . implode( '][', $path ) . ']' : '';
-				$key = $this->id_prefix . "[$key][$fn]" . $part . "[$name]";
+				$key = $this->id_prefix . "[$key]" . $part . "[$name]";
 			} else {
-				$key = $this->id_prefix . "[$key][$fn]";
+				$key = $this->id_prefix . "[$key][$name]";
 			}
 
 			$this->require_component( $key, $value, $params, '_edit' );
@@ -334,6 +340,8 @@ class Meta_Boxes extends Meta {
 	 * @author Ravil
 	 */
 	public function meta_box( $post, $meta ) {
+		$response = get_post_meta( $post->ID, '_category_portfolio', true );
+		$response = get_post_meta( $post->ID, '_category_facts', true );
 ?>
 		<div class="briz_meta_box_wrap">
 			<table width="100%">
@@ -344,6 +352,11 @@ class Meta_Boxes extends Meta {
 				</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td>
+							<?php Helper::debug( $response ); ?>
+						</td>
+					</tr>
 					<?php
 						$this->fields_iterator( $post, $meta );
 					?>
