@@ -27,6 +27,7 @@
 $opts = [
 	'category' => [
 		'option_12' => [
+			'target' => [ -1 ],
 			'type'  => 'media_button',
 			'title' => 'Опция 12',
 			'desc'  => 'Описание опции 12',
@@ -39,6 +40,7 @@ $opts = [
 			]
 		],
 		'option_12_1' => [
+			'target' => [ 4 ],
 			'type'  => 'media_button',
 			'title' => 'Опция 12_1',
 			'desc'  => 'Описание опции 12_1',
@@ -51,6 +53,7 @@ $opts = [
 			]
 		],
 		'option_1' => [
+			'target' => [ 4 ],
 			'type'  => 'text',
 			'title' => 'Опция 1',
 			'desc'  => 'Описание опции 1',

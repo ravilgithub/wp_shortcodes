@@ -107,8 +107,11 @@ class Term_Meta extends Meta {
 	 * @author Ravil
 	 */
 	public function field_iterator( $tax_slug, $term = null ) {
+		$term_id = null;
 		$component_suffix = '';
+
 		if ( is_object( $term ) ) {
+			$term_id = $term->term_id;
 			$stored = get_term_meta( $term->term_id, $this->id_prefix, true );
 			$component_suffix = '_edit';
 		}
@@ -116,18 +119,38 @@ class Term_Meta extends Meta {
 		foreach ( $this->opts[ $tax_slug ] as $name => $params ) {
 			if (
 				! array_key_exists( 'value', $params ) ||
-				! array_key_exists( 'type', $params )
+				! array_key_exists( 'type', $params ) ||
+				(
+					! array_key_exists( 'target', $params ) ||
+					empty( $params[ 'target' ] )
+				)
 			) continue;
 
-			$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $name . ']';
-			$value = $params[ 'value' ];
-
 			if (
-				( ! empty( $stored ) && array_key_exists( $name, $stored ) ) &&
-				( $stored[ $name ] || '0' === $stored[ $name ] )
-			) $value = $stored[ $name ];
+					in_array( -1, $params[ 'target' ] ) ||
+					(
+						$term_id &&
+						in_array( $term_id, $params[ 'target' ] )
+					)
+			) {
+				$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $name . ']';
+				$value = '';
 
-			$this->require_component( $key, $value, $params, $component_suffix );
+				if (
+					! empty( $stored ) &&
+					array_key_exists( $name, $stored )
+				) {
+					if ( $stored[ $name ] || '0' === $stored[ $name ] ) {
+						$value = $stored[ $name ];
+					} elseif ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
+						$value = $params[ 'value' ];
+					}
+				} else {
+					$value = $params[ 'value' ];
+				}
+
+				$this->require_component( $key, $value, $params, $component_suffix );
+			}
 		}
 	}
 
