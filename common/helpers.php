@@ -262,6 +262,88 @@ class Helper {
 
 
 	/**
+	 * We return the values of HTML attributes for images
+	 * of sections or posts in sections.
+	 *
+	 * Отдаём значения HTML атрибутов для картинок секций или записей в секциях.
+	 *
+	 * @param Array $opts - мета поля термина или записи.
+	 * @param Boolean $is_term   - указываем для кого формируем атрибуты,
+	 *                             по умолчанию для записей.
+	 *                             Default: false
+	 * @param String $img_key    - id картинки в базе данных.
+	 *                             Default: ''
+	 * @param String $attach_key - имя мета поля которое отвечает
+	 *                             за способ прикрепления картинки.
+	 *                             Default: 'bg_attachment'
+	 *
+	 * @return Array - значения HTML атрибутов.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil.
+	 */
+	public static function get_bg_atts( $opts, $is_term = false, $img_key = '', $attach_key = 'bg_attachment' ) {
+		$bg = '';
+		$attachment = '';
+		$parallax_data = '';
+		$parallax_img_src = '';
+		$img_id = 0;
+		$img_url = '';
+
+		// self::debug( $opts );
+
+		/*self::debug( $is_term );
+		self::debug( $img_key );
+		self::debug( $opts[ $img_key ] );
+		self::debug( json_decode( $opts[ $img_key ] ) );
+		self::debug( $attach_key );*/
+
+		if ( is_array( $opts ) ) {
+			if ( array_key_exists( $attach_key, $opts ) ) {
+				$bg_type = $opts[ $attach_key ];
+
+				if ( 'hidden' != $bg_type ) {
+					if (
+						$is_term &&
+						$img_key &&
+						array_key_exists( $img_key, $opts ) &&
+						! empty( $opts[ $img_key ] )
+					) {
+						if ( $img_id = ( int ) $opts[ $img_key ] ) {
+							$img_url = wp_get_attachment_image_url( $img_id, 'full' );
+						} elseif ( $ids = json_decode( $opts[ $img_key ] ) ) {
+							if ( $img_id = ( int ) $ids[ 0 ] ) {
+								$img_url = wp_get_attachment_image_url( $img_id, 'full' );
+							}
+						}
+					} elseif (
+						array_key_exists( 'post_id', $opts ) &&
+						$post_id = ( int ) $opts[ 'post_id' ]
+					) {
+						$img_url = get_the_post_thumbnail_url( $post_id, 'full' );
+					}
+
+					if ( $img_url ) {
+						if ( 'fixed' == $bg_type || 'default' == $bg_type ) {
+							$bg = 'background-image: url(' . $img_url . ')';
+							if ( 'fixed' == $bg_type ) {
+								$attachment = 'bg-fixed';
+							}
+						} else {
+							$attachment = 'parallax-window';
+							$parallax_data = 'scroll';
+							$parallax_img_src = $img_url;
+						}
+					}
+				}
+			}
+		}
+
+		return [ $bg, $attachment, $parallax_data, $parallax_img_src ];
+	}
+
+
+	/**
 	* Debug Only.
 	*/
 	public static function get_registered_styles () {
