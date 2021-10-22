@@ -107,49 +107,50 @@ class Term_Meta extends Meta {
 	 * @author Ravil
 	 */
 	public function field_iterator( $tax_slug, $term = null ) {
-		$term_id = null;
+		$term_slug = null;
 		$component_suffix = '';
 
 		if ( is_object( $term ) ) {
-			$term_id = $term->term_id;
+			$term_slug = $term->slug;
+
+			Helper::debug( $term_slug );
+			
 			$stored = get_term_meta( $term->term_id, $this->id_prefix, true );
 			$component_suffix = '_edit';
 		}
 
-		foreach ( $this->opts[ $tax_slug ] as $name => $params ) {
-			if (
-				! array_key_exists( 'value', $params ) ||
-				! array_key_exists( 'type', $params ) ||
-				(
-					! array_key_exists( 'target', $params ) ||
-					empty( $params[ 'target' ] )
-				)
-			) continue;
+		foreach ( $this->opts[ $tax_slug ] as $term_name => $data ) {
+			if ( ! is_array( $data ) || ! array_key_exists( 'fields', $data ) )
+				continue;
 
-			if (
-					in_array( -1, $params[ 'target' ] ) ||
-					(
-						$term_id &&
-						in_array( $term_id, $params[ 'target' ] )
-					)
-			) {
-				$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $name . ']';
-				$value = '';
+			if ( $term_name === $term_slug || $term_name === '__to_all__' ) {
+				foreach ( $data[ 'fields' ] as $field_name => $params ) {
+					if (
+						! array_key_exists( 'value', $params ) ||
+						! array_key_exists( 'type', $params )
+					) continue;
 
-				if (
-					! empty( $stored ) &&
-					array_key_exists( $name, $stored )
-				) {
-					if ( $stored[ $name ] || '0' === $stored[ $name ] ) {
-						$value = $stored[ $name ];
-					} elseif ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
+					$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
+					$value = '';
+
+					if (
+						! empty( $stored ) &&
+						array_key_exists( $field_name, $stored )
+					) {
+						if ( $stored[ $field_name ] || '0' === $stored[ $field_name ] ) {
+							// Получаем значение поля из БД.
+							$value = $stored[ $field_name ];
+						} elseif ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
+							// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
+							$value = $params[ 'value' ];
+						}
+					} else {
+						// Добавленно новое поле, берём его значение по умолчанию. Файл "opts.php".
 						$value = $params[ 'value' ];
 					}
-				} else {
-					$value = $params[ 'value' ];
-				}
 
-				$this->require_component( $key, $value, $params, $component_suffix );
+					$this->require_component( $key, $value, $params, $component_suffix );
+				}
 			}
 		}
 	}
