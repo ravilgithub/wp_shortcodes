@@ -285,16 +285,20 @@ class Meta_Boxes extends Meta {
 							$group = $value;
 						}
 
-						// Получаем значение поля группы.
 						if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
-							if ( ! $value = $group[ $name ] ) {
-								if ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
-									// Default "opts.php" мета поля НЕ! верхнего уровня.
-									$value = $params[ 'value' ];
-								}
+							if ( $group[ $name ] || '0' === $group[ $name ] ) {
+								// Получаем значение поля группы.
+								$value = $group[ $name ];
+							} elseif (
+								! array_key_exists( 'empty', $params ) ||
+								! $params[ 'empty' ]
+							) {
+								// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
+								// Default "opts.php" мета поля НЕ! верхнего уровня.
+								$value = $params[ 'value' ];
 							}
 						} else {
-							// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "meta_opts.php".
+							// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "opts.php".
 							$value = $params[ 'value' ];
 						}
 					}
