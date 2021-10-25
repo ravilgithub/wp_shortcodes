@@ -258,57 +258,73 @@ class Meta_Boxes extends Meta {
 
 			$key = '_' . $tax . '_' . $tmpl;
 			$value = get_post_meta( $post->ID, $key, true );
+			$saved = false;
 
 			if ( ! empty( $value ) ) {
 				// В этом блоке работаем с данными пришедшими из БД.
 				if (
 					// Ищем в результате выборки из БД, текущее мета поле или группу полей верхнего уровня +
-					is_array( $value ) &&
-					array_key_exists( $fn, $value ) &&
-					$value = $value[ $fn ] // верхний уровень
+					is_array( $value ) && array_key_exists( $fn, $value )
 				) {
-					// Так узнаём, что значение является ассоциативным массивам т.е. группой.
-					if ( '{' === json_encode( $value )[ 0 ] ) {
-						$group = null;
+					if (
+						! $value[ $fn ] &&
+						'0' !== $value[ $fn ] &&
+						(
+							! array_key_exists( 'empty', $params ) ||
+							! $params[ 'empty' ]
+						)
+					) {
+						$value = $params[ 'value' ];
+					} else {
+						$value = $value[ $fn ]; // верхний уровень
+						$saved = true;
 
-						if ( 1 < count( $path ) ) {
-							// Находим группу в выборке из базы данных, если её нет, то значит текущее мета поле( $params ) принадлежит новой группе.
-							for ( $n = 1; $n < count( $path ); $n++ ) {
-								if ( ! $group ) {
-									$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
-								} else {
-									$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
+						// Так узнаём, что значение является ассоциативным массивом т.е. группой.
+						if ( '{' === json_encode( $value )[ 0 ] ) {
+							$group = null;
+							$saved = false;
+
+							if ( 1 < count( $path ) ) {
+								// Находим группу в выборке из базы данных, если её нет, то значит текущее мета поле( $params ) принадлежит новой группе.
+								for ( $n = 1; $n < count( $path ); $n++ ) {
+									if ( ! $group ) {
+										$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
+									} else {
+										$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
+									}
 								}
+							} else {
+								// Группа верхнего уровня.
+								$group = $value;
 							}
-						} else {
-							// Группа верхнего уровня.
-							$group = $value;
-						}
 
-						if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
-							if ( $group[ $name ] || '0' === $group[ $name ] ) {
-								// Получаем значение поля группы.
-								$value = $group[ $name ];
-							} elseif (
-								! array_key_exists( 'empty', $params ) ||
-								! $params[ 'empty' ]
-							) {
-								// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
-								// Default "opts.php" мета поля НЕ! верхнего уровня.
+							if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
+								if (
+									! $group[ $name ] &&
+									'0' !== $group[ $name ] &&
+									(
+										! array_key_exists( 'empty', $params ) ||
+										! $params[ 'empty' ]
+									)
+								) {
+									// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
+									// Default "opts.php" мета поля НЕ! верхнего уровня.
+									$value = $params[ 'value' ];
+								} else {
+									$value = $group[ $name ];
+									$saved = true;
+								}
+							} else {
+								// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "opts.php".
 								$value = $params[ 'value' ];
 							}
-						} else {
-							// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "opts.php".
-							$value = $params[ 'value' ];
 						}
 					}
 				} else {
 					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
 					// Добавили новое мета поле type=любой +
 					// Default "opts.php" мета поля верхнего уровня.
-					if ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
-						$value = $params[ 'value' ];
-					}
+					$value = $params[ 'value' ];
 				}
 			} else {
 				// Если в БД ничего нет. Файл "meta_opts.php".
@@ -324,7 +340,7 @@ class Meta_Boxes extends Meta {
 				$key = $this->id_prefix . "[$key][$name]";
 			}
 
-			$this->require_component( $key, $value, $params, '_edit' );
+			$this->require_component( $key, $value, $params, '_edit', $saved );
 		}
 	}
 
