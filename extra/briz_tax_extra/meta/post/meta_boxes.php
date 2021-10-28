@@ -257,18 +257,18 @@ class Meta_Boxes extends Meta {
 			$fn = $group_name ?: $name;
 
 			$key = '_' . $tax . '_' . $tmpl;
-			$value = get_post_meta( $post->ID, $key, true );
+			$post_meta = get_post_meta( $post->ID, $key, true );
 			$saved = false;
 
-			if ( ! empty( $value ) ) {
+			if ( ! empty( $post_meta ) ) {
 				// В этом блоке работаем с данными пришедшими из БД.
 				if (
 					// Ищем в результате выборки из БД, текущее мета поле или группу полей верхнего уровня +
-					is_array( $value ) && array_key_exists( $fn, $value )
+					is_array( $post_meta ) && array_key_exists( $fn, $post_meta )
 				) {
 					if (
-						! $value[ $fn ] &&
-						'0' !== $value[ $fn ] &&
+						! $post_meta[ $fn ] &&
+						'0' !== $post_meta[ $fn ] &&
 						(
 							! array_key_exists( 'empty', $params ) ||
 							! $params[ 'empty' ]
@@ -276,7 +276,7 @@ class Meta_Boxes extends Meta {
 					) {
 						$value = $params[ 'value' ];
 					} else {
-						$value = $value[ $fn ]; // верхний уровень
+						$value = $post_meta[ $fn ]; // верхний уровень
 						$saved = true;
 
 						// Так узнаём, что значение является ассоциативным массивом т.е. группой.
@@ -360,8 +360,6 @@ class Meta_Boxes extends Meta {
 	 * @author Ravil
 	 */
 	public function meta_box( $post, $meta ) {
-		$response = get_post_meta( $post->ID, '_category_portfolio', true );
-		$response = get_post_meta( $post->ID, '_category_facts', true );
 ?>
 		<div class="briz_meta_box_wrap">
 			<table width="100%">
@@ -372,11 +370,6 @@ class Meta_Boxes extends Meta {
 				</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							<?php Helper::debug( $response ); ?>
-						</td>
-					</tr>
 					<?php
 						$this->fields_iterator( $post, $meta );
 					?>
