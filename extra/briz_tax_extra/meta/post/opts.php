@@ -47,6 +47,13 @@ $opts = [
 					'value' => 'Значение по умолчанию опции x'
 				],
 
+				'option_xx' => [
+					'type'  => 'text',
+					'title' => 'Опция xx',
+					'desc'  => 'Описание опции xx',
+					'value' => 'Значение по умолчанию опции xx'
+				],
+
 				'group_insert' => [
 					'type'  => 'group',
 					'title' => 'Group insert',
@@ -83,10 +90,52 @@ $opts = [
 													'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
 													'value' => 'Иконка :)'
 												],
+												'option_xx' => [
+													'type'  => 'text',
+													'title' => 'Опция xx',
+													'desc'  => 'Описание опции xx',
+													'empty' => true,
+													'value' => 'Значение по умолчанию опции xx'
+												],
+												'group_insert_3_x' => [
+													'type'  => 'group',
+													'title' => 'Group insert 3_x',
+													'desc'  => 'Описание group insert 3_x',
+													'color' => '#ca0',
+													'value' => [
+														'icon_insert_3_x' => [
+															'type'  => 'text',
+															'title' => 'Имя иконки',
+															'desc'  => 'Часть класса иконки "Font Awesome".<br /> Пример: fa fa-<имя иконки>',
+															'value' => 'Иконка :)'
+														],
+														'option_3_x' => [
+															'type'  => 'text',
+															'title' => 'Опция 3_x',
+															'desc'  => 'Описание опции 3_x',
+															'empty' => true,
+															'value' => 'Значение по умолчанию опции 3_x'
+														],
+														'option_11_x' => [
+															'type'  => 'media_button',
+															'title' => 'Опция 11_x',
+															'desc'  => 'Описание опции 11_x',
+															'empty' => true,
+															'value' => '[378]',
+															'options' => [
+																'title'    => 'Insert a media',
+																'library'  => [ 'type' => 'image' ],
+																'multiple' => 0,
+																'button'   => [ 'text' => 'Insert' ]
+															]
+														],
+													]
+												],
 												'checbox_insert_3' => [
 													'type'  => 'checkbox',
 													'title' => 'Checbox',
 													'desc'  => 'Описание checbox',
+													'empty' => true,
 													'value' => [
 														'cat',
 														'mouse'
@@ -341,6 +390,7 @@ $opts = [
 											'type'  => 'text',
 											'title' => 'Приставка',
 											'desc'  => 'Приставки перед или после числа',
+											'empty' => true,
 											'value' => ''
 										],
 										'symbol_position' => [
@@ -550,7 +600,8 @@ $opts = [
 									'type'  => 'text',
 									'title' => 'Option g_1_2_4',
 									'desc'  => 'Описание option g_1_2_4',
-									'value' => false
+									'empty' => true,
+									'value' => ''
 								],
 								'option_g_1_2_5' => [
 									'type'  => 'radio',
@@ -739,10 +790,24 @@ $opts = [
 						'button'   => [ 'text' => 'Insert' ]
 					]
 				],
+				'option_11_x' => [
+					'type'  => 'media_button',
+					'title' => 'Опция 11_x',
+					'desc'  => 'Описание опции 11_x',
+					'empty' => true,
+					'value' => '[378]',
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => 0,
+						'button'   => [ 'text' => 'Insert' ]
+					]
+				],
 				'option_12' => [
 					'type'  => 'media_button',
 					'title' => 'Опция 12',
 					'desc'  => 'Описание опции 12',
+					'empty' => false,
 					'value' => '',
 					'options' => [
 						'title'    => 'Insert a media',
@@ -756,6 +821,7 @@ $opts = [
 					'title' => 'Опция 13',
 					'desc'  => 'Описание опции 13',
 					'value' => '',
+					'empty' => true,
 					'options' => [
 						'title'    => 'Insert a media',
 						'library'  => [ 'type' => 'video' ],
@@ -848,6 +914,7 @@ $opts = [
 							'type'  => 'text',
 							'title' => 'Приставка',
 							'desc'  => 'Приставки перед или после числа',
+							// 'empty' => true,
 							'value' => '%'
 						],
 						'symbol_position' => [
@@ -1015,6 +1082,36 @@ $opts = [
 		'solutions' => [
 			'fields' => [
 				'position' => [
+					'type'  => 'radio',
+					'title' => 'Content position',
+					'desc'  => 'Left or right content position',
+					'value' => 'left',
+					'options' => [
+						'left'  => 'Left',
+						'right'  => 'Right'
+					]
+				],
+				'option_12' => [
+					'type'  => 'media_button',
+					'title' => 'Опция 12',
+					'desc'  => 'Описание опции 12',
+					'value' => '[378,377,291,289,292]',
+					// 'empty' => true,
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => 1,
+						'button'   => [ 'text' => 'Insert' ]
+					]
+				],
+				'title_2' => [
+					'type'  => 'text',
+					'title' => 'Accordion title',
+					'desc'  => 'Some text',
+					'value' => 'Placeholder',
+					// 'empty' => true
+				],
+				'position_2' => [
 					'type'  => 'radio',
 					'title' => 'Content position',
 					'desc'  => 'Left or right content position',
