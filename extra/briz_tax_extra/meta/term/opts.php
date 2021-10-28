@@ -9,15 +9,19 @@
  *
  * @var Array $opts {
  *  @type Array $taxonomy_name {
- *   @type Array $option_name {
- *    @type String $type        - Тип мета поля.
- *                                Required.
- *    @type String $title       - Название мета поля.
- *    @type String $desc        - Описание мета поля.
- *    @type String/Array $value - Значение мета поля по умолчанию.
- *                                Required.
- *                                Default: ''
- *    @type Array $options      - Параметры мета поля.
+ *   @type Array $term_name/$__to_all__ {
+ *    @type Array $fields {
+ *     @type Array $option_name {
+ *      @type String $type        - Тип мета поля.
+ *                                  Required.
+ *      @type String $title       - Название мета поля.
+ *      @type String $desc        - Описание мета поля.
+ *      @type String/Array $value - Значение мета поля по умолчанию.
+ *                                  Required.
+ *                                  Default: ''
+ *      @type Array $options      - Параметры мета поля.
+ *     }
+ *    }
  *   }
  *  }
  * }
@@ -26,8 +30,122 @@
 
 $opts = [
 	'category' => [
+		'__to_all__' => [
+			'fields' => [
+				'option_1' => [
+					'type'  => 'text',
+					'title' => 'Опция 1',
+					'desc'  => 'Описание опции 1',
+					'value' => 'Значение по умолчанию опции 1'
+				],
+				'option_2' => [
+					'type'  => 'textarea',
+					'title' => 'Опция 2',
+					'desc'  => 'Описание опции 2',
+					'value' => 'Значение по умолчанию опции 2'
+				],
+				'option_3' => [
+					'type'  => 'number',
+					'title' => 'Опция 3',
+					'desc'  => 'Описание опции 3',
+					'empty' => false,
+					'value' => 2,
+					'options' => [
+						'step' => 2,
+						'min'  => 0,
+						'max'  => 10
+					]
+				],
+				'option_6' => [
+					'type'  => 'checkbox',
+					'title' => 'Опция 6',
+					'desc'  => 'Описание опции 6',
+					'value' => [
+						'green',
+						'red'
+					],
+					'options' => [
+						'red'   => 'Red',
+						'green' => 'Green',
+						'blue'  => 'Blue'
+					]
+				],
+			]
+		],
+
+		'facts' => [
+			'fields' => [
+				'option_11' => [
+					'type'  => 'image',
+					'title' => 'Опция 11',
+					'desc'  => 'Описание опции 11',
+					'value' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABjElEQVRoge2bWQ6DMAxEe/+z+RAICQ7Bz/SjStWFkM02IcNISFEJ9rwKhawPEcGyLBSXiOARCqNLRLCu6ws4/DCqAtsX8OeNkfTJ9Af8W+Hq+mXZBd6reEXtMUSBYw9cRTHvh8BHD/asI89J4FSA3pTymgWcE6gH5XjMBs4NeJZyvRUBlwT2VImnYuDSBNYq9VIFXJPIQjUeqoFrE2qpNncTcEviFrXkbAZuNeCdSwVYw4hXDjVgwBZaK7YqMGADrRlTHRjQNaj9B5oAAzpGLd4WM2CgzbBVe2AKDNQZt2z8zIGBMgDrz5sLMJAH4vEtdwMGjoG8emuuwMA+mGfX1B0Y+Ab0HnycAgy8QM8Yad3AHqJ6pakaLarPElXHg6prSTV4oBoeUk0AUE3xUE3iUU3TUk3EUy21UC2mUS2XUi2I9wAbZL7loSfYILNNLT3CBqlvW+oZNmiapmSde+thaYAeNc9z9N6w24dj0PcG8VjFqyp5BGAk2KBt295l3mM8I8MGvQ9qhQLDJSJ4AsaVfzhlR3kRAAAAAElFTkSuQmCC',
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => false,
+						'button'   => [ 'text' => 'Insert' ]
+					]
+				],
+				'bg_img' => [
+					'type'  => 'media_button',
+					'title' => 'Background image',
+					'desc'  => '',
+					'value' => '[857]',
+					'empty' => false,
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => true,
+						'button'   => [ 'text' => 'Insert' ]
+					],
+				],
+				'bg_attachment' => [
+					'type'  => 'select',
+					'title' => 'Background attachment',
+					'desc'  => '',
+					'value' => 'default',
+					'options' => [
+						'default'  => 'default',
+						'fixed'    => 'Fixed',
+						'parallax' => 'Parallax',
+						'hidden'   => 'Hidden'
+					]
+				],
+			]
+		],
+
+		'about' => [
+			'fields' => [
+				'option_12' => [
+					'type'  => 'media_button',
+					'title' => 'Опция 12',
+					'desc'  => 'Описание опции 12',
+					'value' => '[378,377,291,289,292]',
+					'empty' => true,
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => 1,
+						'button'   => [ 'text' => 'Insert' ]
+					]
+				],
+				'option_4' => [
+					'type'  => 'number',
+					'title' => 'Опция 4',
+					'desc'  => 'Описание опции 4',
+					'value' => 2,
+					'options' => [
+						'step' => 2,
+						'min'  => 0,
+						'max'  => 10
+					]
+				],
+			]
+		],
+
+
 		'option_12' => [
-			'target' => [ -1 ],
 			'type'  => 'media_button',
 			'title' => 'Опция 12',
 			'desc'  => 'Описание опции 12',
@@ -40,7 +158,6 @@ $opts = [
 			]
 		],
 		'option_12_1' => [
-			'target' => [ 4 ],
 			'type'  => 'media_button',
 			'title' => 'Опция 12_1',
 			'desc'  => 'Описание опции 12_1',
@@ -53,7 +170,6 @@ $opts = [
 			]
 		],
 		'option_1' => [
-			'target' => [ 4 ],
 			'type'  => 'text',
 			'title' => 'Опция 1',
 			'desc'  => 'Описание опции 1',
