@@ -82,32 +82,18 @@
 		 */
 		public function get_before( $posts ) {
 			extract( $this->atts );
-			$bg_img = '';
-			// $img_id = ( int ) get_term_meta( $term_id, 'briz-term-img-id', true );
-			$img_id = ( int ) get_term_meta( $term_id, 'briz_term_meta', true )[ 'option_11' ];
 
-			if ( $img_id ) {
-				$img_url = wp_get_attachment_image_url( $img_id, 'full' );
-				$bg_img = 'background-image: url(' . $img_url . ')';
-			}
+			$opts = get_term_meta( $term_id, 'briz_term_meta', true );
+			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 ?>
-			<!-- Fixed Background -->
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="briz-facts-tmpl section facts-page <?php echo $class ?>"
-				style="<?php echo esc_attr( $bg_img ); ?>"
+				class="briz-facts-tmpl showcase section facts-page <?php echo $class ?> <?php echo esc_attr( $attachment ); ?>"
+				style="<?php echo esc_attr( $bg ); ?>"
+				data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+				data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
-
-			<!-- Parallax Background -->
-			<!-- <section
-				id="<?php // echo esc_attr( $this->id ); ?>"
-				class="briz-facts-tmpl section facts-page parallax-window <?php // echo $class ?>"
-				data-parallax="scroll"
-				data-image-src="<?php // echo esc_attr( $img_url ); ?>"
-				data-shortcode-term-id="<?php // echo esc_attr( $this->curr_term_id ); ?>"
-			> -->
-
 				<div class="facts-inner-wrap">
 					<div class="container">
 						<div class="row">
