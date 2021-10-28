@@ -5,6 +5,9 @@
 	background-position: 50% 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+.briz-facts-tmpl.bg-fixed {
 	background-attachment: fixed;
 }
 
