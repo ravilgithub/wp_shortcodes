@@ -41,6 +41,9 @@
 	<th scope="row">
 		<span class="briz-meta-title">
 			<?php echo $params[ 'title' ]; ?>
+			<?php if ( ! $saved ) : ?>
+				<em class="briz-unsaved">*</em>
+			<?php endif; ?>
 		</span>
 	</th>
 

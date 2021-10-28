@@ -17,7 +17,12 @@
 
 <tr class="form-field briz-meta-color-wrap">
 	<th scope="row">
-		<span class="briz-meta-title"><?php _e( $params[ 'title' ] ); ?></span>
+		<span class="briz-meta-title">
+			<?php _e( $params[ 'title' ] ); ?>
+			<?php if ( ! $saved ) : ?>
+				<em class="briz-unsaved">*</em>
+			<?php endif; ?>
+		</span>
 	</th>
 
 	<td>
