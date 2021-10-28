@@ -108,20 +108,20 @@ class Term_Meta extends Meta {
 	 */
 	public function field_iterator( $tax_slug, $term = null ) {
 		$term_slug = null;
+		$term_meta = null;
 		$component_suffix = '';
 
+		// $term передаётся только для страницы "term edit".
 		if ( is_object( $term ) ) {
 			$term_slug = $term->slug;
-
-			Helper::debug( $term_slug );
-			
-			$stored = get_term_meta( $term->term_id, $this->id_prefix, true );
+			$term_meta = get_term_meta( $term->term_id, $this->id_prefix, true );
 			$component_suffix = '_edit';
 		}
 
 		foreach ( $this->opts[ $tax_slug ] as $term_name => $data ) {
-			if ( ! is_array( $data ) || ! array_key_exists( 'fields', $data ) )
+			if ( ! is_array( $data ) || ! array_key_exists( 'fields', $data ) ) {
 				continue;
+			}
 
 			if ( $term_name === $term_slug || $term_name === '__to_all__' ) {
 				foreach ( $data[ 'fields' ] as $field_name => $params ) {
@@ -132,24 +132,33 @@ class Term_Meta extends Meta {
 
 					$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
 					$value = '';
+					$saved = false;
 
 					if (
-						! empty( $stored ) &&
-						array_key_exists( $field_name, $stored )
+						is_array( $term_meta ) &&
+						array_key_exists( $field_name, $term_meta )
 					) {
-						if ( $stored[ $field_name ] || '0' === $stored[ $field_name ] ) {
-							// Получаем значение поля из БД.
-							$value = $stored[ $field_name ];
-						} elseif ( ! array_key_exists( 'empty', $params ) || ! $params[ 'empty' ] ) {
+						if (
+							! $term_meta[ $field_name ] &&
+							'0' !== $term_meta[ $field_name ] &&
+							(
+								! array_key_exists( 'empty', $params ) ||
+								! $params[ 'empty' ]
+							)
+						) {
 							// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
 							$value = $params[ 'value' ];
+						} else {
+							// Получаем значение поля из БД.
+							$value = $term_meta[ $field_name ];
+							$saved = true;
 						}
 					} else {
 						// Добавленно новое поле, берём его значение по умолчанию. Файл "opts.php".
 						$value = $params[ 'value' ];
 					}
 
-					$this->require_component( $key, $value, $params, $component_suffix );
+					$this->require_component( $key, $value, $params, $component_suffix, $saved );
 				}
 			}
 		}
