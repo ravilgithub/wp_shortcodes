@@ -10,6 +10,10 @@ input[type=url]:-moz-ui-invalid {
 	display: block;
 }
 
+.briz-unsaved {
+	color: #f00;
+}
+
 .briz-meta-radio-wrap label,
 .briz-meta-checkbox-wrap label {
 	display: block;
