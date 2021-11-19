@@ -54,97 +54,7 @@ class Helper {
 	 * @author Ravil.
 	 */
 	public function register_shortcodes_vendors() {
-		$assets = [
-			'css' => [
-				'bootstrap' => [
-					'id'   => 'briz-bootstrap-css',
-					'src'  => PLUGIN_URL . 'assets/vendors/bootstrap/css/bootstrap.min.css',
-					'deps' => [],
-					'ver'  => '3.3.5'
-				],
-
-				'mfp' => [
-					'id'   => 'briz-magnific-popup-css',
-					'src'  => PLUGIN_URL . 'assets/vendors/magnific-popup/magnific-popup.min.css',
-					'deps' => [],
-					'ver'  => '1.1.0'
-				],
-
-				'fontawesome' => [
-					'id'   => 'briz-fontawesome-css',
-					'src'  => PLUGIN_URL . 'assets/vendors/font-awesome-4.7.0/css/font-awesome.min.css',
-					'deps' => [],
-					'ver'  => '4.7.0'
-				],
-			],
-
-			'js' => [
-				'bootstrap' => [
-					'id'   => 'briz-bootstrap-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/bootstrap/js/bootstrap.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '3.3.5',
-					'in_footer' => true
-				],
-
-				'mfp' => [
-					'id'   => 'briz-magnific-popup-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/magnific-popup/jquery.magnific-popup.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '1.1.0',
-					'in_footer' => true
-				],
-
-				'isotop' => [
-					'id'   => 'briz-isotop-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/isotope/isotope.pkgd.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '3.0.1',
-					'in_footer' => true
-				],
-
-				'masonry' => [
-					'id'   => 'briz-masonry-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/masonry/masonry.pkgd.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '3.3.2',
-					'in_footer' => true
-				],
-
-				'imagesloaded' => [
-					'id'   => 'briz-imagesloaded-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/imagesloaded/imagesloaded.pkgd.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '3.3.2',
-					'in_footer' => true
-				],
-
-				'animatenumber' => [
-					'id'   => 'briz-animatenumber-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/animateNumber/jquery.animateNumber.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '0.0.12',
-					'in_footer' => true
-				],
-
-				'wow' => [
-					'id'   => 'briz-wow-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/wow/wow.min.js',
-					'deps' => [],
-					'ver'  => '1.1.2',
-					'in_footer' => true
-				],
-
-				'parallax' => [
-					'id'   => 'briz-parallax-js',
-					'src'  => PLUGIN_URL . 'assets/vendors/parallax/parallax.min.js',
-					'deps' => [ 'jquery' ],
-					'ver'  => '1.4.2',
-					'in_footer' => true
-				],
-			]
-		];
-
+		require_once( PLUGIN_PATH . 'common/inc/assets/vendors.php' );
 		$assets = apply_filters( "briz_shortcodes_vendors", $assets );
 		self::join_assets( $assets );
 	}
@@ -267,7 +177,7 @@ class Helper {
 	 *
 	 * Отдаём значения HTML атрибутов для картинок секций или записей в секциях.
 	 *
-	 * @param Array $opts - мета поля термина или записи.
+	 * @param Array $opts        - мета поля термина или записи.
 	 * @param Boolean $is_term   - указываем для кого формируем атрибуты,
 	 *                             по умолчанию для записей.
 	 *                             Default: false
@@ -277,7 +187,7 @@ class Helper {
 	 *                             за способ прикрепления картинки.
 	 *                             Default: 'bg_attachment'
 	 *
-	 * @return Array - значения HTML атрибутов.
+	 * @return Array              - значения HTML атрибутов.
 	 *
 	 * @since 0.0.1
 	 * @author Ravil.
@@ -289,14 +199,6 @@ class Helper {
 		$parallax_img_src = '';
 		$img_id = 0;
 		$img_url = '';
-
-		// self::debug( $opts );
-
-		/*self::debug( $is_term );
-		self::debug( $img_key );
-		self::debug( $opts[ $img_key ] );
-		self::debug( json_decode( $opts[ $img_key ] ) );
-		self::debug( $attach_key );*/
 
 		if ( is_array( $opts ) ) {
 			if ( array_key_exists( $attach_key, $opts ) ) {
