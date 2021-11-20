@@ -84,46 +84,18 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$bg = '';
-			$add_class = '';
-			$parallax_data = '';
-			$parallax_img_src = '';
-			$term_opts = get_term_meta( $term_id, 'briz_term_meta', true );
-
-			if ( is_array( $term_opts ) ) {
-				if ( array_key_exists( 'stickers_background', $term_opts ) ) {
-					$bg_type = $term_opts[ 'stickers_background' ];
-
-					if (
-						'hidden' != $bg_type &&
-						array_key_exists( 'option_11', $term_opts ) &&
-						$img_id = ( int ) $term_opts[ 'option_11' ]
-					) {
-						if ( $img_url = wp_get_attachment_image_url( $img_id, 'full' ) ) {
-							if ( 'fixed' == $bg_type || 'default' == $bg_type ) {
-								$bg = 'background-image: url(' . $img_url . ')';
-								if ( 'fixed' == $bg_type ) {
-									$add_class = 'bg-fixed';
-								}
-							} else {
-								$add_class = 'parallax-window';
-								$parallax_data = 'scroll';
-								$parallax_img_src = $img_url;
-							}
-						}
-					}
-				}
-			}
+			$opts = get_term_meta( $term_id, 'briz_term_meta', true );
+			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section stickers-page <?php echo $class ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section stickers-page"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="stickers-wrap">
 					<div class="stickers-inner-wrap">
 						<div
-							class="stickers-content clearfix <?php echo esc_attr( $add_class ); ?>"
+							class="stickers-content clearfix <?php echo esc_attr( $attachment ); ?>"
 							style="<?php echo esc_attr( $bg ); ?>"
 							data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 							data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
