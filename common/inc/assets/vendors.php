@@ -1,4 +1,10 @@
 <?php
+/**
+ * Cписок регистрируемых JS и CSS библиотек.
+ *
+ * @see Helper::register_shortcodes_vendors()
+ * @link ~/common/helpers.php
+ */
 $assets = [
 	'css' => [
 		/************ CSS ************/
