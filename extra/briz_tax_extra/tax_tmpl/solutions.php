@@ -233,10 +233,8 @@
 						$title = __( $section[ 'title' ], $this->lang_domain	);
 ?>
 						<li class="<?php echo $is_first ?>">
-							<a
-								href="#<?php echo $href ?>"
-								class="fa fa-<?php echo $icon ?>"
-							>
+							<a href="#<?php echo $href ?>">
+								<i class="fa fa-<?php echo $icon ?>" aria-hidden="true"></i>
 								<?php echo $title ?>
 							</a>
 						</li>

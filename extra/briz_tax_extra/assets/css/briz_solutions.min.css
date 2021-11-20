@@ -321,9 +321,15 @@
 	transition: inherit;
 }
 
-.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a:before {
-	margin-right: 9px;
+/*!!!*/
+.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a .fa {
+	margin-right: 5px;
 }
+
+/*---*/
+/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a:before {
+	margin-right: 9px;
+}*/
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-content {
 	position: relative;
