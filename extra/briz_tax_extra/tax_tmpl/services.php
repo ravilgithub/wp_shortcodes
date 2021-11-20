@@ -7,6 +7,7 @@ use Briz_Shortcodes\common\Helper;
  *
  * Формирование вывода шаблона "services".
  *
+ * @property String $tmpl_name        - имя шаблона.
  * @property String $content          - контент шорткода.
  * @property Array $atts              - параметры шорткода.
  * @property String $id               - id шорткода.
@@ -18,6 +19,7 @@ use Briz_Shortcodes\common\Helper;
  * @author Ravil
  */
 class Services {
+	private $tmpl_name = 'briz-services-tmpl';
 	public $content;
 	public $atts;
 	public $id;
@@ -59,7 +61,7 @@ class Services {
 	 * @author Ravil
 	 */
 	public function add_tmpl_assets() {
-		wp_enqueue_style( 'briz-services-tmpl-css' );
+		wp_enqueue_style( $this->tmpl_name . '-css' );
 	}
 
 	/**
@@ -82,7 +84,7 @@ class Services {
 ?>
 		<section
 			id="<?php echo esc_attr( $this->id ); ?>"
-			class="briz-services-tmpl showcase section services-page <?php echo $class ?>"
+			class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section services-page <?php echo $class ?>"
 			data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 		>
 			<div class="container">

@@ -7,6 +7,7 @@
 	 *
 	 * Формирование вывода шаблона "facts".
 	 *
+	 * @property String $tmpl_name        - имя шаблона.
 	 * @property String $content          - контент шорткода.
 	 * @property Array $atts              - параметры шорткода.
 	 * @property String $id               - id шорткода.
@@ -18,6 +19,7 @@
 	 * @author Ravil
 	 */
 	class Facts {
+		private $tmpl_name = 'briz-facts-tmpl';
 		public $content;
 		public $atts;
 		public $id;
@@ -60,8 +62,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'briz-facts-tmpl-css' );
-			wp_enqueue_script( 'briz-facts-tmpl-js' );
+			wp_enqueue_style( $this->tmpl_name . '-css' );
+			wp_enqueue_script( $this->tmpl_name . '-js' );
 		}
 
 
@@ -88,7 +90,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="briz-facts-tmpl showcase section facts-page <?php echo $class ?> <?php echo esc_attr( $attachment ); ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section facts-page <?php echo $class ?> <?php echo esc_attr( $attachment ); ?>"
 				style="<?php echo esc_attr( $bg ); ?>"
 				data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 				data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"

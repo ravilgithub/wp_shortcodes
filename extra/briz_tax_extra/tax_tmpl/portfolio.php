@@ -8,6 +8,7 @@
 	 *
 	 * Формирование вывода шаблона "portfolio".
 	 *
+	 * @property String $tmpl_name        - имя шаблона.
 	 * @property String $content          - контент шорткода.
 	 * @property Array $atts              - параметры шорткода.
 	 * @property String $id               - id шорткода.
@@ -19,6 +20,7 @@
 	 * @author Ravil
 	 */
 	class Portfolio {
+		private $tmpl_name = 'briz-portfolio-tmpl';
 		public $content;
 		public $atts;
 		public $id;
@@ -60,8 +62,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'briz-portfolio-tmpl-css' );
-			wp_enqueue_script( 'briz-portfolio-tmpl-js' );
+			wp_enqueue_style( $this->tmpl_name . '-css' );
+			wp_enqueue_script( $this->tmpl_name . '-js' );
 		}
 
 		/**
@@ -84,7 +86,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="briz-portfolio-tmpl showcase section portfolio-page <?php echo $class ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section portfolio-page <?php echo $class ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="section-inner-wrap">
@@ -169,7 +171,7 @@
 
 					</div> <!-- .section-content -->
 				</div> <!-- .section-inner-wrap -->
-			</section>
+			</section> <!-- .briz-portfolio-tmpl -->
 <?php
 		}
 

@@ -7,6 +7,7 @@
 	 *
 	 * Формирование вывода шаблона "stickers".
 	 *
+	 * @property String $tmpl_name        - имя шаблона.
 	 * @property String $content          - контент шорткода.
 	 * @property Array $atts              - параметры шорткода.
 	 * @property String $id               - id шорткода.
@@ -18,6 +19,7 @@
 	 * @author Ravil
 	 */
 	class Stickers {
+		private $tmpl_name = 'briz-stickers-tmpl';
 		public $content;
 		public $atts;
 		public $id;
@@ -59,8 +61,8 @@
 		 * @author Ravil
 		 */
 		public function add_tmpl_assets() {
-			wp_enqueue_style( 'briz-stickers-tmpl-css' );
-			wp_enqueue_script( 'briz-stickers-tmpl-js' );
+			wp_enqueue_style( $this->tmpl_name . '-css' );
+			wp_enqueue_script( $this->tmpl_name . '-js' );
 		}
 
 
@@ -115,7 +117,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="briz-stickers-tmpl showcase section stickers-page <?php echo $class ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section stickers-page <?php echo $class ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="stickers-wrap">
