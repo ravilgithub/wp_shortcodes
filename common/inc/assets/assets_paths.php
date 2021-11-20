@@ -32,6 +32,12 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css' ],
 			'ver'  => '1.0.0'
 		],
+		'solutions' => [
+			'id'   => 'briz-solutions-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_solutions.min.css',
+			'deps' => [ 'briz-bootstrap-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -61,6 +67,13 @@ $assets = [
 			'id'        => 'briz-facts-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_facts.js',
 			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-masonry-js', 'briz-animatenumber-js', 'briz-wow-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'solutions' => [
+			'id'        => 'briz-solutions-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_solutions.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-wow-js', 'briz-parallax-js', 'briz-jquery-easing-js', 'briz-easing-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
