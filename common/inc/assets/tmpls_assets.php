@@ -73,7 +73,7 @@ $assets = [
 		'solutions' => [
 			'id'        => 'briz-solutions-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_solutions.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-wow-js', 'briz-parallax-js', 'briz-jquery-easing-js', 'briz-easing-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-wow-js', 'briz-parallax-js', 'briz-easing-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
