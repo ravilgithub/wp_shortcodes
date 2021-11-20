@@ -75,18 +75,6 @@ $opts = [
 
 		'facts' => [
 			'fields' => [
-				'option_11' => [
-					'type'  => 'image',
-					'title' => 'Опция 11',
-					'desc'  => 'Описание опции 11',
-					'value' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABjElEQVRoge2bWQ6DMAxEe/+z+RAICQ7Bz/SjStWFkM02IcNISFEJ9rwKhawPEcGyLBSXiOARCqNLRLCu6ws4/DCqAtsX8OeNkfTJ9Af8W+Hq+mXZBd6reEXtMUSBYw9cRTHvh8BHD/asI89J4FSA3pTymgWcE6gH5XjMBs4NeJZyvRUBlwT2VImnYuDSBNYq9VIFXJPIQjUeqoFrE2qpNncTcEviFrXkbAZuNeCdSwVYw4hXDjVgwBZaK7YqMGADrRlTHRjQNaj9B5oAAzpGLd4WM2CgzbBVe2AKDNQZt2z8zIGBMgDrz5sLMJAH4vEtdwMGjoG8emuuwMA+mGfX1B0Y+Ab0HnycAgy8QM8Yad3AHqJ6pakaLarPElXHg6prSTV4oBoeUk0AUE3xUE3iUU3TUk3EUy21UC2mUS2XUi2I9wAbZL7loSfYILNNLT3CBqlvW+oZNmiapmSde+thaYAeNc9z9N6w24dj0PcG8VjFqyp5BGAk2KBt295l3mM8I8MGvQ9qhQLDJSJ4AsaVfzhlR3kRAAAAAElFTkSuQmCC',
-					'options' => [
-						'title'    => 'Insert a media',
-						'library'  => [ 'type' => 'image' ],
-						'multiple' => false,
-						'button'   => [ 'text' => 'Insert' ]
-					]
-				],
 				'bg_img' => [
 					'type'  => 'media_button',
 					'title' => 'Background image',
@@ -139,6 +127,36 @@ $opts = [
 						'step' => 2,
 						'min'  => 0,
 						'max'  => 10
+					]
+				],
+			]
+		],
+
+		'solutions' => [
+			'fields' => [
+				'bg_img' => [
+					'type'  => 'media_button',
+					'title' => 'Background image',
+					'desc'  => '',
+					'value' => '[857]',
+					'empty' => true,
+					'options' => [
+						'title'    => 'Insert a media',
+						'library'  => [ 'type' => 'image' ],
+						'multiple' => true,
+						'button'   => [ 'text' => 'Insert' ]
+					],
+				],
+				'bg_attachment' => [
+					'type'  => 'select',
+					'title' => 'Background attachment',
+					'desc'  => '',
+					'value' => 'default',
+					'options' => [
+						'default'  => 'default',
+						'fixed'    => 'Fixed',
+						'parallax' => 'Parallax',
+						'hidden'   => 'Hidden'
 					]
 				],
 			]
