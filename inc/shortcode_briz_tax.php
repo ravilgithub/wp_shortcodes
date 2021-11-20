@@ -185,7 +185,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function register_assets() {
-		require_once( PLUGIN_PATH . 'common/inc/assets/assets_paths.php' );
+		require_once( PLUGIN_PATH . 'common/inc/assets/tmpls_assets.php' );
 		$assets = apply_filters( "briz_tax_tmpls_assets", $assets );
 		Helper::join_assets( $assets );
 	}
