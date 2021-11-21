@@ -74,27 +74,14 @@
 	background-color: #fafafa;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.black .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:before {
 	color: #000;
 	background-color: #fafafa;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.black .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:after {
 	border-top: 8px solid #fafafa;
 }
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.black .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip {
-	color: #000;
-	background-color: #fafafa;
-}*/
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.black .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip:after {
-	border-top: 8px solid #fafafa;
-}*/
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.white {
 	background-color: #fafafa;
@@ -160,27 +147,14 @@
 	background-color: #999;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.white .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:before {
 	color: #fff;
 	background-color: #333;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.white .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:after {
 	border-top: 8px solid #333;
 }
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.white .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip {
-	color: #fff;
-	background-color: #333;
-}*/
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap.white .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip:after {
-	border-top: 8px solid #333;
-}*/
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap {
 	padding: 0;
@@ -208,8 +182,6 @@
 	padding-right: 30px;
 	-webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
 	box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
-	-webkit-transition: background-color 0.4s ease;
-	transition: background-color 0.4s ease;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item .accordeon-item-header h5 {
@@ -217,8 +189,6 @@
 	margin: 0;
 	padding: 15px;
 	font-size: 1.1em;
-	-webkit-transition: color 0.4s ease;
-	transition: color 0.4s ease;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item .accordeon-item-header:hover {
@@ -244,8 +214,6 @@
 	opacity: 0;
 	background-color: #fff;
 	overflow: hidden;
-	-webkit-transition: opacity 0.2s ease 0.2s, border-color 0.2s ease 0.2s;
-	transition: opacity 0.2s ease 0.2s, border-color 0.2s ease 0.2s;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item .accordeon-content p {
@@ -262,10 +230,14 @@
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item.active .accordeon-item-header {
 	background-color: #fff;
+	-webkit-transition: background-color 0.3s ease;
+	transition: background-color 0.3s ease;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item.active .accordeon-item-header h5 {
 	color: #333;
+	-webkit-transition: color 0.3s ease;
+	transition: color 0.3s ease;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .accordeon-container .accordeon-item.active .accordeon-item-header:after {
@@ -278,6 +250,8 @@
 	border-width: 1px;
 	border-color: #f2f2f2;
 	opacity: 1;
+	-webkit-transition: opacity 0.3s ease, border-color 0.3s ease;
+	transition: opacity 0.3s ease, border-color 0.3s ease;
 }
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container {
@@ -293,7 +267,6 @@
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li {
 	display: block;
 	position: relative;
-	/*padding: 16px 21px;*/
 	text-align: center;
 	list-style-type: none;
 	font-size: 0.94em;
@@ -308,10 +281,6 @@
 	cursor: pointer;
 }
 
-.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li:before {
-	/*margin-right: 9px;*/
-}
-
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a {
 	display: block;
 	padding: 16px 21px;
@@ -321,15 +290,9 @@
 	transition: inherit;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a .fa {
 	margin-right: 5px;
 }
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-list li a:before {
-	margin-right: 9px;
-}*/
 
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .tabs-container .tabs-content {
 	position: relative;
@@ -386,19 +349,11 @@
 	border-radius: 2px;
 }
 
-/*!!!*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container.animated .progress-bar-item .ruler-wrap .ruler:before,
-.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container.animated .progress-bar-item .ruler-wrap .ruler:after {
-	opacity: 1;
-}*/
-
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container.animated .progress-bar-item:hover .ruler-wrap .ruler:before,
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container.animated .progress-bar-item:hover .ruler-wrap .ruler:after {
 	opacity: 0.1;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:before {
 	content: attr(data-ruler);
 	position: absolute;
@@ -409,7 +364,6 @@
 	color: #fff;
 	font-size: 0.94em;
 	border-radius: 3px;
-	/*opacity: 0;*/
 	-webkit-transform: translate(50%, 0);
 	transform: translate(50%, 0);
 	-webkit-transform-style: preserve-3d;
@@ -419,7 +373,6 @@
 	transition: opacity 0.2s;
 }
 
-/*!!!*/
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler:after {
 	content: "";
 	width: 0;
@@ -430,7 +383,6 @@
 	margin-left: -4px;
 	border-left: 4px solid transparent;
 	border-right: 4px solid transparent;
-	/*opacity: 0;*/
 	-webkit-transform: translate(50%, 0);
 	transform: translate(50%, 0);
 	-webkit-transform-style: preserve-3d;
@@ -439,35 +391,6 @@
 	transform: translate3d(50%, 0, 0);
 	transition: opacity 0.2s;
 }
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip {
-	line-height: 1.3;
-	padding: 3px 6px;
-	position: absolute;
-	bottom: 15px;
-	font-size: 0.94em;
-	border-radius: 3px;
-	-webkit-transform: translate(-50%, 0);
-	transform: translate(-50%, 0);
-	-webkit-transform-style: preserve-3d;
-	transform-style: preserve-3d;
-	-webkit-transform: translate3d(-50%, 0, 0);
-	transform: translate3d(-50%, 0, 0);
-}*/
-
-/*---*/
-/*.briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .progress-bar-container .progress-bar-item .ruler-wrap .ruler-tooltip:after {
-	content: "";
-	width: 0;
-	height: 0;
-	position: absolute;
-	left: 50%;
-	bottom: -8px;
-	margin-left: -4px;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-}*/
 
 /* Color */
 .briz-solutions-tmpl .bg-overlay .container-fluid .row .solution-wrap .solution-inner-wrap .section-caption h2 span {
