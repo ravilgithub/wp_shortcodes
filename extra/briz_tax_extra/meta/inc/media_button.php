@@ -30,7 +30,7 @@
 	$btn_action_txt = $add_action_txt;
 	$delBtnClass = '';
 
-	if ( $value ) {
+	if ( $value && '[]' !== $value ) {
 		$stage = 'editable';
 		$btn_action_txt = $edit_action_txt;
 		$delBtnClass = 'briz-del-media-btn-active';
@@ -68,7 +68,7 @@
 	<figure>
 		<span class="briz-media-place">
 <?php
-					if ( $value ) :
+					if ( $value && '[]' !== $value ) :
 						$v = json_decode( $value );
 						if ( ! empty( $v ) ) :
 							foreach ( $v as $media_id ) :
@@ -122,6 +122,6 @@
 	<input
 		type="hidden"
 		name="<?php echo esc_attr( $key ); ?>"
-		value="<?php echo esc_attr( $value); ?>"
+		value="<?php echo esc_attr( $value ); ?>"
 	/>
 </div>
