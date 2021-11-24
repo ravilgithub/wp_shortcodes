@@ -246,6 +246,43 @@ class Helper {
 
 
 	/**
+	 * Sorting groups of meta fields by the value of the "order"
+	 * meta field included in these groups.
+	 *
+	 * Сортировка групп мета полей по значению мета поля "order",
+	 * входящих в эти группы.
+	 *
+	 * @param Array $arr - Массив групп мета полей.
+	 *                     В каждой группе имеется поле "order",
+	 *                     по значению которого ранжируется данная группа в массиве $arr.
+	 *
+	 * @return Array $res - отсортированный исходный массив.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public static function sort( Array $arr ) {
+		$tmp = [];
+		$res = [];
+		foreach ( $arr as $k => $el ) {
+			$tmp[ $k ] = ( int ) $el[ 'order' ];
+		}
+
+		uasort( $tmp, function( $a, $b ) {
+			if ( $a !== $b )
+				return $a - $b;
+			return $b;
+		} );
+
+		foreach ( $tmp as $k => $el ) {
+			$res[ $k ] = $arr[ $k ];
+		}
+
+		return $res;
+	}
+
+
+	/**
 	* Debug Only.
 	*/
 	public static function get_registered_styles () {
