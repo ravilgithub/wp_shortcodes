@@ -398,20 +398,16 @@
 											<?php the_content(); ?>
 										</div>
 <?php
-										if ( $this->check_fields( $opts, 'accordeon' ) ) {
-											$this->get_accordeon( $opts[ 'accordeon' ][ 'sections' ] );
-										}
-
-										if ( $this->check_fields( $opts, 'tabs' ) ) {
-											$this->get_tabs( $opts[ 'tabs' ][ 'sections' ] );
-										}
-
-										if ( $this->check_fields( $opts, 'tabs_2' ) ) {
-											$this->get_tabs( $opts[ 'tabs_2' ][ 'sections' ] );
-										}
-
-										if ( $this->check_fields( $opts, 'progress_bar' ) ) {
-											$this->get_progress_bar( $opts[ 'progress_bar' ][ 'sections' ] );
+										if (
+											array_key_exists( 'solution_elements', $opts ) &&
+											! empty( $els = $opts[ 'solution_elements' ] )
+										) {
+											foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
+												$method_name = 'get_' . $el_name;
+												if ( method_exists( $this, $method_name ) ) {
+													$this->$method_name( $el_params[ 'sections' ] );
+												}
+											}
 										}
 ?>
 									</div>
