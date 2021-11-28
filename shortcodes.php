@@ -42,8 +42,7 @@ abstract class Shortcodes {
 		add_shortcode( $this->name, array( $obj, $this->get_full_name() ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'merge_shortcode_assets' ) );
-
-		$this->set_lang_domain();
+		add_action( 'init', array ( $this, 'set_lang_domain' ) );
 	}
 
 
@@ -221,7 +220,11 @@ abstract class Shortcodes {
 	 * @author Ravil
 	 */
 	public function set_lang_domain() {
-		$flag = load_plugin_textdomain( $this->lang_domain, false, basename( dirname( __DIR__ ) ) . '/lang' );
+		if ( ! is_textdomain_loaded( $this->lang_domain ) ) {
+			$default_path = dirname( __FILE__ ) . '/lang/' . $this->lang_domain . '-ru_RU.mo';
+			$lang_domain_path = apply_filters( 'briz_shortcodes_lang_domain_path', $default_path );
+			load_textdomain( $this->lang_domain, $lang_domain_path );
+		}
 	}
 
 
