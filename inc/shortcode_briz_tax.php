@@ -287,8 +287,6 @@ class Briz_Tax_Shortcode extends Shortcodes {
 		if ( empty( $atts[ 'term' ] ) )
 			return;
 
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		// Helper::debug( $atts );
 
 		ob_start();
@@ -302,7 +300,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 
 			$posts = $this->get_posts( $id, $term_id );
 
-			$instance = new $tmpl_source( $content, $atts, $id, $lang_domain, $term_id );
+			$instance = new $tmpl_source( $content, $atts, $id, $this->lang_domain, $term_id );
 			$instance->add_tmpl_assets();
 			$instance->get_before( $posts );
 			$instance->get_content( $posts );
@@ -636,6 +634,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 
 		$tmpl_source = $this->get_tmpl_source( $atts[ 'term' ][ $shortcode_term_id ] );
 		$instance = new $tmpl_source;
+		$instance->lang_domain = $this->lang_domain;
 		$instance->get_content( $posts );
 
 		echo json_encode( ob_get_clean() );
