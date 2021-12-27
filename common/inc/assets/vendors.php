@@ -28,6 +28,13 @@ $assets = [
 			'deps' => [],
 			'ver'  => '4.7.0'
 		],
+
+		'swiper' => [
+			'id'   => 'briz-swiper-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/swiper/swiper.min.css',
+			'deps' => [],
+			'ver'  => '3.3.1'
+		],
 	],
 
 	'js' => [
@@ -101,6 +108,14 @@ $assets = [
 			'src'  => PLUGIN_URL . 'assets/vendors/briz-easing/briz.easing.js',
 			'deps' => [],
 			'ver'  => '1.0.0',
+			'in_footer' => true
+		],
+
+		'swiper' => [
+			'id'   => 'briz-swiper-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/swiper/swiper.jquery.min.js',
+			'deps' => [ 'jquery' ],
+			'ver'  => '3.3.1',
 			'in_footer' => true
 		],
 	]
