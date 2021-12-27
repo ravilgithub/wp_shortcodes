@@ -45,6 +45,24 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css' ],
 			'ver'  => '1.0.0'
 		],
+		'blog' => [
+			'id'   => 'briz-blog-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_blog.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
+			'ver'  => '1.0.0'
+		],
+		'team' => [
+			'id'   => 'briz-team-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_team.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
+			'ver'  => '1.0.0'
+		],
+		'review' => [
+			'id'   => 'briz-review-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_review.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -81,6 +99,27 @@ $assets = [
 			'id'        => 'briz-solutions-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_solutions.js',
 			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-wow-js', 'briz-parallax-js', 'briz-easing-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'blog' => [
+			'id'        => 'briz-blog-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_blog.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'team' => [
+			'id'        => 'briz-team-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_team.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'review' => [
+			'id'        => 'briz-review-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_review.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
