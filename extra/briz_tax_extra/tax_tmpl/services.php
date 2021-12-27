@@ -141,14 +141,15 @@ class Services {
 
 			if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 				$post_id = get_the_id();
-				$icon_name = get_post_meta( $post_id, '_category_services_icon', true );
+				$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+				$opts = get_post_meta( $post_id, $meta_key, true );
 ?>
 				<div
 					class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 services-item-wrap <?php echo esc_attr( $child->slug ); ?>"
 					data-post-id="<?php echo esc_attr( $post_id ); ?>"
 				>
 					<div class="icon-wrap">
-			<?php if ( $icon_name ) : ?>
+			<?php if ( array_key_exists( 'icon', $opts ) && $icon_name = $opts[ 'icon' ] ) : ?>
 							<i
 								class="fa fa-<?php echo esc_attr( $icon_name ); ?>"
 								aria-hidden="true"
