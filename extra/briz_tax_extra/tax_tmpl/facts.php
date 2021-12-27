@@ -159,16 +159,13 @@
 			foreach ( $posts[ 'data' ] as $data ) :
 				$child = $data[ 'child' ];
 				$query = $data[ 'query' ];
-				$tax_name = $query->query[ 'tax_query' ][ 0 ][ 'taxonomy' ];
-				$class_name = explode( '\\', __CLASS__ );
-				$class_name = strtolower( array_pop( $class_name ) );
-				$meta_key = '_' . $tax_name . '_' . $class_name;
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
-					$post_meta_vals = get_post_meta( $post_id, $meta_key )[ 0 ];
+					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+					$opts = get_post_meta( $post_id, $meta_key, true );
 
-					foreach ( $post_meta_vals as $vals ) :
+					foreach ( $opts as $vals ) :
 						extract( $vals );
 ?>
 						<div class="col-sm-3 facts-item">
