@@ -36,6 +36,8 @@ require 'exports/stickers_meta_fields.php';
 require 'exports/about_meta_fields.php';
 require 'exports/facts_meta_fields.php';
 require 'exports/solutions_meta_fields.php';
+require 'exports/team_meta_fields.php';
+require 'exports/review_meta_fields.php';
 
 $opts = [
 	'category' => [
@@ -46,5 +48,7 @@ $opts = [
 		'about'     => $about_meta_fields,
 		'facts'     => $facts_meta_fields,
 		'solutions' => $solutions_meta_fields,
+    'team'      => $team_meta_fields,
+    'review'    => $review_meta_fields,
 	],
 ];
