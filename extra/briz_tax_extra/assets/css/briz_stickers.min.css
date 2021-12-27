@@ -66,12 +66,12 @@
 	transition: color 0.2s ease;
 }
 
-.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner a:hover:after {
+.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner a.more-link:hover:after {
 	width: 100%;
 	left: 0;
 }
 
-.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner a:after {
+.briz-stickers-tmpl .stickers-wrap .stickers-inner-wrap .stickers-content .container .stickers-content-item .stickers-content-item-inner a.more-link:after {
 	content: "";
 	width: 0;
 	height: 1px;
