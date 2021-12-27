@@ -146,14 +146,15 @@
 
 										$icon_name = '';
 										$label = '';
-										$features_opts = get_post_meta( $post_id, '_category_features', true );
+										$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+										$opts = get_post_meta( $post_id, $meta_key, true );
 
-										if ( is_array( $features_opts ) ) {
-											if ( array_key_exists( 'icon', $features_opts )	 ) {
-												$icon_name = $features_opts[ 'icon' ];
+										if ( is_array( $opts ) ) {
+											if ( array_key_exists( 'icon', $opts )	 ) {
+												$icon_name = $opts[ 'icon' ];
 											}
-											if ( array_key_exists( 'label', $features_opts )	 ) {
-												$label = $features_opts[ 'label' ];
+											if ( array_key_exists( 'label', $opts )	 ) {
+												$label = $opts[ 'label' ];
 											}
 										}
 
@@ -233,10 +234,14 @@
 					$post_id = get_the_id();
 
 					$label = '';
-					$features_opts = get_post_meta( $post_id, '_category_features', true );
+					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+					$opts = get_post_meta( $post_id, $meta_key, true );
 
-					if ( is_array( $features_opts ) && array_key_exists( 'label', $features_opts ) ) {
-							$label = $features_opts[ 'label' ];
+					if (
+						is_array( $opts ) &&
+						array_key_exists( 'label', $opts )
+					) {
+							$label = $opts[ 'label' ];
 					}
 
 					$anchor = $this->prepareAnchor( $label );
