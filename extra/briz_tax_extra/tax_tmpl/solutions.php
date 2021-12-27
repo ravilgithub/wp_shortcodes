@@ -354,7 +354,8 @@
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
-					$opts = get_post_meta( $post_id, '_category_solutions', true );
+					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+					$opts = get_post_meta( $post_id, $meta_key, true );
 
 					$opts[ 'post_id' ] = $post_id;
 
