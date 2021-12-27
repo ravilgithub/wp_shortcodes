@@ -283,6 +283,31 @@ class Helper {
 
 
 	/**
+	 * We form the name of the meta field of the post,
+	 * consisting of the name of the taxonomy to which the
+	 * term of the post belongs and the name of the template class.
+	 *
+	 * Формируем имя мета поля записи, состоящее из имени
+	 * такономии( category, product_cat, ... ) к которой относится
+	 * термин записи и имени класса шаблона.
+	 *
+	 * @param String $class_name     - имя класса шаблона.
+	 * @param WP Query Object $query - объект запроса.
+	 *
+	 * @return String - имя мета поля записи( post meta field key ).
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public static function get_post_meta_key( $class_name, $query ) {
+		$tax_name = $query->query[ 'tax_query' ][ 0 ][ 'taxonomy' ];
+		$class_name = explode( '\\', $class_name );
+		$class_name = strtolower( array_pop( $class_name ) );
+		return '_' . $tax_name . '_' . $class_name;
+	}
+
+
+	/**
 	* Debug Only.
 	*/
 	public static function get_registered_styles () {
