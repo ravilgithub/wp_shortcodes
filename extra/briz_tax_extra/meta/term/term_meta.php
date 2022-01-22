@@ -158,6 +158,11 @@ class Term_Meta extends Meta {
 						$value = $params[ 'value' ];
 					}
 
+					// Сортировка медиа файлов.
+					if ( 'media_button' === $params[ 'type' ] && $value && '[]' !== $value ) {
+						$value = $this->sort_attachment_files( $value, $params );
+					}
+
 					$this->require_component( $key, $value, $params, $component_suffix, $saved );
 				}
 			}

@@ -113,6 +113,54 @@ abstract class Meta {
 
 
 	/**
+	 * Сортировка медиа файлов.
+	 * Сортировка производится по типу файла.
+	 * Порядок типов файлов указывается в опциях мета поля в параметре 'type'.
+	 *
+	 * @param JSON String $value - идентификаторы медиа файлов.
+	 * @param Array $params - параметры мета поля.
+	 *
+	 * @return JSON String $ordered - отсортированные по типу идентификаторы медиа файлов.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function sort_attachment_files( $value, $params ) {
+		$order = $params[ 'options' ][ 'library' ][ 'type' ];
+		$value = json_decode( $value );
+
+		if( ! is_array( $order ) )
+			return json_encode( $value );
+
+		if ( 2 > count( $order ) )
+			return json_encode( $value );
+
+		$ordered = [];
+		$image = [];
+		$audio = [];
+		$video = [];
+
+		foreach ( $value as $media_id ) {
+			$file_type = wp_prepare_attachment_for_js( $media_id )[ 'type' ];
+			if ( 'image' === $file_type ) {
+				$image[] = $media_id;
+			} elseif ( 'audio' === $file_type ) {
+				$audio[] = $media_id;
+			} else {
+				$video[] = $media_id;
+			}
+		}
+
+		foreach ( $order as $type ) {
+			if ( ! empty( $$type ) )
+				$ordered = array_merge( $ordered, $$type );
+		}
+
+		return json_encode( $ordered );
+	}
+
+
+	/**
 	 * Connecting the HTML component of the meta field.
 	 *
 	 * Подключение HTML комонента мета поля.

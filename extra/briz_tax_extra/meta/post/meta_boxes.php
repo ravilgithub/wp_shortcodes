@@ -340,6 +340,11 @@ class Meta_Boxes extends Meta {
 				$key = $this->id_prefix . "[$key][$name]";
 			}
 
+			// Сортировка медиа файлов.
+			if ( 'media_button' === $params[ 'type' ] && $value && '[]' !== $value ) {
+				$value = $this->sort_attachment_files( $value, $params );
+			}
+
 			$this->require_component( $key, $value, $params, '_edit', $saved );
 		}
 	}
