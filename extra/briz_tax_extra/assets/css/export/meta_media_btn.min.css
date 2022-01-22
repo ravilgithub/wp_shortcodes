@@ -1,29 +1,89 @@
 /**
  * BEGIN "media button" meta field
  */
-.briz-meta-media-btn-wrap figure {
-	margin-left: 0;
-	margin-right: 0;
+.briz-meta-media-wrap * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.briz-meta-media-btn-wrap .briz-media-place {
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-controls {
+	display: flex;
+	margin-bottom: 8px;
+	padding-top: 4px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #c3c4c7;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-controls .briz-meta-media-del-all-btn {
+	display: none;
+	margin-left: 10px;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-controls .briz-meta-media-del-all-btn.briz-active {
+	display: initial;
+}
+
+/*.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item figcaption {
+	padding-bottom: 10px;
+}*/
+
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.briz-meta-media-btn-wrap .briz-media-place-item {
-	padding: 0 10px 10px 0;
-	box-sizing: border-box;
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap.audio {
+	flex-basis: 100%;
 }
 
-.briz-meta-media-btn-wrap .briz-media-place-item figcaption {
-	padding-bottom: 10px;
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap.video {
+	flex-basis: 50%;
 }
 
-.briz-meta-media-btn-wrap .briz-del-media-btn {
-	display: none !important;
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap.image {
+	flex-basis: 10%;
 }
 
-.briz-meta-media-btn-wrap .briz-del-media-btn-active {
-	display: inline-block !important;
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap .briz-meta-media-item {
+	display: inline-flex;
+	position: relative;
+	padding: 2px;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap .briz-meta-media-item .briz-meta-media-del-item-btn {
+	display: block;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	width: 1em;
+	height: 1em;
+	line-height: 1em;
+	font-size: 1em;
+	font-weight: 500;
+	font-style: normal;
+	text-align: center;
+	color: #fff;
+	background-color: #333;
+	border-radius: 50%;
+	cursor: pointer;
+	box-shadow: 0 0 0 1px #fff;
+	opacity: 0;
+	z-index: 1;
+	transition: opacity 0.3s;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap .briz-meta-media-item:hover .briz-meta-media-del-item-btn {
+	opacity: 1;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap .briz-meta-media-item .briz-meta-media-del-item-btn:hover {
+	background-color: #c00;
+}
+
+.briz-meta-media-wrap .briz-meta-media-box .briz-meta-media-place .briz-meta-media-item-wrap .briz-meta-media-item img {
+	display: block;
+	width: 100%;
+	height: auto;
 }
