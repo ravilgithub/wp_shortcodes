@@ -25,22 +25,22 @@
 	extract( $opts );
 
 	$stage = 'addidable';
-	$add_action_txt = __( 'Add медиафайлы' );
-	$edit_action_txt = __( 'Edit медиафайлы' );
+	$add_action_txt = __( 'Add' );
+	$edit_action_txt = __( 'Edit' );
 	$btn_action_txt = $add_action_txt;
 	$delBtnClass = '';
 
 	if ( $value && '[]' !== $value ) {
 		$stage = 'editable';
 		$btn_action_txt = $edit_action_txt;
-		$delBtnClass = 'briz-del-media-btn-active';
+		$delBtnClass = 'briz-active';
 	}
 ?>
 
-<tr class="form-field briz-meta-media-btn-wrap">
+<tr class="form-field briz-meta-media-wrap">
 	<th scope="row">
-		<span class="briz-meta-title">
-			<?php echo $params[ 'title' ]; ?>
+		<span class="briz-meta-media-title">
+			<?php _e( $params[ 'title' ] ); ?>
 			<?php if ( ! $saved ) : ?>
 				<em class="briz-unsaved">*</em>
 			<?php endif; ?>
@@ -48,89 +48,105 @@
 	</th>
 
 	<td>
-		<button
-			type="button"
-			class="button briz-add-media-btn"
-			data-title="<?php echo esc_attr( $title ); ?>"
-			data-library-type="<?php echo esc_attr( $library[ 'type' ] ); ?>"
-			data-multiple="<?php echo esc_attr( $multiple ); ?>"
-			data-button-text="<?php echo esc_attr( $button[ 'text' ] ); ?>"
-			data-action-text="<?php echo esc_attr( $edit_action_txt ); ?>"
-			data-stage="<?php echo esc_attr( $stage ); ?>"
-		>
-			<?php echo $btn_action_txt; ?>
-		</button>
+		<div class="briz-meta-media-box">
+			<div class="briz-meta-media-controls">
+				<button
+					type="button"
+					class="button briz-meta-media-add-btn"
+					data-title="<?php echo esc_attr( $title ); ?>"
+					data-library-type="<?php echo esc_attr( json_encode( $library[ 'type' ] ) ); ?>"
+					data-multiple="<?php echo esc_attr( $multiple ); ?>"
+					data-button-text="<?php echo esc_attr( $button[ 'text' ] ); ?>"
+					data-action-text="<?php echo esc_attr( $edit_action_txt ); ?>"
+					data-stage="<?php echo esc_attr( $stage ); ?>"
+				>
+					<?php echo $btn_action_txt; ?>
+				</button>
 
-		<button
-			type="button"
-			class="button briz-del-media-btn <?php echo esc_attr( $delBtnClass ); ?>"
-			data-action-text="<?php echo esc_attr( $add_action_txt ); ?>"
-		>
-			<?php echo __( 'Удалить медиафайлы' ); ?>
-		</button>
+				<button
+					type="button"
+					class="button briz-meta-media-del-all-btn <?php echo esc_attr( $delBtnClass ); ?>"
+					data-action-text="<?php echo esc_attr( $add_action_txt ); ?>"
+				>
+					<?php echo __( 'Delete all' ); ?>
+				</button>
+			</div> <!-- .briz-meta-media-controls -->
 
-		<p class="description">
-			<?php _e( $params[ 'desc'] ); ?>
-		</p>
+			<p class="description">
+				<?php _e( $params[ 'desc'] ); ?>
+			</p>
 
-		<figure>
-			<span class="briz-media-place">
+			<div class="briz-meta-media-place">
 <?php
-					if ( $value && '[]' !== $value ) :
-						$v = json_decode( $value );
-						if ( ! empty( $v ) ) :
-							foreach ( $v as $media_id ) :
+				if ( $value && '[]' !== $value ) :
+					$v = json_decode( $value );
+					if ( ! empty( $v ) ) :
+						foreach ( $v as $media_id ) :
+							$details = wp_prepare_attachment_for_js( $media_id );
+							$src = $details[ 'url' ];
+							$type = $details[ 'type' ];
+
+							if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
+								$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
+							}
 ?>
-								<span class="briz-media-place-item">
+							<div
+								class="briz-meta-media-item-wrap <?php echo esc_attr( $type ); ?>"
+								data-media-id="<?php echo esc_attr( $media_id ); ?>"
+							>
+								<figure
+									title="<?php esc_attr_e( $details[ 'caption' ] ); ?>"
+									class="briz-meta-media-item"
+								>
+									<i class="briz-meta-media-del-item-btn">×</i>
 <?php
-									$details = wp_prepare_attachment_for_js( $media_id );
-									$src = $details[ 'url' ];
-
-									if ( isset( $details[ 'sizes' ][ 'thumbnail' ] ) ) {
-										$src = $details[ 'sizes' ][ 'thumbnail' ][ 'url' ];
-									}
-
 									// Image
-									if ( 'image' == $library[ 'type' ] ) :
+									if ( 'image' == $type ) :
 ?>
 										<img
 											src="<?php echo esc_attr( $src ); ?>"
 											alt="<?php echo esc_attr( $details[ 'alt' ] ); ?>"
 										/>
 <?php
+									endif;
+
 									// Audio
-									elseif ( 'audio' == $library[ 'type' ] ) :
+									if ( 'audio' == $type ) :
 ?>
 										<audio src="<?php echo esc_attr( $src ); ?>" controls></audio>
 <?php
+									endif;
+
 									// Video
-									elseif ( 'video' == $library[ 'type' ] ) :
+									if ( 'video' == $type ) :
 ?>
 										<video src="<?php echo esc_attr( $src ); ?>" controls></video>
 <?php
 									endif;
 
-									if ( $caption = $details[ 'caption' ] ) :
+									// if ( $caption = $details[ 'caption' ] ) :
 ?>
-										<figcaption>
-											<?php echo $caption; ?>
-										</figcaption>
+										<!-- <figcaption> -->
+											<?php // echo $caption; ?>
+										<!-- </figcaption> -->
 <?php
-									endif;
+									// endif;
 ?>
-								</span> <!-- .briz-media-place-item -->
+								</figure> <!-- .briz-meta-media-item -->
+							</div> <!-- .briz-meta-media-item-wrap -->
 <?php
-							endforeach;
-						endif;
+						endforeach;
 					endif;
+				endif;
 ?>
-			</span> <!-- .briz-media-place -->
-		</figure>
+			</div> <!-- .briz-meta-media-place -->
+		</div> <!-- .briz-meta-media-box -->
 
 		<input
 			type="hidden"
+			class="briz-meta-media-collection"
 			name="<?php echo esc_attr( $key ); ?>"
 			value="<?php echo esc_attr( $value ); ?>"
 		/>
 	</td>
-</tr>
+</tr> <!-- .briz-meta-media-wrap -->

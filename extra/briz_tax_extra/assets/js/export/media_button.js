@@ -10,12 +10,44 @@
 export default {
 	selectors: {
 		btn: {
-			add: '.briz-add-media-btn',
-			del: '.briz-del-media-btn'
+			add: 'briz-meta-media-add-btn',
+			del: {
+				item: 'briz-meta-media-del-item-btn',
+				all: 'briz-meta-media-del-all-btn',
+			}
 		},
-		mediaPlace: '.briz-media-place',
-		input: 'input[type=hidden]',
-		activeClass: 'briz-del-media-btn-active',
+		media: {
+			place: 'briz-meta-media-place',
+			itemWrap: 'briz-meta-media-item-wrap',
+			item: 'briz-meta-media-item',
+		},
+		input: 'briz-meta-media-collection',
+		activeClass: 'briz-active',
+	},
+
+
+	/**
+	 * Делегирование событий.
+	 *
+	 * @param String wrap - селектор( CSS class ) родительского элемента мета блока.
+	 *
+	 * @return {void}
+	 */
+	setActions( wrap ) {
+		document.querySelectorAll( wrap ).forEach( instance => {
+			instance.addEventListener( 'click', evt => {
+				const target = evt.target,
+				      classes = target.classList;
+
+				if ( classes.contains( this.selectors.btn.add ) ) {
+					this.add( instance, target );
+				} else if ( classes.contains( this.selectors.btn.del.item ) ) {
+					this.delItem( instance, target );
+				} else if ( classes.contains( this.selectors.btn.del.all ) ) {
+					this.delAll( instance, target );
+				}
+			}, false );
+		} );
 	},
 
 
@@ -23,25 +55,23 @@ export default {
 	 * Создаём объект wp.media и
 	 * передаём ему первоначальные данные.
 	 *
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
+	 * @param DOM Object instance - текущий мета блок.
+	 * @param DOM Object btn - кнопка которая добавляет медиа файлы.
 	 *
 	 * @return {void}
 	 */
-	add( instance ) {
-		instance.querySelector( this.selectors.btn.add ).addEventListener( 'click', evt => {
-			const btn = evt.target,
-			      args = {
-			        title: btn.dataset.title,
-			        library: { type: btn.dataset.libraryType },
-			        multiple: btn.dataset.multiple,
-			        button: { text: btn.dataset.buttonText }
-			      },
-			      wpm = wp.media( args );
+	add( instance, btn ) {
+		const args = {
+		        title: btn.dataset.title,
+		        library: { type: JSON.parse( btn.dataset.libraryType ) },
+		        multiple: btn.dataset.multiple,
+		        button: { text: btn.dataset.buttonText }
+		      },
+		      wpm = wp.media( args );
 
-			this.select( wpm, instance );
-			this.open( wpm, instance );
-			wpm.open();
-		}, false );
+		this.select( wpm, instance );
+		this.open( wpm, instance );
+		wpm.open();
 	},
 
 
@@ -54,17 +84,29 @@ export default {
 	 * @return String html - разметка медиа файлa и подпись к нему если имеется.
 	 */
 	createEl( wpm, atts ) {
-		const tagName = atts.type;
-		const item = document.createElement( 'span' );
-		item.classList.add( 'briz-media-place-item' );
+		const tagName = atts.type,
+		      itemWrap = document.createElement( 'div' ),
+		      figure = document.createElement( 'figure' ),
+		      delItemBtn = document.createElement( 'i' );
+
+		delItemBtn.classList.add( this.selectors.btn.del.item );
+		delItemBtn.textContent = '×';
+
+		figure.appendChild( delItemBtn );
+		figure.classList.add( this.selectors.media.item );
+
+		itemWrap.appendChild( figure );
+		itemWrap.classList.add( this.selectors.media.itemWrap, atts.type );
+		itemWrap.dataset.mediaId = atts.id;
 
 		let attrs = { src: atts.url }, // для 'audio' и 'video'.
 		    html = '',
 		    media = '';
 
 		if ( 'image' == tagName ) {
+			const img = atts.sizes.thumbnail || atts.sizes.full;
+			attrs[ 'src' ] = img.url;
 			attrs[ 'alt' ] = atts.alt;
-			attrs[ 'src' ] = atts.sizes.thumbnail.url || atts.sizes.full.url;
 		} else if ( 'audio' == tagName ) {
 			attrs[ 'controls' ] = 'controls';
 		} else if ( 'video' == tagName ) {
@@ -76,15 +118,15 @@ export default {
 			media.setAttribute( i, attrs[ i ] );
 		}
 
-		item.appendChild( media );
+		figure.appendChild( media );
 
-		if ( atts.caption ) {
+		/*if ( atts.caption ) {
 			const figcaption = document.createElement( 'figcaption' );
 			figcaption.textContent = atts.caption;
-			item.appendChild( figcaption );
-		}
+			figure.appendChild( figcaption );
+		}*/
 
-		return item.outerHTML;
+		return itemWrap.outerHTML;
 	},
 
 
@@ -93,7 +135,7 @@ export default {
 	 * Формирование данных о выбранных медиа файлах.
 	 *
 	 * @param Object wpm - WP Media Object.
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
+	 * @param DOM Object instance - текущий мета блок.
 	 *
 	 * @return {void}
 	 */
@@ -120,18 +162,18 @@ export default {
 
 
 	/**
-	 * Обработчик открыия медиа библиотеки.
+	 * Обработчик открытия медиа библиотеки.
 	 * Помечаем раннее выбранные медиа файлы если они есть.
 	 *
 	 * @param Object wpm - WP Media Object.
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
+	 * @param DOM Object instance - текущий мета блок.
 	 *
 	 * @return {void}
 	 */
 	open( wpm, instance ) {
 		wpm.on( 'open', () => {
 			const sel = wpm.state().get( 'selection' ),
-			      ids = instance.querySelector( this.selectors.input ).value;
+			      ids = instance.querySelector( '.' + this.selectors.input ).value;
 
 			if ( ids ) {
 				JSON.parse( ids )
@@ -148,54 +190,72 @@ export default {
 	/**
 	 * Добавление медиа данных.
 	 *
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
-	 * @param String action - действие которое нужно выполнить - добавить или удалить медиа файлы.
+	 * @param DOM Object instance - текущий мета блок.
+	 * @param String action  - действие которое нужно выполнить - добавить или удалить медиа файлы.
 	 * @param Array els - HTML добавляемых элементов.
 	 * @param Array ids - WP идентификаторы добавляемых медиа файлов.
 	 *
-	 * @return void
+	 * @return {void}
 	 */
 	setMedia( instance, action, els = '', ids = '' ) {
-		const mediaPlace = instance.querySelector( this.selectors.mediaPlace );
+		const mediaPlace = instance.querySelector( '.' + this.selectors.media.place );
 
-		while ( mediaPlace.firstChild ) {
-			mediaPlace.removeChild( mediaPlace.firstChild );
-		}
+		mediaPlace.innerHTML = '';
 
 		for ( const i in els ) {
 			mediaPlace.insertAdjacentHTML( 'beforeend', els[ i ] );
 		}
 
-		instance.querySelector( this.selectors.input ).setAttribute( 'value', ids );
+		instance.querySelector( '.' + this.selectors.input ).setAttribute( 'value', ids );
 		this.btnHandler( instance, action );
 	},
 
 
 	/**
-	 * Удаление медиа данных.
+	 * Удаление произвольного медиа файла из мета блока.
 	 *
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
+	 * @param DOM Object btn - кнопка которая удаляет медиа файл.
 	 *
 	 * @return {void}
 	 */
-	del( instance ) {
-		instance.querySelector( this.selectors.btn.del ).addEventListener( 'click', () => {
-			this.setMedia( instance, 'del' );
-		}, false );
+	delItem( instance, btn ) {
+		const itemWrap = btn.closest( '.' + this.selectors.media.itemWrap ),
+		      delItemId = itemWrap.dataset.mediaId,
+		      input = instance.querySelector( '.' + this.selectors.input ),
+		      ids = JSON.parse( input.value ).filter( id => delItemId != id );
+
+		itemWrap.parentNode.removeChild( itemWrap );
+		input.setAttribute( 'value', JSON.stringify( ids ) );
+
+		if ( ! ids.length ) {
+			this.btnHandler( instance, 'delAll' );
+		}
+	},
+
+
+	/**
+	 * Удаление всех медиа файлов из мета блока.
+	 *
+	 * @param DOM Object instance - текущий мета блок.
+	 *
+	 * @return {void}
+	 */
+	delAll( instance ) {
+		this.setMedia( instance, 'delAll' );
 	},
 
 
 	/**
 	 * Изменение текста кнопок при нажатии на них.
 	 *
-	 * @param DOM Object instance - родительский элемент мета поля "media button".
+	 * @param DOM Object instance - текущий мета блок.
 	 * @param String action  - действие которое нужно выполнить - добавить или удалить медиа файлы.
 	 *
 	 * @return {void}
 	 */
 	btnHandler( instance, action ) {
-		const addBtn = instance.querySelector( this.selectors.btn.add ),
-		      delBtn = instance.querySelector( this.selectors.btn.del );
+		const addBtn = instance.querySelector( '.' + this.selectors.btn.add ),
+		      delBtn = instance.querySelector( '.' + this.selectors.btn.del.all );
 
 		if ( 'add' == action ) {
 			const stage = addBtn.dataset.stage;
@@ -215,7 +275,7 @@ export default {
 	/**
 	 * Инициализация основных методов.
 	 *
-	 * @param String wrap - селектор родительского элемента мета поля "media button".
+	 * @param String wrap - селектор( CSS class ) родительского элемента мета блока.
 	 *
 	 * @return {void}
 	 */
@@ -223,9 +283,6 @@ export default {
 		if ( ! wrap )
 			return;
 
-		document.querySelectorAll( wrap ).forEach( instance => {
-			this.add( instance );
-			this.del( instance );
-		} );
+		this.setActions( wrap );
 	}
 };
