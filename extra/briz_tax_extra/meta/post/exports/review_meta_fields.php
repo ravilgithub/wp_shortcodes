@@ -31,7 +31,7 @@ $review_meta_fields = [
 			'value' => '[]',
 			'options' => [
 				'title'    => 'Insert a media',
-				'library'  => [ 'type' => 'audio' ],
+				'library'  => [ 'type' => [ 'audio' ] ],
 				'multiple' => 0,
 				'button'   => [ 'text' => 'Insert' ]
 			]
