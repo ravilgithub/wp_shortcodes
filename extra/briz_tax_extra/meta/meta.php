@@ -136,7 +136,7 @@ abstract class Meta {
 		if( ! is_array( $order ) )
 			return json_encode( $value );
 
-		if ( 2 > count( $order ) )
+		if ( 2 > count( $order ) || 2 > count( $value ) )
 			return json_encode( $value );
 
 		$ordered = [];

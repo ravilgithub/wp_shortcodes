@@ -141,6 +141,12 @@ export default {
 	 * @return Array $ordered - отсортированные по типу идентификаторы медиа файлов.
 	 */
 	sort_attachment_files( sel, args ) {
+		if ( ! Array.isArray( args.library.type ) )
+			return sel;
+
+		if ( 2 > args.library.type.length || 2 > sel.length )
+			return sel;
+
 		let ordered = [];
 
 // ---------------------------------
