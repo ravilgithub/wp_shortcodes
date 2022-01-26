@@ -69,7 +69,7 @@ export default {
 		      },
 		      wpm = wp.media( args );
 
-		this.select( wpm, instance );
+		this.select( wpm, instance, args );
 		this.open( wpm, instance );
 		wpm.open();
 	},
@@ -131,23 +131,74 @@ export default {
 
 
 	/**
+	 * Сортировка медиа файлов.
+	 * Сортировка производится по типу файла.
+	 * Порядок типов файлов указывается в опциях мета поля в параметре 'type'.
+	 *
+	 * @param Array sel - массив атрибутов для каждого из выбранного медиа файла.
+	 * @param Array args - параметры WP Media.
+	 *
+	 * @return Array $ordered - отсортированные по типу идентификаторы медиа файлов.
+	 */
+	sort_attachment_files( sel, args ) {
+		let ordered = [];
+
+// ---------------------------------
+
+		// Вариант 1
+		/*let stack = {};
+		sel.forEach( media => {
+			const type = media.attributes.type;
+
+			if ( type in stack )
+				stack[ type ].push( media );
+			else
+				stack[ type ] = [ media ];
+		} );
+
+		args.library.type.forEach( type => {
+			if ( type in stack )
+				ordered = ordered.concat( stack[ type ] );
+		} );*/
+
+// ---------------------------------
+
+		// Вариант 2
+		args.library.type.forEach( type => {
+			sel.forEach( media => {
+				if ( media.attributes.type == type ) {
+					ordered.push( media );
+				}
+			} );
+		} );
+
+// ---------------------------------
+
+		return ordered;
+	},
+
+
+	/**
 	 * Обработчик выбора медиа данных в библиотеке.
 	 * Формирование данных о выбранных медиа файлах.
 	 *
 	 * @param Object wpm - WP Media Object.
 	 * @param DOM Object instance - текущий мета блок.
+	 * @param Array args - параметры WP Media.
 	 *
 	 * @return {void}
 	 */
-	select( wpm, instance ) {
+	select( wpm, instance, args ) {
 		wpm.on( 'select', () => {
 			let els = [],
 			    ids = [];
 
-			const sel = wpm
+			let sel = wpm
 			        .state()
 			        .get( 'selection' )
 			        .toArray();
+
+			sel = this.sort_attachment_files( sel, args );
 
 			for ( const i in sel ) {
 				const atts = sel[ i ].attributes;
