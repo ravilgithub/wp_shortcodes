@@ -113,6 +113,10 @@ abstract class Meta {
 
 
 	/**
+	 * Sorting media files.
+	 * Sorting is done by file type.
+	 * The order of file types is specified in the meta field options in the 'type' parameter.
+	 *
 	 * Сортировка медиа файлов.
 	 * Сортировка производится по типу файла.
 	 * Порядок типов файлов указывается в опциях мета поля в параметре 'type'.
@@ -136,24 +140,21 @@ abstract class Meta {
 			return json_encode( $value );
 
 		$ordered = [];
-		$image = [];
-		$audio = [];
-		$video = [];
+		$stack = [];
 
 		foreach ( $value as $media_id ) {
-			$file_type = wp_prepare_attachment_for_js( $media_id )[ 'type' ];
-			if ( 'image' === $file_type ) {
-				$image[] = $media_id;
-			} elseif ( 'audio' === $file_type ) {
-				$audio[] = $media_id;
+			$type = wp_prepare_attachment_for_js( $media_id )[ 'type' ];
+
+			if ( array_key_exists( $type, $stack ) ) {
+				array_push( $stack[ $type ], $media_id );
 			} else {
-				$video[] = $media_id;
+				$stack[ $type ] = [ $media_id ];
 			}
 		}
 
 		foreach ( $order as $type ) {
-			if ( ! empty( $$type ) )
-				$ordered = array_merge( $ordered, $$type );
+			if ( array_key_exists( $type, $stack ) )
+				$ordered = array_merge( $ordered, $stack[ $type ] );
 		}
 
 		return json_encode( $ordered );
