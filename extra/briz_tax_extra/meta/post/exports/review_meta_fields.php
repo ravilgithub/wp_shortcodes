@@ -57,7 +57,7 @@ $review_meta_fields = [
 			'value' => '[876,875,874,690,691,694,873,872,857]',
 			'options' => [
 				'title'    => 'Insert a media',
-				'library'  => [ 'type' => [ 'video', 'image', 'audio' ] ],
+				'library'  => [ 'type' => [ 'image', 'video', 'audio', 'application' ] ],
 				'multiple' => 0,
 				'button'   => [ 'text' => 'Insert' ]
 			]
