@@ -19,3 +19,7 @@ input[type=url]:-moz-ui-invalid {
 	display: block;
 	padding: 2px 0;
 }
+
+.briz-hidden {
+	display: none;
+}

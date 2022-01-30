@@ -378,6 +378,11 @@ class Meta_Boxes extends Meta {
 					<?php
 						$this->fields_iterator( $post, $meta );
 					?>
+					<tr class="briz-hidden">
+						<td colspan="2">
+							<?php wp_nonce_field( 'name_of_my_action','name_of_nonce_field' ); ?>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -399,6 +404,16 @@ class Meta_Boxes extends Meta {
 	 * @author Ravil
 	 */
 	public function meta_box_save( $post_id, $post ) {
+		if (
+			! isset( $_POST[ 'name_of_nonce_field' ] ) ||
+			! wp_verify_nonce( $_POST[ 'name_of_nonce_field' ], 'name_of_my_action' )
+		) return;
+
+		if (
+			! current_user_can( 'edit_post', $post_id ) ||
+			! current_user_can( 'edit_page', $post_id )
+		) return;
+
 		if ( ! isset( $_POST[ $this->id_prefix ] ) )
 			return;
 
