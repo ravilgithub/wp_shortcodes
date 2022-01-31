@@ -132,7 +132,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section blog-page <?php echo $class ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section team-page <?php echo $class ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="section-inner-wrap">
@@ -185,7 +185,7 @@
 						</div> <!-- .row -->
 					</div> <!-- .container -->
 				</div> <!-- .section-inner-wrap -->
-			</section> <!-- .briz-blog-tmpl -->
+			</section> <!-- .briz-team-tmpl -->
 <?php
 		}
 

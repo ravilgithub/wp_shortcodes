@@ -205,7 +205,7 @@
 
 					</div> <!-- .features-inner-wrap -->
 				</div> <!-- .features-wrap -->
-			</section>
+			</section> <!-- .briz-features-tmpl -->
 <?php
 		}
 

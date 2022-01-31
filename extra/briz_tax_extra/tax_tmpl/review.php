@@ -6,7 +6,7 @@
 	/**
 	 * Review template.
 	 *
-	 * Формирование вывода шаблона "team".
+	 * Формирование вывода шаблона "review".
 	 *
 	 * @property String $tmpl_name        - имя шаблона.
 	 * @property String $content          - контент шорткода.
@@ -132,7 +132,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section blog-page <?php echo $class ?>"
+				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section review-page <?php echo $class ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 
@@ -186,7 +186,7 @@
 						</div> <!-- .row -->
 					</div> <!-- .container -->
 				</div> <!-- .section-inner-wrap -->
-			</section> <!-- .briz-blog-tmpl -->
+			</section> <!-- .briz-review-tmpl -->
 <?php
 		}
 
