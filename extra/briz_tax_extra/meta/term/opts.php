@@ -32,7 +32,7 @@ $opts = [
 	'category' => [
 		'__to_all__' => [
 			'fields' => [
-				'option_tmp_1' => [
+				/*'option_tmp_1' => [
 					'type'  => 'media_button',
 					'title' => 'Опция TEMP_1',
 					'desc'  => 'Описание опции TEMP_1',
@@ -121,7 +121,7 @@ $opts = [
 						'green' => 'Green',
 						'blue'  => 'Blue'
 					]
-				],
+				],*/
 			]
 		],
 
