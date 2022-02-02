@@ -28,7 +28,7 @@
 .briz-brands-tmpl .section-inner-wrap .swiper-container {
 	padding-top: 60px;
 	padding-bottom: 60px;
-	cursor: url(../images/mouse-icon/drag.png) 16 9, ew-resize !important;
+	cursor: ew-resize !important;
 }
 
 .briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper img {
