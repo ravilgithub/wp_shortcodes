@@ -38,6 +38,7 @@ require 'exports/facts_meta_fields.php';
 require 'exports/solutions_meta_fields.php';
 require 'exports/team_meta_fields.php';
 require 'exports/review_meta_fields.php';
+require 'exports/brands_meta_fields.php';
 
 $opts = [
 	'category' => [
@@ -50,5 +51,6 @@ $opts = [
 		'solutions' => $solutions_meta_fields,
     'team'      => $team_meta_fields,
     'review'    => $review_meta_fields,
+    'brands'    => $brands_meta_fields,
 	],
 ];
