@@ -63,6 +63,12 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
 			'ver'  => '1.0.0'
 		],
+		'brands' => [
+			'id'   => 'briz-brands-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_brands.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -119,6 +125,13 @@ $assets = [
 		'review' => [
 			'id'        => 'briz-review-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_review.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'brands' => [
+			'id'        => 'briz-brands-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_brands.js',
 			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
