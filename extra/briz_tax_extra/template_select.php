@@ -221,12 +221,31 @@ class Tax_TMPL {
 	public function briz_save_term_template_select( $term_id ) {
 		if ( ! isset( $_POST[ 'tmpl' ] ) ) return;
 		if ( ! current_user_can( 'edit_term', $term_id ) ) return;
-		if (
+
+		$screen = null;
+		if ( isset( $_POST['_wpnonce'] ) )
+			$screen = 'edit';
+		elseif ( isset( $_POST[ '_wpnonce_add-tag' ] ) )
+			$screen = 'add';
+
+		if ( ! $screen ) {
+			return;
+		} else {
+			if ( 'edit' == $screen ) {
+				if ( ! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) )
+					return;
+			} else {
+				if ( ! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' ) )
+					return;
+			}
+		}
+
+		/*if (
 			// wp_nonce_field( 'update-tag_' . $tag_ID );
 			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) &&
 			// wp_nonce_field('add-tag', '_wpnonce_add-tag');
 			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' )
-		) return;
+		) return;*/
 
 		// Все ОК! Теперь, нужно сохранить/удалить данные
 
