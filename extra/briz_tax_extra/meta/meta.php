@@ -26,8 +26,24 @@ abstract class Meta {
 	 * @author Ravil
 	 */
 	protected function __construct() {
+		add_action( 'admin_enqueue_scripts', [ $this, 'load_media_files' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		$this->redefine_script_tag();
+	}
+
+
+	/**
+	 * Includes all files required to use the WordPress media API.
+	 *
+	 * Подключает все файлы необходимые для использования медиа API WordPress.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function load_media_files() {
+		wp_enqueue_media();
 	}
 
 
