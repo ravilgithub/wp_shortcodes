@@ -153,20 +153,27 @@ class Helper {
 	/**
 	 * Debug.
 	 *
-	 * @param Mixed $data - отладочная информация которую надо вывести на экран.
-	 * @param String $pl - значение свойства "padding-left".
-	 * @param String $text - префикс.
+	 * @param Mixed $data       - отладочная информация которую надо вывести на экран.
+	 * @param String $from_file - имя файла, из которого был вызван данный метод.
+	 * @param String $pl        - значение свойства "padding-left".
+	 * @param String $text      - префикс.
 	 *
 	 * @return void.
 	 *
 	 * @since 0.0.1
 	 * @author Ravil.
 	 */
-	public static function debug( $data, $pl = '0', $text = '' ) {
+	public static function debug( $data, $from_file = '', $pl = '0', $text = '' ) {
 		echo '<pre style="padding-left:' . $pl . ';">';
+
 		if ( $text )
 			echo $text . '<br />';
+
 		print_r( $data );
+
+		if ( $from_file )
+			echo '<p>' . $from_file . '</p>';
+
 		echo '</pre>';
 	}
 
