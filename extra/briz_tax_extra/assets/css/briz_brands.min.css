@@ -31,18 +31,24 @@
 	cursor: ew-resize !important;
 }
 
-.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper img {
+.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper .swiper-slide {
+	display: flex;
+	align-content: center;
+	height: auto;
+}
+
+.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper .swiper-slide img {
 	display: block;
 	max-width: 100%;
 	height: auto;
 	margin: 0 auto;
 }
 
-.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper audio {
+.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper .swiper-slide audio {
 	width: 100%;
 }
 
-.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper video {
+.briz-brands-tmpl .section-inner-wrap .swiper-container .swiper-wrapper .swiper-slide video {
 	display: block;
 	max-width: 100%;
 	height: 100%;
