@@ -2,7 +2,6 @@
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
 	use Briz_Shortcodes\common\Helper;
 
-
 	/**
 	 * Review template.
 	 *
@@ -129,6 +128,18 @@
 		 */
 		public function get_before( $posts ) {
 			extract( $this->atts );
+
+			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
+			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+
+			$slider_atts = [];
+			if (
+				is_array( $opts ) &&
+				array_key_exists( 'slider_params', $opts ) &&
+				! empty( $opts[ 'slider_params' ] )
+			) {
+				$slider_atts = $opts[ 'slider_params' ];
+			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
@@ -150,7 +161,10 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<div class="swiper-container">
+								<div
+									class="swiper-container"
+									data-slider-custom-atts="<?php echo esc_attr( json_encode( $slider_atts ) ); ?>"
+								>
 									<div class="swiper-wrapper">
 <?php
 		}
