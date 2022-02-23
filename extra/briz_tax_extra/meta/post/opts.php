@@ -29,16 +29,21 @@
  * }
  *
  */
-require 'exports/portfolio_meta_fields.php';
-require 'exports/services_meta_fields.php';
-require 'exports/features_meta_fields.php';
-require 'exports/stickers_meta_fields.php';
-require 'exports/about_meta_fields.php';
-require 'exports/facts_meta_fields.php';
-require 'exports/solutions_meta_fields.php';
-require 'exports/team_meta_fields.php';
-require 'exports/review_meta_fields.php';
-require 'exports/brands_meta_fields.php';
+
+/* Category */
+require 'exports/category/portfolio_meta_fields.php';
+require 'exports/category/services_meta_fields.php';
+require 'exports/category/features_meta_fields.php';
+require 'exports/category/stickers_meta_fields.php';
+require 'exports/category/about_meta_fields.php';
+require 'exports/category/facts_meta_fields.php';
+require 'exports/category/solutions_meta_fields.php';
+require 'exports/category/team_meta_fields.php';
+require 'exports/category/review_meta_fields.php';
+require 'exports/category/brands_meta_fields.php';
+
+/* Product category */
+require 'exports/product_cat/products_meta_fields.php';
 
 $opts = [
 	'category' => [
@@ -53,4 +58,8 @@ $opts = [
     'review'    => $review_meta_fields,
     'brands'    => $brands_meta_fields,
 	],
+
+  'product_cat' => [
+    'products' => $products_meta_fields,
+  ]
 ];
