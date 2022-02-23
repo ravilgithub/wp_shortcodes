@@ -93,84 +93,6 @@ class Term_Meta extends Meta {
 
 
 	/**
-	 * Iteration of the theme's meta fields obtained
-	 * from the file "term / opts.php".
-	 *
-	 * Перебор мета полей темина полученных из файла "term/opts.php".
-	 *
-	 * @param String $tax_slug     - Ярлык термина.
-	 * @param WP_Term Object $term - Объект термина.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function field_iterator( $tax_slug, $term = null ) {
-		$term_slug = null;
-		$term_meta = null;
-		$component_suffix = '';
-
-		// $term передаётся только для страницы "term edit".
-		if ( is_object( $term ) ) {
-			$term_slug = $term->slug;
-			$term_meta = get_term_meta( $term->term_id, $this->id_prefix, true );
-			$component_suffix = '_edit';
-		}
-
-		foreach ( $this->opts[ $tax_slug ] as $term_name => $data ) {
-			if ( ! is_array( $data ) || ! array_key_exists( 'fields', $data ) ) {
-				continue;
-			}
-
-			if ( $term_name === $term_slug || $term_name === '__to_all__' ) {
-				foreach ( $data[ 'fields' ] as $field_name => $params ) {
-					if (
-						! array_key_exists( 'value', $params ) ||
-						! array_key_exists( 'type', $params )
-					) continue;
-
-					$key = $this->id_prefix . '[' . $tax_slug . ']' . '[' . $field_name . ']';
-					$value = '';
-					$saved = false;
-
-					if (
-						is_array( $term_meta ) &&
-						array_key_exists( $field_name, $term_meta )
-					) {
-						if (
-							! $term_meta[ $field_name ] &&
-							'0' !== $term_meta[ $field_name ] &&
-							(
-								! array_key_exists( 'empty', $params ) ||
-								! $params[ 'empty' ]
-							)
-						) {
-							// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
-							$value = $params[ 'value' ];
-						} else {
-							// Получаем значение поля из БД.
-							$value = $term_meta[ $field_name ];
-							$saved = true;
-						}
-					} else {
-						// Добавленно новое поле, берём его значение по умолчанию. Файл "opts.php".
-						$value = $params[ 'value' ];
-					}
-
-					// Сортировка медиа файлов.
-					if ( 'media_button' === $params[ 'type' ] && $value && '[]' !== $value ) {
-						$value = $this->sort_attachment_files( $value, $params );
-					}
-
-					$this->require_component( $key, $value, $params, $component_suffix, $saved );
-				}
-			}
-		}
-	}
-
-
-	/**
 	 * Adding additional form fields for taxonomy terms when creating them.
 	 *
 	 * Добавляем дополнительные поля формы терминов таксономии при их создании.
@@ -183,10 +105,22 @@ class Term_Meta extends Meta {
 	 * @author Ravil
 	 */
 	public function add_term_fields ( $tax_slug ) {
-		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
-			return;
+		if (
+			! is_array( $this->opts ) ||
+			! array_key_exists( $tax_slug, $this->opts ) ||
+			! array_key_exists( '__to_all__', $this->opts[ $tax_slug ] ) ||
+			! $fields = $this->opts[ $tax_slug ][ '__to_all__' ]
+		) return;
 
-		$this->field_iterator( $tax_slug );
+		$meta[ 'taxonomy' ] = $tax_slug;
+		$meta[ 'tmpl' ] = '__to_all__';
+		$meta[ 'fields' ] = $fields[ 'fields' ];
+		$meta[ 'page' ] = 'term';
+		$meta[ 'action' ] = 'add';
+		$meta[ 'id' ] = '';
+		$meta[ 'wp_object' ] = '';
+
+		$this->fields_iterator( $meta );
 	}
 
 
@@ -207,7 +141,36 @@ class Term_Meta extends Meta {
 		if ( ! is_array( $this->opts ) || ! array_key_exists( $tax_slug, $this->opts ) )
 			return;
 
-		$this->field_iterator( $tax_slug, $term );
+		$id = $term->term_id;
+		$tmpl_path = get_term_meta( $id, 'tmpl', $tax_slug );
+		$meta[ 'taxonomy' ] = $tax_slug;
+		$meta[ 'page' ] = 'term';
+		$meta[ 'action' ] = 'edit';
+		$meta[ 'id' ] = $id;
+		$meta[ 'wp_object' ] = $term;
+
+		if ( '' !== $tmpl_path && -1 != $tmpl_path ) {
+			$tmpl_info = pathinfo( $tmpl_path );
+			$tmpl_name = $tmpl_info[ 'filename' ];
+
+			if (
+				array_key_exists( $tmpl_name, $this->opts[ $tax_slug ] ) &&
+				$fields = $this->opts[ $tax_slug ][ $tmpl_name ]
+			) {
+				$meta[ 'fields' ] = $fields[ 'fields' ];
+				$meta[ 'tmpl' ] = $tmpl_name;
+				$this->fields_iterator( $meta );
+			}
+		}
+
+		if (
+			array_key_exists( '__to_all__', $this->opts[ $tax_slug ] ) &&
+			$fields = $this->opts[ $tax_slug ][ '__to_all__' ]
+		) {
+			$meta[ 'fields' ] = $fields[ 'fields' ];
+			$meta[ 'tmpl' ] = '__to_all__';
+			$this->fields_iterator( $meta );
+		}
 	}
 
 
@@ -227,35 +190,41 @@ class Term_Meta extends Meta {
 		$term = get_term( $term_id );
 		$tax_name = $term->taxonomy;
 
-		if ( ! isset( $_POST[ $this->id_prefix ][ $tax_name ] ) ) return;
+		if ( ! isset( $_POST[ $this->id_prefix ] ) )
+			return;
 
-		$term_fields = $_POST[ $this->id_prefix ][ $tax_name ];
-		if ( empty( $term_fields ) ) return;
+		$term_fields = $_POST[ $this->id_prefix ];
+		if ( empty( $term_fields ) )
+			return;
 
-		if ( ! current_user_can( 'edit_term', $term_id ) ) return;
-		if (
-			! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) &&
-			! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' )
-		) return;
+		if ( ! current_user_can( 'edit_term', $term_id ) )
+			return;
 
-		foreach ( $term_fields as $field_name => $field_value ) {
-			if ( ! is_array( $field_value ) ) {
-				// Для "wp_editor" и остальных типов полей.
-				$field_value = wp_kses( wp_unslash( $field_value ), 'post' );
+		$screen = null;
+		if ( isset( $_POST['_wpnonce'] ) )
+			$screen = 'edit';
+		elseif ( isset( $_POST[ '_wpnonce_add-tag' ] ) )
+			$screen = 'add';
+
+		if ( ! $screen ) {
+			return;
+		} else {
+			if ( 'edit' == $screen ) {
+				if ( ! wp_verify_nonce( $_POST['_wpnonce'], "update-tag_$term_id" ) )
+					return;
 			} else {
-				// Для полей типа "checkbox".
-				foreach ( $field_value as $k => $v ) {
-					$field_value[ $k ] = sanitize_text_field( wp_unslash( $v ) );
-				}
+				if ( ! wp_verify_nonce( $_POST['_wpnonce_add-tag'], 'add-tag' ) )
+					return;
 			}
-
-			$term_fields[ $field_name ] = $field_value;
 		}
 
-		if ( ! $term_fields )
-			delete_term_meta( $term_id, $this->id_prefix ); // Полей нет.
-		else
-			update_term_meta( $term_id, $this->id_prefix, $term_fields );
+		foreach ( $_POST[ $this->id_prefix ] as $key => $val ) {
+			if ( ! $val && $val !== '0' ) {
+				delete_term_meta( $term_id, $key ); // Полей нет.
+			} else {
+				update_term_meta( $term_id, $key, $val );
+			}
+		}
 	}
 }
 

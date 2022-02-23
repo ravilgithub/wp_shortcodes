@@ -202,4 +202,224 @@ abstract class Meta {
 		require apply_filters( $filter_id, $component_path, $key, $value, $params, $component_suffix, $saved );
 		return ob_end_flush();
 	}
+
+
+	/**
+	 * Enumeration of meta fields obtained from the database or from the "meta_opts.php" file.
+	 *
+	 * Перебор мета полей полученных из базы данных или из файла "meta_opts.php".
+	 *
+	 * @param Object $post - Объект записи: объект WP_Post.
+	 * @param Array $meta - Данные поста ( объект $post ) и аргументы переданные в этот параметр.
+	 *   @see add_meta_box( ...$callback_args )
+	 * @param Array $fields - Массив мета полей. Default: null.
+	 * @param String $group_name - Имя группы верхнего уровня
+	 *                             ( группа находящаяся в массиве "fields" в файле "meta_opts.php" ).
+	 *                             Default: ''.
+	 * @param Array $path - Массив имён групп полей начиная от родительской к дочерней,
+	 *                      которые в свою очередь находятся в группе верхнего
+	 *                      уровня( группа находящаяся в массиве "fields" )
+	 *                      в файле "meta_opts.php".
+	 *                      Служат для нахождения группы после выборки из базы данных.
+	 *                      Default: empty Array.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function fields_iterator( $meta, $fields = null, $group_name = '', $path = [] ) {
+		// Helper::debug( $meta );
+		$tax = $meta[ 'taxonomy' ];
+		$tmpl = $meta[ 'tmpl' ];
+		$fields = $fields ?: $meta[ 'fields' ];
+
+		foreach ( $fields as $name => $params ) {
+			if ( 'group' == $params[ 'type' ] ) {
+				/**
+				* Переменный $gn и $pth созданы для того что бы
+				* не переписывать переменные $group_name и $path ( ссылочная система )
+				* используемые в текущем вызове функции fields_iterator.
+				*/
+				$gn = $group_name ?: $name;
+
+				// Собераем имена групп.
+				$pth = $path;
+				if ( $name != $group_name ) {
+					$pth[] = $name;
+				}
+
+				$color = $this->get_random_color();
+				$this->decorate_group( 'Start', $color, $params, $meta );
+				$this->fields_iterator( $meta, $params[ 'value' ], $gn, $pth );
+				$this->decorate_group( 'End', $color, $params, $meta );
+
+				continue;
+			}
+
+			// Имя мета поля или группы мета полей верхнего уровня( группа находящаяся в массиве "fields" )
+			$fn = $group_name ?: $name;
+
+			$key = '_' . $tax . '_' . $tmpl;
+			$component_suffix = '_edit';
+
+			if ( 'post' === $meta[ 'page' ] ) {
+				$post_meta = get_post_meta( $meta[ 'id' ], $key, true );
+			} elseif ( 'term' === $meta[ 'page' ] ) {
+				$post_meta = get_term_meta( $meta[ 'id' ], $key, true );
+				if ( 'add' === $meta[ 'action' ] ) {
+					$component_suffix = '';
+				}
+			}
+
+			$saved = false;
+
+			if ( ! empty( $post_meta ) ) {
+				// В этом блоке работаем с данными пришедшими из БД.
+				if (
+					// Ищем в результате выборки из БД, текущее мета поле или группу полей верхнего уровня +
+					is_array( $post_meta ) && array_key_exists( $fn, $post_meta )
+				) {
+					if (
+						! $post_meta[ $fn ] &&
+						'0' !== $post_meta[ $fn ] &&
+						(
+							! array_key_exists( 'empty', $params ) ||
+							! $params[ 'empty' ]
+						)
+					) {
+						$value = $params[ 'value' ];
+					} else {
+						$value = $post_meta[ $fn ]; // верхний уровень
+						$saved = true;
+
+						// Так узнаём, что значение является ассоциативным массивом т.е. группой.
+						if ( '{' === json_encode( $value )[ 0 ] ) {
+							$group = null;
+							$saved = false;
+
+							if ( 1 < count( $path ) ) {
+								// Находим группу в выборке из базы данных, если её нет, то значит текущее мета поле( $params ) принадлежит новой группе.
+								for ( $n = 1; $n < count( $path ); $n++ ) {
+									if ( ! $group ) {
+										$group = array_key_exists( $path[ $n ], $value ) ? $value[ $path[ $n ] ] : $params;
+									} else {
+										$group = array_key_exists( $path[ $n ], $group ) ? $group[ $path[ $n ] ] : $params;
+									}
+								}
+							} else {
+								// Группа верхнего уровня.
+								$group = $value;
+							}
+
+							if ( is_array( $group ) && array_key_exists( $name, $group ) ) {
+								if (
+									! $group[ $name ] &&
+									'0' !== $group[ $name ] &&
+									(
+										! array_key_exists( 'empty', $params ) ||
+										! $params[ 'empty' ]
+									)
+								) {
+									// Значение не можен быть пустым. берём его значение по умолчанию. Файл "opts.php".
+									// Default "opts.php" мета поля НЕ! верхнего уровня.
+									$value = $params[ 'value' ];
+								} else {
+									$value = $group[ $name ];
+									$saved = true;
+								}
+							} else {
+								// Если в группу добавленно новое поле, то берём его значение по умолчанию. Файл "opts.php".
+								$value = $params[ 'value' ];
+							}
+						}
+					}
+				} else {
+					// Новое мета поле которого нет в БД. Файл "meta_opts.php".
+					// Добавили новое мета поле type=любой +
+					// Default "opts.php" мета поля верхнего уровня.
+					$value = $params[ 'value' ];
+				}
+			} else {
+				// Если в БД ничего нет. Файл "meta_opts.php".
+				// Значение мета поля ( не группа ) +
+				$value = $params[ 'value' ];
+			}
+
+			// Создаём значения атрибутов "name" мета полей.
+			if ( $group_name ) {
+				$part = ! empty( $path ) ? '[' . implode( '][', $path ) . ']' : '';
+				$key = $this->id_prefix . "[$key]" . $part . "[$name]";
+			} else {
+				$key = $this->id_prefix . "[$key][$name]";
+			}
+
+			// Сортировка медиа файлов.
+			if ( 'media_button' === $params[ 'type' ] && $value && '[]' !== $value ) {
+				$value = $this->sort_attachment_files( $value, $params );
+			}
+
+			$this->require_component( $key, $value, $params, $component_suffix, $saved );
+
+			// Helper::debug( get_current_screen() );
+		}
+	}
+
+
+	/**
+	 * Decorating groups.
+	 *
+	 * Декорирование групп.
+	 *
+	 * @param String $position    - префикс имени группы.
+	 * @param Array $field_params - параметры и мета поля группы.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function decorate_group( $position, $color, $field_params, $meta ) {
+		if ( array_key_exists( 'color', $field_params ) && $field_params[ 'color' ] ) {
+			$color = $field_params[ 'color' ];
+		}
+
+		$style = 'background:' . $color . ';';
+		$title = $position . ' ' . $field_params[ 'title' ];
+
+		if ( 'term' == $meta[ 'page' ] && 'add' == $meta[ 'action' ] ) :
+?>
+			<div
+				class="briz_meta_box_group_name"
+				style="<?php echo esc_attr( $style ); ?> padding: 10px;">
+				<span><?php _e( $title ); ?></span>
+			</div>
+<?php
+		else :
+?>
+		<tr class="briz_meta_box_group_name" style="<?php echo esc_attr( $style ); ?>">
+			<td colspan="2"><?php _e( $title ); ?></td>
+		</tr>
+<?php
+		endif;
+	}
+
+
+	/**
+	 * A random background color to represent the group.
+	 *
+	 * Случайный фоновый цвет для обозначения группы.
+	 *
+	 * @return Array $rgb_color - цвет в формате rgb.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function get_random_color() {
+		$rgb_color = [];
+		foreach( [ 'r', 'g', 'b' ] as $color ) {
+			$rgb_color[ $color ] = mt_rand( 150, 225 );
+		}
+		return 'rgb(' . implode( ',', $rgb_color ) . ')';
+	}
 }
