@@ -22,15 +22,21 @@
 		$img_url = wp_get_attachment_image_url( $img_id, [ 60, 60 ] );
 		$btn_class = '';
 	}
+
+	$hideClass = '';
 ?>
 
 <tr class="form-field briz-meta-img-wrap">
 	<th scope="row">
 		<span class="briz-meta-title">
-			<?php _e( $params[ 'title' ] ); ?>
-			<?php if ( ! $saved ) : ?>
-				<em class="briz-unsaved">*</em>
-			<?php endif; ?>
+			<?php
+				_e( $params[ 'title' ] );
+
+				if ( $saved ) {
+					$hideClass = 'briz-hidden';
+				}
+			?>
+			<em class="briz-unsaved <?php echo esc_attr( $hideClass ); ?>">*</em>
 		</span>
 	</th>
 

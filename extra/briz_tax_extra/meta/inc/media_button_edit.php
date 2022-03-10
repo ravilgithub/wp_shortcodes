@@ -35,15 +35,21 @@
 		$btn_action_txt = $edit_action_txt;
 		$delBtnClass = 'briz-active';
 	}
+
+	$hideClass = '';
 ?>
 
 <tr class="form-field briz-meta-media-wrap">
 	<th scope="row">
 		<span class="briz-meta-media-title">
-			<?php _e( $params[ 'title' ] ); ?>
-			<?php if ( ! $saved ) : ?>
-				<em class="briz-unsaved">*</em>
-			<?php endif; ?>
+			<?php
+				_e( $params[ 'title' ] );
+
+				if ( $saved ) {
+					$hideClass = 'briz-hidden';
+				}
+			?>
+			<em class="briz-unsaved <?php echo esc_attr( $hideClass ); ?>">*</em>
 		</span>
 	</th>
 
