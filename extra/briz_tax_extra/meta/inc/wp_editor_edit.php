@@ -17,7 +17,7 @@
 	$args = array_merge(
 		[
 			'textarea_name'    => $key, //нужно указывать!
-			'editor_class'     => 'editor-class',
+			'editor_class'     => 'briz-meta-field-item',
 			// изменяемое
 			'wpautop'          => 1,
 			'textarea_rows'    => 5,
@@ -32,24 +32,39 @@
 		],
 		$params[ 'options' ]
 	);
+
+	$empty = array_key_exists( 'empty', $params ) ? $params[ 'empty' ] : false;
+	$hideClass = '';
 ?>
 
-<tr class="form-field briz-meta-wp-editor-wrap">
+<tr
+	class="form-field briz-meta-wp-editor-wrap briz-meta-field"
+	data-briz-meta-field-default="<?php echo esc_attr( $params[ 'value' ] ); ?>"
+	data-briz-meta-field-current="<?php echo esc_attr( $value ); ?>"
+	data-briz-meta-field-empty="<?php echo esc_attr( $empty ); ?>"
+	data-briz-meta-field-type="wp_editor"
+>
 	<th scope="row">
 		<span class="briz-meta-title">
-			<?php _e( $params[ 'title' ] ); ?>
-			<?php if ( ! $saved ) : ?>
-				<em class="briz-unsaved">*</em>
-			<?php endif; ?>
+			<?php
+				_e( $params[ 'title' ] );
+
+				if ( $saved ) {
+					$hideClass = 'briz-hidden';
+				}
+			?>
+			<em class="briz-unsaved <?php echo esc_attr( $hideClass ); ?>">*</em>
 		</span>
 	</th>
 
 	<td>
-
-		<?php
-			echo $value;
-			wp_editor( $value, $key, $args );
-		?>
+		<div class="briz-meta-field-inner">
+			<?php
+				echo $value;
+				wp_editor( $value, $key, $args );
+			?>
+			<button type="button" class="button briz-reset-default"><?php _e( 'Reset' ); ?></button>
+		</div>
 
 		<p class="description">
 			<?php _e( $params[ 'desc'] ); ?>

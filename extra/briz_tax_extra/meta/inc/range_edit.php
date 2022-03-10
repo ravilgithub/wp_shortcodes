@@ -13,15 +13,28 @@
  * @since 0.0.1
  * @author Ravil
  */
+
+	$empty = array_key_exists( 'empty', $params ) ? $params[ 'empty' ] : false;
+	$hideClass = '';
 ?>
 
-<tr class="form-field briz-meta-range-wrap">
+<tr
+	class="form-field briz-meta-range-wrap briz-meta-field"
+	data-briz-meta-field-default="<?php echo esc_attr( $params[ 'value' ] ); ?>"
+	data-briz-meta-field-current="<?php echo esc_attr( $value ); ?>"
+	data-briz-meta-field-empty="<?php echo esc_attr( $empty ); ?>"
+	data-briz-meta-field-type="range"
+>
 	<th scope="row">
 		<span class="briz-meta-title">
-			<?php _e( $params[ 'title' ] ); ?>
-			<?php if ( ! $saved ) : ?>
-				<em class="briz-unsaved">*</em>
-			<?php endif; ?>
+			<?php
+				_e( $params[ 'title' ] );
+
+				if ( $saved ) {
+					$hideClass = 'briz-hidden';
+				}
+			?>
+			<em class="briz-unsaved <?php echo esc_attr( $hideClass ); ?>">*</em>
 		</span>
 	</th>
 
@@ -33,14 +46,19 @@
 			</span>
 		</p>
 
-		<input
-			name="<?php echo $key; ?>"
-			type="range"
-			value="<?php echo $value; ?>"
-			step="<?php echo $params[ 'options' ][ 'step' ]; ?>"
-			min="<?php echo $params[ 'options' ][ 'min' ]; ?>"
-			max="<?php echo $params[ 'options' ][ 'max' ]; ?>"
-		/>
+		<div class="briz-meta-field-inner">
+			<input
+				class="briz-meta-field-item"
+				name="<?php echo $key; ?>"
+				type="range"
+				value="<?php echo $value; ?>"
+				step="<?php echo $params[ 'options' ][ 'step' ]; ?>"
+				min="<?php echo $params[ 'options' ][ 'min' ]; ?>"
+				max="<?php echo $params[ 'options' ][ 'max' ]; ?>"
+			/>
+
+			<button type="button" class="button briz-reset-default"><?php _e( 'Reset' ); ?></button>
+		</div>
 
 		<p class="description">
 			<?php _e( $params[ 'desc'] ); ?>

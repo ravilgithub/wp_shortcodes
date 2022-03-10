@@ -153,7 +153,10 @@ class Meta_Boxes extends Meta {
 			$callback_args[ 'id' ] = $post->ID;
 			$callback_args[ 'wp_object' ] = $post;
 
-			add_meta_box( "{$this->id_prefix}_{$n}", $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
+			$meta_box_id = "{$this->id_prefix}_{$n}";
+			$callback_args[ 'meta_box_id' ] = $meta_box_id;
+
+			add_meta_box( $meta_box_id, $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 		}
 	}
 
@@ -186,6 +189,15 @@ class Meta_Boxes extends Meta {
 					<?php
 						$this->fields_iterator( $meta[ 'args' ] );
 					?>
+					<tr>
+						<td colspan="2" class="briz-meta-reset-all-btn-cell">
+							<button
+								type="button"
+								class="button briz-meta-reset-all"
+								data-meta-box-id="<?php echo esc_attr( $meta[ 'args' ][ 'meta_box_id' ] ); ?>"
+							>Reset all</button>
+						</td>
+					</tr>
 					<tr class="briz-hidden">
 						<td colspan="2">
 							<?php wp_nonce_field( 'name_of_my_action','name_of_nonce_field' ); ?>
