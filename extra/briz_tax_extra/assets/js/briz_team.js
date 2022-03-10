@@ -3,6 +3,7 @@
  */
 import { slider } from './export/slider.js';
 
+
 /**
  * Значения по умолчанию для слайдера.
  */
@@ -44,6 +45,7 @@ const tmplSliderAtts = {
       spaceBetween: 30,
     },
   },
+
 
   // Lazy loading
   preloadImages: false,

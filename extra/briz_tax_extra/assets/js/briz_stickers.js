@@ -15,6 +15,7 @@
 		const $stickersMassonry = {
 			ctx: '.briz-stickers-tmpl',
 
+
 			/**
 			 * Объект создающийся для каждого шаблона "stickers".
 			 *
@@ -166,8 +167,6 @@
 		};
 
 		$stickersMassonry.init();
-		console.log( 'stickers' );
-
 	} );
 
 } )( jQuery );

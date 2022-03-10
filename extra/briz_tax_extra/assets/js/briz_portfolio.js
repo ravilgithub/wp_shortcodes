@@ -15,6 +15,7 @@
 		const $setPortfolioActions = {
 			ctx: '.briz-portfolio-tmpl',
 
+
 			/**
 			 * Объект создающийся для каждого шаблона "portfolio".
 			 * 
@@ -27,6 +28,7 @@
 			iso: {
 				dom: {},
 				filter: '*',
+
 
 				/**
 				 * Получаем количество отображенных записей

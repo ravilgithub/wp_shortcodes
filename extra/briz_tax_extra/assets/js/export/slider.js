@@ -3,7 +3,7 @@ import { slider_defaults } from './slider_defaults.js';
 /**
  * Функционал обеспечивающий работу слайдера в шаблонах.
  *
- * @property {String} ctx    - селектор шаблона в котором находится слайдер.
+ * @property {String} ctx - селектор шаблона в котором находится слайдер.
  * @property {Object} tmplSliderAtts - пользовательские параметры слайдера.
  *
  * @since 0.0.1
@@ -89,7 +89,7 @@ const slider = {
 	/**
 	 * Let's go.
 	 *
-	 * @property {String} ctx    - селектор шаблона в котором находится слайдер.
+	 * @property {String} ctx - селектор шаблона в котором находится слайдер.
 	 * @property {Object} tmplSliderAtts - пользовательские параметры слайдера.
 	 *
 	 * @return {void}
