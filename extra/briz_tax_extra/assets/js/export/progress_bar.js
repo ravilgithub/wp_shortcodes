@@ -2,13 +2,16 @@
  * Функционал обеспечивающий работу шаблона "Progress bar".
  *
  * @property {String} ctx - селектор шаблона "Progress bar".
+ * 	@default: 'wow'.
+ *
  * @since 0.0.1
  * @autor Ravil
  */
 const progressBar = {
-	ctx: '',
+	ctx: 'wow',
 	duration: 1500,
 	easingName: 'easeOutQuad',
+
 
 	/**
 	 * Функция плавности по умолчанию.
@@ -20,6 +23,7 @@ const progressBar = {
 	stdEasing( x ) {
 		return 1 - ( 1 - x ) * ( 1 - x );
 	},
+
 
 	/**
 	 * Возвращаем функцию плавности.
@@ -37,6 +41,7 @@ const progressBar = {
 			return w.brizEasing[ name ];
 		return this.stdEasing;
 	},
+
 
 	/**
 	 * Анимация элеметов Progress bar'a.
@@ -80,6 +85,7 @@ const progressBar = {
 			} );
 	},
 
+
 	/**
 	 * Устанавливаем символ до или после ширины элемента "ruler".
 	 *
@@ -108,6 +114,7 @@ const progressBar = {
 		return dataParam;
 	},
 
+
 	/**
 	 * Запуск анимации элементов шаблона "Progress bar"
 	 * только в том случае если шаблон виден на экране.
@@ -132,6 +139,23 @@ const progressBar = {
 		$wow.init();
 	},
 
+
+	/**
+	 * Изменение CSS селектор шаблона.
+	 *
+	 * @property {String} ctx - объект содержащий CSS селектор.
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
+
+
 	/**
 	 * Let's go.
 	 *
@@ -139,9 +163,7 @@ const progressBar = {
 	 * @since 0.0.1
 	 */
 	init( ctx ) {
-		if ( ! ctx )
-			ctx = 'wow';
-		this.ctx = ctx;
+		this.setSelector( ctx );
 		this.setWOW();
 	}
 };

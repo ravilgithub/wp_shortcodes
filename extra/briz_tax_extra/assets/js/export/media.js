@@ -2,10 +2,16 @@
  * Функционал описывающий работу с медиа файлами.
  * Добавление, изменение и удаление медиа файлов в мета полях.
  *
+ * @property {String} ctx - селектор шаблона.
+ * 	@default: '.briz-meta-img-wrap'.
+ *
  * @since 0.0.1
  * @autor Ravil
  */
 export default {
+	ctx: '.briz-meta-img-wrap',
+
+
 	/**
 	 * Объект создающийся для каждого мета поля "image".
 	 *
@@ -154,16 +160,45 @@ export default {
 
 
 	/**
-	 * Инициализация основных методов.
-	 *
-	 * @param String selector - селектор родительского элемента мета поля "image".
+	 * Создание независимого объекта "image"
+	 * для каждого мета поля "image".
 	 *
 	 * @return {void}
+	 *
+	 * @since 0.0.1
 	 */
-	init( selector ) {
-		document.querySelectorAll( selector ).forEach( el => {
-			// Object.assign( {}, this.image, { dom: { tmpl: el } } ).start();
+	clone() {
+		document.querySelectorAll( this.ctx ).forEach( el => {
+			// Object.assign( {}, this.image, { dom: { tmpl: el } } ).start( );
 			jQuery.extend( true, { dom: { tmpl: el } }, this.image ).start();
 		} );
+	},
+
+
+	/**
+	 * Изменение CSS селектор шаблона.
+	 *
+	 * @property {String} ctx - объект содержащий CSS селектор.
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
+
+
+	/**
+	 * Let's go.
+	 *
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	init( ctx ) {
+		this.setSelector( ctx );
+		this.clone();
 	}
 };

@@ -2,12 +2,16 @@
  * Функционал описывающий работу с медиа файлами.
  * Добавление, изменение и удаление медиа файлов в мета полях.
  *
+ * @property {String} ctx - селектор шаблона.
+ * 	@default: '.briz-meta-media-wrap'.
+ *
  * @property Object selectors - селекторы HTML элементов мета поля.
  *
  * @since 0.0.1
  * @autor Ravil
  */
 export default {
+	ctx: '.briz-meta-media-wrap',
 	selectors: {
 		btn: {
 			add: 'briz-meta-media-add-btn',
@@ -29,12 +33,10 @@ export default {
 	/**
 	 * Делегирование событий.
 	 *
-	 * @param String wrap - селектор( CSS class ) родительского элемента мета блока.
-	 *
 	 * @return {void}
 	 */
-	setActions( wrap ) {
-		document.querySelectorAll( wrap ).forEach( instance => {
+	setActions() {
+		document.querySelectorAll( this.ctx ).forEach( instance => {
 			instance.addEventListener( 'click', evt => {
 				const target = evt.target,
 				      classes = target.classList;
@@ -330,16 +332,29 @@ export default {
 
 
 	/**
-	 * Инициализация основных методов.
+	 * Изменение CSS селектор шаблона.
 	 *
-	 * @param String wrap - селектор( CSS class ) родительского элемента мета блока.
+	 * @property {String} ctx - объект содержащий CSS селектор.
 	 *
 	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
-	init( wrap ) {
-		if ( ! wrap )
-			return;
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
 
-		this.setActions( wrap );
+
+	/**
+	 * Let's go.
+	 *
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	init( ctx ) {
+		this.setSelector( ctx );
+		this.setActions();
 	}
 };

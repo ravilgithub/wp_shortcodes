@@ -2,11 +2,14 @@
  * Функционал обеспечивающий работу шаблона "Tabs".
  *
  * @property {String} ctx - селектор шаблона "Tabs".
+ * 	@default: '.tabs-container'.
+ *
  * @since 0.0.1
  * @autor Ravil
  */
 const tabs = {
-	ctx: '',
+	ctx: '.tabs-container',
+
 
 	/**
 	 * Выбераем все шаблоны "Tabs".
@@ -24,6 +27,7 @@ const tabs = {
 				}
 			);
 	},
+
 
 	/**
 	 * Что-бы страница не меняла высоту,
@@ -43,6 +47,7 @@ const tabs = {
 		inners[ 0 ].parentNode.style.height = maxHeight + 'px';
 	},
 
+
 	/**
 	 * Прослушиваем событие "click" на внутренних элемента шаблона "Tabs".
 	 *
@@ -56,6 +61,7 @@ const tabs = {
 			this.clickHandler( evt );
 		};
 	},
+
 
 	/**
 	 * Обработчик события.
@@ -75,6 +81,7 @@ const tabs = {
 		this.showActiveTab( [ li, inner ] );
 	},
 
+
 	/**
 	 * Показываем контент активного элемента tab'a и
 	 * прячем не активные элементы.
@@ -91,6 +98,7 @@ const tabs = {
 			} );
 		} );
 	},
+
 
 	/**
 	 * Получаем сестренские элементы, активного элемента шаблона "Tabs".
@@ -117,15 +125,32 @@ const tabs = {
 		);
 	},
 
+
+	/**
+	 * Изменение CSS селектор шаблона.
+	 *
+	 * @property {String} ctx - объект содержащий CSS селектор.
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
+
+
 	/**
 	 * Let's go.
 	 *
 	 * @return {void}
 	 * @since 0.0.1
 	 */
-	init: function( ctx ) {
-		if ( ! ctx ) return;
-		this.ctx = ctx;
+	init( ctx ) {
+		this.setSelector( ctx );
+		console.log( this.ctx );
 		this.getTabs();
 	}
 };

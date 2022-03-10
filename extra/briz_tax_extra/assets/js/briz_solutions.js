@@ -2,10 +2,10 @@
  * Solutions functionality.
  */
 import { accordeon } from './export/accordeon.js'
-accordeon.init( '.briz-solutions-tmpl .accordeon-container' );
+accordeon.init();
 
 import { tabs } from './export/tabs.js'
-tabs.init( '.briz-solutions-tmpl .tabs-container' );
+tabs.init();
 
 import { progressBar } from './export/progress_bar.js'
-progressBar.init( 'wow' );
+progressBar.init();

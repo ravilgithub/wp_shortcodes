@@ -2,11 +2,14 @@
  * Функционал обеспечивающий работу шаблона "Аккордеон".
  *
  * @property {String} ctx - селектор шаблона "Аккордеон".
+ * 	Default: '.accordeon-container'.
+ *
  * @since 0.0.1
  * @autor Ravil
  */
 const accordeon = {
-	ctx: '',
+	ctx: '.accordeon-container',
+
 
 	/**
 	 * Выбераем все шаблоны "Аккордеон".
@@ -22,6 +25,7 @@ const accordeon = {
 				this.addEvent( el );
 			} );
 	},
+
 
 	/**
 	 * Присваиваем высоту контенту !первого элемента
@@ -45,6 +49,7 @@ const accordeon = {
 		);
 	},
 
+
 	/**
 	 * Прослушиваем событие "click" на внутренних элемента шаблона "Аккордеон".
 	 *
@@ -55,6 +60,7 @@ const accordeon = {
 	addEvent( el ) {
 		el.addEventListener( 'click', this.clickHandler.bind( this ), false );
 	},
+
 
 	/**
 	 * Обработчик события.
@@ -76,6 +82,7 @@ const accordeon = {
 		this.setHeight( [ item ] );
 		this.setHeight( siblings, 0 );
 	},
+
 
 	/**
 	 * Получаем сестренские элементы, активного элемента шаблона "Аккордеон".
@@ -102,6 +109,7 @@ const accordeon = {
 		);
 	},
 
+
 	/**
 	 * Показываем контент активного элемента аккордиона.
 	 *
@@ -112,6 +120,7 @@ const accordeon = {
 	addClass( item ) {
 		item.classList.add( 'active' );
 	},
+
 
 	/**
 	 * Прячем контент не активного элемента аккордиона.
@@ -126,6 +135,23 @@ const accordeon = {
 		);
 	},
 
+
+	/**
+	 * Изменение CSS селектор шаблона.
+	 *
+	 * @property {String} ctx - объект содержащий CSS селектор.
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
+
+
 	/**
 	 * Let's go.
 	 *
@@ -133,8 +159,7 @@ const accordeon = {
 	 * @since 0.0.1
 	 */
 	init( ctx ) {
-		if ( ! ctx ) return;
-		this.ctx = ctx; 
+		this.setSelector( ctx );
 		this.selectAccords();
 	},
 };

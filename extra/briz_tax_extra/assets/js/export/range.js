@@ -1,13 +1,15 @@
 /**
  * Отображение текущего значения мета поля 'range'.
  *
- * @property String selector - селектор родительского элемента мета поля "range".
+ * @property String ctx - селектор родительского элемента мета поля "range".
+ * 	@default: '.briz-meta-range-wrap'.
  *
  * @since 0.0.1
  * @author Ravil
  */
 export default {
-	selector: '',
+	ctx: '.briz-meta-range-wrap',
+
 
 	/**
 	 * Отображение текущего значения мета поля 'range'.
@@ -15,7 +17,7 @@ export default {
 	 * @return {void}
 	 */
 	numShow() {
-		document.querySelectorAll( this.selector ).forEach( el => {
+		document.querySelectorAll( this.ctx ).forEach( el => {
 			const input = el.querySelector( 'input' ),
 						em    = el.querySelector( '.briz-meta-range-current-value' );
 
@@ -29,17 +31,29 @@ export default {
 
 
 	/**
-	 * Инициализация основных методов.
+	 * Изменение CSS селектор шаблона.
 	 *
-	 * @param String selector - селектор родительского элемента мета поля "range".
+	 * @property {String} ctx - объект содержащий CSS селектор.
 	 *
 	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
-	init( selector ) {
-		if ( ! selector )
-			return;
+	setSelector( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
 
-		this.selector = selector;
+
+	/**
+	 * Let's go.
+	 *
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	init( ctx ) {
+		this.setSelector( ctx );
 		this.numShow();
 	}
 };
