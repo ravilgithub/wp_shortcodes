@@ -89,8 +89,8 @@ const slider = {
 	/**
 	 * Let's go.
 	 *
-	 * @property {String} ctx - селектор шаблона в котором находится слайдер.
-	 * @property {Object} tmplSliderAtts - пользовательские параметры слайдера.
+	 * @param {String} ctx - селектор шаблона в котором находится слайдер.
+	 * @param {Object} tmplSliderAtts - пользовательские параметры слайдера.
 	 *
 	 * @return {void}
 	 * @since 0.0.1

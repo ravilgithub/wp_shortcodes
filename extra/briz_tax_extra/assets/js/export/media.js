@@ -2,7 +2,7 @@
  * Функционал описывающий работу с медиа файлами.
  * Добавление, изменение и удаление медиа файлов в мета полях.
  *
- * @property {String} ctx - селектор шаблона.
+ * @property {String} ctx - селектор( CSS class ) родительского элемента мета поля.
  * 	@default: '.briz-meta-img-wrap'.
  *
  * @since 0.0.1
@@ -10,7 +10,6 @@
  */
 export default {
 	ctx: '.briz-meta-img-wrap',
-
 
 	/**
 	 * Объект создающийся для каждого мета поля "image".
@@ -176,9 +175,9 @@ export default {
 
 
 	/**
-	 * Изменение CSS селектор шаблона.
+	 * Изменение CSS селектора шаблона.
 	 *
-	 * @property {String} ctx - объект содержащий CSS селектор.
+	 * @param {String} ctx - селектор( CSS class ) родительского элемента мета поля.
 	 *
 	 * @return {void}
 	 *
@@ -193,6 +192,8 @@ export default {
 
 	/**
 	 * Let's go.
+	 *
+	 * @param {String} ctx - селектор( CSS class ) родительского элемента мета поля.
 	 *
 	 * @return {void}
 	 * @since 0.0.1

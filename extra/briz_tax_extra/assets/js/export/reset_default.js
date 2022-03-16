@@ -302,7 +302,7 @@ export default {
 	 * Изменение CSS селекторов мета полей и кнопок возврата значений всех мета
 	 * полей мета бокса( для записей ) или термина к значениям по умолчанию.
 	 *
-	 * @property {Object} ctx - объект содержащий CSS селекторы:
+	 * @param {Object} ctx - объект содержащий CSS селекторы:
 	 * 	@property {String} field - CSS класс мета поля.
 	 * 		Default: '.briz-meta-field'.
 	 * 	@property {String} resetAllBtn - CSS класс кнопки возврата значений всех мета
@@ -328,6 +328,13 @@ export default {
 
 	/**
 	 * Let's go.
+	 *
+	 * @param {Object} ctx - объект содержащий CSS селекторы:
+	 * 	@property {String} field - CSS класс мета поля.
+	 * 		Default: '.briz-meta-field'.
+	 * 	@property {String} resetAllBtn - CSS класс кнопки возврата значений всех мета
+	 * 	полей мета бокса( для записей ) или термина к значениям по умолчанию.
+	 * 		Default: '.briz-meta-reset-all'.
 	 *
 	 * @return {void}
 	 * @since 0.0.1

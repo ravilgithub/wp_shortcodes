@@ -141,9 +141,9 @@ const progressBar = {
 
 
 	/**
-	 * Изменение CSS селектор шаблона.
+	 * Изменение CSS селектора шаблона.
 	 *
-	 * @property {String} ctx - объект содержащий CSS селектор.
+	 * @param {String} ctx - селектор шаблона "Progress bar".
 	 *
 	 * @return {void}
 	 *
@@ -158,6 +158,8 @@ const progressBar = {
 
 	/**
 	 * Let's go.
+	 *
+	 * @param {String} ctx - селектор шаблона "Progress bar".
 	 *
 	 * @return {void}
 	 * @since 0.0.1

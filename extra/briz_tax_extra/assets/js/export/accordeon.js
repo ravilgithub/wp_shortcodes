@@ -137,9 +137,9 @@ const accordeon = {
 
 
 	/**
-	 * Изменение CSS селектор шаблона.
+	 * Изменение CSS селектора шаблона.
 	 *
-	 * @property {String} ctx - объект содержащий CSS селектор.
+	 * @param {String} ctx - селектор шаблона "Аккордеон".
 	 *
 	 * @return {void}
 	 *
@@ -154,6 +154,8 @@ const accordeon = {
 
 	/**
 	 * Let's go.
+	 *
+	 * @param {String} ctx - селектор шаблона "Аккордеон".
 	 *
 	 * @return {void}
 	 * @since 0.0.1

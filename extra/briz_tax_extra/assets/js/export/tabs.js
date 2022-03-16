@@ -127,9 +127,9 @@ const tabs = {
 
 
 	/**
-	 * Изменение CSS селектор шаблона.
+	 * Изменение CSS селектора шаблона.
 	 *
-	 * @property {String} ctx - объект содержащий CSS селектор.
+	 * @param {String} ctx - селектор шаблона "Tabs".
 	 *
 	 * @return {void}
 	 *
@@ -145,12 +145,13 @@ const tabs = {
 	/**
 	 * Let's go.
 	 *
+	 * @param {String} ctx - селектор шаблона "Tabs".
+	 *
 	 * @return {void}
 	 * @since 0.0.1
 	 */
 	init( ctx ) {
 		this.setSelector( ctx );
-		console.log( this.ctx );
 		this.getTabs();
 	}
 };

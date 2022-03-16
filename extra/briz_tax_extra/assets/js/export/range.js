@@ -1,7 +1,7 @@
 /**
  * Отображение текущего значения мета поля 'range'.
  *
- * @property String ctx - селектор родительского элемента мета поля "range".
+ * @property String ctx - селектор( CSS class ) родительского элемента мета поля.
  * 	@default: '.briz-meta-range-wrap'.
  *
  * @since 0.0.1
@@ -31,9 +31,9 @@ export default {
 
 
 	/**
-	 * Изменение CSS селектор шаблона.
+	 * Изменение CSS селектора шаблона.
 	 *
-	 * @property {String} ctx - объект содержащий CSS селектор.
+	 * @param {String} ctx - селектор( CSS class ) родительского элемента мета поля.
 	 *
 	 * @return {void}
 	 *
@@ -48,6 +48,8 @@ export default {
 
 	/**
 	 * Let's go.
+	 *
+	 * @param {String} ctx - селектор( CSS class ) родительского элемента мета поля.
 	 *
 	 * @return {void}
 	 * @since 0.0.1
