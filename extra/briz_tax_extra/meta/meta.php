@@ -182,6 +182,44 @@ abstract class Meta {
 
 
 	/**
+	 * HTML markup of the button, when clicked, the values
+	 * of the meta fields are reset and the default values are set.
+	 *
+	 * HTML разметка кнопки при нажатии на которую, сбрасываются значения
+	 * мета полей и устанавливаются значения по умолчанию.
+	 *
+	 * @param WP_Term Object $tag - текущий объект термина таксономии.
+	 * @param String $category    - ярлык текущий таксономии.
+	 *
+	 * @param String $meta_box_id - уникальный идентификатор мета бокса
+	 *                              на странице редактирования записи.
+	 *   @used ./post/meta_boxes.php
+	 *    @see method "meta_box"
+	 *   @used ./term/term_meta.php
+	 *    @see action "{$tax_name}_edit_form_fields"
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public function add_reset_all_btn( $tag, $category, $meta_box_id = '' ) {
+?>
+		<tr>
+			<td colspan="2" class="briz-meta-reset-all-btn-cell">
+				<button
+					type="button"
+					class="button briz-meta-reset-all"
+					data-meta-box-id="<?php echo esc_attr( $meta_box_id ); ?>"
+					data-test="test"
+				><?php _e( 'Reset all', $this->lang_domain ); ?></button>
+			</td>
+		</tr>
+<?php
+	}
+
+
+	/**
 	 * Connecting the HTML component of the meta field.
 	 *
 	 * Подключение HTML комонента мета поля.

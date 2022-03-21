@@ -188,16 +188,8 @@ class Meta_Boxes extends Meta {
 				<tbody>
 					<?php
 						$this->fields_iterator( $meta[ 'args' ] );
+						$this->add_reset_all_btn( false, false, $meta[ 'args' ][ 'meta_box_id' ] );
 					?>
-					<tr>
-						<td colspan="2" class="briz-meta-reset-all-btn-cell">
-							<button
-								type="button"
-								class="button briz-meta-reset-all"
-								data-meta-box-id="<?php echo esc_attr( $meta[ 'args' ][ 'meta_box_id' ] ); ?>"
-							><?php _e( 'Reset all', $this->lang_domain ); ?></button>
-						</td>
-					</tr>
 					<tr class="briz-hidden">
 						<td colspan="2">
 							<?php wp_nonce_field( 'name_of_my_action','name_of_nonce_field' ); ?>

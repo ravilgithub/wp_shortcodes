@@ -95,36 +95,6 @@ class Term_Meta extends Meta {
 
 
 	/**
-	 * HTML markup of the button, when clicked, the values
-	 * of the meta fields are reset and the default values are set.
-	 *
-	 * HTML разметка кнопки при нажатии на которую, сбрасываются значения
-	 * мета полей и устанавливаются значения по умолчанию.
-	 *
-	 * @param WP_Term Object $tag - текущий объект термина таксономии.
-	 * @param String $category    - ярлык текущий таксономии.
-	 *
-	 * @return void
-	 *
-	 * @since 0.0.1
-	 * @author Ravil
-	 */
-	public function add_reset_all_btn( $tag, $category ) {
-?>
-		<tr>
-			<td colspan="2" class="briz-meta-reset-all-btn-cell">
-				<button
-					type="button"
-					class="button briz-meta-reset-all"
-					data-meta-box-id=""
-				><?php _e( 'Reset all', $this->lang_domain ); ?></button>
-			</td>
-		</tr>
-<?php
-	}
-
-
-	/**
 	 * Adding additional form fields for taxonomy terms when creating them.
 	 *
 	 * Добавляем дополнительные поля формы терминов таксономии при их создании.
