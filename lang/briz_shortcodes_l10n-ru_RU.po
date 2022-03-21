@@ -24,3 +24,18 @@ msgstr "пример"
 
 msgid "Send"
 msgstr "Отправить"
+
+msgid "Reset"
+msgstr "Сбросить"
+
+msgid "Reset all"
+msgstr "Сбросить всё"
+
+msgid "Show more"
+msgstr "Показать ещё"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Value"
+msgstr "Значение"

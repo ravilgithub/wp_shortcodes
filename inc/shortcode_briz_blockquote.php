@@ -191,9 +191,6 @@ class Briz_Blockquote_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_blockquote( $content, $id, $atts ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<q id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
@@ -220,15 +217,15 @@ class Briz_Blockquote_Shortcode extends Shortcodes {
 							<strong class="shortcode_briz_blockquote_author_name">
 
 								<?php if ( ! empty( $atts[ 'author_link' ] ) && wp_http_validate_url( $atts[ 'author_link' ] ) ) : ?>
-									<a href="<?php echo esc_url( $atts[ 'author_link' ] ) ?>" target="_blank" class="shortcode_briz_blockquote_author_link"><?php _e( $atts[ 'author_name' ], $lang_domain ) ?></a>
+									<a href="<?php echo esc_url( $atts[ 'author_link' ] ) ?>" target="_blank" class="shortcode_briz_blockquote_author_link"><?php _e( $atts[ 'author_name' ], $this->lang_domain ) ?></a>
 								<?php else : ?>
-									<?php _e( $atts[ 'author_name' ], $lang_domain ) ?>
+									<?php _e( $atts[ 'author_name' ], $this->lang_domain ) ?>
 								<?php endif ?>
 
 							</strong>
 
 							<?php if ( ! empty( $atts[ 'author_meta' ] ) ) : ?>
-								<em class="shortcode_briz_blockquote_author_meta"><?php _e( $atts[ 'author_meta' ], $lang_domain ) ?></em>
+								<em class="shortcode_briz_blockquote_author_meta"><?php _e( $atts[ 'author_meta' ], $this->lang_domain ) ?></em>
 							<?php endif ?>
 
 						</span>

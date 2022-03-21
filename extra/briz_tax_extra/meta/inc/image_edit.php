@@ -30,7 +30,7 @@
 	<th scope="row">
 		<span class="briz-meta-title">
 			<?php
-				_e( $params[ 'title' ] );
+				_e( $params[ 'title' ], $this->lang_domain );
 
 				if ( $saved ) {
 					$hideClass = 'briz-hidden';
@@ -45,18 +45,18 @@
 			<a href="#">
 				<img
 					src="<?php echo esc_attr( $img_url ); ?>"
-					data-default="<?php echo esc_attr( $params[ 'value' ] ); ?>"
+					data-default="<?php echo esc_attr_e( $params[ 'value' ], $this->lang_domain ); ?>"
 					alt="Alt"
 				/>
 			</a>
 
 			<button type="button" class="button <?php echo esc_attr( $btn_class ); ?>">
-				<?php _e( 'Remove' ); ?>
+				<?php _e( 'Remove', $this->lang_domain ); ?>
 			</button>
 		</figure>
 
 		<p class="description">
-			<?php _e( $params[ 'desc'] ); ?>
+			<?php _e( $params[ 'desc'], $this->lang_domain ); ?>
 		</p>
 
 		<input

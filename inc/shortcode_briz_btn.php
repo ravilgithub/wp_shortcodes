@@ -268,9 +268,6 @@ class Briz_Btn_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_btn( $content, $atts, $id, $rel, $target, $download, $onclick ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 
 		if ( ( int ) $atts[ 'btn' ] ) :
@@ -289,7 +286,7 @@ class Briz_Btn_Shortcode extends Shortcodes {
 					</span>
 				<?php endif; ?>
 
-				<span class="shortcode_briz_btn_label"><?php _e( $content, $lang_domain ) ?></span>
+				<span class="shortcode_briz_btn_label"><?php _e( $content, $this->lang_domain ) ?></span>
 
 <?php if ( ( int ) $atts[ 'btn' ] ) : ?>
 			</button>

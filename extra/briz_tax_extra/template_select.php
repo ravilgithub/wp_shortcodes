@@ -7,17 +7,18 @@ use Briz_Shortcodes\common\Helper;
  *
  * Класс добавляет выбор доступных шаблонов для создаваемых или изменяемых терминов.
  *
- * @property Array $files - опции( имена файлов ) выпадающего списка позволяющий 
- *                          выбрать нужный шаблон для записей термина.
- * @property String $dir  - директория шаблонов.
+ * @property Array $files       - опции( имена файлов ) выпадающего списка позволяющий
+ *                                выбрать нужный шаблон для записей термина.
+ * @property String $dir        - директория шаблонов.
+ * @property String lang_domain - регистрационное "id" файла переводов для всех шорткодов.
  *
  * @since 0.0.1
  * @author Ravil
  */
-// class Tax_TMPL extends Meta_boxes {
 class Tax_TMPL {
 	public $files = [ 'None' => -1 ];
 	public $dir;
+	public $lang_domain;
 
 
 	/**
@@ -33,9 +34,8 @@ class Tax_TMPL {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	// public function __construct( $dir, Array $screens, Array $taxs ) {
 	public function __construct( $dir, Array $taxs ) {
-		// parent::__construct( $screens, $taxs );
+		$this->lang_domain = Helper::get_l10n_id();
 		$this->dir = $dir;
 		$this->get_tmpl();
 		$this->add_hooks( $taxs );
@@ -136,21 +136,21 @@ class Tax_TMPL {
 ?>
 		<div class="form-field">
 			<label for="tmpl">
-				<?php _e( 'Termin template' ); ?>
+				<?php _e( 'Termin template', $this->lang_domain ); ?>
 			</label>
 
 			<select name="tmpl" id="tmpl">
 
 				<?php foreach( $this->files as $file_name => $path ) : ?>
 					<option value="<?php echo $path ?>">
-						<?php _e( $file_name ); ?>
+						<?php _e( $file_name, $this->lang_domain ); ?>
 					</option>
 				<?php endforeach; ?>
 
 			</select>
 
 			<p class="description">
-				<?php _e( 'Шаблон, согласно которому будет формироваться вывод категории и записей относящихся к ней.' ); ?>
+				<?php _e( 'Шаблон, согласно которому будет формироваться вывод категории и записей относящихся к ней.', $this->lang_domain ); ?>
 			</p>
 		</div>
 <?php
@@ -174,7 +174,7 @@ class Tax_TMPL {
 		<tr class="form-field">
 			<th scope="row" valign="top">
 				<label for="tmpl">
-					<?php _e( 'Termin template' ); ?>
+					<?php _e( 'Termin template', $this->lang_domain ); ?>
 				</label>
 			</th>
 			<td>
@@ -191,14 +191,14 @@ class Tax_TMPL {
 								);
 							?>
 						>
-							<?php _e( $file_name ); ?>
+							<?php _e( $file_name, $this->lang_domain ); ?>
 						</option>
 					<?php endforeach; ?>
 
 				</select>
 
 				<p class="description">
-					<?php _e( 'Шаблон, согласно которому будет формироваться вывод категории и записей относящихся к ней.' ); ?>
+					<?php _e( 'Шаблон, согласно которому будет формироваться вывод категории и записей относящихся к ней.', $this->lang_domain ); ?>
 				</p>
 			</td>
 		</tr>

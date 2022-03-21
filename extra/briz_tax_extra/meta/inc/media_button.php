@@ -25,8 +25,8 @@
 	extract( $opts );
 
 	$stage = 'addidable';
-	$add_action_txt = __( 'Add' );
-	$edit_action_txt = __( 'Edit' );
+	$add_action_txt = __( 'Add', $this->lang_domain );
+	$edit_action_txt = __( 'Edit', $this->lang_domain );
 	$btn_action_txt = $add_action_txt;
 	$delBtnClass = '';
 
@@ -39,7 +39,7 @@
 
 <div class="form-field briz-meta-media-wrap">
 	<span class="briz-meta-media-title">
-		<?php _e( $params[ 'title' ] ); ?>
+		<?php _e( $params[ 'title' ], $this->lang_domain ); ?>
 	</span>
 
 	<div class="briz-meta-media-box">
@@ -62,12 +62,12 @@
 				class="button briz-meta-media-del-all-btn <?php echo esc_attr( $delBtnClass ); ?>"
 				data-action-text="<?php echo esc_attr( $add_action_txt ); ?>"
 			>
-				<?php echo __( 'Delete all' ); ?>
+				<?php _e( 'Delete all', $this->lang_domain ); ?>
 			</button>
 		</div> <!-- .briz-meta-media-controls -->
 
 		<p class="description">
-			<?php _e( $params[ 'desc'] ); ?>
+			<?php _e( $params[ 'desc'], $this->lang_domain ); ?>
 		</p>
 
 		<div class="briz-meta-media-place">
@@ -89,7 +89,7 @@
 							data-media-id="<?php echo esc_attr( $media_id ); ?>"
 						>
 							<figure
-								title="<?php esc_attr_e( $details[ 'caption' ] ); ?>"
+								title="<?php esc_attr_e( $details[ 'caption' ], $this->lang_domain ); ?>"
 								class="briz-meta-media-item"
 							>
 								<i class="briz-meta-media-del-item-btn">×</i>
@@ -99,7 +99,7 @@
 ?>
 									<img
 										src="<?php echo esc_attr( $src ); ?>"
-										alt="<?php echo esc_attr( $details[ 'alt' ] ); ?>"
+										alt="<?php esc_attr_e( $details[ 'alt' ], $this->lang_domain ); ?>"
 									/>
 <?php
 								endif;

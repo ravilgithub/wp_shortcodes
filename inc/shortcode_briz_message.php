@@ -244,9 +244,6 @@ class Briz_Message_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_message( $content, $atts, $id, $rel, $target, $download, $onclick ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ]?>" role="alert">
@@ -257,19 +254,19 @@ class Briz_Message_Shortcode extends Shortcodes {
 <?php endif ?>
 
 <?php if ( 2 !== ( int ) $atts[ 'type' ] ) : ?>
-				<?php _e( $content, $lang_domain ) ?>
+				<?php _e( $content, $this->lang_domain ) ?>
 <?php endif ?>
 
 <?php if ( ! empty( $atts[ 'link' ] ) ) : ?>
 				<a href="<?php echo $atts[ 'link' ] ?>" <?php echo $rel, $target, $onclick, $download ?>>
 
-					<?php _e( $atts[ 'link_text' ], $lang_domain ) ?>
+					<?php _e( $atts[ 'link_text' ], $this->lang_domain ) ?>
 
 				</a>
 <?php endif ?>
 
 <?php if ( 2 === ( int ) $atts[ 'type' ] ) : ?>
-				<?php _e( $content, $lang_domain ) ?>
+				<?php _e( $content, $this->lang_domain ) ?>
 <?php endif ?>
 
 			</span>

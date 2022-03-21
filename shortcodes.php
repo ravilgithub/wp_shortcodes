@@ -17,9 +17,9 @@ use Briz_Shortcodes\common\Helper;
  * @author Ravil
  */
 abstract class Shortcodes {
-	const CSS_PATH             = 'assets/css/';
-	const JS_PATH              = 'assets/js/';
-	public $lang_domain        = 'briz_shortcodes_l10n';
+	const CSS_PATH = 'assets/css/';
+	const JS_PATH  = 'assets/js/';
+	public $lang_domain;
 	public $special_atts_types = array(
 		'js' => array(
 			'atts_names'  => array( 'onclick' ),
@@ -39,10 +39,9 @@ abstract class Shortcodes {
 	 */
 	public function __construct( $obj ) {
 		$obj = ! empty( $obj ) ? $obj : $this;
+		$this->lang_domain = Helper::get_l10n_id();
 		add_shortcode( $this->name, array( $obj, $this->get_full_name() ) );
-
 		add_action( 'wp_enqueue_scripts', array( $this, 'merge_shortcode_assets' ) );
-		add_action( 'init', array ( $this, 'set_lang_domain' ) );
 	}
 
 
@@ -207,24 +206,6 @@ abstract class Shortcodes {
 		}
 
 		$this->inline_styles = array();
-	}
-
-
-	/**
-	 * Register translation file.
-	 *
-	 * Регистрация файла перевода.
-	 *
-	 * @return void
-	 * @since  0.0.1
-	 * @author Ravil
-	 */
-	public function set_lang_domain() {
-		if ( ! is_textdomain_loaded( $this->lang_domain ) ) {
-			$default_path = dirname( __FILE__ ) . '/lang/' . $this->lang_domain . '-ru_RU.mo';
-			$lang_domain_path = apply_filters( 'briz_shortcodes_lang_domain_path', $default_path );
-			load_textdomain( $this->lang_domain, $lang_domain_path );
-		}
 	}
 
 

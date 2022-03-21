@@ -185,9 +185,6 @@ class Briz_List_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_list( $content, $atts, $id ) {
-
-		// $lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"><?php echo $content ?></div>

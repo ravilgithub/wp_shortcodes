@@ -117,7 +117,7 @@ class Term_Meta extends Meta {
 					type="button"
 					class="button briz-meta-reset-all"
 					data-meta-box-id=""
-				>Reset all</button>
+				><?php _e( 'Reset all', $this->lang_domain ); ?></button>
 			</td>
 		</tr>
 <?php

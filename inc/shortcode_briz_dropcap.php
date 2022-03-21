@@ -153,12 +153,9 @@ class Briz_Dropcap_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_dropcap( $content, $atts, $id ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
-		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"><?php _e( $content, $lang_domain ) ?></span>
+		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>"><?php _e( $content, $this->lang_domain ) ?></span>
 <?php
 		return trim( ob_get_clean() );
 	}

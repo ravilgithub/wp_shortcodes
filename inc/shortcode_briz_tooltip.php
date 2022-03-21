@@ -136,9 +136,6 @@ class Briz_Tooltip_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_dropcap( $content, $atts, $id ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<span id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
@@ -146,9 +143,9 @@ class Briz_Tooltip_Shortcode extends Shortcodes {
 				<?php if ( wp_http_validate_url( $atts[ 'img_url' ] ) ) : ?>
 					<img src="<?php echo esc_url( $atts[ 'img_url' ] ) ?>" alt="ALT" />
 				<?php endif; ?>
-				<?php _e( $atts[ 'hint' ], $lang_domain ) ?>
+				<?php _e( $atts[ 'hint' ], $this->lang_domain ) ?>
 			</span>
-			<?php _e( $content, $lang_domain ) ?>
+			<?php _e( $content, $this->lang_domain ) ?>
 		</span>
 <?php
 		return trim( ob_get_clean() );

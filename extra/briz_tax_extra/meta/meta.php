@@ -7,15 +7,18 @@ use Briz_Shortcodes\common\Helper;
  *
  * Класс реализует общий функционал мета полей.
  *
- * @property String $assets_id - префикс id, JS и CSS файлов.
- * @property String $inc_path  - путь к HTML компонентам - мета полям.
- * 
+ * @property String $assets_id  - префикс id, JS и CSS файлов.
+ * @property String $inc_path   - путь к HTML компонентам - мета полям.
+ * @property String lang_domain - регистрационное "id" файла
+ *                                переводов для всех шорткодов.
+ *
  * @since 0.0.1
  * @author Ravil
  */
 abstract class Meta {
 	protected $assets_id = 'briz_meta';
-	protected $inc_path = PLUGIN_PATH . 'extra/briz_tax_extra/meta/inc/';
+	protected $inc_path  = PLUGIN_PATH . 'extra/briz_tax_extra/meta/inc/';
+	protected $lang_domain;
 
 	/**
 	 * Constructor.
@@ -26,6 +29,7 @@ abstract class Meta {
 	 * @author Ravil
 	 */
 	protected function __construct() {
+		$this->lang_domain = Helper::get_l10n_id();
 		add_action( 'admin_enqueue_scripts', [ $this, 'load_media_files' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'add_assets' ] );
 		$this->redefine_script_tag();
@@ -392,13 +396,13 @@ abstract class Meta {
 			<div
 				class="briz_meta_box_group_name"
 				style="<?php echo esc_attr( $style ); ?> padding: 10px;">
-				<span><?php _e( $title ); ?></span>
+				<span><?php _e( $title, $this->lang_domain ); ?></span>
 			</div>
 <?php
 		else :
 ?>
 		<tr class="briz_meta_box_group_name" style="<?php echo esc_attr( $style ); ?>">
-			<td colspan="2"><?php _e( $title ); ?></td>
+			<td colspan="2"><?php _e( $title, $this->lang_domain ); ?></td>
 		</tr>
 <?php
 		endif;

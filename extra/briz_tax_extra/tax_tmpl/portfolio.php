@@ -165,7 +165,7 @@
 								class="show-more"
 								data-shortcode-id="<?php echo esc_attr( $this->id ); ?>"
 								data-all-posts-count="<?php echo esc_attr( $this->all_posts_count ); ?>"
-							><?php _e( 'Show More', $this->lang_domain ); ?></button>
+							><?php _e( 'Show more', $this->lang_domain ); ?></button>
 						</div> <!-- .show-more-wrap -->
 			<?php endif; ?>
 

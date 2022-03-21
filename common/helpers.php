@@ -10,6 +10,7 @@ namespace Briz_Shortcodes\common;
  * @author Ravil.
  */
 class Helper {
+	private static $l10n_default_id = 'briz_shortcodes_l10n';
 
 	/**
 	 * Constructor.
@@ -22,6 +23,62 @@ class Helper {
 	public function __construct() {
 		add_action( 'init', [ $this, 'create_session' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'register_shortcodes_vendors' ] );
+		add_action( 'init', [ $this, 'set_lang_domain' ] );
+	}
+
+
+	/**
+	 * A unique identifier that can be used in
+	 * the future to translate a string.
+	 *
+	 * Уникальный идентификатор, по которому, для перевода строки,
+	 * в дальнейшем можно будет обращаться.
+	 *
+	 * @return String - Уникальный идентификатор перевода.
+	 *
+	 * @since  0.0.1
+	 * @author Ravil
+	 */
+	public static function get_l10n_id() {
+		return apply_filters( 'briz_shortcodes_lang_domain_name', self::$l10n_default_id );
+	}
+
+
+	/**
+	 * Absolute path to .mo file.
+	 *
+	 * Абсолютный путь до .mo файла.
+	 *
+	 * @return Stirng - путь до .mo файла.
+	 *
+	 * @since  0.0.1
+	 * @author Ravil
+	 */
+	private function get_l10n_path() {
+		$default_path = PLUGIN_PATH . 'lang/' . self::get_l10n_id() . '-ru_RU.mo';
+		return apply_filters( 'briz_shortcodes_lang_domain_path', $default_path );
+	}
+
+
+	/**
+	 * Register translation file.
+	 *
+	 * Регистрация файла перевода.
+	 *
+	 * @return void
+	 * @since  0.0.1
+	 * @author Ravil
+	 */
+	public function set_lang_domain() {
+		$l10n_id = self::get_l10n_id();
+		if ( is_textdomain_loaded( $l10n_id ) )
+			return;
+
+		$l10n_path = $this->get_l10n_path();
+		if ( ! file_exists( $l10n_path ) )
+			return;
+
+		load_textdomain( $l10n_id, $l10n_path );
 	}
 
 

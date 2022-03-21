@@ -132,7 +132,7 @@ class Meta_Boxes extends Meta {
 		$n = 0;
 		foreach ( $terms_info[ 'tmpl' ] as $tmpl ) {
 			$n++;
-			$title = __( "Options for term template: " ) . ucfirst( $tmpl );
+			$title = __( "Options for term template: ", $this->lang_domain ) . ucfirst( $tmpl );
 
 			$tax = $terms_info[ 'taxonomy' ];
 
@@ -181,8 +181,8 @@ class Meta_Boxes extends Meta {
 			<table width="100%">
 				<thead>
 				<tr>
-					<th width>Имя</th>
-					<th width>Значение</th>
+					<th><?php _e( 'Name', $this->lang_domain ); ?></th>
+					<th><?php _e( 'Value', $this->lang_domain ); ?></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -195,7 +195,7 @@ class Meta_Boxes extends Meta {
 								type="button"
 								class="button briz-meta-reset-all"
 								data-meta-box-id="<?php echo esc_attr( $meta[ 'args' ][ 'meta_box_id' ] ); ?>"
-							>Reset all</button>
+							><?php _e( 'Reset all', $this->lang_domain ); ?></button>
 						</td>
 					</tr>
 					<tr class="briz-hidden">

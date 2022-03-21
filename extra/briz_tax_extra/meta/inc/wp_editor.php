@@ -46,7 +46,7 @@
 >
 	<span class="briz-meta-title">
 		<?php
-			_e( $params[ 'title' ] );
+			_e( $params[ 'title' ], $this->lang_domain );
 
 			if ( $saved ) {
 				$hideClass = 'briz-hidden';
@@ -60,10 +60,10 @@
 			echo $value;
 			wp_editor( $value, $key, $args );
 		?>
-		<button type="button" class="button briz-reset-default"><?php _e( 'Reset' ); ?></button>
+		<button type="button" class="button briz-reset-default"><?php _e( 'Reset', $this->lang_domain ); ?></button>
 	</div>
 
 	<p class="description">
-		<?php _e( $params[ 'desc'] ); ?>
+		<?php _e( $params[ 'desc'], $this->lang_domain ); ?>
 	</p>
 </div>

@@ -131,14 +131,11 @@ class Briz_Spacer_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_image( $content, $atts, $id ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
 <?php if ( ! empty( $content ) ) : ?>
-			<span class="shortcode_briz_spacer_content"><?php _e( $content, $lang_domain ) ?></span>
+			<span class="shortcode_briz_spacer_content"><?php _e( $content, $this->lang_domain ) ?></span>
 <?php endif; ?>
 		</div>
 <?php

@@ -276,12 +276,9 @@ class Briz_Link_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_btn( $content, $atts, $id, $rel, $target, $onclick, $download ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
-		<a href="<?php echo $atts[ 'link' ] ?>" id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" data-hover="<?php _e( $content, $lang_domain ) ?>" <?php echo $rel, $target, $onclick, $download ?>>
+		<a href="<?php echo $atts[ 'link' ] ?>" id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>" data-hover="<?php _e( $content, $this->lang_domain ) ?>" <?php echo $rel, $target, $onclick, $download ?>>
 
 			<?php if ( ! empty( $atts[ 'icon_name' ] ) and 9 === ( int ) $atts[ 'type' ] ) : ?>
 				<span class="shortcode_briz_link_icon">
@@ -289,7 +286,7 @@ class Briz_Link_Shortcode extends Shortcodes {
 				</span>
 			<?php endif; ?>
 
-			<span class="shortcode_briz_link_label"><?php _e( $content, $lang_domain ) ?></span>
+			<span class="shortcode_briz_link_label"><?php _e( $content, $this->lang_domain ) ?></span>
 
 		</a>
 <?php

@@ -28,7 +28,7 @@
 	<th scope="row">
 		<span class="briz-meta-title">
 			<?php
-				_e( $params[ 'title' ] );
+				_e( $params[ 'title' ], $this->lang_domain );
 
 				if ( $saved ) {
 					$hideClass = 'briz-hidden';
@@ -40,7 +40,7 @@
 
 	<td>
 		<p>
-			<?php _e( 'Current value' ); ?>:
+			<?php _e( 'Current value', $this->lang_domain ); ?>:
 			<span class="briz-meta-range-current-value">
 				<?php echo $value; ?>
 			</span>
@@ -57,11 +57,11 @@
 				max="<?php echo $params[ 'options' ][ 'max' ]; ?>"
 			/>
 
-			<button type="button" class="button briz-reset-default"><?php _e( 'Reset' ); ?></button>
+			<button type="button" class="button briz-reset-default"><?php _e( 'Reset', $this->lang_domain ); ?></button>
 		</div>
 
 		<p class="description">
-			<?php _e( $params[ 'desc'] ); ?>
+			<?php _e( $params[ 'desc'], $this->lang_domain ); ?>
 		</p>
 	</td>
 </tr>

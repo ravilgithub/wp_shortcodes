@@ -19,6 +19,3 @@ msgstr ""
 # путь к файлу и номер строки где использовался перевод.
 msgid "example"
 msgstr "пример"
-
-msgid "Send"
-msgstr "Отправить"

@@ -251,9 +251,6 @@ class Briz_Image_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_image( $content, $atts, $id, $rel, $target, $onclick ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<figure  id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
@@ -284,7 +281,7 @@ class Briz_Image_Shortcode extends Shortcodes {
 				</span>
 
 				<?php if ( ! empty( $content ) ) : ?>
-					<figcaption class="shortcode_briz_image_label"><?php _e( $content, $lang_domain ) ?></figcaption>
+					<figcaption class="shortcode_briz_image_label"><?php _e( $content, $this->lang_domain ) ?></figcaption>
 				<?php endif; ?>
 
 			</span>

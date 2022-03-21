@@ -222,9 +222,6 @@ class Briz_Separator_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function display_image( $content, $atts, $id ) {
-
-		$lang_domain = apply_filters( 'briz_shortcode_lang_domain', $this->lang_domain );
-
 		ob_start();
 ?>
 		<div id="<?php echo $id ?>" class="<?php echo $atts[ 'class' ] ?>">
@@ -234,7 +231,7 @@ class Briz_Separator_Shortcode extends Shortcodes {
 				</div>
 			<?php elseif ( ! empty( $content ) ) : ?>
 				<div class="shortcode_briz_separator_content_wrap">
-					<?php _e( $content, $lang_domain ) ?>
+					<?php _e( $content, $this->lang_domain ) ?>
 				</div>
 			<?php endif; ?>
 		</div>
