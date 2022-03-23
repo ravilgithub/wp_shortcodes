@@ -99,16 +99,6 @@
 			>
 				<div class="facts-inner-wrap">
 					<div class="container">
-						<div class="row">
-							<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-								<div class="section-caption">
-									<h2>Some facts <span>about us</span></h2>
-									<div class="spacer">
-										<div class="diamond"></div>
-									</div>
-								</div>
-							</div>
-						</div>
 						<div class="row facts-items-wrap">
 <?php
 		}
