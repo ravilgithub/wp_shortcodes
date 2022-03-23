@@ -83,6 +83,22 @@
 		 */
 		public function get_before( $posts ) {
 			extract( $this->atts );
+
+			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
+			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+
+			$header_first_word = '';
+			$header_last_word = '';
+
+			if ( is_array( $opts ) ) {
+				if ( array_key_exists( 'section_header_first', $opts ) ) {
+					$header_first_word = $opts[ 'section_header_first' ];
+				}
+
+				if ( array_key_exists( 'section_header_last', $opts ) ) {
+					$header_last_word = $opts[ 'section_header_last' ];
+				}
+			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
@@ -90,6 +106,29 @@
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
 				<div class="section-inner-wrap">
+					<div class="container">
+<?php
+						if ( $header_first_word ||  $header_last_word ) :
+?>
+							<div class="row">
+								<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+									<div class="section-caption">
+										<h2>
+											<?php _e( $header_first_word, $this->lang_domain ); ?>
+											<span>
+												<?php _e( $header_last_word, $this->lang_domain ); ?>
+											</span>
+										</h2>
+										<div class="spacer">
+											<div class="diamond"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+<?php
+						endif;
+?>
+					</div>
 					<div class="section-content">
 			<?php
 
