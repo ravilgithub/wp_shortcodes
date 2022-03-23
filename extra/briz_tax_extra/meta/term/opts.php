@@ -38,6 +38,8 @@ require 'exports/category/review_meta_fields.php';
 require 'exports/category/team_meta_fields.php';
 require 'exports/category/brands_meta_fields.php';
 require 'exports/category/blog_meta_fields.php';
+require 'exports/category/features_meta_fields.php';
+require 'exports/category/portfolio_meta_fields.php';
 
 /* Product category */
 require 'exports/product_cat/__to_all__products_meta_fields.php';
@@ -53,6 +55,8 @@ $opts = [
     'team'       => $team_meta_fields,
     'brands'     => $brands_meta_fields,
     'blog'       => $blog_meta_fields,
+    'features'   => $features_meta_fields,
+    'portfolio'  => $portfolio_meta_fields,
 	],
 
 	'product_cat' => [
