@@ -14,6 +14,19 @@ $solutions_meta_fields = [
 				'right'  => 'Right'
 			]
 		],
+		'bg_img' => [
+			'type'  => 'media_button',
+			'title' => 'Background image',
+			'desc'  => '',
+			'value' => '[857]',
+			'empty' => false,
+			'options' => [
+				'title'    => 'Insert a media',
+				'library'  => [ 'type' => 'image' ],
+				'multiple' => false,
+				'button'   => [ 'text' => 'Insert' ]
+			],
+		],
 		'bg_attachment' => [
 			'type'  => 'select',
 			'title' => 'Background type',
@@ -26,10 +39,26 @@ $solutions_meta_fields = [
 				'hidden'   => 'Hidden'
 			]
 		],
-		'bg_color' => [
+		'content_bg_color_enable' => [
+			'type'  => 'checkbox',
+			'title' => 'Показать цвет фона контента',
+			'desc'  => 'Показать цвет фона контента.',
+			'empty' => true,
+			'value' => '',
+			'options' => [
+				'on' => 'On'
+			]
+		],
+		'content_bg_color' => [
+			'type'  => 'color',
+			'title' => 'Цвет фона контента',
+			'desc'  => 'Цвет фона контента',
+			'value' => '#fafafa'
+		],
+		'theme_color' => [
 			'type'  => 'select',
-			'title' => 'Background color',
-			'desc'  => 'Background color',
+			'title' => 'Theme color',
+			'desc'  => 'Theme color',
 			'value' => 'white',
 			'options' => [
 				'white'  => 'White',

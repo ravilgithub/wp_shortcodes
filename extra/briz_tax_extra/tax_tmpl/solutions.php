@@ -132,15 +132,115 @@
 			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
+
+			$section_class = '';
+			$header = false;
+			$header_first = '';
+			$header_last = '';
+			$header_spacer = false;
+			$header_description = false;
+			$header_description_text = '';
+			$header_bg_color = '';
+			$content_bg_color = '';
+
+			if ( is_array( $opts ) ) {
+				if ( array_key_exists( 'header', $opts ) ) {
+					if ( $opts[ 'header' ] ) {
+						$header = true;
+						$section_class = 'section-with-header';
+					}
+				}
+
+				if ( array_key_exists( 'header_first', $opts ) ) {
+					$header_first = __( $opts[ 'header_first' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_last', $opts ) ) {
+					$header_last = __( $opts[ 'header_last' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_spacer', $opts ) ) {
+					$header_spacer = $opts[ 'header_spacer' ] ? true : $header_spacer;
+				}
+
+				if ( array_key_exists( 'header_description', $opts ) ) {
+					$header_description = $opts[ 'header_description' ] ? true : $header_description;
+				}
+
+				if ( array_key_exists( 'header_description_text', $opts ) ) {
+					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_bg_color', $opts ) ) {
+					$header_bg_color = 'background-color: ' . esc_attr( $opts[ 'header_bg_color' ] ) . ';';
+				}
+
+				if (
+					! $parallax_img_src &&
+					array_key_exists( 'content_bg_color_enable', $opts ) &&
+					! empty( $opts[ 'content_bg_color_enable' ] ) &&
+					array_key_exists( 'content_bg_color', $opts )
+				) {
+					$content_bg_color = ' background-color: ' . esc_attr( $opts[ 'content_bg_color' ] ) . ';';
+				}
+			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section solutions-page <?php echo $class ?> <?php echo esc_attr( $attachment ); ?>"
-				style="<?php echo esc_attr( $bg ); ?>"
-				data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
-				data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
+				class="showcase section stickers-page
+					<?php echo esc_attr( $this->tmpl_name ); ?>
+					<?php echo esc_attr( $class ); ?>
+					<?php echo $section_class; ?>
+				"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
+<?php
+				if ( $header ) :
+?>
+					<div
+						class="section-caption-wrap"
+						style="<?php echo $header_bg_color; ?>"
+					>
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<?php
+								if ( $header_first ||  $header_last ) :
+?>
+									<h2>
+										<?php echo $header_first; ?>
+										<span>
+											<?php echo $header_last; ?>
+										</span>
+									</h2>
+<?php
+								endif;
+								if ( $header_spacer ) :
+?>
+									<div class="briz-caption-spacer">
+										<div class="diamond"></div>
+									</div>
+<?php
+								endif;
+								if ( $header_description && $header_description_text ) :
+?>
+									<p><?php echo $header_description_text; ?></p>
+<?php
+								endif;
+?>
+								</div> <!-- .col- -->
+							</div> <!-- .row -->
+						</div> <!-- .container -->
+					</div> <!-- .section-caption-wrap -->
+<?php
+				endif;
+?>
+				<div
+					class="section-content-wrap <?php echo esc_attr( $attachment ); ?>"
+					style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
+					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
+				>
 <?php
 		}
 
@@ -163,15 +263,16 @@
 		public function get_after( $posts ) {
 			extract( $this->atts );
 ?>
+				</div> <!-- .section-content-wrap -->
 			</section> <!-- .briz-solutions-tmpl -->
 <?php
 		}
 
 
 		/**
-		 * Template "Accordeon".
+		 * Template "Accordion".
 		 *
-		 * Шаблон "Accordeon".
+		 * Шаблон "Accordion".
 		 *
 		 * @param Array $sections - мета поля шаблона.
 		 *
@@ -185,17 +286,19 @@
 
 			$is_first = 'active';
 ?>
-			<div class="accordeon-container">
+			<div class="accordion-container">
 <?php
 				foreach ( $sections as $section ) :
-					if ( $section[ 'enable' ] ) :
+					if ( $section[ 'enable' ] ) : // ??? $section['value']['enable']
+						$title = __( $section[ 'title' ], $this->lang_domain );
+						$content = __( $section[ 'content' ], $this->lang_domain );
 ?>
-						<div class="accordeon-item <?php echo $is_first; ?>">
-							<div class="accordeon-item-header">
-								<h5><?php _e( $section[ 'title' ], $this->lang_domain ); ?></h5>
+						<div class="accordion-item <?php echo $is_first; ?>">
+							<div class="accordion-item-header">
+								<h3><?php echo $title; ?></h3>
 							</div>
-							<div class="accordeon-content">
-								<p><?php _e( $section[ 'content' ], $this->lang_domain ); ?></p>
+							<div class="accordion-item-content">
+								<p><?php echo $content; ?></p>
 							</div>
 						</div>
 <?php
@@ -233,10 +336,10 @@
 						$href = esc_attr( $section_name );
 						$title = __( $section[ 'title' ], $this->lang_domain	);
 ?>
-						<li class="<?php echo $is_first ?>">
-							<a href="#<?php echo $href ?>">
-								<i class="fa fa-<?php echo $icon ?>" aria-hidden="true"></i>
-								<?php echo $title ?>
+						<li class="<?php echo $is_first; ?>">
+							<a href="#<?php echo $href; ?>">
+								<i class="fa fa-<?php echo $icon; ?>" aria-hidden="true"></i>
+								<?php echo $title; ?>
 							</a>
 						</li>
 <?php
@@ -252,8 +355,8 @@
 							$id = esc_attr( $section_name );
 							$content = __( $section[ 'content' ], $this->lang_domain );
 ?>
-							<div class="tab-content-inner <?php echo $is_first ?>" id="<?php echo $id ?>">
-								<p><?php echo $content ?></p>
+							<div class="tab-content-inner <?php echo $is_first; ?>" id="<?php echo $id; ?>">
+								<p><?php echo $content; ?></p>
 							</div>
 <?php
 						endif;
@@ -283,13 +386,13 @@
 			<div class="wow progress-bar-container clearfix">
 <?php
 				foreach ( $sections as $section ) :
-					$title = $section[ 'title' ];
+					$title = __( $section[ 'title' ], $this->lang_domain );
 					$num = esc_attr( ( int ) $section[ 'target_number' ] );
 					$symbol = esc_attr( $section[ 'symbol' ] );
 					$symbol_position = esc_attr( $section[ 'symbol_position' ] );
 ?>
 					<div class="progress-bar-item" data-progress-target="<?php echo $num; ?>">
-						<h5><?php echo $title; ?></h5>
+						<h3><?php echo $title; ?></h3>
 						<div class="ruler-wrap">
 							<div
 								class="ruler"
@@ -349,70 +452,97 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
+			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
+			$term_opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+
+			$content_width_class = 'container';
+
+			if ( is_array( $term_opts ) ) {
+				if ( array_key_exists( 'content_wide', $term_opts ) ) {
+					$content_width_class = $term_opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
+				}
+			}
+
 			foreach ( $posts[ 'data' ] as $data ) :
 				$child = $data[ 'child' ];
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
-					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
-					$opts = get_post_meta( $post_id, $meta_key, true );
+					$post_opts = get_post_meta( $post_id, $meta_key, true );
 
-					$opts[ 'post_id' ] = $post_id;
+					if ( empty( $post_opts ) )
+						return false;
 
+					$post_opts[ 'post_id' ] = $post_id;
+
+					$content_bg_color = '';
 					$content_position = '';
-					$bg_position = 'left';
-					$bg_color = '';
+					$bg_position = ' left';
+					$theme_color = '';
 					$glassy = '';
 
-					list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts );
+					$post_title = __( get_the_title() , $this->lang_domain );
+					$post_content = __( get_the_content( '' ), $this->lang_domain );
 
-					if ( array_key_exists( 'position', $opts ) ) {
-						if ( 'right' == $opts[ 'position' ] ) {
-							$bg_position = 'right';
-							$content_position = 'col-md-offset-6';
+					// list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $post_opts );
+					list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $post_opts, true, 'bg_img', 'bg_attachment' );
+
+					if (
+						! $parallax_img_src &&
+						array_key_exists( 'content_bg_color_enable', $post_opts ) &&
+						! empty( $post_opts[ 'content_bg_color_enable' ] ) &&
+						array_key_exists( 'content_bg_color', $post_opts )
+					) {
+						$content_bg_color = ' background-color: ' . esc_attr( $post_opts[ 'content_bg_color' ] ) . ';';
+					}
+
+					if ( array_key_exists( 'position', $post_opts ) ) {
+						if ( 'right' == $post_opts[ 'position' ] ) {
+							$bg_position = ' right';
+							$content_position = ' col-md-offset-6';
 						}
 					}
 
-					if ( array_key_exists( 'bg_color', $opts ) ) {
-						$bg_color = $opts[ 'bg_color' ];
+					if ( array_key_exists( 'theme_color', $post_opts ) ) {
+						$theme_color = $post_opts[ 'theme_color' ];
 					}
 
 					if (
-						array_key_exists( 'glassy', $opts ) &&
-						! empty( $opts[ 'glassy' ] )
+						array_key_exists( 'glassy', $post_opts ) &&
+						! empty( $post_opts[ 'glassy' ] )
 					) {
-						$glassy = 'glassy';
+						$glassy = ' glassy';
 					}
 ?>
 					<div 
-						class="bg-overlay <?php echo esc_attr( $bg_position ); ?> <?php echo esc_attr( $attachment ); ?>"
-						style="<?php echo esc_attr( $bg ); ?>"
+						class="solution-item <?php echo esc_attr( $attachment ), $bg_position; ?>"
+						style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
 						data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 						data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 					>
-						<div class="container-fluid">
+						<div class="<?php echo $content_width_class; ?>">
 							<div class="row">
-								<div class="solution-wrap col-md-6 <?php echo esc_attr( $content_position . ' ' . $bg_color . ' ' . $glassy ); ?>">
-									<div class="solution-inner-wrap">
-										<div class="section-caption">
-											<?php the_title( '<h2>', '</h2>'); ?>
-											<?php the_content(); ?>
-										</div>
+								<div
+									class="solution-inner col-md-6 <?php echo esc_attr( $theme_color ), $content_position, $glassy; ?>"
+								>
+									<div class="solution-item-caption">
+										<h2><?php echo $post_title; ?></h2>
+										<?php echo $post_content; ?>
+									</div>
 <?php
-										if (
-											array_key_exists( 'solution_elements', $opts ) &&
-											! empty( $els = $opts[ 'solution_elements' ] )
-										) {
-											foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
-												$method_name = 'get_' . $el_name;
-												if ( method_exists( $this, $method_name ) ) {
-													$this->$method_name( $el_params[ 'sections' ] );
-												}
+									if (
+										array_key_exists( 'solution_elements', $post_opts ) &&
+										! empty( $els = $post_opts[ 'solution_elements' ] )
+									) {
+										foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
+											$method_name = 'get_' . $el_name;
+											if ( method_exists( $this, $method_name ) ) {
+												$this->$method_name( $el_params[ 'sections' ] );
 											}
 										}
+									}
 ?>
-									</div>
 								</div>
 							</div>
 						</div>
