@@ -1,8 +1,8 @@
 /**
  * Solutions functionality.
  */
-import { accordeon } from './export/accordeon.js'
-accordeon.init();
+import { accordion } from './export/accordion.js'
+accordion.init();
 
 import { tabs } from './export/tabs.js'
 tabs.init();
