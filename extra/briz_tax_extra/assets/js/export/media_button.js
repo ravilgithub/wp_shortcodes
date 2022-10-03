@@ -280,11 +280,13 @@ export default {
 	delItem( instance, btn ) {
 		const itemWrap = btn.closest( '.' + this.selectors.media.itemWrap ),
 		      delItemId = itemWrap.dataset.mediaId,
-		      input = instance.querySelector( '.' + this.selectors.input ),
-		      ids = JSON.parse( input.value ).filter( id => delItemId != id );
+		      input = instance.querySelector( '.' + this.selectors.input );
 
+		let ids = JSON.parse( input.value ).filter( id => delItemId != id );
+		ids = ids.length ? JSON.stringify( ids ) : '';
+
+		input.setAttribute( 'value', ids );
 		itemWrap.parentNode.removeChild( itemWrap );
-		input.setAttribute( 'value', JSON.stringify( ids ) );
 
 		if ( ! ids.length ) {
 			this.btnHandler( instance, 'delAll' );
