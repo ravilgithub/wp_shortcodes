@@ -2,13 +2,13 @@
  * Функционал обеспечивающий работу шаблона "Аккордеон".
  *
  * @property {String} ctx - селектор шаблона "Аккордеон".
- * 	Default: '.accordeon-container'.
+ * 	Default: '.accordion-container'.
  *
  * @since 0.0.1
  * @autor Ravil
  */
-const accordeon = {
-	ctx: '.accordeon-container',
+const accordion = {
+	ctx: '.accordion-container',
 
 
 	/**
@@ -45,7 +45,7 @@ const accordeon = {
 	 */
 	setHeight( els, height = 'auto' ) {
 		els.forEach(
-			el => el.querySelector( '.accordeon-content' ).style.height = height
+			el => el.querySelector( '.accordion-item-content' ).style.height = height
 		);
 	},
 
@@ -70,10 +70,10 @@ const accordeon = {
 	 * @since 0.0.1
 	 */
 	clickHandler( evt ) {
-		if ( ! evt.target.closest( '.accordeon-item' ) )
+		if ( ! evt.target.closest( '.accordion-item' ) )
 			return;
 
-		const item = evt.target.closest( '.accordeon-item' ),
+		const item = evt.target.closest( '.accordion-item' ),
 		      siblings = this.getSiblings( item );
 
 		this.addClass( item );
@@ -166,4 +166,4 @@ const accordeon = {
 	},
 };
 
-export { accordeon };
+export { accordion };
