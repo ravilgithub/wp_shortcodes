@@ -97,7 +97,27 @@ use Briz_Shortcodes\common\Helper;
 class Briz_Tax_Shortcode extends Shortcodes {
 	public $name          = 'briz_tax';
 	private $tax_tmpl_ns  = 'Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\\';
-	public $assets        = [];
+	public $assets        = [
+		'css' => [
+			'briz_tax' => [
+				'deps' => [
+					'briz-tax-extra-css'
+				],
+				'ver' => '1.0.0',
+				'in_footer' => false
+			]
+		],
+		'js' => [
+			'briz_tax' => [
+				'deps' => [
+					'jquery',
+					'briz-parallax-js'
+				],
+				'ver' => '1.0.0',
+				'in_footer' => true
+			]
+		]
+	];
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
@@ -128,9 +148,53 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	 */
 	public function __construct( $obj = '' ) {
 		parent::__construct( $obj );
-		add_action( 'wp_enqueue_scripts', [ $this, 'register_assets' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'register_tmpls_assets' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'add_ajax' ] );
+		$this->redefine_script_tag();
 		$this->set_ajax_handler();
+	}
+
+
+	/**
+	 * Adding a filter to override the attributes of the 'script' tag.
+	 *
+	 * Добавление фильтра для переопределения атрибутов тега 'script'.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function redefine_script_tag() {
+		add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
+	}
+
+
+	/**
+	 * We indicate that the script is a module and, accordingly
+	 * will be able to import
+	 * functionality from other modules.
+	 *
+	 * Указываем, что скрипт - это модуль и соответственно
+	 * будет иметь возможность импортировать
+	 * функционал из других модулей.
+	 *
+	 * @param String $tag    - HTML код тега <script>.
+	 * @param String $handle - Название скрипта (рабочее название),
+	 *                         указываемое первым параметром в
+	 *                         функции wp_enqueue_script().
+	 * @param String $src    - Ссылка на скрипт.
+	 *
+	 * @return String $tag   - HTML код тега <script>.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 * */
+	public function set_module_attr( $tag, $handle, $src ) {
+		$module_handle = $this->name . '-js';
+		if ( $module_handle === $handle )
+			$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
+		return $tag;
 	}
 
 
@@ -184,7 +248,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	public function register_assets() {
+	public function register_tmpls_assets() {
 		require_once( PLUGIN_PATH . 'common/inc/assets/tmpls_assets.php' );
 		$assets = apply_filters( "briz_tax_tmpls_assets", $assets );
 		Helper::join_assets( $assets );
@@ -264,7 +328,8 @@ class Briz_Tax_Shortcode extends Shortcodes {
 
 		Helper::add_to_session( $id, $atts );
 
-		// $this->add_shortcode_style( $id, $atts );
+		$this->add_shortcode_style( $id, $atts );
+		$this->add_shortcode_script();
 
 		return $this->display_tax( $content, $atts, $id );
 	}
@@ -516,6 +581,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	 */
 	public function get_posts( $shortcode_id, $shortcode_term_id, $active_term_id = 0 ) {
 		$result = [];
+		$total_posts = 0;
 
 		if ( ! empty( $_SESSION[ $shortcode_id ] ) ) {
 			$atts = json_decode( $_SESSION[ $shortcode_id ], true );
@@ -570,7 +636,10 @@ class Briz_Tax_Shortcode extends Shortcodes {
 				'query' => $query
 			];
 			$result[ 'data' ][] = $data;
+			$total_posts += $child->count;
 		}
+
+		$result[ 'total_posts' ] = $total_posts;
 
 		// Helper::debug( $result );
 
