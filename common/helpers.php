@@ -270,7 +270,7 @@ class Helper {
 
 				if ( 'hidden' != $bg_type ) {
 					if (
-						$is_term &&
+						// $is_term && // не нужен.
 						$img_key &&
 						array_key_exists( $img_key, $opts ) &&
 						! empty( $opts[ $img_key ] )
@@ -291,7 +291,7 @@ class Helper {
 
 					if ( $img_url ) {
 						if ( 'fixed' == $bg_type || 'default' == $bg_type ) {
-							$bg = 'background-image: url(' . $img_url . ')';
+							$bg = 'background-image: url(' . $img_url . ');';
 							if ( 'fixed' == $bg_type ) {
 								$attachment = 'bg-fixed';
 							}
