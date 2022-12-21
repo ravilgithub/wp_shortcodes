@@ -63,14 +63,14 @@ abstract class Shortcodes {
 
 		$css = [
 			$this->name => [
-				'id'  => "{$this->name}-shortcode-css",
+				'id'  => "{$this->name}-css",
 				'src' => PLUGIN_URL . self::CSS_PATH . $this->get_full_name() . '.min.css'
 			]
 		];
 
 		$js = [
 			$this->name => [
-				'id'  => "{$this->name}-shortcode-js",
+				'id'  => "{$this->name}-js",
 				'src' => PLUGIN_URL . self::JS_PATH . $this->get_full_name() . '.js'
 			]
 		];
@@ -103,7 +103,7 @@ abstract class Shortcodes {
 	 * @author Ravil
 	 */
 	public function add_shortcode_script() {
-		wp_enqueue_script( "{$this->name}-shortcode-js" );
+		wp_enqueue_script( "{$this->name}-js" );
 	}
 
 
@@ -169,7 +169,7 @@ abstract class Shortcodes {
 			}
 
 			/*echo '<pre>';
-			echo "{$this->name}-shortcode-css inline styles\n";
+			echo "{$this->name}-css inline styles\n";
 			print_r( $inline_styles );
 			echo '</pre>';*/
 
@@ -196,13 +196,13 @@ abstract class Shortcodes {
 	 * @author Ravil
 	 */
 	public function add_shortcode_style( $id, $atts ) {
-		wp_enqueue_style( "{$this->name}-shortcode-css" );
+		wp_enqueue_style( "{$this->name}-css" );
 		$inline_styles = apply_filters( $this->get_full_name() . '_inline_styles', $this->inline_styles, $id, $atts );
 
 		$custom_css = $this->get_inline_styles( $id, $inline_styles );
 
 		if ( ! empty( $custom_css ) ) {
-			wp_add_inline_style( "{$this->name}-shortcode-css", $custom_css );
+			wp_add_inline_style( "{$this->name}-css", $custom_css );
 		}
 
 		$this->inline_styles = array();
