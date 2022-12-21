@@ -49,10 +49,13 @@ const slider = {
 	 * @since 0.0.1
 	 */
 	prepareAtts( defs, atts, result = {} ) {
-		if ( 'type' in defs ) {
-			return ( atts ? this.toType( defs.type, atts ) : defs.value );
+		if ( 'dataType' in defs ) {
+			// console.log( atts );
+			return atts ? this.toType( defs.dataType, atts ) : defs.value;
 		} else {
 			for ( const i in defs ) {
+				// console.log( i );
+				// console.log( i, atts[ i ] );
 				result[ i ] = this.prepareAtts( defs[ i ], atts[ i ] );
 			}
 			return result;
@@ -63,13 +66,17 @@ const slider = {
 	/**
 	 * Получаем параметры слайдера.
 	 *
+	 * @param {DOM Object} ctx - текущий шаблон.
+	 *
 	 * @return {Object} - значения параметров для слайдера.
 	 *
 	 * @since 0.0.1
 	 */
-	getAtts() {
-		let atts = document.querySelector( `${this.ctx} .swiper-container` ).dataset.sliderCustomAtts;
-		atts = ( atts && '[]' !== atts && 'undefined' !== typeof atts ) ? JSON.parse( atts ) : this.tmplSliderAtts;
+	getAtts( ctx ) {
+		let atts = ctx.querySelector( '.swiper' ).dataset.sliderCustomAtts;
+		// atts = ( atts && '[]' !== atts && 'undefined' !== typeof atts ) ? JSON.parse( atts ) : this.tmplSliderAtts;
+		atts = JSON.parse( atts );
+		jQuery.extend( true, atts, this.tmplSliderAtts );
 		return this.prepareAtts( slider_defaults, atts );
 	},
 
@@ -82,7 +89,22 @@ const slider = {
 	 * @since 0.0.1
 	 */
 	setSlider() {
-		new Swiper( `${this.ctx} .swiper-container`, Object.assign( {}, this.getAtts() ) );
+		const ctxs = document.querySelectorAll( this.ctx );
+		for ( const ctx of ctxs ) {
+			// console.log( ctx );
+			const container = ctx.querySelector( '.swiper' );
+
+			// let atts =  Object.assign( {}, this.getAtts() );
+			let atts =  this.getAtts( ctx );
+
+			atts.navigation.prevEl = ctx.querySelector( atts.navigation.prevEl );
+			atts.navigation.nextEl = ctx.querySelector( atts.navigation.nextEl );
+			atts.pagination.el = ctx.querySelector( atts.pagination.el );
+
+			// console.log( this.ctx, atts );
+
+			new Swiper( container, atts );
+		}
 	},
 
 
