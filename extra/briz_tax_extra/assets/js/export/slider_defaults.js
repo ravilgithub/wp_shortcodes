@@ -2,157 +2,276 @@
  * Значения по умолчанию для слайдера.
  */
 const slider_defaults = {
-	nextButton: {
-		type: 'string',
-		value: '.swiper-button-next',
-	},
+	navigation: {
+		nextEl: {
+			dataType: 'string',
+			value: '.swiper-button-next'
+		},
 
-	prevButton: {
-		type: 'string',
-		value: '.swiper-button-prev',
+		prevEl: {
+			dataType: 'string',
+			value: '.swiper-button-prev'
+		}
 	},
 
 	pagination: {
-		type: 'string',
-		value: '.swiper-pagination',
-	},
+		el: {
+			dataType: 'string',
+			value: '.swiper-pagination'
+		},
 
-	paginationClickable: {
-		type: 'boolean',
-		value: true,
+		type: {
+			dataType: 'string',
+			value: 'bullets'
+		},
+
+		clickable: {
+			dataType: 'boolean',
+			value: true
+		}
 	},
 
 	slidesPerView: {
-		type: 'number',
-		value: 1,
+		dataType: 'number',
+		value: 1
 	},
 
 	spaceBetween: {
-		type: 'number',
-		value: 0,
+		dataType: 'number',
+		value: 0
 	},
 
 	speed: {
-		type: 'number',
-		value: 2050,
+		dataType: 'number',
+		value: 200
 	},
 
 	autoplay: {
-		type: 'number',
-		value: 0,
+		dataType: 'boolean',
+		value: false
 	},
 
+	/*autoplay: {
+		delay: {
+			dataType: 'number',
+			value: 2000
+		}
+	},*/
+
 	loop: {
-		type: 'boolean',
-		value: false,
+		dataType: 'boolean',
+		value: false
+	},
+
+	/*preloadImages: {
+		dataType: 'boolean',
+		value: true
+	},*/
+
+	lazy: {
+		enabled: {
+			dataType: 'boolean',
+			value: false
+		},
+
+		loadOnTransitionStart: {
+			dataType: 'boolean',
+			value: false
+		},
+
+		preloaderClass: {
+			dataType: 'string',
+			value: 'swiper-lazy-preloader'
+		},
+
+		loadPrevNext: {
+			dataType: 'boolean',
+			value: false
+		},
+
+		lazyLoadingInPrevNextAmount: {
+			dataType: 'number',
+			value: 1
+		}
 	},
 
 	breakpoints: {
 		250: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
 		320: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
 		480: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
-		567: {
+		568: { // ?? 567
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
 		640: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
 		768: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
 			},
 		},
 
-		991: {
+		992: {
 			slidesPerView: {
-				type: 'number',
+				dataType: 'number',
 				value: 1,
 			},
 
 			spaceBetween: {
-				type: 'number',
-				value: 0,
+				dataType: 'number',
+				value: 30,
+			},
+		},
+
+		1200: {
+			slidesPerView: {
+				dataType: 'number',
+				value: 1,
+			},
+
+			spaceBetween: {
+				dataType: 'number',
+				value: 30,
 			},
 		}
 	},
 
-	// Lazy loading
-	preloadImages: {
-		type: 'boolean',
-		value: false,
-	},
+	on: {
+		dataType: 'events',
+		/*init: {
+			dataType: 'function',
+			value: null
+		},
+		beforeTransitionStart: {
+			dataType: 'function',
+			value: null
+		},*/
+	}
 
-	lazyLoading: {
-		type: 'boolean',
-		value: true,
-	},
+// ------------------------------------------------------
 
-	lazyLoadingOnTransitionStart: {
-		type: 'boolean',
-		value: true,
-	},
+	// nextButton: { // +
+	// 	dataType: 'string',
+	// 	value: '.swiper-button-next'
+	// },
 
-	lazyLoadingInPrevNextAmount: {
-		type: 'number',
-		value: 1,
-	},
+	// prevButton: { // +
+	// 	dataType: 'string',
+	// 	value: '.swiper-button-prev'
+	// },
+
+	// pagination: { // +
+	// 	dataType: 'string',
+	// 	value: '.swiper-pagination'
+	// },
+
+	// paginationClickable: { // +
+	// 	dataType: 'boolean',
+	// 	value: true
+	// },
+
+	// slidesPerView: { // +
+	// 	dataType: 'number',
+	// 	value: 1
+	// },
+
+	// spaceBetween: { // +
+	// 	dataType: 'number',
+	// 	value: 0
+	// },
+
+	// speed: { // +
+	// 	dataType: 'number',
+	// 	value: 2050
+	// },
+
+	// autoplay: { // +
+	// 	dataType: 'number',
+	// 	value: 0
+	// },
+
+	// loop: { // +
+	// 	dataType: 'boolean',
+	// 	value: false
+	// },
+
+	// // Lazy loading
+	// preloadImages: { // +
+	// 	dataType: 'boolean',
+	// 	value: false
+	// },
+
+	// lazyLoading: { // +
+	// 	dataType: 'boolean',
+	// 	value: true
+	// },
+
+	// lazyLoadingOnTransitionStart: { // +
+	// 	dataType: 'boolean',
+	// 	value: true
+	// },
+
+	// lazyLoadingInPrevNextAmount: { // +
+	// 	dataType: 'number',
+	// 	value: 1
+	// }
 };
 
 export { slider_defaults };
