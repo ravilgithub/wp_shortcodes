@@ -69,6 +69,24 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css' ],
 			'ver'  => '1.0.0'
 		],
+		'pricing' => [
+			'id'   => 'briz-pricing-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_pricing.min.css',
+			'deps' => [ 'briz-bootstrap-css' ],
+			'ver'  => '1.0.0'
+		],
+		'video' => [
+			'id'   => 'briz-video-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_video.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-magnific-popup-css', 'briz-fontello-css' ],
+			'ver'  => '1.0.0'
+		],
+		'subscribe' => [
+			'id'   => 'briz-subscribe-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_subscribe.min.css',
+			'deps' => [ 'briz-bootstrap-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -83,14 +101,21 @@ $assets = [
 		'features' => [
 			'id'        => 'briz-features-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_features.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-imagesloaded-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-imagesloaded-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'services' => [
+			'id'        => 'briz-services-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_services.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
 		'stickers' => [
 			'id'        => 'briz-stickers-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_stickers.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-masonry-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
@@ -111,28 +136,49 @@ $assets = [
 		'blog' => [
 			'id'        => 'briz-blog-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_blog.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
 		'team' => [
 			'id'        => 'briz-team-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_team.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
 		'review' => [
 			'id'        => 'briz-review-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_review.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
 		'brands' => [
 			'id'        => 'briz-brands-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_brands.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'pricing' => [
+			'id'        => 'briz-pricing-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_pricing.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'video' => [
+			'id'        => 'briz-video-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_video.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-magnific-popup-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'subscribe' => [
+			'id'        => 'briz-subscribe-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_subscribe.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
