@@ -29,11 +29,32 @@ $assets = [
 			'ver'  => '4.7.0'
 		],
 
-		'swiper' => [
+		/*'swiper' => [
 			'id'   => 'briz-swiper-css',
 			'src'  => PLUGIN_URL . 'assets/vendors/swiper/swiper.min.css',
 			'deps' => [],
 			'ver'  => '3.3.1'
+		],*/
+
+		'swiper' => [
+			'id'   => 'briz-swiper-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/swiper@8.2.6/swiper-bundle.min.css',
+			'deps' => [],
+			'ver'  => '8.2.6'
+		],
+
+		'fontello' => [
+			'id'   => 'briz-fontello-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/fontello/css/fontello.min.css',
+			'deps' => [],
+			'ver'  => '1.0.0'
+		],
+
+		'extra' => [
+			'id'   => 'briz-tax-extra-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/briz-tax-extra/css/extra.min.css',
+			'deps' => [],
+			'ver'  => '1.0.0'
 		],
 	],
 
@@ -111,11 +132,19 @@ $assets = [
 			'in_footer' => true
 		],
 
-		'swiper' => [
+		/*'swiper' => [
 			'id'   => 'briz-swiper-js',
 			'src'  => PLUGIN_URL . 'assets/vendors/swiper/swiper.jquery.min.js',
 			'deps' => [ 'jquery' ],
 			'ver'  => '3.3.1',
+			'in_footer' => true
+		],*/
+
+		'swiper' => [
+			'id'   => 'briz-swiper-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/swiper@8.2.6/swiper-bundle.min.js',
+			'deps' => [ 'jquery' ],
+			'ver'  => '8.2.6',
 			'in_footer' => true
 		],
 	]
