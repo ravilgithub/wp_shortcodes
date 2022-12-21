@@ -36,7 +36,7 @@ use Briz_Shortcodes\common\Helper;
  *
  *  @type Integer $self          - показвать ли записи родительского
  *                                  термина переданного в параметр $term_id.
- *                                  Default: 0.
+ *                                  Default: 1.
  *                                  Accepts: 0, 1.
  *
  *  @type Integer $children      - показывать ли записи дочерних терминов
