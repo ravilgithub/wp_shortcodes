@@ -39,3 +39,6 @@ msgstr "Имя"
 
 msgid "Value"
 msgstr "Значение"
+
+msgid "Best price"
+msgstr "Лучшая цена"
