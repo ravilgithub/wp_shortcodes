@@ -40,6 +40,10 @@ require 'exports/category/brands_meta_fields.php';
 require 'exports/category/blog_meta_fields.php';
 require 'exports/category/features_meta_fields.php';
 require 'exports/category/portfolio_meta_fields.php';
+require 'exports/category/pricing_meta_fields.php';
+require 'exports/category/services_meta_fields.php';
+require 'exports/category/video_meta_fields.php';
+require 'exports/category/subscribe_meta_fields.php';
 
 /* Product category */
 require 'exports/product_cat/__to_all__products_meta_fields.php';
@@ -57,6 +61,10 @@ $opts = [
     'blog'       => $blog_meta_fields,
     'features'   => $features_meta_fields,
     'portfolio'  => $portfolio_meta_fields,
+    'pricing'    => $pricing_meta_fields,
+    'services'   => $services_meta_fields,
+    'video'      => $video_meta_fields,
+    'subscribe'  => $subscribe_meta_fields,
 	],
 
 	'product_cat' => [
