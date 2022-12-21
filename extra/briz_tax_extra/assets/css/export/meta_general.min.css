@@ -1,0 +1,54 @@
+/**
+ * General
+ */
+input[type=url]:-moz-ui-invalid {
+	border-color: #d63638 !important;
+	box-shadow: 0 0 2px rgba(214,54,56,0.8);
+}
+
+.briz-meta-title {
+	display: block;
+}
+
+.briz-unsaved {
+	color: #f00;
+}
+
+.briz-meta-radio-wrap label,
+.briz-meta-checkbox-wrap label {
+	display: block;
+	padding: 2px 0;
+}
+
+.briz-hidden {
+	display: none;
+}
+
+/**
+ * Meta field items
+ */
+.briz-meta-field input {
+	margin-left: 0;
+}
+
+.briz-meta-field select,
+.briz-meta-field input[type=range],
+.briz-meta-field input[type=color] {
+	display: block;
+}
+
+.briz-meta-field .briz-reset-default {
+	margin-top: 5px;
+}
+
+
+/**
+ * Reset button
+ */
+.briz-meta-reset-all-btn-cell {
+	text-align: center !important;
+}
+
+.briz-meta-reset-all-btn-cell .briz-meta-reset-all {
+	min-width: 30%;
+}
