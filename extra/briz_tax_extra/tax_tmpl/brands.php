@@ -27,6 +27,8 @@
 		public $curr_term_id;
 		public $all_posts_count = 0;
 
+		private $swiper_autoplay = '';
+
 
 		/**
 		 * Constructor
@@ -131,10 +133,19 @@
 
 			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 			$slider_atts = [];
-			$header_first_word = '';
-			$header_last_word = '';
+			$section_class = '';
+			$header = false;
+			$header_first = '';
+			$header_last = '';
+			$header_spacer = false;
+			$header_description = false;
+			$header_description_text = '';
+			$header_bg_color = '';
+			$content_bg_color = '';
+			$content_width_class = 'container';
 
 			if ( is_array( $opts ) ) {
 				if (
@@ -142,53 +153,140 @@
 					! empty( $opts[ 'slider_params' ] )
 				) {
 					$slider_atts = $opts[ 'slider_params' ];
+
+					if ( array_key_exists( 'autoplay_delay', $slider_atts ) ) {
+						if ( $delay = absint( $slider_atts[ 'autoplay_delay' ] ) ) {
+							$this->swiper_autoplay = 'data-swiper-autoplay="' . $delay . '"';
+							unset( $slider_atts[ 'autoplay_delay' ] );
+						}
+					}
+
+					$slider_atts = esc_attr( json_encode( $slider_atts ) );
+					$limit = ( int ) $this->atts[ 'limit' ];
+					$total = ( int ) $posts[ 'total_posts' ];
+					$view  = ( int ) $opts[ 'slider_params' ][ 'slidesPerView' ];
+
+					if ( ( -1 == $limit && $view < $total ) || $view < $limit ) {
+						$section_class .= ' slider-with-navigation';
+					}
+
+					// Helper::debug( $limit );
+					// Helper::debug( $total );
+					// Helper::debug( $view );
 				}
 
-				if ( array_key_exists( 'section_header_first', $opts ) ) {
-					$header_first_word = $opts[ 'section_header_first' ];
+				if ( array_key_exists( 'header', $opts ) ) {
+					if ( $opts[ 'header' ] ) {
+						$header = true;
+						$section_class = 'section-with-header';
+					}
 				}
 
-				if ( array_key_exists( 'section_header_last', $opts ) ) {
-					$header_last_word = $opts[ 'section_header_last' ];
+				if ( array_key_exists( 'header_first', $opts ) ) {
+					$header_first = __( $opts[ 'header_first' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_last', $opts ) ) {
+					$header_last = __( $opts[ 'header_last' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_spacer', $opts ) ) {
+					$header_spacer = $opts[ 'header_spacer' ] ? true : $header_spacer;
+				}
+
+				if ( array_key_exists( 'header_description', $opts ) ) {
+					$header_description = $opts[ 'header_description' ] ? true : $header_description;
+				}
+
+				if ( array_key_exists( 'header_description_text', $opts ) ) {
+					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
+				}
+
+				if (
+					! empty( $opts[ 'header_bg_color_enable' ] ) &&
+					array_key_exists( 'header_bg_color_enable', $opts ) &&
+					array_key_exists( 'header_bg_color', $opts )
+				) {
+					$header_bg_color = 'background-color: ' . esc_attr( $opts[ 'header_bg_color' ] ) . ';';
+				}
+
+				if (
+					! $parallax_img_src &&
+					array_key_exists( 'content_bg_color_enable', $opts ) &&
+					! empty( $opts[ 'content_bg_color_enable' ] ) &&
+					array_key_exists( 'content_bg_color', $opts )
+				) {
+					$content_bg_color = ' background-color: ' . esc_attr( $opts[ 'content_bg_color' ] ) . ';';
+				}
+
+				if ( array_key_exists( 'content_wide', $opts ) ) {
+					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
 				}
 			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section brands-page <?php echo $class ?>"
+				class="showcase section brands-page
+					<?php echo esc_attr( $this->tmpl_name ); ?>
+					<?php echo esc_attr( $class ); ?>
+					<?php echo $section_class; ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
-
-				<div class="section-inner-wrap">
+<?php
+			if ( $header ) :
+?>
+				<div
+					class="section-caption-wrap"
+					style="<?php echo $header_bg_color; ?>"
+				>
 					<div class="container">
-<?php
-						if ( $header_first_word ||  $header_last_word ) :
-?>
-							<div class="row">
-								<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-									<div class="section-caption">
-										<h2>
-											<?php _e( $header_first_word, $this->lang_domain ); ?>
-											<span>
-												<?php _e( $header_last_word, $this->lang_domain ); ?>
-											</span>
-										</h2>
-										<div class="spacer">
-											<div class="diamond"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-<?php
-						endif;
-?>
 						<div class="row">
-							<div class="col-sm-12">
-								<div
-									class="swiper-container"
-									data-slider-custom-atts="<?php echo esc_attr( json_encode( $slider_atts ) ); ?>"
-								>
-									<div class="swiper-wrapper">
+							<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<?php
+							if ( $header_first ||  $header_last ) :
+?>
+								<h2>
+									<?php echo $header_first; ?>
+									<span>
+										<?php echo $header_last ?>
+									</span>
+								</h2>
+<?php
+							endif;
+							if ( $header_spacer ) :
+?>
+								<div class="briz-caption-spacer">
+									<div class="diamond"></div>
+								</div>
+<?php
+							endif;
+							if ( $header_description && $header_description_text ) :
+?>
+								<p><?php echo $header_description_text; ?></p>
+<?php
+							endif;
+?>
+							</div> <!-- .col- -->
+						</div> <!-- .row -->
+					</div> <!-- .container [ -fluid ] -->
+				</div> <!-- .section-caption-wrap -->
+<?php
+			endif;
+?>
+			<div
+				class="section-content-wrap <?php echo esc_attr( $attachment ); ?>"
+				style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
+				data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+				data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
+			>
+				<div class="<?php echo $content_width_class; ?>">
+					<div class="row">
+						<div class="col-sm-12">
+							<div
+								class="swiper"
+								data-slider-custom-atts="<?php echo $slider_atts; ?>"
+							>
+								<div class="swiper-wrapper">
 <?php
 		}
 
@@ -213,14 +311,14 @@
 ?>
 									</div> <!-- .swiper-wrapper -->
 
-									<div class="swiper-pagination"></div>
-									<div class="swiper-button-prev"></div>
-									<div class="swiper-button-next"></div>
+									<div class="swiper-pagination-custom"></div>
+									<div class="swiper-button-prev-custom"></div>
+									<div class="swiper-button-next-custom"></div>
 								</div> <!-- .swiper-container -->
 							</div> <!-- .col-sm-12 -->
 						</div> <!-- .row -->
 					</div> <!-- .container -->
-				</div> <!-- .section-inner-wrap -->
+				</div> <!-- .section-content-wrap -->
 			</section> <!-- .briz-brands-tmpl -->
 <?php
 		}
@@ -242,7 +340,7 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
-			$placeholder = esc_url( PLUGIN_URL . '/img/placeholder/review/placeholder.png' );
+			// $placeholder = esc_url( PLUGIN_URL . '/img/placeholder/placeholder.png' );
 			foreach ( $posts[ 'data' ] as $data ) :
 				$query = $data[ 'query' ];
 
@@ -264,21 +362,27 @@
 						// $img_alt = esc_attr( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ) );
 
 						$details = wp_prepare_attachment_for_js( $media_id );
-						$src = $details[ 'url' ];
+						$src = esc_url( $details[ 'url' ] );
 						$type = $details[ 'type' ];
-
+						$alt = esc_attr__( $details[ 'alt' ] );
 ?>
-						<div class="swiper-slide">
-							<div class="swiper-lazy-preloader"></div>
+						<div
+							class="swiper-slide"
+							<?php echo $this->swiper_autoplay; ?>
+						>
+							<div class="swiper-lazy-preloader-custom"></div>
 <?php
 							// Image
 							if ( 'image' == $type ) :
+								$aspect_ratio = $details[ 'width' ] / $details[ 'height' ];
 ?>
+									<!-- src="<?php //echo $placeholder; ?>" -->
 								<img
 									class="swiper-lazy"
-									src="<?php echo esc_attr( $placeholder ); ?>"
-									data-src="<?php echo esc_attr( $src ); ?>"
-									alt="<?php echo esc_attr( $details[ 'alt' ] ); ?>"
+									src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+									data-src="<?php echo $src; ?>"
+									alt="<?php echo $alt; ?>"
+									style="aspect-ratio: <?php echo $aspect_ratio; ?>;"
 								/>
 <?php
 							endif;
@@ -288,8 +392,8 @@
 ?>
 								<audio
 									class="swiper-lazy"
-									src="<?php echo esc_attr( $placeholder ); ?>"
-									data-src="<?php echo esc_attr( $src ); ?>"
+									src="<?php echo $placeholder; ?>"
+									data-src="<?php echo $src; ?>"
 									controls>
 								</audio>
 <?php
@@ -300,8 +404,8 @@
 ?>
 								<video
 									class="swiper-lazy"
-									src="<?php echo esc_attr( $placeholder ); ?>"
-									data-src="<?php echo esc_attr( $src ); ?>"
+									src="<?php echo $placeholder; ?>"
+									data-src="<?php echo $src; ?>"
 									controls>
 								</video>
 <?php
