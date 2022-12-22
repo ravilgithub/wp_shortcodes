@@ -166,7 +166,7 @@
 			},
 		};
 
-		$stickersMassonry.init();
+		// $stickersMassonry.init();
 	} );
 
 } )( jQuery );
