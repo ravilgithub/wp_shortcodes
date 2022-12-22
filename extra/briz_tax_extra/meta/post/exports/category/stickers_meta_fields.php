@@ -9,8 +9,9 @@ $stickers_meta_fields = [
 			'title' => 'Background only',
 			'desc'  => 'Показывать только миниатюру записи',
 			'value' => [],
+			'empty' => true,
 			'options' => [
-				'bg_only' => 'Background only'
+				'on' => 'On'
 			]
 		],
 	]
