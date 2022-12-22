@@ -50,6 +50,7 @@
 			$this->curr_term_id = $curr_term_id;
 		}
 
+
 		/**
 		 * Adding previously registered styles and template scripts.
 		 *
@@ -87,25 +88,131 @@
 			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
+
+			$section_class = '';
+			$header = false;
+			$header_first = '';
+			$header_last = '';
+			$header_spacer = false;
+			$header_description = false;
+			$header_description_text = '';
+			$header_bg_color = '';
+			$content_bg_color = '';
+			$content_width_class = 'container';
+
+			if ( is_array( $opts ) ) {
+				if ( array_key_exists( 'header', $opts ) ) {
+					if ( $opts[ 'header' ] ) {
+						$header = true;
+						$section_class = 'section-with-header';
+					}
+				}
+
+				if ( array_key_exists( 'header_first', $opts ) ) {
+					$header_first = __( $opts[ 'header_first' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_last', $opts ) ) {
+					$header_last = __( $opts[ 'header_last' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_spacer', $opts ) ) {
+					$header_spacer = $opts[ 'header_spacer' ] ? true : $header_spacer;
+				}
+
+				if ( array_key_exists( 'header_description', $opts ) ) {
+					$header_description = $opts[ 'header_description' ] ? true : $header_description;
+				}
+
+				if ( array_key_exists( 'header_description_text', $opts ) ) {
+					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
+				}
+
+				if (
+					! empty( $opts[ 'header_bg_color_enable' ] ) &&
+					array_key_exists( 'header_bg_color_enable', $opts ) &&
+					array_key_exists( 'header_bg_color', $opts )
+				) {
+					$header_bg_color = 'background-color: ' . esc_attr( $opts[ 'header_bg_color' ] ) . ';';
+				}
+
+				if (
+					! $parallax_img_src &&
+					array_key_exists( 'content_bg_color_enable', $opts ) &&
+					! empty( $opts[ 'content_bg_color_enable' ] ) &&
+					array_key_exists( 'content_bg_color', $opts )
+				) {
+					$content_bg_color = ' background-color: ' . esc_attr( $opts[ 'content_bg_color' ] ) . ';';
+				}
+
+				if ( array_key_exists( 'content_wide', $opts ) ) {
+					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
+				}
+			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section stickers-page"
+				class="showcase section stickers-page
+					<?php echo esc_attr( $this->tmpl_name ); ?>
+					<?php echo esc_attr( $class ); ?>
+					<?php echo $section_class; ?>
+				"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
-				<div class="stickers-wrap">
-					<div class="stickers-inner-wrap">
-						<div
-							class="stickers-content clearfix <?php echo esc_attr( $attachment ); ?>"
-							style="<?php echo esc_attr( $bg ); ?>"
-							data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
-							data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
-						>
-							<div class="container">
-								<div class="row">
-									<div class="stickers-content-grid col-sm-12">
+<?php
+				if ( $header ) :
+?>
+					<div
+						class="section-caption-wrap"
+						style="<?php echo $header_bg_color; ?>"
+					>
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<?php
+								if ( $header_first ||  $header_last ) :
+?>
+									<h2>
+										<?php echo $header_first; ?>
+										<span>
+											<?php echo $header_last; ?>
+										</span>
+									</h2>
+<?php
+								endif;
+								if ( $header_spacer ) :
+?>
+									<div class="briz-caption-spacer">
+										<div class="diamond"></div>
+									</div>
+<?php
+								endif;
+								if ( $header_description && $header_description_text ) :
+?>
+									<p><?php echo $header_description_text; ?></p>
+<?php
+								endif;
+?>
+								</div> <!-- .col- -->
+							</div> <!-- .row -->
+						</div> <!-- .container -->
+					</div> <!-- .section-caption-wrap -->
+<?php
+				endif;
+?>
+				<div
+					class="section-content-wrap <?php echo esc_attr( $attachment ); ?>"
+					style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
+					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
+				>
+					<div class="<?php echo $content_width_class; ?>">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="stickers-content-grid">
 <?php
 		}
+
 
 		/**
 		 * After content part of template.
@@ -125,15 +232,15 @@
 		public function get_after( $posts ) {
 			extract( $this->atts );
 ?>
-									</div> <!-- .stickers-content-grid -->
-								</div> <!-- .row -->
-							</div> <!-- .container -->
-						</div> <!-- .stickers-content -->
-					</div> <!-- .stickers-inner-wrap -->
-				</div> <!-- .stickers-wrap -->
+								</div> <!-- .stickers-content-grid -->
+							</div> <!-- .col-sm-12 -->
+						</div> <!-- .row -->
+					</div> <!-- .container -->
+				</div> <!-- .stickers-content -->
 			</section> <!-- .briz-stickers-tmpl -->
 <?php
 		}
+
 
 		/**
 		 * Content of template.
@@ -158,6 +265,11 @@
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
 
+					$post_title = __( get_the_title(), $this->lang_domain );
+					$post_content = __( get_the_content( '' ), $this->lang_domain );
+					$post_more_link_text = __( 'Readmore...', $this->lang_domain );
+					$post_link = esc_url( get_permalink() );
+
 					$style = '';
 					$bg_only_class = '';
 					if ( has_post_thumbnail( $post_id ) ) {
@@ -175,11 +287,29 @@
 						}
 					}
 ?>
-					<div class="stickers-content-item <?php echo esc_attr( $bg_only_class ); ?>">
-						<div class="stickers-content-item-inner" style="<?php echo esc_attr( $style ); ?>">
-							<?php the_title( sprintf( '<h3><a href="%s">', esc_url( get_permalink() ) ), '</a></h3>'); ?>
-							<?php the_content( __( 'Readmore...', $this->lang_domain ) ); ?>
+					<div
+						class="stickers-content-item <?php echo $bg_only_class; ?>"
+						style="<?php echo $style; ?>"
+					>
+<?php
+					if ( ! $bg_only_class ) :
+?>
+						<div class="stickers-content-item-inner">
+							<h3>
+								<a href="<?php echo $post_link; ?>">
+									<?php echo $post_title; ?>
+								</a>
+							</h3>
+
+							<?php echo $post_content; ?>
+
+							<a href="<?php echo $post_link; ?>" class="more-link">
+								<?php echo $post_more_link_text; ?>
+							</a>
 						</div>
+<?php
+					endif;
+?>
 					</div>
 <?php
 				endwhile;
