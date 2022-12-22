@@ -1,38 +1,129 @@
 .briz-services-tmpl {
 	line-height: 1.6;
-	padding: 100px 0;
 }
 
-.briz-services-tmpl .services-item-wrap .icon-wrap {
+.briz-services-tmpl .section-caption-wrap {
+	padding: 100px 0;
+	text-align: center;
+}
+
+.briz-services-tmpl .section-caption-wrap h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer {
+	display: inline-block;
+	position: relative;
+	margin: 32px auto 0;
+	background-color: transparent;
+}
+
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:before {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: -90px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:after {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: 30px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: relative;
+	background-color: transparent;
+	border-style: solid;
+	border-width: 1px;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
+	content: "";
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	left: 1px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: transparent;
+}
+
+.briz-services-tmpl .section-caption-wrap p {
+	margin-top: 32px;
+	margin-bottom: 0;
+	color: #999;
+}
+
+.briz-services-tmpl .section-content-wrap {
+	padding: 100px 0;
+	background-position: 50% 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.briz-services-tmpl .section-content-wrap.bg-fixed {
+	background-attachment: fixed;
+}
+
+.briz-services-tmpl .section-content-wrap .services-item-wrap .icon-wrap {
 	width: 60px;
 	float: left;
 	padding-top: 20px;
 	text-align: center;
 }
 
-.briz-services-tmpl .services-item-wrap .icon-wrap i {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .icon-wrap i {
 	font-size: 4em;
 	color: #ccc;
 	-webkit-transition: color 0.2s;
 	transition: color 0.2s;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap {
 	margin-left: 80px;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap h4 {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap h4 {
 	line-height: 1.42857143;
 	color: #333;
 	font-size: 1.27em;
 	text-transform: uppercase;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap p {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap p {
 	color: #999;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap a {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap a {
 	position: relative;
 	font-size: 1em;
 	text-transform: uppercase;
@@ -41,7 +132,7 @@
 	transition: color 0.2s;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap a:after {
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap a:after {
 	content: "\f105";
 	display: inline-block;
 	position: absolute;
@@ -51,17 +142,42 @@
 	font-size: 16px !important;
 }
 
-.briz-services-tmpl .services-item-wrap:hover .icon-wrap i {
-	color: #8033c7;
+
+/**
+ * Spacer color
+ */
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-services-tmpl .section-caption-wrap .briz-caption-spacer:after {
+	border-color: #ee4444;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap a {
-	color: #8033c7;
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
+	border-color: #ee4444;
 }
 
-.briz-services-tmpl .services-item-wrap .content-wrap a:hover {
-	color: #66299e;
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
+	border-color: #ee4444;
 }
+
+
+
+/* Color */
+.briz-services-tmpl .section-caption-wrap h2 span {
+	color: #ee4444;
+}
+
+.briz-services-tmpl .section-content-wrap .services-item-wrap:hover .icon-wrap i {
+	color: #ee4444;
+}
+
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap a {
+	color: #ee4444;
+}
+
+.briz-services-tmpl .section-content-wrap .services-item-wrap .content-wrap a:hover {
+	color: #ea1515;
+}
+
+
 
 /* Small Devices, Tablets */
 @media only screen and (max-width: 767px) {
