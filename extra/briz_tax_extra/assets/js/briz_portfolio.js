@@ -375,8 +375,8 @@
 				 */
 				setProps() {
 					this.dom[ 'grid' ] = this.dom.tmpl.find( '.isotope' );
-					this.dom[ 'more' ] = this.dom.tmpl.find( '.show-more' );
-					this.dom[ 'filter' ] = this.dom.tmpl.find( '.filter' );
+					this.dom[ 'more' ] = this.dom.tmpl.find( '.showmore' );
+					this.dom[ 'filter' ] = this.dom.tmpl.find( '.isotop-filter' );
 					// console.log( 'dom', this.dom );
 				},
 
@@ -417,7 +417,6 @@
 					$.extend( true, newIso, this.iso );
 					newIso.start();
 				} );
-
 			},
 		};
 
