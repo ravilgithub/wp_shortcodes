@@ -85,24 +85,6 @@
 
 
 				/**
-				 * Параллакс эффект фона шаблона "facts"
-				 * 
-				 * @return {void}
-				 * 
-				 * @since 0.0.1
-				 */
-				createParallax() {
-					$( '.parallax-window', this.ctx ).parallax( {
-						iosFix: true,
-						androidFix: true,
-						speed: 0.1,
-						//naturalWidth: 1920,
-						//naturalHeight: 1276,
-					} );
-				},
-
-
-				/**
 				 * Добавление jQuery объекты элементов шаблона "facts"
 				 * в свойство "this.dom" для краткости кода.
 				 *
@@ -127,7 +109,6 @@
 				start() {
 					this.setProps();
 					this.createWow();
-					this.createParallax();
 				}
 			},
 
