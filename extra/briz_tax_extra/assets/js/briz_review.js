@@ -3,55 +3,38 @@
  */
 import { slider } from './export/slider.js';
 
+const foo = num => num * 2;
+
 
 /**
  * Значения по умолчанию для слайдера.
  */
 const tmplSliderAtts = {
-	nextButton: '.swiper-button-next',
-	prevButton: '.swiper-button-prev',
-	pagination: '.swiper-pagination',
-	paginationClickable: true,
-	slidesPerView: 2,
-	spaceBetween: 30,
-	speed: 200,
-	breakpoints: {
-		 250: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    320: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    480: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    567: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    640: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    768: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
-    991: {
-      slidesPerView: 1,
-      spaceBetween: 30,
-    },
+	navigation: {
+		nextEl: '.swiper-button-next-custom',
+		prevEl: '.swiper-button-prev-custom'
 	},
 
+	pagination: {
+		// el: '.swiper-pagination-custom'
+	},
 
-  // Lazy loading
-  preloadImages: false,
-  lazyLoading: true,
-  lazyLoadingOnTransitionStart: true,
-  lazyLoadingInPrevNextAmount: 1
+  lazy: {
+    enabled: true,
+    loadOnTransitionStart: true,
+    preloaderClass: 'swiper-lazy-preloader-custom'
+  },
+
+	on: {
+		beforeTransitionStart() {
+			// console.log( foo( 2 ) );
+		},
+
+		init( swiper ) {
+			// console.log( 'i\'m inited' );
+			// console.log( swiper );
+		}
+	}
 };
 
 slider.init( '.briz-review-tmpl', tmplSliderAtts );
