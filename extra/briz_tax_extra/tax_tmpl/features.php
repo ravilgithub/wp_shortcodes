@@ -48,7 +48,9 @@
 			$this->id = $id;
 			$this->lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
+			$this->redefine_script_tag();
 		}
+
 
 		/**
 		 * Adding previously registered styles and template scripts.
@@ -63,6 +65,49 @@
 		public function add_tmpl_assets() {
 			wp_enqueue_style( $this->tmpl_name . '-css' );
 			wp_enqueue_script( $this->tmpl_name . '-js' );
+		}
+
+
+		/**
+		 * Adding a filter to override the attributes of the 'script' tag.
+		 *
+		 * Добавление фильтра для переопределения атрибутов тега 'script'.
+		 *
+		 * @return void
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 * */
+		public function redefine_script_tag() {
+			add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
+		}
+
+
+		/**
+		 * We indicate that the script is a module and, accordingly
+		 * will be able to import
+		 * functionality from other modules.
+		 *
+		 * Указываем, что скрипт - это модуль и соответственно
+		 * будет иметь возможность импортировать
+		 * функционал из других модулей.
+		 *
+		 * @param String $tag    - HTML код тега <script>.
+		 * @param String $handle - Название скрипта (рабочее название),
+		 *                         указываемое первым параметром в
+		 *                         функции wp_enqueue_script().
+		 * @param String $src    - Ссылка на скрипт.
+		 *
+		 * @return String $tag   - HTML код тега <script>.
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 * */
+		public function set_module_attr( $tag, $handle, $src ) {
+			$module_handle = $this->tmpl_name . '-js';
+			if ( $module_handle === $handle )
+				$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
+			return $tag;
 		}
 
 
@@ -95,6 +140,7 @@
 			return $anchor;
 		}
 
+
 		/**
 		 * Before content part of template.
 		 *
@@ -115,53 +161,141 @@
 
 			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
-			$header_first_word = '';
-			$header_last_word = '';
+			$section_class = '';
+			$header = false;
+			$header_first = '';
+			$header_last = '';
+			$header_spacer = false;
+			$header_description = false;
+			$header_description_text = '';
+			$header_bg_color = '';
+			$tab_bg_color = '';
+			$content_bg_color = '';
+			$content_width_class = 'container';
+			$tab_arrow_class = ( $bg || $parallax_img_src ) ? '' : 'tab-with-arrow';
+			$tab_arrow_color = '#fafafa';
 
 			if ( is_array( $opts ) ) {
-				if ( array_key_exists( 'section_header_first', $opts ) ) {
-					$header_first_word = $opts[ 'section_header_first' ];
+				if ( array_key_exists( 'header', $opts ) ) {
+					if ( $opts[ 'header' ] ) {
+						$header = true;
+						$section_class = 'section-with-header';
+					}
 				}
 
-				if ( array_key_exists( 'section_header_last', $opts ) ) {
-					$header_last_word = $opts[ 'section_header_last' ];
+				if ( array_key_exists( 'header_first', $opts ) ) {
+					$header_first = __( $opts[ 'header_first' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_last', $opts ) ) {
+					$header_last = __( $opts[ 'header_last' ], $this->lang_domain );
+				}
+
+				if ( array_key_exists( 'header_spacer', $opts ) ) {
+					$header_spacer = $opts[ 'header_spacer' ] ? true : $header_spacer;
+				}
+
+				if ( array_key_exists( 'header_description', $opts ) ) {
+					$header_description = $opts[ 'header_description' ] ? true : $header_description;
+				}
+
+				if ( array_key_exists( 'header_description_text', $opts ) ) {
+					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
+				}
+
+				if (
+					! empty( $opts[ 'header_bg_color_enable' ] ) &&
+					array_key_exists( 'header_bg_color_enable', $opts ) &&
+					array_key_exists( 'header_bg_color', $opts )
+				) {
+					$header_bg_color = 'background-color: ' . esc_attr( $opts[ 'header_bg_color' ] ) . ';';
+				}
+
+				if (
+					! empty( $opts[ 'tab_bg_color_enable' ] ) &&
+					array_key_exists( 'tab_bg_color_enable', $opts ) &&
+					array_key_exists( 'tab_bg_color', $opts )
+				) {
+					$tab_bg_color = 'background-color: ' . esc_attr( $opts[ 'tab_bg_color' ] ) . ';';
+				}
+
+				if (
+					! $parallax_img_src &&
+					array_key_exists( 'content_bg_color_enable', $opts ) &&
+					! empty( $opts[ 'content_bg_color_enable' ] ) &&
+					array_key_exists( 'content_bg_color', $opts )
+				) {
+					$tab_arrow_color = esc_attr( $opts[ 'content_bg_color' ] );
+					$content_bg_color = ' background-color: ' . esc_attr( $opts[ 'content_bg_color' ] ) . ';';
+				}
+
+				if ( array_key_exists( 'content_wide', $opts ) ) {
+					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
 				}
 			}
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="<?php echo esc_attr( $this->tmpl_name ); ?> showcase section features-page <?php echo $class ?>"
+				class=" showcase section features-page
+					<?php echo esc_attr( $this->tmpl_name ); ?>
+					<?php echo esc_attr( $class ); ?>
+					<?php echo $section_class; ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
-				<div class="features-wrap">
-					<div class="features-inner-wrap">
-						<div class="container">
 <?php
-						if ( $header_first_word ||  $header_last_word ) :
+				if ( $header ) :
 ?>
+					<div
+						class="section-caption-wrap"
+						style="<?php echo $header_bg_color; ?>"
+					>
+						<div class="container">
 							<div class="row">
 								<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-									<div class="section-caption">
-										<h2>
-											<?php _e( $header_first_word, $this->lang_domain ); ?>
-											<span>
-												<?php _e( $header_last_word, $this->lang_domain ); ?>
-											</span>
-										</h2>
-										<div class="spacer">
-											<div class="diamond"></div>
-										</div>
-									</div>
-								</div>
-							</div>
 <?php
-						endif;
+								if ( $header_first ||  $header_last ) :
 ?>
-						</div>
-
-						<div class="tabs-container">
-							<ul class="tabs-list clearfix">
+									<h2>
+										<?php echo $header_first; ?>
+										<span>
+											<?php echo $header_last; ?>
+										</span>
+									</h2>
+<?php
+								endif;
+								if ( $header_spacer ) :
+?>
+									<div class="briz-caption-spacer">
+										<div class="diamond"></div>
+									</div>
+<?php
+								endif;
+								if ( $header_description && $header_description_text ) :
+?>
+									<p><?php echo $header_description_text; ?></p>
+<?php
+								endif;
+?>
+								</div> <!-- .col- -->
+							</div> <!-- .row -->
+						</div> <!-- .container -->
+					</div> <!-- .section-caption-wrap -->
+<?php
+				endif;
+?>
+				<div
+					class="section-tabs-wrap <?php echo $tab_arrow_class; ?>"
+					style="
+						<?php echo $tab_bg_color; ?>
+						--features-tabs-arrow-color: <?php echo $tab_arrow_color; ?>;
+					"
+				>
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12">
+								<ul class="tabs-list clearfix">
 <?php
 								$n = 0;
 								foreach ( $posts[ 'data' ] as $data ) :
@@ -173,38 +307,52 @@
 
 										$icon_name = '';
 										$label = '';
+										$anchor = '';
 										$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
 										$opts = get_post_meta( $post_id, $meta_key, true );
 
 										if ( is_array( $opts ) ) {
 											if ( array_key_exists( 'icon', $opts )	 ) {
-												$icon_name = $opts[ 'icon' ];
+												$icon_name = esc_attr( $opts[ 'icon' ] );
 											}
 											if ( array_key_exists( 'label', $opts )	 ) {
-												$label = $opts[ 'label' ];
+												$label = __( $opts[ 'label' ], $this->lang_domain );
+												$anchor = $this->prepareAnchor( esc_attr( $opts[ 'label' ] ) );
 											}
 										}
 
-										$anchor = $this->prepareAnchor( $label );
 										$active = ! $n++ ? ' active' : '';
 ?>
-											<li class="fa fa-<?php echo esc_attr( $icon_name ); ?><?php echo $active; ?>">
-												<a href="#<?php echo esc_attr( $anchor ); ?>">
-													<?php _e( $label, $this->lang_domain ); ?>
-												</a>
-											</li>
+										<li class="tab-item fa fa-<?php echo $icon_name, $active; ?>">
+											<a
+												class="tab-anchor"
+												href="#<?php echo $anchor; ?>"
+											><?php echo $label; ?></a>
+										</li>
 <?php
 										endwhile;
 									endif;
 								endforeach;
 ?>
-							</ul>
-							<div class="tabs-content">
-								<div class="container">
-									<div class="row">
-										<div class="col-sm-12">
+								</ul> <!-- .tabs-list -->
+							</div> <!-- .col-sm-12 -->
+						</div> <!-- .row -->
+					</div> <!-- .container -->
+				</div> <!-- .section-tabs-wrap -->
+
+				<div
+					class="section-content-wrap <?php echo esc_attr( $attachment ); ?>"
+					style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
+					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
+					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
+				>
+					<div class="<?php echo $content_width_class; ?>">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="tabs-content">
 <?php
 		}
+
 
 		/**
 		 * After content part of template.
@@ -224,17 +372,15 @@
 		public function get_after( $posts ) {
 			extract( $this->atts );
 ?>
-										</div>
-									</div>
-								</div>
-							</div> <!-- .tabs-content -->
-						</div> <!-- .tabs-container -->
-
-					</div> <!-- .features-inner-wrap -->
-				</div> <!-- .features-wrap -->
+								</div> <!-- .tabs-content -->
+							</div> <!-- .col-sm-12 -->
+						</div> <!-- .row -->
+					</div> <!-- .container [ -fluid ] -->
+				</div> <!-- .section-content-wrap -->
 			</section> <!-- .briz-features-tmpl -->
 <?php
 		}
+
 
 		/**
 		 * Content of template.
@@ -253,6 +399,7 @@
 		 */
 		public function get_content( $posts ) {
 			$n = 0;
+
 			foreach ( $posts[ 'data' ] as $data ) :
 				$child = $data[ 'child' ];
 				$query = $data[ 'query' ];
@@ -260,29 +407,43 @@
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
 
-					$label = '';
 					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
 					$opts = get_post_meta( $post_id, $meta_key, true );
 
-					if (
-						is_array( $opts ) &&
-						array_key_exists( 'label', $opts )
-					) {
-							$label = $opts[ 'label' ];
+					$label = '';
+					$anchor = '';
+
+					if ( is_array( $opts ) && array_key_exists( 'label', $opts ) ) {
+						$label = esc_attr( $opts[ 'label' ] );
+						$anchor = $this->prepareAnchor( esc_attr( $label ) );
 					}
 
-					$anchor = $this->prepareAnchor( $label );
 					$active = ! $n++ ? 'active' : '';
+					$post_thumb_url = esc_url( get_the_post_thumbnail_url( $post_id, 'full' ) );
+					$post_title = __( get_the_title(), $this->lang_domain );
+					$post_content = __( get_the_content( '' ), $this->lang_domain );
+					$post_link = esc_url( get_permalink() );
+					$post_more_link_text = __( 'Readmore', $this->lang_domain );
 ?>
-					<div class="tab-content-inner <?php echo $active; ?>" id="<?php echo esc_attr( $anchor ); ?>">
-						<div class="tab-content-text">
+					<div
+						class="tab-content-inner <?php echo $active; ?>"
+						id="<?php echo $anchor; ?>"
+					>
+						<div class="tab-content-image">
 							<img
-								src="<?php echo esc_attr( get_the_post_thumbnail_url( $post_id, 'full' ) ); ?>"
-								alt="<?php echo esc_attr( get_the_title() ); ?>"
-								title="<?php echo esc_attr( get_the_title() ); ?>"
+								src="<?php echo $post_thumb_url; ?>"
+								alt="<?php echo $post_title; ?>"
+								title="<?php echo $post_title; ?>"
 							/>
-							<?php the_title( '<h3>', '</h3>'); ?>
-							<?php the_content( __( 'Explore', $this->lang_domain ) ); ?>
+						</div>
+
+						<div class="tab-content-text">
+							<h3><?php echo $post_title; ?></h3>
+							<?php echo $post_content; ?>
+							<a
+								href="<?php echo $post_link; ?>"
+								class="more-link"
+							><?php echo $post_more_link_text; ?></a>
 						</div>
 					</div>
 <?php
