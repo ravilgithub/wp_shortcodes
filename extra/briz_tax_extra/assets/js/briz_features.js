@@ -1,154 +1,200 @@
-;( $ => {
-	'use strict';
-
-	$( document ).ready( () => {
-
-		/**
-		 * Features Actions.
-		 *
-		 * @property {String} ctx - селектор каждого шаблона "features".
-		 * @property {Object} tab - объект создающийся для каждого шаблона "features".
-		 *
-		 * @since 0.0.1
-		 * @author Ravil.
-		 */
-		const $featuresTabsAnimate = {
-			ctx: '.briz-features-tmpl',
-
-			/**
-			 * Объект создающийся для каждого шаблона "features".
-			 *
-			 * @property {Object} dom - jQuery объекты элементов шаблона "features".
-			 *
-			 * @since 0.0.1
-			 */
-			tab: {
-				dom: {},
-
-				/**
-				 * Показаваем/Акцентируем внимание на активных элементах и прячем не активные.
-				 *
-				 * @param {jQuery Object / String} $el       - елемент который надо сделать активным.
-				 * @param {jQuery Object / String} $siblings - сестренские елементы которые надо дективировать.
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				classToggle( $el, $siblings ) {
-					$( $el )
-						.addClass( 'active' )
-						.siblings( $siblings )
-							.removeClass( 'active' );
-				},
+/**
+* Функционал обеспечивающий работу шаблона "Features".
+*
+* @property {String} ctx - селектор корневого элемента шаблона "Features".
+* 	Default: '.briz-features-tmpl'.
+*
+* @since 0.0.1
+* @autor Ravil
+*/
+const features = {
+	ctx: '.briz-features-tmpl',
+	selectors: {
+		tab: 'tab-item',
+		anchor: 'tab-anchor',
+		content: '.tabs-content'
+	},
 
 
-				/**
-				 * Присваиваем высоту активному элементу( контенту ) табуляции,
-				 * исходя из высоты его содержимого.
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				setHeight() {
-					$( this.dom.contentInner )
-						.filter( '.active' )
-							.imagesLoaded()
-								.done( instance => {
-									const $childHeight = instance.elements[ 0 ].clientHeight;
-									$( this.dom.content ).height( $childHeight );
-								} );
-				},
+	/**
+	 * Стартовый метод.
+	 *
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	firstAction() {
+		this.getInstance().forEach( i => {
+			const content = this.getActiveContent( i );
+			if ( content )
+				this.setContentHeight( content );
+
+			this.setEvent( i );
+		} );
+	},
 
 
-				/**
-				 * Обработчик события "click".
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				clickHandler() {
-					$( 'li', this.dom.list ).on( 'click', $event => {
-						$event.preventDefault();
-						const $el = $event.target,
-						      $tabContent = $( 'a', $el ).attr( 'href' );
-
-						this.classToggle( $el, 'li' );
-						this.classToggle( $tabContent, this.dom.contentInner );
-						this.setHeight();
-					} );
-				},
+	/**
+	 * Получаем коллекцию корневых элементов шаблона "Features".
+	 *
+	 * @return {Array} - коллекция корневых элементов шаблона.
+	 * @since 0.0.1
+	 */
+	getInstance() {
+		return document.querySelectorAll( this.ctx );
+	},
 
 
-				/**
-				 * Обработчик события "resize".
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				resizeHandler() {
-					$( window ).on( 'resize', () => {
-						this.setHeight();
-					} );
-				},
+	/**
+	 * Делегирование корневому элементу шаблона, события клик на элементе табуляции.
+	 *
+	 * @param {DOM Object} inst - корневой элемент шаблона "Features".
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	setEvent( inst ) {
+		inst.addEventListener( 'click', this.tabs.bind( this ), false );
+	},
 
 
-				/**
-				 * Добавление jQuery объекты элементов шаблона "features"
-				 * в свойство "this.dom" для краткости кода.
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				setProps() {
-					let $dom = this.dom;
-					$dom[ 'list' ] = $dom.tmpl.find( '.tabs-list' );
-					$dom[ 'content' ] = $dom.tmpl.find( '.tabs-content' );
-					$dom[ 'contentInner' ] = $dom.tmpl.find( '.tab-content-inner' );
-				},
+	/**
+	 * Выбор активного элемента контента.
+	 *
+	 * @param {DOM Object} evt - объект события.
+	 * @return {void|false}
+	 * @since 0.0.1
+	 */
+	tabs( evt ) {
+		let trgt = evt.target;
+		const inst = evt.currentTarget;
+
+		let contentId = '';
+		if ( trgt.classList.contains( this.selectors.anchor ) ) {
+			evt.preventDefault();
+			contentId = trgt.getAttribute( 'href' );
+			trgt = trgt.parentNode;
+		} else if ( trgt.classList.contains( this.selectors.tab ) ) {
+			contentId = trgt.querySelector( 'a' ).getAttribute( 'href' );
+		} else {
+			return false;
+		}
+
+		const content = inst.querySelector( contentId );
+		if ( ! content )
+			return false;
+
+		this.toggleClass( trgt );
+		this.toggleClass( content );
+		this.setContentHeight( content );
+	},
 
 
-				/**
-				 * Let's go.
-				 *
-				 * @return {void}
-				 *
-				 * @since 0.0.1
-				 */
-				start() {
-					this.setProps();
-					this.setHeight();
-					this.clickHandler();
-					this.resizeHandler();
-				}
-			},
+	/**
+	 * Присваивание/Удаление классов.
+	 *
+	 * @param {DOM Object} el - активный элемент.
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	toggleClass( el ) {
+		el.classList.add( 'active' );
+
+		this.getSiblings( el ).forEach( sibling => {
+			sibling.classList.remove( 'active' );
+		} );
+	},
 
 
-			/**
-			 * Создание независимого объекта "tab"
-			 * для каждого шаблона "features".
-			 *
-			 * @return {void}
-			 *
-			 * @since 0.0.1
-			 */
-			init() {
-				$( this.ctx ).each( ( $idx, $el ) => {
-					let newTab = { dom: {} };
-					newTab.dom[ 'tmpl' ] = $( $el );
+	/**
+	 * Нахождение сестренских элементов.
+	 *
+	 * @param {DOM Object} el - активный элемент.
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	getSiblings( el ) {
+		return Array.prototype.filter.call( el.parentNode.children, child => child != el );
+	},
 
-					$.extend( true, newTab, this.tab );
-					newTab.start();
-				} );
-			},
-		};
 
-		$featuresTabsAnimate.init();
+	/**
+	 * Получаем видимый элемент контента.
+	 *
+	 * @param {DOM Object} inst - корневой элемент шаблона "Features".
+	 * @return {DOM Object} - видимый элемент контента.
+	 * @since 0.0.1
+	 */
+	getActiveContent( inst ) {
+		const contentParent = inst.querySelector( this.selectors.content );
+		if ( ! contentParent )
+			return false;
 
-	} );
+		const content = contentParent.children;
+		if ( ! content.length )
+			return false;
 
-} )( jQuery );
+		return Array.prototype.filter.call( content, i => i.classList.contains( 'active' ) )[ 0 ];
+	},
+
+
+	/**
+	 * Определяем высоту контента.
+	 *
+	 * @param {DOM Object} content - активный элемент контента.
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	setContentHeight( content ) {
+		imagesLoaded( content, () => {
+			content.parentNode.style.height = content.clientHeight + 'px';
+		} );
+	},
+
+
+	/**
+	 * Обработчик события "resize".
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 */
+	resizeHandler() {
+		window.addEventListener( 'resize', evt => {
+			this.getInstance().forEach( i => {
+				const content = this.getActiveContent( i );
+				if ( content )
+					this.setContentHeight( content );
+			} );
+		}, false );
+	},
+
+
+	/**
+	 * Изменение CSS селектора корневого элемента шаблона.
+	 *
+	 * @param {String} ctx - селектор корневого элемента шаблона.
+	 *
+	 * @return {void}
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	setCtx( ctx ) {
+		if ( ! ctx ) return;
+		this.ctx = ctx;
+	},
+
+
+	/**
+	 * Let's go.
+	 *
+	 * @param {String} ctx - селектор корневого элемента шаблона.
+	 *
+	 * @return {void}
+	 * @since 0.0.1
+	 */
+	init( ctx ) {
+		this.setCtx( ctx );
+		this.firstAction();
+		this.resizeHandler();
+	}
+}.init();
