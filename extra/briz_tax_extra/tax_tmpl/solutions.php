@@ -171,7 +171,11 @@
 					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
 				}
 
-				if ( array_key_exists( 'header_bg_color', $opts ) ) {
+				if (
+					! empty( $opts[ 'header_bg_color_enable' ] ) &&
+					array_key_exists( 'header_bg_color_enable', $opts ) &&
+					array_key_exists( 'header_bg_color', $opts )
+				) {
 					$header_bg_color = 'background-color: ' . esc_attr( $opts[ 'header_bg_color' ] ) . ';';
 				}
 
@@ -187,7 +191,7 @@
 ?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="showcase section stickers-page
+				class="showcase section solutions-page
 					<?php echo esc_attr( $this->tmpl_name ); ?>
 					<?php echo esc_attr( $class ); ?>
 					<?php echo $section_class; ?>

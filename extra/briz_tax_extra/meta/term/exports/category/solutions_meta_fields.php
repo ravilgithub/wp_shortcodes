@@ -80,6 +80,16 @@ $solutions_meta_fields = [
 				'hidden'   => 'Hidden'
 			]
 		],
+		'header_bg_color_enable' => [
+			'type'  => 'checkbox',
+			'title' => 'Показать цвет фона заголовка',
+			'desc'  => 'Показать цвет фона заголовка.',
+			'empty' => true,
+			'value' => '',
+			'options' => [
+				'on' => 'On'
+			]
+		],
 		'header_bg_color' => [
 			'type'  => 'color',
 			'title' => 'Цвет фона заголовка',
@@ -100,7 +110,7 @@ $solutions_meta_fields = [
 			'type'  => 'color',
 			'title' => 'Цвет фона контента',
 			'desc'  => 'Цвет фона контента',
-			'value' => '#fafafa'
+			'value' => '#b0c4de'
 		],
 		'content_wide' => [
 			'type'  => 'checkbox',
