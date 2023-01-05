@@ -5,10 +5,10 @@
 
 		/**
 		 * Portfolio Actions.
-		 * 
+		 *
 		 * @property String ctx   - селектор каждого шаблона "portfolio".
 		 * @property {Object} iso - объект создающийся для каждого шаблона "portfolio".
-		 * 
+		 *
 		 * @since 0.0.1
 		 * @author Ravil.
 		 */
@@ -18,25 +18,27 @@
 
 			/**
 			 * Объект создающийся для каждого шаблона "portfolio".
-			 * 
+			 *
 			 * @property {Object} dom - jQuery объекты элементов шаблона "portfolio"
-			 * @property {String} filter - фильтер по умолчанию.
+			 * @property {String} filter - фильтр по умолчанию.
 			 *                             Default: * - отображать все записи.
-			 * 
+			 * @property {Null/Object} iso - Объект Isotope JS.
+			 *
 			 * @since 0.0.1
 			 */
 			iso: {
 				dom: {},
 				filter: '*',
+				iso: null,
 
 
 				/**
 				 * Получаем количество отображенных записей
 				 * если активный фильтер не "*",
 				 * иначе количество всех записей.
-				 * 
+				 *
 				 * @return {Integer} cnt - количество записей.
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				getActivePosts() {
@@ -60,9 +62,9 @@
 				 * активного термина в базе данных если
 				 * фильтр не "*", иначе количество всех
 				 * записей всех терминов.
-				 * 
+				 *
 				 * @return {Integer} cnt - количество записей.
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				getMaxPosts() {
@@ -91,9 +93,9 @@
 				 * в зависимости от того остались ли не выведенные
 				 * записи текущей категории или записи какой либо
 				 * категории если активный фильтр "*" в базе данных.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				moreTrigger() {
@@ -101,28 +103,33 @@
 					      activePosts = this.getActivePosts();
 
 					if ( activePosts < maxPosts ) {
-						this.dom.more.show( 100 );
+						this.dom.more.show();
 					} else {
-						this.dom.more.hide( 100 );
+						this.dom.more.hide();
 					}
 				},
 
 
 				/**
 				 * Показываем записи которые соответствуют фильтру.
-				 * 
+				 *
+				 * @param Array items - HTML .isotope-item element,
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
-				async filterIsotopeItems() {
+				async filterIsotopeItems( items = [] ) {
 					await new Promise( ( resolve, reject ) => {
-						const self = this;
-						let ids = [];
+						const self = this,
+						      ids = [];
 
 						// console.log( 2 ); // log
 
-						const iso = this.dom.grid.isotope( {
+						if ( items.length )
+							this.iso.isotope( 'appended', items );
+
+						this.iso.isotope( {
 							filter() {
 								if ( '*' == self.filter ) {
 									const postId = $( this ).data( 'post-id' );
@@ -138,29 +145,27 @@
 							}
 						} );
 
-						iso.on( 'arrangeComplete', resolve );
+						this.iso.on( 'arrangeComplete', resolve );
 					} );				
 				},
 
 
 				/**
 				 * Добавляем новые записи полученные методом Ajax.
-				 * 
+				 *
 				 * @see "getMorePosts".
 				 *
 				 * @param Array items - HTML .isotope-item element,
 				 * @see briz_shortcodes_extends/extra/briz_tax_extra/tax_tmpl/portfolio.php
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				async addIsotopeItems( items ) {
 					if ( ! items || ! items.length ) {
 						return;
 					}
-
-					console.log( items );
 
 					await new Promise( ( resolve, reject ) => {
 						$( items ).css( {
@@ -171,16 +176,19 @@
 							.append( items )
 							.imagesLoaded()
 								.done( instance => {
+
 									// console.log( 1 ); // log
 
-									// После события "appended" вызывается "filter" подписанный в методе "filterIsotopeItems"
-									this.dom.grid.isotope( 'appended', items );
+									this.filterIsotopeItems( items )
+										.then( () => {
+											$( items ).css( {
+												opacity: 1,
+											} );
 
-									$( items ).css( {
-										opacity: 1,
-									} );
+											resolve();
+										} );
 
-									resolve();
+									// console.log( 3 ); // log
 								} );
 					} );
 				},
@@ -190,9 +198,9 @@
 				 * Обработчик события:
 				 * "Выбор активного термина записи
 				 * которого нужно отобразить".
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				setIsotopeTabs() {
@@ -209,7 +217,6 @@
 							.then( () => {
 								// console.log( 10 ); // log
 								this.setMagnificPopup();
-
 								this.moreTrigger();
 							} );
 
@@ -221,9 +228,9 @@
 
 				/**
 				 * Инициализация основных функций.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				async setIsotope() {
@@ -231,6 +238,10 @@
 						this.dom.grid.imagesLoaded()
 							.done( () => {
 								// console.log( 10 ); // log
+
+								if ( ! this.iso )
+									this.iso = this.dom.grid.isotope();
+
 								this.filterIsotopeItems();
 								this.setIsotopeTabs();
 								resolve();
@@ -241,9 +252,9 @@
 
 				/**
 				 * Показ миниатюр ввиде всплывающих окон.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				setMagnificPopup() {
@@ -284,9 +295,9 @@
 
 				/**
 				 * Анимация миниатюры при наведении на неё.
-				 * 
+				 *
 				 * @return {void} 
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				hoverHandler() {
@@ -307,9 +318,9 @@
 
 				/**
 				 * Получаем записи из базы данных.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				getMorePosts() {
@@ -368,9 +379,9 @@
 				 * Добавление jQuery объекты элементов
 				 * шаблона "portfolio" в свойство "this.dom"
 				 * для кратости кода.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				setProps() {
@@ -383,9 +394,9 @@
 
 				/**
 				 * Let's go.
-				 * 
+				 *
 				 * @return {void}
-				 * 
+				 *
 				 * @since 0.0.1
 				 */
 				start() {
@@ -404,9 +415,9 @@
 			/**
 			 * Создание независимого объекта "iso"
 			 * для каждого шаблона "portfolio".
-			 * 
+			 *
 			 * @return {void}
-			 * 
+			 *
 			 * @since 0.0.1
 			 */
 			init() {
