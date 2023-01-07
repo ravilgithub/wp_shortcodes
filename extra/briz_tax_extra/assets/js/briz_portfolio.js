@@ -29,7 +29,7 @@
 			iso: {
 				dom: {},
 				filter: '*',
-				iso: null,
+				isoObj: null,
 
 
 				/**
@@ -42,18 +42,8 @@
 				 * @since 0.0.1
 				 */
 				getActivePosts() {
-					let cnt = 0,
-					    selector = '.isotope-item';
-
-					if ( '*' != this.filter ) {
-						selector += ':visible';
-					}
-
-					cnt = this.dom.grid.find( selector ).length;
-
-					// console.log( 'visible items', cnt );
-
-					return cnt;
+					const selector = ( '*' === this.filter ) ? '.isotope-item' : '.' + this.filter;
+					return this.dom.grid.find( selector ).length;
 				},
 
 
@@ -80,11 +70,7 @@
 					}
 
 					cnt = parseInt( cnt, 10 );
-					cnt = ! Number.isNaN( cnt ) ? cnt : 0;
-
-					// console.log( 'max posts', cnt );
-
-					return cnt;
+					return ( ! Number.isNaN( cnt ) ) ? cnt : 0;
 				},
 
 
@@ -103,9 +89,9 @@
 					      activePosts = this.getActivePosts();
 
 					if ( activePosts < maxPosts ) {
-						this.dom.more.show();
+						this.dom.more.parent().show();
 					} else {
-						this.dom.more.hide();
+						this.dom.more.parent().hide();
 					}
 				},
 
@@ -113,40 +99,28 @@
 				/**
 				 * Показываем записи которые соответствуют фильтру.
 				 *
-				 * @param Array items - HTML .isotope-item element,
-				 *
 				 * @return {void}
 				 *
 				 * @since 0.0.1
 				 */
-				async filterIsotopeItems( items = [] ) {
-					await new Promise( ( resolve, reject ) => {
-						const self = this,
-						      ids = [];
+				filterIsotopeItems() {
+					const self = this,
+					      ids = [];
 
-						// console.log( 2 ); // log
+					this.dom.grid.isotope( {
+						filter() {
+							if ( '*' == self.filter ) {
+								const postId = $( this ).data( 'post-id' );
 
-						if ( items.length )
-							this.iso.isotope( 'appended', items );
-
-						this.iso.isotope( {
-							filter() {
-								if ( '*' == self.filter ) {
-									const postId = $( this ).data( 'post-id' );
-
-									if ( -1 === ids.indexOf( postId ) ) {
-										ids.push( postId );
-										// console.log( ids );
-										return true;
-									}
-								} else if ( $( this ).hasClass( self.filter ) ) {
-										return true;
+								if ( -1 === ids.indexOf( postId ) ) {
+									ids.push( postId );
+									return true;
 								}
+							} else if ( $( this ).hasClass( self.filter ) ) {
+									return true;
 							}
-						} );
-
-						this.iso.on( 'arrangeComplete', resolve );
-					} );				
+						}
+					} );
 				},
 
 
@@ -162,35 +136,31 @@
 				 *
 				 * @since 0.0.1
 				 */
-				async addIsotopeItems( items ) {
+				addIsotopeItems( items ) {
 					if ( ! items || ! items.length ) {
 						return;
 					}
 
-					await new Promise( ( resolve, reject ) => {
-						$( items ).css( {
-							opacity: 0,
-						} );
-
-						this.dom.grid
-							.append( items )
-							.imagesLoaded()
-								.done( instance => {
-
-									// console.log( 1 ); // log
-
-									this.filterIsotopeItems( items )
-										.then( () => {
-											$( items ).css( {
-												opacity: 1,
-											} );
-
-											resolve();
-										} );
-
-									// console.log( 3 ); // log
-								} );
+					$( items ).css( {
+						visibility: 'hidden',
 					} );
+
+					this.dom.grid
+						.append( items )
+						.imagesLoaded()
+							.done( instance => {
+								this.dom.grid
+									.isotope( 'appended', items ) // trigger filter
+									.isotope( 'layout' );
+
+								$( items ).css( {
+									visibility: 'visible',
+								} );
+
+								this.hoverHandler();
+								this.setMagnificPopup();
+								this.moreTrigger();
+							} );
 				},
 
 
@@ -211,14 +181,10 @@
 
 						$link = ( $link[ 0 ] == '#' ) ? $link.substr( 1 ) : $link;
 						this.filter = ( $link != '' ) ? $link : '*';
-						// console.log( 'filter', this.filter ); // log
 
-						this.filterIsotopeItems()
-							.then( () => {
-								// console.log( 10 ); // log
-								this.setMagnificPopup();
-								this.moreTrigger();
-							} );
+						this.filterIsotopeItems();
+						this.setMagnificPopup();
+						this.moreTrigger();
 
 						$( 'li', this.dom.filter ).removeClass( 'active' );
 						$el.parent().addClass( 'active' );
@@ -233,20 +199,14 @@
 				 *
 				 * @since 0.0.1
 				 */
-				async setIsotope() {
-					await new Promise( ( resolve, reject ) => {
-						this.dom.grid.imagesLoaded()
-							.done( () => {
-								// console.log( 10 ); // log
-
-								if ( ! this.iso )
-									this.iso = this.dom.grid.isotope();
-
-								this.filterIsotopeItems();
-								this.setIsotopeTabs();
-								resolve();
-							} );
-					} );
+				setIsotope() {
+					this.dom.grid.imagesLoaded()
+						.done( () => {
+							this.setIsotopeTabs();
+							this.filterIsotopeItems();
+							this.setMagnificPopup();
+							this.hoverHandler();
+						} );
 				},
 
 
@@ -258,8 +218,6 @@
 				 * @since 0.0.1
 				 */
 				setMagnificPopup() {
-					// console.log( 11 ); // log
-
 					$( '.isotope-item:visible .portfolio-img-zoom', this.dom.tmpl ).magnificPopup( {
 						type: 'image',
 						preloader: true,
@@ -332,7 +290,6 @@
 						      shortcodeTermId = this.dom.tmpl.data( 'shortcode-term-id' );
 
 						if ( 'undefined' == typeof activeTermId ) {
-							// console.log( 'activeTermId:', 'undefined' ); // log
 							activeTermId = '';
 						}
 
@@ -353,22 +310,12 @@
 							},
 
 							success( response ) {
-								// console.log( 'Success:' ); // log
 								response = $.parseHTML( response.trim() );
-
-								self.addIsotopeItems( response )
-									.then( () => {
-										// console.log( 'filter', self.filter ); // log
-										self.hoverHandler();
-										self.setMagnificPopup();
-
-										self.moreTrigger();
-									} );
+								self.addIsotopeItems( response );
 							},
 
 							error( error ) {
 								// console.log( 'Error:' );
-								// console.log( error );
 							}
 						} );
 					} );
@@ -388,7 +335,6 @@
 					this.dom[ 'grid' ] = this.dom.tmpl.find( '.isotope' );
 					this.dom[ 'more' ] = this.dom.tmpl.find( '.showmore' );
 					this.dom[ 'filter' ] = this.dom.tmpl.find( '.isotop-filter' );
-					// console.log( 'dom', this.dom );
 				},
 
 
@@ -401,12 +347,7 @@
 				 */
 				start() {
 					this.setProps();
-					this.setIsotope()
-						.then( () => {
-							this.setMagnificPopup();
-							this.hoverHandler();
-						} );
-
+					this.setIsotope();
 					this.getMorePosts();
 				}
 			},
