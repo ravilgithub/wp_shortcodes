@@ -17,6 +17,10 @@ use Briz_Shortcodes\common\Helper;
  * @property Array $default_atts  {
  *  Доступные атрибуты:
  *
+ *  @type String  $disabled      - Состояние шорткода( включен/выключен ).
+ *                                 Default: 0.
+ *                                 Accepts: 0, 1.
+ *
  *  @type String  $class         - дополнительные классы шорткода.
  *                                 Default: ''.
  *
@@ -121,6 +125,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
+		'disabled'    => 0,
 		'class'       => '',
 		'term_id'     => '',
 		'operator'    => 'IN',
@@ -270,12 +275,15 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_tax( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
 
 		$content = wp_kses( $content, 'post' );
-
-		$atts = $this->prepare_atts( $atts );
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 
