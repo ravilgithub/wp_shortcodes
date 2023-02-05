@@ -56,6 +56,13 @@ $assets = [
 			'deps' => [],
 			'ver'  => '1.0.0'
 		],
+
+		'photoswipe' => [
+			'id'   => 'briz-photoswipe-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/photoswipe/photoswipe.min.css',
+			'deps' => [],
+			'ver'  => '4.1.1'
+		],
 	],
 
 	'js' => [
@@ -146,6 +153,21 @@ $assets = [
 			'deps' => [ 'jquery' ],
 			'ver'  => '8.2.6',
 			'in_footer' => true
+		],
+
+		'photoswipe' => [
+			'id'   => 'briz-photoswipe-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/photoswipe/photoswipe.min.js',
+			'deps' => [],
+			'ver'  => '4.1.1',
+			'in_footer' => true
+		],
+
+		'threesixty' => [
+			'id'   => 'briz-threesixty-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/threesixty/threesixty.min.js',
+			'deps' => [ 'jquery' ],
+			'ver'  => '2.0.5'
 		],
 	]
 ];
