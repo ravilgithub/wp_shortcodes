@@ -87,6 +87,12 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css' ],
 			'ver'  => '1.0.0'
 		],
+		'products' => [
+			'id'   => 'briz-products-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_products.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css', 'briz-magnific-popup-css', 'briz-photoswipe-css', 'briz-fontawesome-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -179,6 +185,13 @@ $assets = [
 			'id'        => 'briz-subscribe-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_subscribe.js',
 			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'products' => [
+			'id'        => 'briz-products-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_products.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
