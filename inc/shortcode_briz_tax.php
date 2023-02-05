@@ -125,19 +125,19 @@ class Briz_Tax_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
-		'disabled'    => 0,
-		'class'       => '',
-		'term_id'     => '',
-		'operator'    => 'IN',
-		'self'        => 1,
-		'children'    => 0,
+		'disabled'      => 0,
+		'class'         => '',
+		'term_id'       => '',
+		'operator'      => 'IN',
+		'self'          => 1,
+		'children'      => 0,
 		'grandchildren' => 0,
-		'limit'       => -1,
-		'offset'      => 0,
-		'orderby'     => 'id',
-		'order'       => 'ASC',
-		'meta_key'    => '',
-		'show_more'   => 1
+		'limit'         => -1,
+		'offset'        => 0,
+		'orderby'       => 'id',
+		'order'         => 'ASC',
+		'meta_key'      => '',
+		'show_more'     => 1
 	];
 
 
@@ -282,8 +282,7 @@ class Briz_Tax_Shortcode extends Shortcodes {
 
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
-
-		$content = wp_kses( $content, 'post' );
+		$content       = wp_kses( $content, 'post' );
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 

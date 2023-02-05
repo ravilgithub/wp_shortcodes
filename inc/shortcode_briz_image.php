@@ -19,6 +19,7 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
+ *   @disabled     - состояние шорткода( включен(1)/выключен(0) )
  *   @class        - дополнительные классы.
  *   @type         - тип оформления ( 1 | 2 )
  *   @img_url      - адрес картинки.
@@ -83,6 +84,7 @@ class Briz_Image_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
+		'disabled'     => 0,
 		'class'        => '',
 		'type'         => 1,
 		'img_url'      => '',
@@ -129,17 +131,19 @@ class Briz_Image_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_image( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
 		$type          = 0;
 		$target        = '';
 		$rel           = '';
 		$onclick       = '';
-
-		$content = wp_kses( $content, 'post' );
-
-		$atts = $this->prepare_atts( $atts );
-		$type = ( int ) $atts[ 'type' ];
+		$content       = wp_kses( $content, 'post' );
+		$type          = ( int ) $atts[ 'type' ];
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 

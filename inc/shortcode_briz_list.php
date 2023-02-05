@@ -19,6 +19,7 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
+ *   @disabled     - состояние шорткода( включен(1)/выключен(0) )
  *   @class        - дополнительные классы.
  *   @position     - обтeкание ( left | right )
  *   @cursive      - текст курсивом ( 0 | 1 )
@@ -65,6 +66,7 @@ class Briz_List_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
+		'disabled'     => 0,
 		'class'        => '',
 		'position'     => '',
 		'cursive'      => 0,
@@ -109,16 +111,18 @@ class Briz_List_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_list( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
 		$prefix        = '';
-
-		// $content = wp_kses_post( $content );
+		// $content       = wp_kses_post( $content );
 
 		if ( empty( $content ) )
 			return false;
-
-		$atts = $this->prepare_atts( $atts );
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ? " $default_class" : $default_class );
 

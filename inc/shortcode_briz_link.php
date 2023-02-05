@@ -19,6 +19,7 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
+ *   @disabled     - состояние шорткода( включен(1)/выключен(0) )
  *   @class        - дополнительные классы.
  *   @type         - тип оформления ( 1 | 9 )
  *   @link         - ссылка ( http | https ) на страницу или файл.
@@ -76,6 +77,7 @@ class Briz_Link_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
+		'disabled'     => 0,
 		'class'        => '',
 		'type'         => 1,
 		'link'         => '',
@@ -125,6 +127,11 @@ class Briz_Link_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_link( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
 		$type          = 0;
@@ -132,13 +139,11 @@ class Briz_Link_Shortcode extends Shortcodes {
 		$rel           = '';
 		$onclick       = '';
 		$download      = '';
-
-		$content = wp_kses( $content, 'post' );
+		$content       = wp_kses( $content, 'post' );
 
 		if ( empty( $content ) )
 			return false;
 
-		$atts = $this->prepare_atts( $atts );
 		$type = ( int ) $atts[ 'type' ];
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;

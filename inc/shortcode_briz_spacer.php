@@ -19,9 +19,10 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
- *   @class  - дополнительные классы.
- *   @height - высота элемента.
- *   @back   - CSS цвет фона.
+ *   @disabled - состояние шорткода( включен(1)/выключен(0) )
+ *   @class    - дополнительные классы.
+ *   @height   - высота элемента.
+ *   @back     - CSS цвет фона.
  * }
  *
  * Пример:
@@ -56,9 +57,10 @@ class Briz_Spacer_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
-		'class'  => '',
-		'height' => '20px',
-		'back'   => 'inherit',
+		'disabled' => 0,
+		'class'    => '',
+		'height'   => '20px',
+		'back'     => 'inherit',
 	];
 
 
@@ -92,12 +94,14 @@ class Briz_Spacer_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_spacer( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
-
-		$content = wp_kses( $content, 'post' );
-
-		$atts = $this->prepare_atts( $atts );
+		$content       = wp_kses( $content, 'post' );
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ) ? " $default_class" : $default_class;
 

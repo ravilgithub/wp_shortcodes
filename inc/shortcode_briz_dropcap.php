@@ -18,12 +18,13 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
- *   @class  - классы
- *   @size   - размер символа ( 1, 2, 3 )
- *   @circle - скруглённые края блока ( 0 | 1 )
- *   @border - цвет рамки
- *   @back   - цвет фона
- *   @color  - цвет символа
+ *   @disabled - состояние шорткода( включен(1)/выключен(0) )
+ *   @class    - классы
+ *   @size     - размер символа ( 1, 2, 3 )
+ *   @circle   - скруглённые края блока ( 0 | 1 )
+ *   @border   - цвет рамки
+ *   @back     - цвет фона
+ *   @color    - цвет символа
  * }
  *
  * Пример:
@@ -53,12 +54,13 @@ class Briz_Dropcap_Shortcode extends Shortcodes {
 	public $inline_styles = [];
 	public static $n      = 1;
 	public $default_atts  = [
-		'class'  => '',
-		'size'   => 1,
-		'circle' => 0,
-		'border' => '#ccc',
-		'back'   => '#fafafa',
-		'color'  => '#333'
+		'disabled' => 0,
+		'class'    => '',
+		'size'     => 1,
+		'circle'   => 0,
+		'border'   => '#ccc',
+		'back'     => '#fafafa',
+		'color'    => '#333'
 	];
 
 
@@ -92,15 +94,17 @@ class Briz_Dropcap_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_dropcap( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
-
-		$content = wp_kses( $content, 'post' );
+		$content       = wp_kses( $content, 'post' );
 
 		if ( empty( $content ) )
 			return false;
-
-		$atts = $this->prepare_atts( $atts );
 
 		$atts[ 'class' ] .= ( ! empty( $atts[ 'class' ] ) ? " $default_class" : $default_class );
 

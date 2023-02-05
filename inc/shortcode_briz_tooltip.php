@@ -18,14 +18,15 @@ use Briz_Shortcodes\common\Helper;
  * @property Integer $n - порядковый номер шордкода.
  * @property Array $default_atts {
  *  Доступные атрибуты:
- *   @class   - классы.
- *   @hint    - текст подсказки.
- *   @img_url - адрес картинки.
- *              Ссылку на файл можно найти здесь -
- *              "медиафайлы -> библиотека -> любая картинка -> изменить -> ссылка на файл".
+ *   @disabled - состояние шорткода( включен(1)/выключен(0) )
+ *   @class    - классы.
+ *   @hint     - текст подсказки.
+ *   @img_url  - адрес картинки.
+ *               Ссылку на файл можно найти здесь -
+ *               "медиафайлы -> библиотека -> любая картинка -> изменить -> ссылка на файл".
  *              Пример - http://wordpress/wpfirst/wp-content/uploads/2019/04/shortcode_briz_tooltip_1.png
- *   @back    - цвет фона.
- *   @color   - цвет текста.
+ *   @back     - цвет фона.
+ *   @color    - цвет текста.
  *
  * Пример:
  * [briz_tooltip
@@ -55,11 +56,12 @@ class Briz_Tooltip_Shortcode extends Shortcodes {
 	public $inline_styles = array();
 	public static $n      = 1;
 	public $default_atts  = array(
-		'class'   => '',
-		'hint'    => '',
-		'img_url' => '',
-		'back'    => '#393939',
-		'color'   => '#fff'
+		'disabled' => 0,
+		'class'    => '',
+		'hint'     => '',
+		'img_url'  => '',
+		'back'     => '#393939',
+		'color'    => '#fff'
 	);
 
 
@@ -93,11 +95,14 @@ class Briz_Tooltip_Shortcode extends Shortcodes {
 	 * @author Ravil
 	 */
 	public function shortcode_briz_tooltip( $atts, $content, $tag ) {
+		$atts = $this->prepare_atts( $atts );
+
+		if ( absint( $atts[ 'disabled' ] ) )
+			return false;
+
 		$default_class = $this->get_full_name();
 		$id            = $default_class . '_' . self::$n++;
-
-		$content = wp_kses( $content, 'post' );
-		$atts = $this->prepare_atts( $atts );
+		$content       = wp_kses( $content, 'post' );
 
 		if ( empty( $content ) || empty( $atts[ 'hint' ] ) )
 			return false;
