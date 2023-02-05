@@ -47,6 +47,7 @@ require 'exports/category/subscribe_meta_fields.php';
 
 /* Product category */
 require 'exports/product_cat/__to_all__products_meta_fields.php';
+require 'exports/product_cat/products_meta_fields.php';
 
 $opts = [
 	'category' => [
@@ -69,5 +70,6 @@ $opts = [
 
 	'product_cat' => [
 		'__to_all__' => $__to_all__products_meta_fields,
+    'products'   => $products_meta_fields,
 	]
 ];
