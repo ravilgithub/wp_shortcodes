@@ -14,6 +14,11 @@
  */
 
 namespace Briz_Shortcodes;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 use Briz_Shortcodes\inc\Briz_List_Shortcode;
 use Briz_Shortcodes\inc\Briz_Dropcap_Shortcode;
 use Briz_Shortcodes\inc\Briz_Highlight_Shortcode;
@@ -37,6 +42,8 @@ require_once 'extra/briz_tax_extra/meta/meta.php';
 require_once 'extra/briz_tax_extra/meta/term/term_meta.php';
 require_once 'extra/briz_tax_extra/meta/post/meta_boxes.php';
 require_once 'extra/briz_tax_extra/template_select.php';
+
+require_once 'extra/briz_tax_extra/tax_tmpl/related/products/actions.php';
 
 require_once 'shortcodes.php';
 
