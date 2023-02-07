@@ -7,24 +7,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Briz_Shortcodes\common\Helper;
 
-trait HoverContent {
-	public function hover_content() {
-		/**
-		 * add_archive_product_caption_on_hover_content_container
-		 */
-		add_action(
-			'woocommerce_after_shop_loop_item_title',
-			[ $this, 'add_archive_product_caption_on_hover_content_container' ],
-			99
-		);
+trait ProductHoverContent {
+	/**
+	 * 
+	 */
+	public function product_hover_content_before() {
+		global $post, $product;
 
-		/**
-		 * add_archive_product_item_gallery
-		 */
-		add_action(
-			'bri_add_archive_product_caption_on_hover_content_container_inner',
-			[ $this, 'add_archive_product_item_gallery' ],
-			10
+		echo apply_filters(
+			'shortcode_briz_tax_product_hover_content_before_html',
+			'<div class="caption-on-hover-content">',
+			$post,
+			$product
 		);
 	}
 
@@ -32,26 +26,23 @@ trait HoverContent {
 	/**
 	 * 
 	 */
-	public function add_archive_product_caption_on_hover_content_container() {
+	public function product_hover_content_after() {
 		global $post, $product;
-?>
-		<div class="caption-on-hover-content">
-<?php
-			do_action( 'bri_add_archive_product_caption_on_hover_content_container_inner' );
-?>
-		</div>
-<?php
+
+		echo apply_filters(
+			'shortcode_briz_tax_product_hover_content_after_html',
+			'</div>',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function add_archive_product_item_gallery() {
+	public function product_hover_content_item_gallery() {
 		global $post, $product;
-
-		// Helper::debug( $post );			
-		Helper::debug( $product );
 
 		$html = '';
 		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
@@ -63,12 +54,17 @@ trait HoverContent {
 			$slide_img_src = esc_url( wc_placeholder_img_src() );
 			$slide_img_alt_attr = esc_html__( 'Awaiting product image', 'woocommerce' );
 
-			$html_placeholder = '<div data-lg-img-src="' . $slide_img_src . '" data-background-image="' . $slide_img_src . '" title="' . $slide_img_alt_attr . '" class="swiper-slide bri-archive-product-item-gallery__image--placeholder" >';
-			$html_placeholder .= '<img src="' . $slide_img_src . '" alt="' . $slide_img_alt_attr . '" title="' . $slide_img_alt_attr . '" data-caption="' . $slide_img_alt_attr . '" />';
-			$html_placeholder .= '</div>';
+			$html_placeholder = sprintf(
+				'<div data-lg-img-src="%1$s" data-background-image="%1$s" title="%2$s" class="swiper-slide bri-archive-product-item-gallery__image--placeholder" ><img src="%1$s" alt="%2$s" title="%2$s" data-caption="%2$s" /></div>',
+				$slide_img_src,
+				$slide_img_alt_attr
+			);
 
 			// Мой фильтр - "bri_archive_product_item_gallery_placeholder_thumbnail_html"
-			$html_placeholder = apply_filters( 'bri_archive_product_item_gallery_placeholder_thumbnail_html', $html_placeholder );
+			$html_placeholder = apply_filters(
+				'bri_archive_product_item_gallery_placeholder_thumbnail_html',
+				$html_placeholder
+			);
 		}
 ?>
 		<div class="bri-archive-product-item-gallery">
@@ -85,10 +81,8 @@ trait HoverContent {
 									2. Изображение единичного товара - "shop_single"
 									3. Миниатюра товара - "shop_thumbnail"
 							*/
-							$full_size_image = wp_get_attachment_image_src( $attachment_id, 'full' );
-							// $full_size_image = wp_get_attachment_image_src( $attachment_id, 'shop_single' );
-							//$thumbnail       = wp_get_attachment_image_src( $attachment_id, 'full' );
-							$thumbnail       = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
+							$full_size_image = esc_url( wp_get_attachment_image_src( $attachment_id, 'full' )[ 0 ] );
+							$thumbnail = esc_url( wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' )[ 0 ] );
 
 							$first_slide = ( 1 == ++$n ) ? 'active' : '';
 
@@ -96,20 +90,29 @@ trait HoverContent {
 							$title = get_post_field( 'post_title', $attachment_id );
 							$data_caption = get_post_field( 'post_excerpt', $attachment_id );
 
-							$html_img = '<div data-lg-img-src="' . esc_url( $full_size_image[ 0 ] ) . '" class="swiper-slide bri-archive-product-item-gallery__image '  . $first_slide . '" title="' . $title . '" data-background-image="' . esc_url( $thumbnail[ 0 ] ) . '">';
-							$html_img .= '<img src="' . esc_url( $thumbnail[ 0 ] ) . '" alt="' . $title . '" title="' . $title . '" data-caption="' . $data_caption . '" />';
-					 		$html_img .= '</div>';
+							$html_img = sprintf(
+								'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" /></div>',
+								$full_size_image,
+								$first_slide,
+								$title,
+								$thumbnail,
+								$data_caption
+							);
 
-					 		$html .= apply_filters( 'bri_archive_product_item_gallery_image_thumbnail_html', $html_img, $attachment_id );
-					 	}
+							$html .= apply_filters(
+								'bri_archive_product_item_gallery_image_thumbnail_html',
+								$html_img,
+								$attachment_id
+							);
+						}
 
-				 		if ( ! $post_thumbnail_id ) {
+						if ( ! $post_thumbnail_id ) {
 							$html = $html_placeholder . $html;
 						}
 					} else {
 						$html = $html_placeholder;
 					}
-							
+
 					echo $html;
 ?>
 				</div>

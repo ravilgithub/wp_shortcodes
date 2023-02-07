@@ -9,14 +9,14 @@ require_once 'actions/product_image.php';
 require_once 'actions/product_link.php';
 require_once 'actions/product_buttons_group.php';
 require_once 'actions/product_caption.php';
-require_once 'actions/hover_content.php';
+require_once 'actions/product_hover_content.php';
 
 use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\actions\ {
 	ProductImage,
 	ProductLink,
 	ProductButtonsGroup,
 	ProductCaption,
-	HoverContent,
+	ProductHoverContent,
 };
 
 trait Actions {
@@ -24,7 +24,7 @@ trait Actions {
 	    ProductLink,
 	    ProductButtonsGroup,
 			ProductCaption,
-	    HoverContent;
+	    ProductHoverContent;
 
 	protected function add_actions() {
 		/**
@@ -226,5 +226,34 @@ trait Actions {
 		);
 
 		// ****************************************************
+
+		/**
+		 * product_hover_content_before
+		 */
+		add_action(
+			'shortcode_briz_tax_product_hover_content_before',
+			[ $this, 'product_hover_content_before' ],
+			10
+		);
+
+
+		/**
+		 * product_hover_content_after
+		 */
+		add_action(
+			'shortcode_briz_tax_product_hover_content_after',
+			[ $this, 'product_hover_content_after' ],
+			10
+		);
+
+
+		/**
+		 * product_hover_content_item_gallery
+		 */
+		add_action(
+			'shortcode_briz_tax_product_hover_content_item_gallery',
+			[ $this, 'product_hover_content_item_gallery' ],
+			10
+		);
 	}
 }
