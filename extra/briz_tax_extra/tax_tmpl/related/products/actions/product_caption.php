@@ -76,5 +76,32 @@ trait ProductCaption {
 
 		echo $rating_wrapper_open . wc_get_rating_html( $product->get_average_rating() ) . $rating_wrapper_close;
 	}
+
+
+	/**
+	 * 
+	 */
+	public function product_caption_price() {
+		global $post, $product;
+
+		if ( ! $price_html = $product->get_price_html() )
+			return false;
+
+		$price_wrapper_open = apply_filters(
+			'shortcode_briz_tax_product_caption_price_wrapper_open_html',
+			'<span class="price"><span class="price-inner-wrap">',
+			$post,
+			$product
+		);
+
+		$price_wrapper_close = apply_filters(
+			'shortcode_briz_tax_product_caption_price_wrapper_close_html',
+			'</span></span>',
+			$post,
+			$product
+		);
+
+		echo $price_wrapper_open, $price_html, $price_wrapper_close;
+	}
 }
 ?>

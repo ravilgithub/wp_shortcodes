@@ -214,6 +214,17 @@ trait Actions {
 			10
 		);
 
+
+		/**
+		 * 
+		 * product_caption_price
+		 */
+		add_action(
+			'shortcode_briz_tax_product_caption_price',
+			[ $this, 'product_caption_price' ],
+			10
+		);
+
 		// ****************************************************
 	}
 }
