@@ -203,6 +203,17 @@ trait Actions {
 			10
 		);
 
+
+		/**
+		 * 
+		 * product_caption_rating
+		 */
+		add_action(
+			'shortcode_briz_tax_product_caption_rating',
+			[ $this, 'product_caption_rating' ],
+			10
+		);
+
 		// ****************************************************
 	}
 }

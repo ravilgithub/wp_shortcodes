@@ -46,4 +46,35 @@ trait ProductCaption {
 			$product
 		);
 	}
+
+
+	/**
+	 * @param Boolean $hide_empty - спрятать нулевой рейтинг? Default: false.
+	 */
+	public function product_caption_rating( $hide_empty ) {
+		global $post, $product;
+
+		if ( ! wc_review_ratings_enabled() || $hide_empty ) {
+			return;
+		}
+
+		$rating_wrapper_open = apply_filters(
+			'shortcode_briz_tax_product_caption_rating_wrapper_open_html',
+			'<div class="star-rating-wrap after-star-rating grid">',
+			$post,
+			$product,
+			$hide_empty
+		);
+
+		$rating_wrapper_close = apply_filters(
+			'shortcode_briz_tax_product_caption_rating_wrapper_close_html',
+			'</div>',
+			$post,
+			$product,
+			$hide_empty
+		);
+
+		echo $rating_wrapper_open . wc_get_rating_html( $product->get_average_rating() ) . $rating_wrapper_close;
+	}
 }
+?>

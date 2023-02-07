@@ -386,6 +386,7 @@
 										do_action( 'shortcode_briz_tax_product_caption_before' );
 
 											do_action( 'shortcode_briz_tax_product_caption_title' );
+											do_action( 'shortcode_briz_tax_product_caption_rating' );
 
 										do_action( 'shortcode_briz_tax_product_caption_after' );
 ?>
