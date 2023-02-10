@@ -248,11 +248,11 @@ trait Actions {
 
 
 		/**
-		 * product_hover_content_item_gallery
+		 * product_hover_content_gallery
 		 */
 		add_action(
-			'shortcode_briz_tax_product_hover_content_item_gallery',
-			[ $this, 'product_hover_content_item_gallery' ],
+			'shortcode_briz_tax_product_hover_content_gallery',
+			[ $this, 'product_hover_content_gallery' ],
 			10
 		);
 	}

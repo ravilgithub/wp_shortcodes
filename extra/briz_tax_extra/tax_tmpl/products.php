@@ -389,7 +389,7 @@
 											do_action( 'shortcode_briz_tax_product_caption_rating' );
 											do_action( 'shortcode_briz_tax_product_caption_price' );
 											do_action( 'shortcode_briz_tax_product_hover_content_before' );
-											do_action( 'shortcode_briz_tax_product_hover_content_item_gallery' );
+											do_action( 'shortcode_briz_tax_product_hover_content_gallery' );
 											do_action( 'shortcode_briz_tax_product_hover_content_after' );
 
 										do_action( 'shortcode_briz_tax_product_caption_after' );

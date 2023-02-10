@@ -41,79 +41,70 @@ trait ProductHoverContent {
 	/**
 	 * 
 	 */
-	public function product_hover_content_item_gallery() {
+	public function product_hover_content_gallery() {
 		global $post, $product;
 
 		$html = '';
 		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
 		$attachment_ids = $product->get_gallery_image_ids();
 
-		if ( $post_thumbnail_id ) {
+		// Нет картинок для слайдера.
+		if ( empty( $attachment_ids ) )
+			return false;
+
+		if ( count( $attachment_ids ) == 1 ) {
+			// Если картинка одна и она такая же как миниатюра товара, то слайдер не нужен.
+			if ( $attachment_ids[ 0 ] == $post_thumbnail_id ) {
+				return false;
+			} else {
+				array_unshift( $attachment_ids, $post_thumbnail_id );
+			}
+		}
+		elseif ( ! in_array( $post_thumbnail_id, $attachment_ids ) ) {
 			array_unshift( $attachment_ids, $post_thumbnail_id );
-		} else {
-			$slide_img_src = esc_url( wc_placeholder_img_src() );
-			$slide_img_alt_attr = esc_html__( 'Awaiting product image', 'woocommerce' );
-
-			$html_placeholder = sprintf(
-				'<div data-lg-img-src="%1$s" data-background-image="%1$s" title="%2$s" class="swiper-slide bri-archive-product-item-gallery__image--placeholder" ><img src="%1$s" alt="%2$s" title="%2$s" data-caption="%2$s" /></div>',
-				$slide_img_src,
-				$slide_img_alt_attr
-			);
-
-			// Мой фильтр - "bri_archive_product_item_gallery_placeholder_thumbnail_html"
-			$html_placeholder = apply_filters(
-				'bri_archive_product_item_gallery_placeholder_thumbnail_html',
-				$html_placeholder
-			);
 		}
 ?>
 		<div class="bri-archive-product-item-gallery">
 			<div class="swiper">
 				<div class="swiper-wrapper">
 <?php
-					if ( ! empty( $attachment_ids ) ) {
-						$n = 0;
+						foreach ( $attachment_ids as $k => $attachment_id ) {
+							$first_slide = ( $k == 0 ) ? 'active' : '';
 
-						foreach ( $attachment_ids as $attachment_id ) {
-
-							/*	Фиксированный размер из адинки "woocommerce" -> "настройки" -> отображение:
-									1. Изображения каталога - "shop_catalog"
-									2. Изображение единичного товара - "shop_single"
-									3. Миниатюра товара - "shop_thumbnail"
-							*/
+							/**
+							 * Фиксированный размер из адинки:
+							 *  "woocommerce" -> "настройки" -> отображение:
+							 *	 1. Изображения каталога - "shop_catalog"
+							 *	 2. Изображение единичного товара - "shop_single"
+							 *	 3. Миниатюра товара - "shop_thumbnail"
+							 */
 							$full_size_image = esc_url( wp_get_attachment_image_src( $attachment_id, 'full' )[ 0 ] );
-							$thumbnail = esc_url( wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' )[ 0 ] );
-
-							$first_slide = ( 1 == ++$n ) ? 'active' : '';
+							list( $thumbnail, $thumbnail_width, $thumbnail_height ) = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
+							$thumbnail = esc_url( $thumbnail );
+							$aspect_ratio = ( $thumbnail_height !== 0 ) ? $thumbnail_width / $thumbnail_height : 'auto';
 
 							// Указывется при редактировании картинки в медиабиблиотеке
 							$title = get_post_field( 'post_title', $attachment_id );
 							$data_caption = get_post_field( 'post_excerpt', $attachment_id );
 
-							$html_img = sprintf(
-								'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" /></div>',
+							$slide = sprintf(
+								'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
 								$full_size_image,
 								$first_slide,
 								$title,
 								$thumbnail,
-								$data_caption
+								$data_caption,
+								$aspect_ratio
 							);
 
-							$html .= apply_filters(
-								'bri_archive_product_item_gallery_image_thumbnail_html',
-								$html_img,
+							echo apply_filters(
+								'shortcode_briz_tax_product_hover_content_gallery_slide_html',
+								$slide,
+								$post,
+								$product,
 								$attachment_id
 							);
 						}
-
-						if ( ! $post_thumbnail_id ) {
-							$html = $html_placeholder . $html;
-						}
-					} else {
-						$html = $html_placeholder;
-					}
-
-					echo $html;
 ?>
 				</div>
 			</div>
