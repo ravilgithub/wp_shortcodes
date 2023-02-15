@@ -36,6 +36,7 @@
 		public $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
+		public $slider_atts = '';
 
 
 		/**
@@ -58,6 +59,7 @@
 			$this->id = $id;
 			$this->lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
+			$this->redefine_script_tag();
 
 			$this->add_actions();
 			$this->set_filters();
@@ -77,6 +79,49 @@
 		public function add_tmpl_assets() {
 			wp_enqueue_style( $this->tmpl_name . '-css' );
 			wp_enqueue_script( $this->tmpl_name . '-js' );
+		}
+
+
+		/**
+		 * Adding a filter to override the attributes of the 'script' tag.
+		 *
+		 * Добавление фильтра для переопределения атрибутов тега 'script'.
+		 *
+		 * @return void
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 * */
+		public function redefine_script_tag() {
+			add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
+		}
+
+
+		/**
+		 * We indicate that the script is a module and, accordingly
+		 * will be able to import
+		 * functionality from other modules.
+		 *
+		 * Указываем, что скрипт - это модуль и соответственно
+		 * будет иметь возможность импортировать
+		 * функционал из других модулей.
+		 *
+		 * @param String $tag    - HTML код тега <script>.
+		 * @param String $handle - Название скрипта (рабочее название),
+		 *                         указываемое первым параметром в
+		 *                         функции wp_enqueue_script().
+		 * @param String $src    - Ссылка на скрипт.
+		 *
+		 * @return String $tag   - HTML код тега <script>.
+		 *
+		 * @since 0.0.1
+		 * @author Ravil
+		 * */
+		public function set_module_attr( $tag, $handle, $src ) {
+			$module_handle = $this->tmpl_name . '-js';
+			if ( $module_handle === $handle )
+				$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
+			return $tag;
 		}
 
 
@@ -102,6 +147,7 @@
 			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
+			$slider_atts = [];
 			$section_class = '';
 			$header = false;
 			$header_first = '';
@@ -115,10 +161,17 @@
 			$content_width_class = 'container';
 
 			if ( is_array( $opts ) ) {
+				if (
+					array_key_exists( 'slider_params', $opts ) &&
+					! empty( $opts[ 'slider_params' ] )
+				) {
+					$this->slider_atts = esc_attr( json_encode( $opts[ 'slider_params' ] ) );
+				}
+
 				if ( array_key_exists( 'header', $opts ) ) {
 					if ( $opts[ 'header' ] ) {
 						$header = true;
-						$section_class = 'section-with-header';
+						$section_class .= ' section-with-header';
 					}
 				}
 
@@ -349,7 +402,10 @@
 						<!-- <div class="swiper-pagination-custom"></div> -->
 					</div>
 
-					<div class="swiper">
+					<div
+						class="swiper"
+						data-slider-custom-atts="<?php echo $this->slider_atts; ?>"
+					>
 						<div class="swiper-wrapper">
 <?php
 						if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
