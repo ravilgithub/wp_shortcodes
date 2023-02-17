@@ -312,11 +312,11 @@
 									$term_name = __( $child->name, $this->lang_domain );
 ?>
 									<li
-										class="<?php echo $is_first; ?>"
+										class="tab-item <?php echo $is_first; ?>"
 										data-term-id="<?php echo $term_id; ?>"
 										data-term-posts-count="<?php echo $term_posts_count; ?>"
 									>
-										<a href="#<?php echo $term_slug; ?>"><?php echo $term_name; ?></a>
+										<a href="#<?php echo $term_slug; ?>" class="tab-anchor"><?php echo $term_name; ?></a>
 									</li>
 <?php
 									$is_first = '';
