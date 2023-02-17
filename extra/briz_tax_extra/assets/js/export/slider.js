@@ -89,7 +89,8 @@ const slider = {
 	 * @since 0.0.1
 	 */
 	setSlider() {
-		const ctxs = document.querySelectorAll( this.ctx );
+		const ctxs = ( typeof this.ctx === 'object' && this.ctx !== null ) ? [ this.ctx ] : document.querySelectorAll( this.ctx );
+
 		for ( const ctx of ctxs ) {
 			// console.log( ctx );
 			const container = ctx.querySelector( '.swiper' );
