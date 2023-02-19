@@ -93,10 +93,11 @@ const slider = {
 
 		for ( const ctx of ctxs ) {
 			// console.log( ctx );
-			const container = ctx.querySelector( '.swiper' );
+			const sliderSelector = ( this.scoped ) ? ':scope > .swiper' : '.swiper',
+			      container = ctx.querySelector( sliderSelector );
 
-			// let atts =  Object.assign( {}, this.getAtts() );
-			let atts =  this.getAtts( ctx );
+			// let atts = Object.assign( {}, this.getAtts() );
+			let atts = this.getAtts( ctx );
 
 			atts.navigation.prevEl = ctx.querySelector( atts.navigation.prevEl );
 			atts.navigation.nextEl = ctx.querySelector( atts.navigation.nextEl );
@@ -118,10 +119,11 @@ const slider = {
 	 * @return {void}
 	 * @since 0.0.1
 	 */
-	init( ctx, tmplSliderAtts ) {
+	init( ctx, tmplSliderAtts, scoped = false ) {
 		if ( ! ctx || ! tmplSliderAtts )
 			return false;
 		this.ctx = ctx;
+		this.scoped = scoped;
 		this.tmplSliderAtts = tmplSliderAtts;
 		this.setSlider();
 	}
