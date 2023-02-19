@@ -75,8 +75,15 @@ const slider = {
 	getAtts( ctx ) {
 		let atts = ctx.querySelector( '.swiper' ).dataset.sliderCustomAtts;
 		// atts = ( atts && '[]' !== atts && 'undefined' !== typeof atts ) ? JSON.parse( atts ) : this.tmplSliderAtts;
-		atts = JSON.parse( atts );
-		jQuery.extend( true, atts, this.tmplSliderAtts );
+
+		try {
+			atts = JSON.parse( atts );
+			jQuery.extend( true, atts, this.tmplSliderAtts );
+		} catch ( e ) {
+			// Если не параметров для слайдера из админки, берём параметры из JS файла который вызывает объект slider.
+			atts = this.tmplSliderAtts;
+		}
+
 		return this.prepareAtts( slider_defaults, atts );
 	},
 
