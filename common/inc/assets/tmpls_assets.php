@@ -191,7 +191,7 @@ $assets = [
 		'products' => [
 			'id'        => 'briz-products-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_products.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js', 'briz-imagesloaded-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
