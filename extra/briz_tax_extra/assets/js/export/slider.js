@@ -96,10 +96,10 @@ const slider = {
 	 * @since 0.0.1
 	 */
 	setSlider() {
-		const ctxs = ( typeof this.ctx === 'object' && this.ctx !== null ) ? [ this.ctx ] : document.querySelectorAll( this.ctx );
+		const sliders = [],
+		      ctxs = ( typeof this.ctx === 'object' && this.ctx !== null ) ? [ this.ctx ] : document.querySelectorAll( this.ctx );
 
 		for ( const ctx of ctxs ) {
-			// console.log( ctx );
 			const sliderSelector = ( this.scoped ) ? ':scope > .swiper' : '.swiper',
 			      container = ctx.querySelector( sliderSelector );
 
@@ -110,10 +110,10 @@ const slider = {
 			atts.navigation.nextEl = ctx.querySelector( atts.navigation.nextEl );
 			atts.pagination.el = ctx.querySelector( atts.pagination.el );
 
-			// console.log( this.ctx, atts );
-
-			new Swiper( container, atts );
+			sliders.push( new Swiper( container, atts ) );
 		}
+
+		return sliders;
 	},
 
 
@@ -132,7 +132,8 @@ const slider = {
 		this.ctx = ctx;
 		this.scoped = scoped;
 		this.tmplSliderAtts = tmplSliderAtts;
-		this.setSlider();
+
+		return this.setSlider();
 	}
 };
 
