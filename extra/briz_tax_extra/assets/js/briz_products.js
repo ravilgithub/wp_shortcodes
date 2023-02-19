@@ -11,6 +11,7 @@ const products = {
     anchor: 'tab-anchor',
     content: '.section-content-wrap',
     contentInner: '.tab-content-inner',
+    itemSlider: '.bri-archive-product-item-gallery',
   },
 
   sliderAtts: {
@@ -30,6 +31,40 @@ const products = {
     },
   },
 
+  itemSliderAtts: {
+    navigation: {
+      nextEl: '.swiper-button-next-custom',
+      prevEl: '.swiper-button-prev-custom'
+    },
+
+    pagination: {
+      // el: '.swiper-pagination-custom'
+    },
+
+    lazy: {
+      // enabled: true,
+      // loadOnTransitionStart: true,
+      // preloaderClass: 'swiper-lazy-preloader-custom'
+    },
+
+    slidesPerView: 3,
+    spaceBetween: 15,
+
+    breakpoints: {
+      250: { slidesPerView: 3 },
+      320: { slidesPerView: 3 },
+      384: { slidesPerView: 4 },
+      480: { slidesPerView: 4 },
+      568: { slidesPerView: 3 },
+      640: { slidesPerView: 3 },
+      768: { slidesPerView: 3 },
+      992: { slidesPerView: 3 },
+      1200: { slidesPerView: 3 }
+    },
+
+    on: {}
+  },
+
 
   /**
    * Слайдер.
@@ -42,7 +77,13 @@ const products = {
       inst
         .querySelectorAll( this.selectors.contentInner )
         .forEach( el => {
-          slider.init( el, this.sliderAtts );
+          slider.init( el, this.sliderAtts, true );
+
+          el
+            .querySelectorAll( this.selectors.itemSlider )
+            .forEach( item => {
+              slider.init( item, this.itemSliderAtts );
+            } );
         } );
     } );
   },
