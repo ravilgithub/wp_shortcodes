@@ -11,32 +11,42 @@ trait ProductCaption {
 	/**
 	 * 
 	 */
-	public function product_caption_before() {
+	public static function shortcode_briz_tax_template_product_caption_wrap_open() {
 		global $post, $product;
-		echo '<div class="caption">';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_caption_wrap_open_html',
+			'<div class="caption">',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_caption_after() {
+	public static function shortcode_briz_tax_template_product_caption_wrap_close() {
 		global $post, $product;
-		echo '</div>';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_caption_wrap_close_html',
+			'</div>',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_caption_title() {
+	public static function shortcode_briz_tax_template_product_caption_title() {
 		global $post, $product;
 
 		$link = esc_url( get_the_permalink() );
-		$title = __( get_the_title(), $this->lang_domain );
+		$title = __( get_the_title(), self::$lang_domain );
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_caption_title_html',
+			'shortcode_briz_tax_template_product_caption_title_html',
 			sprintf(
 				'<h4><a href="%1$s" title="%2$s">%2$s</a></h4>',
 				$link,
@@ -51,7 +61,7 @@ trait ProductCaption {
 	/**
 	 * @param Boolean $hide_empty - спрятать нулевой рейтинг? Default: false.
 	 */
-	public function product_caption_rating( $hide_empty ) {
+	public static function shortcode_briz_tax_template_product_caption_rating( $hide_empty ) {
 		global $post, $product;
 
 		if ( ! wc_review_ratings_enabled() || $hide_empty ) {
@@ -59,7 +69,7 @@ trait ProductCaption {
 		}
 
 		$rating_wrapper_open = apply_filters(
-			'shortcode_briz_tax_product_caption_rating_wrapper_open_html',
+			'shortcode_briz_tax_template_product_caption_rating_open_html',
 			'<div class="star-rating-wrap after-star-rating grid">',
 			$post,
 			$product,
@@ -67,7 +77,7 @@ trait ProductCaption {
 		);
 
 		$rating_wrapper_close = apply_filters(
-			'shortcode_briz_tax_product_caption_rating_wrapper_close_html',
+			'shortcode_briz_tax_template_product_caption_rating_close_html',
 			'</div>',
 			$post,
 			$product,
@@ -81,21 +91,21 @@ trait ProductCaption {
 	/**
 	 * 
 	 */
-	public function product_caption_price() {
+	public static function shortcode_briz_tax_template_product_caption_price() {
 		global $post, $product;
 
 		if ( ! $price_html = $product->get_price_html() )
 			return false;
 
 		$price_wrapper_open = apply_filters(
-			'shortcode_briz_tax_product_caption_price_wrapper_open_html',
+			'shortcode_briz_tax_template_product_caption_price_open_html',
 			'<span class="price"><span class="price-inner-wrap">',
 			$post,
 			$product
 		);
 
 		$price_wrapper_close = apply_filters(
-			'shortcode_briz_tax_product_caption_price_wrapper_close_html',
+			'shortcode_briz_tax_template_product_caption_price_close_html',
 			'</span></span>',
 			$post,
 			$product

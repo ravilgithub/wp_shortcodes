@@ -33,7 +33,7 @@
 		public $content;
 		public $atts;
 		public $id;
-		public $lang_domain;
+		public static $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
 		public $slider_atts = '';
@@ -57,7 +57,7 @@
 			$this->content = $content;
 			$this->atts = $atts;
 			$this->id = $id;
-			$this->lang_domain = $lang_domain;
+			self::$lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
 			$this->redefine_script_tag();
 
@@ -176,11 +176,11 @@
 				}
 
 				if ( array_key_exists( 'header_first', $opts ) ) {
-					$header_first = __( $opts[ 'header_first' ], $this->lang_domain );
+					$header_first = __( $opts[ 'header_first' ], self::$lang_domain );
 				}
 
 				if ( array_key_exists( 'header_last', $opts ) ) {
-					$header_last = __( $opts[ 'header_last' ], $this->lang_domain );
+					$header_last = __( $opts[ 'header_last' ], self::$lang_domain );
 				}
 
 				if ( array_key_exists( 'header_spacer', $opts ) ) {
@@ -192,7 +192,7 @@
 				}
 
 				if ( array_key_exists( 'header_description_text', $opts ) ) {
-					$header_description_text = __( $opts[ 'header_description_text' ], $this->lang_domain );
+					$header_description_text = __( $opts[ 'header_description_text' ], self::$lang_domain );
 				}
 
 				if (
@@ -309,7 +309,7 @@
 									$term_id = esc_attr( $child->term_id );
 									$term_posts_count = esc_attr( $child->count );
 									$term_slug = esc_attr( $child->slug );
-									$term_name = __( $child->name, $this->lang_domain );
+									$term_name = __( $child->name, self::$lang_domain );
 ?>
 									<li
 										class="tab-item <?php echo $is_first; ?>"
@@ -416,39 +416,22 @@
 								<div class="<?php echo implode( ' ', get_post_class( 'product-thumb' ) ); ?>">
 									<div class="product-block-inner clearfix">
 <?php
-										// Image wrapper
-										do_action( 'shortcode_briz_tax_product_image_before' );
+										// Image
+										do_action( 'shortcode_briz_tax_before_product_image' );
 											
-											// Link
-											do_action( 'shortcode_briz_tax_product_link_open' );
-											do_action( 'shortcode_briz_tax_product_image_preloader' );
-											do_action( 'shortcode_briz_tax_product_sale_flash' );
-											do_action( 'shortcode_briz_tax_product_message' );
-											do_action( 'shortcode_briz_tax_product_image' );
-											do_action( 'shortcode_briz_tax_product_link_close' );
+										// Image / Link
+										do_action( 'shortcode_briz_tax_before_product_image_link' );
+										do_action( 'shortcode_briz_tax_after_product_image_link' );
 
-											// Buttons
-											do_action( 'shortcode_briz_tax_product_buttons_before' );
-											do_action( 'shortcode_briz_tax_product_add_to_cart' );
-											do_action( 'shortcode_briz_tax_product_add_to_wishlist' );
-											do_action( 'shortcode_briz_tax_product_add_to_compare' );
-											do_action( 'shortcode_briz_tax_product_quickview' );
-											do_action( 'shortcode_briz_tax_product_buttons_after' );
+										// Image / Buttons
+										do_action( 'shortcode_briz_tax_before_product_buttons' );
+										do_action( 'shortcode_briz_tax_after_product_buttons' );
 
-										do_action( 'shortcode_briz_tax_product_image_after' );
-
+										do_action( 'shortcode_briz_tax_after_product_image' );
 
 										// Caption
-										do_action( 'shortcode_briz_tax_product_caption_before' );
-
-											do_action( 'shortcode_briz_tax_product_caption_title' );
-											do_action( 'shortcode_briz_tax_product_caption_rating' );
-											do_action( 'shortcode_briz_tax_product_caption_price' );
-											do_action( 'shortcode_briz_tax_product_hover_content_before' );
-											do_action( 'shortcode_briz_tax_product_hover_content_gallery' );
-											do_action( 'shortcode_briz_tax_product_hover_content_after' );
-
-										do_action( 'shortcode_briz_tax_product_caption_after' );
+										do_action( 'shortcode_briz_tax_before_product_caption' );
+										do_action( 'shortcode_briz_tax_after_product_caption' );
 ?>
 									</div> <!-- .product-block-inner -->
 								</div> <!-- .product-thumb -->

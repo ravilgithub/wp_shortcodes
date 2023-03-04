@@ -11,25 +11,35 @@ trait ProductImage {
 	/**
 	 * 
 	 */
-	public function product_image_before() {
+	public static function shortcode_briz_tax_template_product_image_wrap_open() {
 		global $post, $product;
-		echo '<div class="image-wrap">';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_image_wrap_open_html',
+			'<div class="image-wrap">',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_image_after() {
+	public static function shortcode_briz_tax_template_product_image_wrap_close() {
 		global $post, $product;
-		echo '</div>';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_image_wrap_close_html',
+			'</div>',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_sale_flash() {
+	public static function shortcode_briz_tax_template_product_sale_flash() {
 		global $post, $product;
 		
 		if ( ! $product->is_on_sale() )
@@ -47,30 +57,38 @@ trait ProductImage {
 		$text = floor( ( $regular_price - $sale_price ) / $regular_price * 100 );
 		$text = '-' . $text . '%';
 
-		echo apply_filters( 'shortcode_briz_tax_product_sale_flash_html', '<span class="onsale">' . $text . '</span>', $post, $product );
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_sale_flash_html',
+			'<span class="onsale">' . $text . '</span>',
+			$post,
+			$product );
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_message() {
+	public static function shortcode_briz_tax_template_product_message() {
 		global $post, $product;
-
-		echo apply_filters( 'shortcode_briz_tax_product_message_html', '<span class="product-message">' . esc_html__( 'Sale!', 'woocommerce' ) . '</span>', $post, $product );
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_message_html',
+			'<span class="product-message">' . esc_html__( 'Sale!', 'woocommerce' ) . '</span>',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_image() {
+	public static function shortcode_briz_tax_template_product_image() {
 		global $post, $product;
 		$size = 'woocommerce_single';
 		$attr = [ 'class' => 'img-responsive' ];
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_image_html',
+			'shortcode_briz_tax_template_product_image_html',
 			sprintf(
 				'<div class="product-image">%s</div>',
 				woocommerce_get_product_thumbnail( $size, $attr, false )
@@ -86,8 +104,13 @@ trait ProductImage {
 	/**
 	 * 
 	 */
-	public function image_preloader() {
+	public static function shortcode_briz_tax_template_product_image_preloader() {
 		global $post, $product;
-		echo '<div class="archive-product-preloader-box"></div>';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_image_preloader_html',
+			'<div class="archive-product-preloader-box"></div>',
+			$post,
+			$product
+		);
 	}
 }

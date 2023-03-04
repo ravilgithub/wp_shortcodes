@@ -11,11 +11,11 @@ trait ProductHoverContent {
 	/**
 	 * 
 	 */
-	public function product_hover_content_before() {
+	public static function shortcode_briz_tax_template_product_hover_content_open_wrap() {
 		global $post, $product;
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_hover_content_before_html',
+			'shortcode_briz_tax_template_product_hover_content_open_wrap_html',
 			'<div class="caption-on-hover-content">',
 			$post,
 			$product
@@ -26,11 +26,11 @@ trait ProductHoverContent {
 	/**
 	 * 
 	 */
-	public function product_hover_content_after() {
+	public static function shortcode_briz_tax_template_product_hover_content_close_wrap() {
 		global $post, $product;
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_hover_content_after_html',
+			'shortcode_briz_tax_template_product_hover_content_close_wrap_html',
 			'</div>',
 			$post,
 			$product
@@ -41,7 +41,7 @@ trait ProductHoverContent {
 	/**
 	 * 
 	 */
-	public function product_hover_content_gallery() {
+	public static function shortcode_briz_tax_template_product_hover_content_gallery() {
 		global $post, $product;
 
 		$html = '';
@@ -98,7 +98,7 @@ trait ProductHoverContent {
 							);
 
 							echo apply_filters(
-								'shortcode_briz_tax_product_hover_content_gallery_slide_html',
+								'shortcode_briz_tax_template_product_hover_content_gallery_slide_html',
 								$slide,
 								$post,
 								$product,

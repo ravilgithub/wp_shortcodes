@@ -5,27 +5,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-use Briz_Shortcodes\common\Helper;
-
 trait ProductLink {
 	/**
 	 * 
 	 */
-	public function product_link_open( $show_text ) {
+	public static function shortcode_briz_tax_template_product_image_link_open( $show_text ) {
 		global $post, $product;
 		$link = esc_url( get_the_permalink() );
-		$title = __( get_the_title(), $this->lang_domain );
+		$title = __( get_the_title(), self::$lang_domain );
 		$text = ( $show_text ) ? $title : '';
 		$format = '<a href="%s" title="%s">%s';
-		printf( $format, $link, $title, $text );
+
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_image_link_open_html',
+			sprintf( $format, $link, $title, $text ),
+			$post,
+			$product,
+			$format,
+			$link,
+			$title,
+			$text
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_link_close() {
+	public static function shortcode_briz_tax_template_product_image_link_close() {
 		global $post, $product;
-		echo '</a>';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_image_link_close_html',
+			'</a>',
+			$post,
+			$product
+		);
 	}
 }

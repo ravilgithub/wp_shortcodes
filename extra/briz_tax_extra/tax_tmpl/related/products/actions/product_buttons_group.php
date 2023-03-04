@@ -11,25 +11,35 @@ trait ProductButtonsGroup {
 	/**
 	 * 
 	 */
-	public function product_buttons_group_before() {
+	public static function shortcode_briz_tax_template_product_buttons_wrap_open() {
 		global $post, $product;
-		echo '<div class="button-group">';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_buttons_wrap_open_html',
+			'<div class="button-group">',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_buttons_group_after() {
+	public static function shortcode_briz_tax_template_product_buttons_wrap_close() {
 		global $post, $product;
-		echo '</div>';
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_buttons_wrap_close_html',
+			'</div>',
+			$post,
+			$product
+		);
 	}
 
 
 	/**
 	 * 
 	 */
-	public function product_add_to_cart( $args = [] ) {
+	public static function shortcode_briz_tax_template_product_add_to_cart( $args = [] ) {
 		global $post, $product;
 
 		if ( $product ) {
@@ -55,14 +65,14 @@ trait ProductButtonsGroup {
 				),
 			);
 
-			$args = apply_filters( 'shortcode_briz_tax_product_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
+			$args = apply_filters( 'shortcode_briz_tax_template_product_add_to_cart_args', wp_parse_args( $args, $defaults ), $product );
 
 			if ( isset( $args['attributes']['aria-label'] ) ) {
 				$args['attributes']['aria-label'] = wp_strip_all_tags( $args['attributes']['aria-label'] );
 			}
 
 			echo apply_filters(
-				'shortcode_briz_tax_product_add_to_cart_button_html', // WPCS: XSS ok.
+				'shortcode_briz_tax_template_product_add_to_cart_html', // WPCS: XSS ok.
 				sprintf(
 					'<div class="woocommerce_loop_add_to_cart_link_wrap"><a href="%s" data-quantity="%s" class="%s" %s>%s</a></div>',
 					esc_url( $product->add_to_cart_url() ),
@@ -82,7 +92,7 @@ trait ProductButtonsGroup {
 	/**
 	 * 
 	 */
-	public function product_add_to_wishlist() {
+	public static function shortcode_briz_tax_template_product_add_to_wishlist() {
 		if ( shortcode_exists( 'yith_wcwl_add_to_wishlist' ) ) {
 			echo do_shortcode( "[yith_wcwl_add_to_wishlist]" );
 		}
@@ -92,7 +102,7 @@ trait ProductButtonsGroup {
 	/**
 	 * 
 	 */
-	public function product_add_to_compare() {
+	public static function shortcode_briz_tax_template_product_add_to_compare() {
 		global $yith_woocompare;
 		global $post, $product;
 
@@ -112,7 +122,7 @@ trait ProductButtonsGroup {
 		}
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_add_to_compare_button_html',
+			'shortcode_briz_tax_template_product_add_to_compare_html',
 			sprintf(
 				'<div class="woocommerce product compare-button"><a href="/clear/?action=yith-woocompare-view-table&iframe=yes" class="compare button%3$s" data-product_id="%1$d" rel="nofollow">%2$s</a></div>',
 				$product_id,
@@ -129,15 +139,15 @@ trait ProductButtonsGroup {
 	/**
 	 * 
 	 */
-	public function product_quickview() {
-		global $product;
+	public static function shortcode_briz_tax_template_product_quickview() {
+		global $post, $product;
 		$product_id = esc_attr( $product->get_id() );
 		$post_type = get_post_type( $product_id );
 		$style = ( 'product_variation' === $post_type ) ? 'visibility: hidden;' : '';
 		$text = __( 'Quick view', 'woocommerce' );
 
 		echo apply_filters(
-			'shortcode_briz_tax_product_quickview_button_html',
+			'shortcode_briz_tax_template_product_quickview_html',
 			sprintf(
 				'<div class="button-quickview bri-%1$s" style="%3$s"><a class="quickview button" rel="nofollow" href="#quickview-%2$d" data-product-id="%2$d" data-post-type="%1$s">%4$s</a></div>',
 				$post_type,
@@ -145,6 +155,7 @@ trait ProductButtonsGroup {
 				$style,
 				$text
 			),
+			$post,
 			$product
 		);
 	}
