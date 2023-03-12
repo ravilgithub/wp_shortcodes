@@ -111,8 +111,6 @@ trait Actions {
 				if ( empty( $callback ) || has_action( $tag, $callback ) )
 					continue;
 
-				$priority = $priority ?: 10;
-				$accepted_args = $accepted_args ?: 1;
 				add_action( $tag, $callback, $priority, $accepted_args );
 			}
 		}
