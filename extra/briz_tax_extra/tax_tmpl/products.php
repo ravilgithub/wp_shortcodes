@@ -62,7 +62,6 @@
 			$this->redefine_script_tag();
 
 			$this->add_actions();
-			$this->set_filters();
 		}
 
 
@@ -446,28 +445,5 @@
 				</div> <!-- .tab-content-inner -->
 <?php
 			endforeach;
-		}
-
-
-		/**
-		 * 
-		 */
-		public function set_filters() {
-			add_filter( 'woocommerce_product_get_rating_html', [ $this, 'bri_create_empty_rating_stars' ], 10, 2 );
-		}
-
-
-		/**
-		 * Добавление пустых звёзд.
-		 * Нужно это потому, что если нет отзывов по умолчанию звёзды не показываются. 
-		 */
-		public function bri_create_empty_rating_stars( $rating_html, $rating ) {
-			if ( 0 >= $rating ) {
-				$rating = 0;
-				$rating_html = '<div class="star-rating" title="' . sprintf( esc_attr__( 'Rated %s out of 5', 'woocommerce' ), $rating ) . '">';
-				$rating_html .= '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"><strong class="rating">' . $rating . '</strong> ' . esc_html__( 'out of 5', 'woocommerce' ) . '</span>';
-				$rating_html .= '</div>';
-			}
-			return $rating_html;
 		}
 	}

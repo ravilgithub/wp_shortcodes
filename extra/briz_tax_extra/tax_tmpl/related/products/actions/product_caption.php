@@ -59,32 +59,48 @@ trait ProductCaption {
 
 
 	/**
-	 * @param Boolean $hide_empty - спрятать нулевой рейтинг? Default: false.
+	 * 
 	 */
-	public static function shortcode_briz_tax_template_product_caption_rating( $hide_empty ) {
+	public static function rating_html() {
 		global $post, $product;
 
-		if ( ! wc_review_ratings_enabled() || $hide_empty ) {
+		$rating = $product->get_average_rating();
+		$title = sprintf( esc_attr__( 'Rated %s out of ', 'woocommerce' ), $rating );
+		$style_width = ( $rating / 5 ) * 100;
+		$text = esc_html__( 'out of 5', 'woocommerce' );
+
+		return sprintf(
+			'<div class="star-rating" title="%s"><span style="width:%s%%;"><strong class="rating">%s</strong>%s</span></div>',
+			$title,
+			$style_width,
+			$rating,
+			$text
+		);
+	}
+
+
+	/**
+	 * 
+	 */
+	public static function shortcode_briz_tax_template_product_caption_rating() {
+		global $post, $product;
+
+		if ( ! wc_review_ratings_enabled() ) {
 			return;
 		}
 
-		$rating_wrapper_open = apply_filters(
-			'shortcode_briz_tax_template_product_caption_rating_open_html',
-			'<div class="star-rating-wrap after-star-rating grid">',
+		$rating_html = self::rating_html();
+
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_caption_rating_html',
+			sprintf(
+				'<div class="star-rating-wrap after-star-rating grid">%s</div>',
+				$rating_html
+			),
 			$post,
 			$product,
-			$hide_empty
+			$rating_html
 		);
-
-		$rating_wrapper_close = apply_filters(
-			'shortcode_briz_tax_template_product_caption_rating_close_html',
-			'</div>',
-			$post,
-			$product,
-			$hide_empty
-		);
-
-		echo $rating_wrapper_open . wc_get_rating_html( $product->get_average_rating() ) . $rating_wrapper_close;
 	}
 
 
