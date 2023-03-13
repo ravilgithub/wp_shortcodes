@@ -70,9 +70,16 @@ trait ProductImage {
 	 */
 	public static function shortcode_briz_tax_template_product_message() {
 		global $post, $product;
+
+		if ( ! $product->is_on_sale() )
+			return false;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_message_html',
-			'<span class="product-message">' . esc_html__( 'Sale!', 'woocommerce' ) . '</span>',
+			sprintf(
+				'<span class="product-message">%s</span>',
+				esc_html__( 'Sale!', 'woocommerce' )
+			),
 			$post,
 			$product
 		);
