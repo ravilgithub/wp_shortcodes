@@ -113,21 +113,15 @@ trait ProductCaption {
 		if ( ! $price_html = $product->get_price_html() )
 			return false;
 
-		$price_wrapper_open = apply_filters(
-			'shortcode_briz_tax_template_product_caption_price_open_html',
-			'<span class="price"><span class="price-inner-wrap">',
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_caption_price_html',
+			sprintf(
+				'<span class="price"><span class="price-inner-wrap">%s</span></span>',
+				$price_html
+			),
 			$post,
 			$product
 		);
-
-		$price_wrapper_close = apply_filters(
-			'shortcode_briz_tax_template_product_caption_price_close_html',
-			'</span></span>',
-			$post,
-			$product
-		);
-
-		echo $price_wrapper_open, $price_html, $price_wrapper_close;
 	}
 }
 ?>
