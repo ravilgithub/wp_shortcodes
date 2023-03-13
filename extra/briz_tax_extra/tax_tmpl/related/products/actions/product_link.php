@@ -14,14 +14,12 @@ trait ProductLink {
 		$link = esc_url( get_the_permalink() );
 		$title = __( get_the_title(), self::$lang_domain );
 		$text = ( $show_text ) ? $title : '';
-		$format = '<a href="%s" title="%s">%s';
 
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_image_link_open_html',
-			sprintf( $format, $link, $title, $text ),
+			sprintf( '<a href="%s" title="%s">%s', $link, $title, $text ),
 			$post,
 			$product,
-			$format,
 			$link,
 			$title,
 			$text
