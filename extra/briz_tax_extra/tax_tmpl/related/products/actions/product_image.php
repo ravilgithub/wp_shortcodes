@@ -41,27 +41,27 @@ trait ProductImage {
 	 */
 	public static function shortcode_briz_tax_template_product_sale_flash() {
 		global $post, $product;
-		
+
 		if ( ! $product->is_on_sale() )
 			return false;
 
-		$text = esc_html__( 'Sale!', 'woocommerce' );
-		$class = 'product-message';
-
 		$regular_price = floatval( $product->get_regular_price() );
-		$sale_price = floatval( $product->get_sale_price() );
-
 		if ( ! $regular_price )
 			return false;
 
-		$text = floor( ( $regular_price - $sale_price ) / $regular_price * 100 );
-		$text = '-' . $text . '%';
+		$sale_price = floatval( $product->get_sale_price() );
+		$discount = floor( ( $regular_price - $sale_price ) / $regular_price * 100 );
 
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_sale_flash_html',
-			'<span class="onsale">' . $text . '</span>',
+			sprintf(
+				'<span class="onsale">-%s%%</span>',
+				$discount
+			),
 			$post,
-			$product );
+			$product,
+			$discount
+		);
 	}
 
 
