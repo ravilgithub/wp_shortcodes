@@ -41,10 +41,55 @@ trait ProductHoverContent {
 	/**
 	 * 
 	 */
+	public static function gallery_slides( $post, $product, $attachment_ids ) {
+		$slides = '';
+
+		foreach ( $attachment_ids as $k => $attachment_id ) {
+			$first_slide = ( $k == 0 ) ? 'active' : '';
+
+			/**
+			 * Фиксированный размер из адинки:
+			 *  "woocommerce" -> "настройки" -> отображение:
+			 *	 1. Изображения каталога - "shop_catalog"
+			 *	 2. Изображение единичного товара - "shop_single"
+			 *	 3. Миниатюра товара - "shop_thumbnail"
+			 */
+			$full_size_image = esc_url( wp_get_attachment_image_src( $attachment_id, 'full' )[ 0 ] );
+			list( $thumbnail, $thumbnail_width, $thumbnail_height ) = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
+			$thumbnail = esc_url( $thumbnail );
+			$aspect_ratio = ( $thumbnail_height !== 0 ) ? $thumbnail_width / $thumbnail_height : 'auto';
+
+			// Указывется при редактировании картинки в медиабиблиотеке
+			$title = get_post_field( 'post_title', $attachment_id );
+			$data_caption = get_post_field( 'post_excerpt', $attachment_id );
+
+			$slides .= apply_filters(
+				'shortcode_briz_tax_template_product_hover_content_gallery_slide_html',
+				sprintf(
+					'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
+					$full_size_image,
+					$first_slide,
+					$title,
+					$thumbnail,
+					$data_caption,
+					$aspect_ratio
+				),
+				$post,
+				$product,
+				$attachment_id
+			);
+		}
+
+		return $slides;
+	}
+
+
+	/**
+	 * 
+	 */
 	public static function shortcode_briz_tax_template_product_hover_content_gallery() {
 		global $post, $product;
 
-		$html = '';
 		$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
 		$attachment_ids = $product->get_gallery_image_ids();
 
@@ -63,55 +108,16 @@ trait ProductHoverContent {
 		elseif ( ! in_array( $post_thumbnail_id, $attachment_ids ) ) {
 			array_unshift( $attachment_ids, $post_thumbnail_id );
 		}
-?>
-		<div class="bri-archive-product-item-gallery">
-			<div class="swiper">
-				<div class="swiper-wrapper">
-<?php
-						foreach ( $attachment_ids as $k => $attachment_id ) {
-							$first_slide = ( $k == 0 ) ? 'active' : '';
 
-							/**
-							 * Фиксированный размер из адинки:
-							 *  "woocommerce" -> "настройки" -> отображение:
-							 *	 1. Изображения каталога - "shop_catalog"
-							 *	 2. Изображение единичного товара - "shop_single"
-							 *	 3. Миниатюра товара - "shop_thumbnail"
-							 */
-							$full_size_image = esc_url( wp_get_attachment_image_src( $attachment_id, 'full' )[ 0 ] );
-							list( $thumbnail, $thumbnail_width, $thumbnail_height ) = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
-							$thumbnail = esc_url( $thumbnail );
-							$aspect_ratio = ( $thumbnail_height !== 0 ) ? $thumbnail_width / $thumbnail_height : 'auto';
-
-							// Указывется при редактировании картинки в медиабиблиотеке
-							$title = get_post_field( 'post_title', $attachment_id );
-							$data_caption = get_post_field( 'post_excerpt', $attachment_id );
-
-							$slide = sprintf(
-								'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
-								$full_size_image,
-								$first_slide,
-								$title,
-								$thumbnail,
-								$data_caption,
-								$aspect_ratio
-							);
-
-							echo apply_filters(
-								'shortcode_briz_tax_template_product_hover_content_gallery_slide_html',
-								$slide,
-								$post,
-								$product,
-								$attachment_id
-							);
-						}
-?>
-				</div>
-			</div>
-			<div class="swiper-button-prev-custom"></div>
-			<div class="swiper-button-next-custom"></div>
-			<!-- <div class="swiper-pagination-custom"></div> -->
-		</div>
-<?php
+		echo apply_filters(
+			'shortcode_briz_tax_template_product_hover_content_gallery_html',
+			sprintf(
+				'<div class="bri-archive-product-item-gallery"><div class="swiper"><div class="swiper-wrapper">%s</div></div><div class="swiper-button-prev-custom"></div><div class="swiper-button-next-custom"></div></div>',
+				self::gallery_slides( $post, $product, $attachment_ids )
+			),
+			$post,
+			$product,
+			$attachment_ids
+		);
 	}
 }
