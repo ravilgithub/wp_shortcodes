@@ -21,6 +21,10 @@ use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\actions\ {
 
 use Briz_Shortcodes\common\Helper;
 
+
+/**
+ * 
+ */
 trait Actions {
 	use ProductImage,
 	    ProductLink,
@@ -28,8 +32,16 @@ trait Actions {
 	    ProductCaption,
 	    ProductHoverContent;
 
+
 	/**
-	 * 
+	 * Actions list.
+	 *
+	 * Список действий.
+	 *
+	 * @return Array - actions list
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	protected function get_actions_list() {
 		$actions_list = [
@@ -95,7 +107,14 @@ trait Actions {
 
 
 	/**
-	 * 
+	 * Add actions.
+	 *
+	 * Прикрепляем указанную PHP функцию на указанный хук.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	protected function add_actions() {
 		$defaults = [ null, 10, 1 ];

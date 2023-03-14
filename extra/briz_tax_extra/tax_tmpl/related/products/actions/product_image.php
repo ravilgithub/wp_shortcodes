@@ -7,12 +7,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Briz_Shortcodes\common\Helper;
 
+
+/**
+ * 
+ */
 trait ProductImage {
+
 	/**
-	 * 
+	 * The opening tag of the product card thumbnail wrapper.
+	 *
+	 * Открывающий тег обёртки миниатюры карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image_wrap_open() {
 		global $post, $product;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_image_wrap_open_html',
 			'<div class="image-wrap">',
@@ -23,10 +36,18 @@ trait ProductImage {
 
 
 	/**
-	 * 
+	 * The closing tag of the product card thumbnail wrapper.
+	 *
+	 * Закрвающий тег обёртки миниатюры карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image_wrap_close() {
 		global $post, $product;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_image_wrap_close_html',
 			'</div>',
@@ -37,7 +58,14 @@ trait ProductImage {
 
 
 	/**
-	 * 
+	 * Percentage discount on product price.
+	 *
+	 * Процент скидки на цену товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_sale_flash() {
 		global $post, $product;
@@ -66,7 +94,14 @@ trait ProductImage {
 
 
 	/**
-	 * 
+	 * Message about the participation of goods in the sale.
+	 *
+	 * Сообщение об участии товара в распродаже.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_message() {
 		global $post, $product;
@@ -87,10 +122,18 @@ trait ProductImage {
 
 
 	/**
-	 * 
+	 * Product card thumbnail.
+	 *
+	 * Миниатюра карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image() {
 		global $post, $product;
+
 		$size = 'woocommerce_single';
 		$attr = [ 'class' => 'img-responsive' ];
 
@@ -109,10 +152,18 @@ trait ProductImage {
 
 
 	/**
-	 * 
+	 * Product card thumbnail preloader HTML element.
+	 *
+	 * HTML элемент сигнализирующий о загрузке карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image_preloader() {
 		global $post, $product;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_image_preloader_html',
 			'<div class="archive-product-preloader-box"></div>',

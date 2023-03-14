@@ -5,9 +5,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+use Briz_Shortcodes\common\Helper;
+
+
+/**
+ * 
+ */
 trait ProductLink {
+
 	/**
-	 * 
+	 * The opening tag of the link to the product page.
+	 *
+	 * Открывающий тег ссылки на страницу товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image_link_open( $show_text ) {
 		global $post, $product;
@@ -28,7 +42,14 @@ trait ProductLink {
 
 
 	/**
-	 * 
+	 * The closing tag of the link to the product page.
+	 *
+	 * Закрывающий тег ссылки на страницу товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_image_link_close() {
 		global $post, $product;

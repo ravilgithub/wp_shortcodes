@@ -7,9 +7,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Briz_Shortcodes\common\Helper;
 
+
+/**
+ * 
+ */
 trait ProductHoverContent {
+
 	/**
-	 * 
+	 * The opening wrapper tag for additional content when hovering over a product card.
+	 *
+	 * Открывающий тег обёртки дополнительного контента при наведении на карточку товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_hover_content_open_wrap() {
 		global $post, $product;
@@ -24,7 +36,14 @@ trait ProductHoverContent {
 
 
 	/**
-	 * 
+	 * The closing wrapper tag for additional content when hovering over a product card.
+	 *
+	 * Закрывающий тег обёртки дополнительного контента при наведении на карточку товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_hover_content_close_wrap() {
 		global $post, $product;
@@ -39,7 +58,14 @@ trait ProductHoverContent {
 
 
 	/**
-	 * 
+	 * Additional content gallery slides.
+	 *
+	 * Слайды галереи дополнительного контента товара.
+	 *
+	 * @return String - HTML разметка слайдов галереи дополнительного контента товара.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function gallery_slides( $post, $product, $attachment_ids ) {
 		$slides = '';
@@ -85,7 +111,14 @@ trait ProductHoverContent {
 
 
 	/**
-	 * 
+	 * Product Additional Content Gallery.
+	 *
+	 * Галерея дополнительного контента товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_hover_content_gallery() {
 		global $post, $product;

@@ -7,12 +7,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Briz_Shortcodes\common\Helper;
 
+
+/**
+ * 
+ */
 trait ProductCaption {
+
 	/**
-	 * 
+	 * The opening tag of the product card caption wrapper.
+	 *
+	 * Открывающий тег обёртки заголовка карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_caption_wrap_open() {
 		global $post, $product;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_caption_wrap_open_html',
 			'<div class="caption">',
@@ -23,10 +36,18 @@ trait ProductCaption {
 
 
 	/**
-	 * 
+	 * The closing tag of the product card caption wrapper.
+	 *
+	 * Закрывающий тег обёртки заголовка карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_caption_wrap_close() {
 		global $post, $product;
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_caption_wrap_close_html',
 			'</div>',
@@ -37,7 +58,14 @@ trait ProductCaption {
 
 
 	/**
-	 * 
+	 * Title of the product card.
+	 *
+	 * Заголовок карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_caption_title() {
 		global $post, $product;
@@ -59,7 +87,14 @@ trait ProductCaption {
 
 
 	/**
-	 * 
+	 * Product rating HTML markup.
+	 *
+	 * HTML разметка рейтинга товара.
+	 *
+	 * @return String - HTML разметка рейтинга товара.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function rating_html() {
 		global $post, $product;
@@ -80,7 +115,14 @@ trait ProductCaption {
 
 
 	/**
-	 * 
+	 * Product rating.
+	 *
+	 * Рейтинг товара.
+	 *
+	 * @return String - Рейтинг товара.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_caption_rating() {
 		global $post, $product;
@@ -105,7 +147,14 @@ trait ProductCaption {
 
 
 	/**
-	 * 
+	 * Product price.
+	 *
+	 * Product price.
+	 *
+	 * @return String - HTML разметка цены товара.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_caption_price() {
 		global $post, $product;
@@ -124,4 +173,3 @@ trait ProductCaption {
 		);
 	}
 }
-?>

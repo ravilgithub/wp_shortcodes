@@ -7,9 +7,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Briz_Shortcodes\common\Helper;
 
+
+/**
+ * 
+ */
 trait ProductButtonsGroup {
+
 	/**
-	 * 
+	 * The opening tag of the product card buttons wrapper.
+	 *
+	 * Открывающий тег обёртки кнопок карточки товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_buttons_wrap_open() {
 		global $post, $product;
@@ -23,7 +35,14 @@ trait ProductButtonsGroup {
 
 
 	/**
-	 * 
+	 * The opening tag of the product card thumbnail wrapper.
+	 *
+	 * The closing tag of the product card buttons wrapper.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_buttons_wrap_close() {
 		global $post, $product;
@@ -37,7 +56,14 @@ trait ProductButtonsGroup {
 
 
 	/**
-	 * 
+	 * Add product to cart button.
+	 *
+	 * Кнопока добавления товара в корзину.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_add_to_cart( $args = [] ) {
 		global $post, $product;
@@ -90,7 +116,14 @@ trait ProductButtonsGroup {
 
 
 	/**
-	 * 
+	 * Add product to wishlist.
+	 *
+	 * Кнопока добавления товара в избранное.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_add_to_wishlist() {
 		if ( shortcode_exists( 'yith_wcwl_add_to_wishlist' ) ) {
@@ -100,7 +133,14 @@ trait ProductButtonsGroup {
 
 
 	/**
-	 * 
+	 * Add product to compare.
+	 *
+	 * Кнопока добавления товара в список сравнения товаров.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_add_to_compare() {
 		global $yith_woocompare;
@@ -137,7 +177,14 @@ trait ProductButtonsGroup {
 
 
 	/**
-	 * 
+	 * Product quickview.
+	 *
+	 * Быстрый просмотр/заказ товара.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
 	 */
 	public static function shortcode_briz_tax_template_product_quickview() {
 		global $post, $product;
