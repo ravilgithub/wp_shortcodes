@@ -9,7 +9,12 @@ use Briz_Shortcodes\common\Helper;
 
 
 /**
- * 
+ * Caption handlers.
+ *
+ * Действия заголовка карточки товара.
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
 trait ProductCaption {
 

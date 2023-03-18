@@ -9,7 +9,12 @@ use Briz_Shortcodes\common\Helper;
 
 
 /**
- * 
+ * Additional content handlers when hovering over a product card.
+ *
+ * Действия дополнительного контента при наведении на карточку товара.
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
 trait ProductHoverContent {
 

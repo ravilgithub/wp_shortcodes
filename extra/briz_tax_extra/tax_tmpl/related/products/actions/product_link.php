@@ -9,7 +9,12 @@ use Briz_Shortcodes\common\Helper;
 
 
 /**
- * 
+ * Links handlers.
+ *
+ * Действия ссылок карточки товара.
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
 trait ProductLink {
 

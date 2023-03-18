@@ -9,7 +9,12 @@ use Briz_Shortcodes\common\Helper;
 
 
 /**
- * 
+ * Buttons handlers.
+ *
+ * Действия кнопок карточки товара.
+ *
+ * @since 0.0.1
+ * @author Ravil
  */
 trait ProductButtonsGroup {
 

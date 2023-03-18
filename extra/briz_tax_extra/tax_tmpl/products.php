@@ -415,6 +415,10 @@
 								<div class="<?php echo implode( ' ', get_post_class( 'product-thumb' ) ); ?>">
 									<div class="product-block-inner clearfix">
 <?php
+										/**
+										 * @see Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\Actions
+										 */
+
 										// Image
 										do_action( 'shortcode_briz_tax_before_product_image' );
 											
