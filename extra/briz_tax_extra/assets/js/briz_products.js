@@ -12,6 +12,16 @@ const products = {
     content: '.section-content-wrap',
     contentInner: '.tab-content-inner',
     itemSlider: '.bri-archive-product-item-gallery',
+    buttons: [
+      '.button-group .add_to_cart_button',
+      '.button-group .product_type_external',
+      '.button-group .product_type_grouped',
+      '.button-group .add_to_wishlist',
+      '.button-group .yith-wcwl-wishlistaddedbrowse a',
+      '.button-group .yith-wcwl-wishlistexistsbrowse a',
+      '.button-group .compare',
+      '.button-group .quickview',
+    ],
   },
 
   sliderAtts: {
@@ -101,13 +111,14 @@ const products = {
       if ( content )
         this.setContentHeight( content );
 
+      this.createToolTips( inst );
       this.setEvent( inst );
     } );
   },
 
 
   /**
-   * Получаем коллекцию корневых элементов шаблона "Features".
+   * Получаем коллекцию корневых элементов шаблона "Products".
    *
    * @return {Array} - коллекция корневых элементов шаблона.
    * @since 0.0.1
@@ -118,14 +129,37 @@ const products = {
 
 
   /**
-   * Делегирование корневому элементу шаблона, события клик на элементе табуляции.
+   * Делегирование событий корневому элементу шаблона.
    *
-   * @param {DOM Object} inst - корневой элемент шаблона "Features".
+   * @param {DOM Object} inst - корневой элемент шаблона "Products".
    * @return {void}
    * @since 0.0.1
    */
   setEvent( inst ) {
     inst.addEventListener( 'click', this.tabs.bind( this ), false );
+  },
+
+
+  /**
+   * Создание подсказок( tooltip label ) которые отображаются при наведении на кнопки:
+   *  Добавить в корзину
+   *  Добавить в список желаний
+   *  Сравнить
+   *  Быстрый просмотр
+   *
+   * @param {DOM Object} inst - корневой элемент шаблона "Products".
+   * @return {void}
+   * @since 0.0.1
+   */
+  createToolTips( inst ) {
+    this.selectors.buttons.forEach( btnSelector => {
+      inst.querySelectorAll( btnSelector ).forEach( btn => {
+        const span = document.createElement( 'span' );
+        span.setAttribute( 'class', 'product-button-tooltip-label' );
+        span.innerHTML = btn.text;
+        btn.after( span );
+      } );
+    } );
   },
 
 
@@ -192,7 +226,7 @@ const products = {
   /**
    * Получаем видимый элемент контента.
    *
-   * @param {DOM Object} inst - корневой элемент шаблона "Features".
+   * @param {DOM Object} inst - корневой элемент шаблона "Products".
    * @return {DOM Object} - видимый элемент контента.
    * @since 0.0.1
    */
