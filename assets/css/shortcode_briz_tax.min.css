@@ -1,3 +1,153 @@
-* {
-	/*color: green !important;*/
+/**
+ * Global styles for BRIZ Tax Shortcode.
+ */
+
+/**********************************
+ * BEGIN All animations
+ */
+
+/**
+ * BEGIN Swiper js preloader
+ */
+@-webkit-keyframes swiper-preloader-spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
 }
+
+@keyframes swiper-preloader-spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/**
+ * END Swiper js preloader
+ */
+
+/**
+ * BEGIN Single product gallery
+ * woocommerce/_single_product_gallery.sass
+ */
+@-webkit-keyframes single-product-preloader-rotate {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes single-product-preloader-rotate {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/**
+ * END Single product gallery
+ */
+
+/**
+ * BEGIN Scroll to top
+ * _scroll_to_top.sass
+ */
+@-webkit-keyframes scroll-to-top-hovered {
+	33.33% {
+		-webkit-transform: translate(-50%, -25%) rotate(-45deg);
+		transform: translate(-50%, -25%) rotate(-45deg);
+	}
+
+	66.66% {
+		-webkit-transform: translate(-50%, -75%) rotate(-45deg);
+		transform: translate(-50%, -75%) rotate(-45deg);
+	}
+}
+
+@keyframes scroll-to-top-hovered {
+	33.33% {
+		-webkit-transform: translate(-50%, -25%) rotate(-45deg);
+		transform: translate(-50%, -25%) rotate(-45deg);
+	}
+
+	66.66% {
+		-webkit-transform: translate(-50%, -75%) rotate(-45deg);
+		transform: translate(-50%, -75%) rotate(-45deg);
+	}
+}
+/**
+ * BEGIN Scroll to top
+ * _scroll_to_top.sass
+ */
+
+/**
+ * BEGIN Ajax Loading
+ */
+@-webkit-keyframes ajaxLoading {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes ajaxLoading {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/**
+ * END Ajax Loading
+ */
+
+/**
+ * BEGIN Archive product preloader rotate
+ */
+@-webkit-keyframes archive-product-preloader-rotate {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes archive-product-preloader-rotate {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+/**
+ * END Archive product preloader rotate
+ */
+
+/**
+ * END All animations
+ ***********************************/
