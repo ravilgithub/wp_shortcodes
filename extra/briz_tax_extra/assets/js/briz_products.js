@@ -88,6 +88,7 @@ const products = {
         .querySelectorAll( this.selectors.contentInner )
         .forEach( el => {
           slider.init( el, this.sliderAtts, true );
+          this.buttons_preloader( el );
 
           el
             .querySelectorAll( this.selectors.itemSlider )
@@ -269,6 +270,27 @@ const products = {
           this.setContentHeight( content );
       } );
     }, false );
+  },
+
+
+  /**
+   * Иконка "preloader" для кнопок "Wishlist" и "Compare".
+   *
+   * @return {void}
+   *
+   * @since 0.0.1
+   */
+  buttons_preloader( slider ) {
+    const btnSelectors = [
+      '.button-group .add_to_wishlist',
+      '.button-group .compare',
+    ];
+
+    btnSelectors.forEach( btnSelector => {
+      slider
+        .querySelectorAll( btnSelector )
+        .forEach( btn => btn.addEventListener( 'click', evt => evt.target.classList.add( 'loading' ) ) );
+    } );
   },
 
 
