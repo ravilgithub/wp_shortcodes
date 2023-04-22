@@ -428,7 +428,8 @@
 	display: none;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable {
@@ -445,7 +446,8 @@
 	font-size: 0;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:before,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:before,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable:before {
@@ -462,7 +464,8 @@
 	transition: color 0.2s linear 0.1s;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:after,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:after,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable:after {
@@ -478,7 +481,8 @@
 	transform: translate(-50%, -50%);
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button.loading:before,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button.loading:before,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple.loading:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped.loading:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external.loading:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable.loading:before {
@@ -487,7 +491,8 @@
 	animation: ajaxLoading 1s linear infinite;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button.added:before,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button.added:before,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple.added:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped.added:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external.added:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable.added:before {
@@ -1312,14 +1317,16 @@
 	background-color: #ee4444;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:before,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:before,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external:before,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable:before {
 	color: #ee4444;
 }
 
-.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:after,
+/*.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .add_to_cart_button:after,*/
+.briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_simple:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_grouped:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_external:after,
 .briz-products-tmpl .section-content-wrap .tab-content-inner > .swiper .swiper-slide .product-thumb .product-block-inner .button-group .woocommerce_loop_add_to_cart_link_wrap .product_type_variable:after {
