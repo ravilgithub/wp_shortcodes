@@ -167,10 +167,15 @@ trait ProductCaption {
 		if ( ! $price_html = $product->get_price_html() )
 			return false;
 
+		$price_wrap_html = '<span class="price">%s</span>';
+		if ( ! has_filter( 'woocommerce_get_price_html' ) ) {
+			$price_wrap_html = '<span class="price"><span class="price-inner-wrap">%s</span></span>';
+		}
+
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_caption_price_html',
 			sprintf(
-				'<span class="price"><span class="price-inner-wrap">%s</span></span>',
+				$price_wrap_html,
 				$price_html
 			),
 			$post,
