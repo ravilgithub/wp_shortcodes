@@ -13,7 +13,9 @@ const products = {
     contentInner: '.tab-content-inner',
     itemSlider: '.bri-archive-product-item-gallery',
     buttons: [
-      '.button-group .add_to_cart_button',
+      // '.button-group .add_to_cart_button',
+      '.button-group .product_type_simple',
+      '.button-group .product_type_variable',
       '.button-group .product_type_external',
       '.button-group .product_type_grouped',
       '.button-group .add_to_wishlist',
