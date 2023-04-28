@@ -9,6 +9,7 @@
 	use Briz_Shortcodes\common\Helper;
 
 	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\Actions;
+	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\Filters;
 
 	/**
 	 * Products template.
@@ -27,7 +28,7 @@
 	 * @author Ravil
 	 */
 	class Products {
-		use Actions;
+		use Actions, Filters;
 
 		private $tmpl_name = 'briz-products-tmpl';
 		public $content;
@@ -62,6 +63,7 @@
 			$this->redefine_script_tag();
 
 			$this->add_actions();
+			$this->add_filters();
 		}
 
 
@@ -435,6 +437,12 @@
 										// Caption
 										do_action( 'shortcode_briz_tax_before_product_caption' );
 										do_action( 'shortcode_briz_tax_after_product_caption' );
+
+										// woocommerce_show_product_sale_flash();
+
+										/*echo WC()->template_path();
+										echo '<br />';
+										echo WC()->plugin_path() . '/templates/';*/
 ?>
 									</div> <!-- .product-block-inner -->
 								</div> <!-- .product-thumb -->

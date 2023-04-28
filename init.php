@@ -44,6 +44,7 @@ require_once 'extra/briz_tax_extra/meta/post/meta_boxes.php';
 require_once 'extra/briz_tax_extra/template_select.php';
 
 require_once 'extra/briz_tax_extra/tax_tmpl/related/products/actions.php';
+require_once 'extra/briz_tax_extra/tax_tmpl/related/products/filters.php';
 
 require_once 'shortcodes.php';
 
