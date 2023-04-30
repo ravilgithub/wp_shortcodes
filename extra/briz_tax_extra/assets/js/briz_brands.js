@@ -2,6 +2,8 @@
  * Brands functionality.
  */
 import { slider } from './export/slider.js';
+import { test } from './export/test.js';
+test.init( 'body', 'mousedown', 'brands' );
 
 /**
  * Значения по умолчанию для слайдера.

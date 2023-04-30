@@ -2,6 +2,8 @@
  * Products functionality.
  */
 import { slider } from './export/slider.js';
+import { test } from './export/test.js';
+test.init( document, 'mouseup', 'products' );
 
 const products = {
   ctx: '.briz-products-tmpl',
