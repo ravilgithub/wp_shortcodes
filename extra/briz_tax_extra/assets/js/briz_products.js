@@ -66,15 +66,15 @@ const products = {
     spaceBetween: 15,
 
     breakpoints: {
-      250: { slidesPerView: 3 },
-      320: { slidesPerView: 3 },
-      384: { slidesPerView: 4 },
-      480: { slidesPerView: 4 },
-      568: { slidesPerView: 3 },
-      640: { slidesPerView: 3 },
-      768: { slidesPerView: 3 },
-      992: { slidesPerView: 3 },
-      1200: { slidesPerView: 3 }
+      250: { slidesPerView: 3, spaceBetween: 15 },
+      320: { slidesPerView: 3, spaceBetween: 15 },
+      384: { slidesPerView: 4, spaceBetween: 15 },
+      480: { slidesPerView: 4, spaceBetween: 15 },
+      568: { slidesPerView: 3, spaceBetween: 15 },
+      640: { slidesPerView: 3, spaceBetween: 15 },
+      768: { slidesPerView: 3, spaceBetween: 15 },
+      992: { slidesPerView: 3, spaceBetween: 15 },
+      1200: { slidesPerView: 3, spaceBetween: 15 }
     },
 
     on: {}
