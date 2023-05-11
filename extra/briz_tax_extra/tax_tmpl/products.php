@@ -437,12 +437,6 @@
 										// Caption
 										do_action( 'shortcode_briz_tax_before_product_caption' );
 										do_action( 'shortcode_briz_tax_after_product_caption' );
-
-										// woocommerce_show_product_sale_flash();
-
-										/*echo WC()->template_path();
-										echo '<br />';
-										echo WC()->plugin_path() . '/templates/';*/
 ?>
 									</div> <!-- .product-block-inner -->
 								</div> <!-- .product-thumb -->
