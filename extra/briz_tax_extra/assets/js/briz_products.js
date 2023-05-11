@@ -2,6 +2,7 @@
  * Products functionality.
  */
 import { slider } from './export/slider.js';
+import { tooltip } from './export/tooltip.js';
 import { test } from './export/test.js';
 test.init( document, 'mouseup', 'products' );
 
@@ -116,7 +117,8 @@ const products = {
       if ( content )
         this.setContentHeight( content );
 
-      this.createToolTips( inst );
+      // this.createToolTips( inst );
+      tooltip( inst, this.selectors.buttons, 'span', 'product-button-tooltip-label' );
       this.setEvent( inst );
     } );
   },
@@ -156,7 +158,7 @@ const products = {
    * @return {void}
    * @since 0.0.1
    */
-  createToolTips( inst ) {
+  /*createToolTips( inst ) {
     this.selectors.buttons.forEach( btnSelector => {
       inst.querySelectorAll( btnSelector ).forEach( btn => {
         const span = document.createElement( 'span' );
@@ -165,7 +167,7 @@ const products = {
         btn.after( span );
       } );
     } );
-  },
+  },*/
 
 
   /**
