@@ -60,7 +60,7 @@ $blog_meta_fields = [
 			'title' => 'Background image',
 			'desc'  => '',
 			'value' => '[857]',
-			'empty' => false,
+			'empty' => true,
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
