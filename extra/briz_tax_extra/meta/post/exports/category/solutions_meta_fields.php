@@ -80,10 +80,10 @@ $solutions_meta_fields = [
 			'title' => 'Solution elements',
 			'decs'  => 'Solution elements fields',
 			'value' => [
-				'accordeon' => [
+				'accordion' => [
 					'type'  => 'group',
-					'title' => 'Accordeon',
-					'decs'  => 'Accordeon fields',
+					'title' => 'Accordion',
+					'decs'  => 'Accordion fields',
 					'value' => [
 						'enable' => [
 							'type'  => 'checkbox',
@@ -128,13 +128,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'We Create Awesome Websites For Your Business'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui.'
 										]
@@ -157,13 +157,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'Only Creative Design and Development'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'
 										]
@@ -186,13 +186,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'Let’s Start Creating Websites Together Today'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui.'
 										]

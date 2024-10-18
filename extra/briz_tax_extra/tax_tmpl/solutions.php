@@ -285,7 +285,7 @@
 		 * @since 0.0.1
 		 * @author Ravil
 		 */
-		private function get_accordeon( $sections ) {
+		private function get_accordion( $sections ) {
 			ob_start();
 
 			$is_first = 'active';
