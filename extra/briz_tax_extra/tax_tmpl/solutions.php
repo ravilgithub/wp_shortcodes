@@ -394,6 +394,9 @@
 			<div class="wow progress-bar-container clearfix">
 <?php
 				foreach ( $sections as $section ) :
+					if (! $section['enable'])
+						continue;
+
 					$title = __( $section[ 'title' ], $this->lang_domain );
 					$num = esc_attr( ( int ) $section[ 'target_number' ] );
 					$symbol = esc_attr( $section[ 'symbol' ] );
