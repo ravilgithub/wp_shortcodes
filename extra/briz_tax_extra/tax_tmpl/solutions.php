@@ -336,6 +336,9 @@
 <?php 
 					$is_first = 'active';
 					foreach ( $sections as $section_name => $section ) :
+						if ( ! $section['enable'] )
+							continue;
+
 						$icon = esc_attr( $section[ 'icon' ] );
 						$href = esc_attr( $section_name );
 						$title = __( $section[ 'title' ], $this->lang_domain	);
@@ -355,15 +358,16 @@
 <?php
 					$is_first = 'active';
 					foreach ( $sections as $section_name => $section ) :
-						if ( $section[ 'enable' ] ) :
-							$id = esc_attr( $section_name );
-							$content = __( $section[ 'content' ], $this->lang_domain );
+						if ( ! $section[ 'enable' ] )
+							continue;
+
+						$id = esc_attr( $section_name );
+						$content = __( $section[ 'content' ], $this->lang_domain );
 ?>
-							<div class="tab-content-inner <?php echo $is_first; ?>" id="<?php echo $id; ?>">
-								<p><?php echo $content; ?></p>
-							</div>
+						<div class="tab-content-inner <?php echo $is_first; ?>" id="<?php echo $id; ?>">
+							<p><?php echo $content; ?></p>
+						</div>
 <?php
-						endif;
 						$is_first = '';
 					endforeach;
 ?>
