@@ -293,21 +293,21 @@
 			<div class="accordion-container">
 <?php
 				foreach ( $sections as $section ) :
-					if ( $section[ 'enable' ] ) : // ??? $section['value']['enable']
-						$title = __( $section[ 'title' ], $this->lang_domain );
-						$content = __( $section[ 'content' ], $this->lang_domain );
-?>
-						<div class="accordion-item <?php echo $is_first; ?>">
-							<div class="accordion-item-header">
-								<h3><?php echo $title; ?></h3>
-							</div>
-							<div class="accordion-item-content">
-								<p><?php echo $content; ?></p>
-							</div>
-						</div>
-<?php
-					endif;
+					if ( ! $section[ 'enable' ] )
+						continue;
 
+					$title = __( $section[ 'title' ], $this->lang_domain );
+					$content = __( $section[ 'content' ], $this->lang_domain );
+?>
+					<div class="accordion-item <?php echo $is_first; ?>">
+						<div class="accordion-item-header">
+							<h3><?php echo $title; ?></h3>
+						</div>
+						<div class="accordion-item-content">
+							<p><?php echo $content; ?></p>
+						</div>
+					</div>
+<?php
 					$is_first = '';
 				endforeach;
 ?>
