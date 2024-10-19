@@ -422,32 +422,6 @@
 
 
 		/**
-		 * Checking if template output is allowed ( accordion, tabs, ... ).
-		 *
-		 * Проверка, разрешен ли вывод шаблона ( accordion, tabs, ... ).
-		 *
-		 * @param Array $opts        - мета поля записи.
-		 * @param String $field_name - имя мета поля, значение которого,
-		 *                             необходимо проверить на истинность.
-		 * @return Boolean
-		 *
-		 * @since 0.0.1
-		 * @author Ravil
-		 */
-		private function check_fields( $opts, $field_name ) {
-			if (
-				is_array( $opts ) &&
-				array_key_exists( $field_name, $opts ) &&
-				array_key_exists( 'enable', $opts[ $field_name ] ) &&
-				$opts[ $field_name ][ 'enable' ] &&
-				array_key_exists( 'sections', $opts[ $field_name ] )
-			) {
-				return true;
-			}
-		}
-
-
-		/**
 		 * Content of template.
 		 *
 		 * Контент шаблона.
