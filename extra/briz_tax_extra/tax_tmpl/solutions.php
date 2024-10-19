@@ -547,6 +547,9 @@
 										! empty( $els = $post_opts[ 'solution_elements' ] )
 									) {
 										foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
+											if ( empty( $el_params[ 'enable' ] ) )
+												continue;
+
 											$method_name = 'get_' . $el_name;
 											if ( method_exists( $this, $method_name ) ) {
 												$this->$method_name( $el_params[ 'sections' ] );
