@@ -59,8 +59,8 @@ $review_meta_fields = [
 			'type'  => 'media_button',
 			'title' => 'Background image',
 			'desc'  => '',
-			'value' => '[802]',
-			'empty' => false,
+			'value' => '[]',
+			'empty' => true,
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],

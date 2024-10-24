@@ -285,7 +285,7 @@
 		 * @since 0.0.1
 		 * @author Ravil
 		 */
-		private function get_accordeon( $sections ) {
+		private function get_accordion( $sections ) {
 			ob_start();
 
 			$is_first = 'active';
@@ -293,21 +293,21 @@
 			<div class="accordion-container">
 <?php
 				foreach ( $sections as $section ) :
-					if ( $section[ 'enable' ] ) : // ??? $section['value']['enable']
-						$title = __( $section[ 'title' ], $this->lang_domain );
-						$content = __( $section[ 'content' ], $this->lang_domain );
-?>
-						<div class="accordion-item <?php echo $is_first; ?>">
-							<div class="accordion-item-header">
-								<h3><?php echo $title; ?></h3>
-							</div>
-							<div class="accordion-item-content">
-								<p><?php echo $content; ?></p>
-							</div>
-						</div>
-<?php
-					endif;
+					if ( ! $section[ 'enable' ] )
+						continue;
 
+					$title = __( $section[ 'title' ], $this->lang_domain );
+					$content = __( $section[ 'content' ], $this->lang_domain );
+?>
+					<div class="accordion-item <?php echo $is_first; ?>">
+						<div class="accordion-item-header">
+							<h3><?php echo $title; ?></h3>
+						</div>
+						<div class="accordion-item-content">
+							<p><?php echo $content; ?></p>
+						</div>
+					</div>
+<?php
 					$is_first = '';
 				endforeach;
 ?>
@@ -336,6 +336,9 @@
 <?php 
 					$is_first = 'active';
 					foreach ( $sections as $section_name => $section ) :
+						if ( ! $section['enable'] )
+							continue;
+
 						$icon = esc_attr( $section[ 'icon' ] );
 						$href = esc_attr( $section_name );
 						$title = __( $section[ 'title' ], $this->lang_domain	);
@@ -355,15 +358,16 @@
 <?php
 					$is_first = 'active';
 					foreach ( $sections as $section_name => $section ) :
-						if ( $section[ 'enable' ] ) :
-							$id = esc_attr( $section_name );
-							$content = __( $section[ 'content' ], $this->lang_domain );
+						if ( ! $section[ 'enable' ] )
+							continue;
+
+						$id = esc_attr( $section_name );
+						$content = __( $section[ 'content' ], $this->lang_domain );
 ?>
-							<div class="tab-content-inner <?php echo $is_first; ?>" id="<?php echo $id; ?>">
-								<p><?php echo $content; ?></p>
-							</div>
+						<div class="tab-content-inner <?php echo $is_first; ?>" id="<?php echo $id; ?>">
+							<p><?php echo $content; ?></p>
+						</div>
 <?php
-						endif;
 						$is_first = '';
 					endforeach;
 ?>
@@ -390,6 +394,9 @@
 			<div class="wow progress-bar-container clearfix">
 <?php
 				foreach ( $sections as $section ) :
+					if (! $section['enable'])
+						continue;
+
 					$title = __( $section[ 'title' ], $this->lang_domain );
 					$num = esc_attr( ( int ) $section[ 'target_number' ] );
 					$symbol = esc_attr( $section[ 'symbol' ] );
@@ -411,32 +418,6 @@
 ?>
 			</div>
 <?php
-		}
-
-
-		/**
-		 * Checking if template output is allowed ( accordion, tabs, ... ).
-		 *
-		 * Проверка, разрешен ли вывод шаблона ( accordion, tabs, ... ).
-		 *
-		 * @param Array $opts        - мета поля записи.
-		 * @param String $field_name - имя мета поля, значение которого,
-		 *                             необходимо проверить на истинность.
-		 * @return Boolean
-		 *
-		 * @since 0.0.1
-		 * @author Ravil
-		 */
-		private function check_fields( $opts, $field_name ) {
-			if (
-				is_array( $opts ) &&
-				array_key_exists( $field_name, $opts ) &&
-				array_key_exists( 'enable', $opts[ $field_name ] ) &&
-				$opts[ $field_name ][ 'enable' ] &&
-				array_key_exists( 'sections', $opts[ $field_name ] )
-			) {
-				return true;
-			}
 		}
 
 
@@ -540,6 +521,9 @@
 										! empty( $els = $post_opts[ 'solution_elements' ] )
 									) {
 										foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
+											if ( empty( $el_params[ 'enable' ] ) )
+												continue;
+
 											$method_name = 'get_' . $el_name;
 											if ( method_exists( $this, $method_name ) ) {
 												$this->$method_name( $el_params[ 'sections' ] );

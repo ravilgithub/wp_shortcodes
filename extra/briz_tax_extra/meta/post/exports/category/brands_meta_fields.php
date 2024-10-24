@@ -9,7 +9,7 @@ $brands_meta_fields = [
 			'title' => 'Опция brands media',
 			'desc'  => 'Описание brands media',
 			'empty' => true,
-			'value' => '[876,875,874,690,691,694,873,872,857]',
+			'value' => '[]',
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => [ 'image', 'video', 'audio', 'application' ] ],

@@ -18,8 +18,8 @@ $solutions_meta_fields = [
 			'type'  => 'media_button',
 			'title' => 'Background image',
 			'desc'  => '',
-			'value' => '[857]',
-			'empty' => false,
+			'value' => '[]',
+			'empty' => true,
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
@@ -80,10 +80,10 @@ $solutions_meta_fields = [
 			'title' => 'Solution elements',
 			'decs'  => 'Solution elements fields',
 			'value' => [
-				'accordeon' => [
+				'accordion' => [
 					'type'  => 'group',
-					'title' => 'Accordeon',
-					'decs'  => 'Accordeon fields',
+					'title' => 'Accordion',
+					'decs'  => 'Accordion fields',
 					'value' => [
 						'enable' => [
 							'type'  => 'checkbox',
@@ -128,13 +128,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'We Create Awesome Websites For Your Business'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui.'
 										]
@@ -157,13 +157,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'Only Creative Design and Development'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'
 										]
@@ -186,13 +186,13 @@ $solutions_meta_fields = [
 										],
 										'title' => [
 											'type'  => 'text',
-											'title' => 'Accordeon title',
+											'title' => 'Accordion title',
 											'desc'  => 'Some text',
 											'value' => 'Let’s Start Creating Websites Together Today'
 										],
 										'content' => [
 											'type'  => 'textarea',
-											'title' => 'Accordeon content',
+											'title' => 'Accordion content',
 											'desc'  => 'Some text',
 											'value' => 'Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui.'
 										]
@@ -203,146 +203,6 @@ $solutions_meta_fields = [
 					],
 				],
 				'tabs' => [
-					'type'  => 'group',
-					'title' => 'Tabs',
-					'decs'  => 'Tabs fields',
-					'value' => [
-						'enable' => [
-							'type'  => 'checkbox',
-							'title' => 'Enable?',
-							'desc'  => '',
-							'empty' => true,
-							'value' => [ 'on' ],
-							'options' => [
-								'on'  => 'On'
-							]
-						],
-						'order' => [
-							'type'  => 'number',
-							'title' => 'Позиция элемента',
-							'desc'  => 'Число от 0 включительно. Элемент с меньшим числом выводится раньше остальных.',
-							'value' => 0,
-							'options' => [
-								'step' => 1,
-								'min'  => 0,
-								'max'  => ''
-							]
-						],
-						'sections' => [
-							'type'  => 'group',
-							'title' => 'Sections',
-							'desc'  => '',
-							'value' => [
-								'section_1' => [
-									'type'  => 'group',
-									'title' => 'Section 1',
-									'desc'  => 'Section 1 desc',
-									'value' => [
-										'enable' => [
-											'type'  => 'checkbox',
-											'title' => 'Enable section?',
-											'desc'  => '',
-											'empty' => true,
-											'value' => [ 'on' ],
-											'options' => [
-												'on'  => 'On'
-											]
-										],
-										'icon' => [
-											'type'  => 'text',
-											'title' => 'Tab icon',
-											'desc'  => 'Tab font-awesome icon class after .fa .fa-',
-											'value' => 'lightbulb-o'
-										],
-										'title' => [
-											'type'  => 'text',
-											'title' => 'Tab title',
-											'desc'  => 'Some text',
-											'value' => 'Mission'
-										],
-										'content' => [
-											'type'  => 'textarea',
-											'title' => 'Tab content',
-											'desc'  => 'Some text',
-											'value' => 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincid unt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.'
-										]
-									]
-								],
-								'section_2' => [
-									'type'  => 'group',
-									'title' => 'Section 2',
-									'desc'  => 'Section 2 desc',
-									'value' => [
-										'enable' => [
-											'type'  => 'checkbox',
-											'title' => 'Enable section?',
-											'desc'  => '',
-											'empty' => true,
-											'value' => [ 'on' ],
-											'options' => [
-												'on'  => 'On'
-											]
-										],
-										'icon' => [
-											'type'  => 'text',
-											'title' => 'Tab icon',
-											'desc'  => 'Tab font-awesome icon class after .fa .fa-',
-											'value' => 'lightbulb-o'
-										],
-										'title' => [
-											'type'  => 'text',
-											'title' => 'Tab title',
-											'desc'  => 'Some text',
-											'value' => 'Vision'
-										],
-										'content' => [
-											'type'  => 'textarea',
-											'title' => 'Tab content',
-											'desc'  => 'Some text',
-											'value' => 'Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.'
-										]
-									]
-								],
-								'section_3' => [
-									'type'  => 'group',
-									'title' => 'Section 3',
-									'desc'  => 'Section 3 desc',
-									'value' => [
-										'enable' => [
-											'type'  => 'checkbox',
-											'title' => 'Enable section?',
-											'desc'  => '',
-											'empty' => true,
-											'value' => [ 'on' ],
-											'options' => [
-												'on'  => 'On'
-											]
-										],
-										'icon' => [
-											'type'  => 'text',
-											'title' => 'Tab icon',
-											'desc'  => 'Tab font-awesome icon class after .fa .fa-',
-											'value' => 'lightbulb-o'
-										],
-										'title' => [
-											'type'  => 'text',
-											'title' => 'Tab title',
-											'desc'  => 'Some text',
-											'value' => 'Support'
-										],
-										'content' => [
-											'type'  => 'textarea',
-											'title' => 'Tab content',
-											'desc'  => 'Some text',
-											'value' => 'Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.'
-										]
-									]
-								],
-							]
-						],
-					]
-				],
-				'tabs_2' => [
 					'type'  => 'group',
 					'title' => 'Tabs',
 					'decs'  => 'Tabs fields',
