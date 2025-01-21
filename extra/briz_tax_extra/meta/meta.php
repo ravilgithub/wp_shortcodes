@@ -302,7 +302,14 @@ abstract class Meta {
 			// Имя мета поля или группы мета полей верхнего уровня( группа находящаяся в массиве "fields" )
 			$fn = $group_name ?: $name;
 
+			// Для терминов
 			$key = '_' . $tax . '_' . $tmpl;
+
+			// Для записей
+			if ( array_key_exists( 'meta_box_id', $meta ) ) {
+				$key = '_' . $meta[ 'meta_box_id' ] . $key;
+			}
+
 			$component_suffix = '_edit';
 
 			if ( 'post' === $meta[ 'page' ] ) {

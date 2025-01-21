@@ -131,32 +131,38 @@ class Meta_Boxes extends Meta {
 
 		$n = 0;
 		foreach ( $terms_info[ 'tmpl' ] as $tmpl ) {
-			$n++;
-			$title = __( "Options for term template: ", $this->lang_domain ) . ucfirst( $tmpl );
-
 			$tax = $terms_info[ 'taxonomy' ];
 
 			if (
 				! array_key_exists( $tax, $this->opts ) ||
-				! array_key_exists( $tmpl, $this->opts[ $tax ] ) ||
-				empty( $this->opts[ $tax ][ $tmpl ][ 'fields' ] )
-			) {
-				continue;
+				! array_key_exists( $tmpl, $this->opts[ $tax ] )
+			) continue;
+
+			foreach ( $this->opts[ $tax ][ $tmpl ] as $data ) {
+				if (
+					! array_key_exists( 'title', $data ) ||
+					! array_key_exists( 'fields', $data ) ||
+					empty( $data[ 'title' ] ) ||
+					empty( $data['fields'] )
+				) continue;
+
+				$title = __( $data[ 'title' ], $this->lang_domain );
+				$title .= ' ( ' . __( $tmpl, $this->lang_domain ) . ' )';
+
+				$n++;
+				$meta_box_id = "{$this->id_prefix}_{$n}";
+
+				$callback_args[ 'meta_box_id' ] = $meta_box_id;
+				$callback_args[ 'fields' ] = $data[ 'fields' ];
+				$callback_args[ 'taxonomy' ] = $tax;
+				$callback_args[ 'tmpl' ] = $tmpl;
+				$callback_args[ 'page' ] = 'post';
+				$callback_args[ 'action' ] = 'edit';
+				$callback_args[ 'id' ] = $post->ID;
+				$callback_args[ 'wp_object' ] = $post;
+
+				add_meta_box( $meta_box_id, $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 			}
-
-			$callback_args[ 'fields' ] = $this->opts[ $tax ][ $tmpl ][ 'fields' ];
-			$callback_args[ 'taxonomy' ] = $tax;
-			$callback_args[ 'tmpl' ] = $tmpl;
-
-			$callback_args[ 'page' ] = 'post';
-			$callback_args[ 'action' ] = 'edit';
-			$callback_args[ 'id' ] = $post->ID;
-			$callback_args[ 'wp_object' ] = $post;
-
-			$meta_box_id = "{$this->id_prefix}_{$n}";
-			$callback_args[ 'meta_box_id' ] = $meta_box_id;
-
-			add_meta_box( $meta_box_id, $title, $callback, $this->screens, 'advanced', 'default', $callback_args );
 		}
 	}
 
