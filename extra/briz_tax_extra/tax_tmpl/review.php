@@ -348,7 +348,7 @@
 
 					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
 					$opts = get_post_meta( $post_id, $meta_key, true );
-					$member_info = __( trim( $opts[ 'member_info' ] ), $this->lang_domain );
+					$member_info = array_key_exists( 'member_info', $opts ) ? __( $opts[ 'member_info' ], $this->lang_domain ) : null;
 					$post_title = __( get_the_title(), $this->lang_domain );
 					$post_content = __( get_the_content( '' ), $this->lang_domain );
 ?>
