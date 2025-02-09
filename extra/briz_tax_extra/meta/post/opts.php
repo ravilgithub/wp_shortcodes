@@ -62,7 +62,7 @@ $opts = [
 		'brands'    => $brands_meta_fields,
 		'pricing'   => $pricing_meta_fields,
 		'video'     => $video_meta_fields,
-    'subscribe' => $subscribe_meta_fields,
+		'subscribe' => $subscribe_meta_fields,
 	],
 
 	'product_cat' => [
