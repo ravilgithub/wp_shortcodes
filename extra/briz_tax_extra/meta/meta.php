@@ -303,6 +303,7 @@ abstract class Meta {
 			$fn = $group_name ?: $name;
 
 			$key = '_' . $tax . '_' . $tmpl;
+
 			$component_suffix = '_edit';
 
 			if ( 'post' === $meta[ 'page' ] ) {

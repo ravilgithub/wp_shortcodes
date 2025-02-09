@@ -1,14 +1,22 @@
 <?php
 /**
  * Мета поля термина "products".
+ *
+ * Ключи дочерних элементов массивов "fields"
+ * должны быть уникальным.
  */
 $products_meta_fields = [
-	'fields' => [
-		'option_1' => [
-			'type'  => 'text',
-			'title' => 'Опция 1',
-			'desc'  => 'Описание опции 1',
-			'value' => 'Значение по умолчанию опции 1'
-		],
-	]
+	[
+		'title'  => 'Product video',
+		'fields' => [
+			'video_url' => [
+				'type'     => 'url',
+				'title'    => 'URL Video',
+				'desc'     => 'Ссылка на видео.',
+				'value'    => 'https://www.youtube.com/watch?v=nBYZpsbu9ds',
+				'pattern'  => 'https://.*',
+				'required' => true
+			],
+		]
+	],
 ];

@@ -347,9 +347,16 @@
 
 					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
 					$opts = get_post_meta( $post_id, $meta_key, true );
-					$link_to_post = $opts[ 'link_to_post' ];
-					$member_info = __( $opts[ 'member_info' ], $this->lang_domain );
 					$post_title = __( get_the_title(), $this->lang_domain );
+
+					$link_to_post = false;
+					if (
+						array_key_exists( 'link_to_post', $opts ) &&
+						! empty( $opts[ 'link_to_post' ] ) &&
+						is_array( $opts[ 'link_to_post' ] )
+					) $link_to_post = !! $opts[ 'link_to_post' ][ 0 ];
+
+					$member_info = array_key_exists( 'member_info', $opts ) ? __( trim( $opts[ 'member_info' ] ), $this->lang_domain ) : null;
 ?>
 					<div class="swiper-slide">
 						<div class="slide-inner-wrap">
@@ -365,15 +372,14 @@
 								/>
 <?php
 									if (
-										array_key_exists( 'social', $opts ) &&
-										is_array( $opts[ 'social' ] ) &&
-										$social = $opts[ 'social' ]
+										array_key_exists('member_socials', $opts) &&
+										is_array( $opts[ 'member_socials' ] )
 									) :
 ?>
 										<div class="team-member-overlay">
 											<div class="social-links">
 <?php
-												foreach ( $social as $item ) :
+												foreach ( $opts[ 'member_socials' ] as $item ) :
 													$social_url = esc_url( $item[ 'social_url' ] );
 													$social_icon = esc_attr( $item[ 'social_icon' ] );
 ?>
