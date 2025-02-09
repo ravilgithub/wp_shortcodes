@@ -26,6 +26,7 @@
 		public $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
+		private $available_solution_els = [ 'accordion', 'tabs', 'progress_bar' ];
 
 
 		/**
@@ -517,8 +518,7 @@
 									</div>
 <?php
 									if (
-										array_key_exists( 'solution_elements', $post_opts ) &&
-										! empty( $els = $post_opts[ 'solution_elements' ] )
+										! empty( $els = array_intersect_key( $post_opts, array_flip( $this->available_solution_els ) ) )
 									) {
 										foreach ( Helper::sort( $els ) as $el_name => $el_params ) {
 											if ( empty( $el_params[ 'enable' ] ) )
