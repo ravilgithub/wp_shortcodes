@@ -93,6 +93,12 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css', 'briz-magnific-popup-css', 'briz-photoswipe-css', 'briz-fontawesome-css' ],
 			'ver'  => '1.0.0'
 		],
+		'hero' => [
+			'id'   => 'briz-hero-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_hero.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css', 'briz-magnific-popup-css', 'briz-fontawesome-css', 'briz-animate-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -191,7 +197,14 @@ $assets = [
 		'products' => [
 			'id'        => 'briz-products-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_products.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js', 'briz-imagesloaded-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js', 'briz-imagesloaded-js', 'briz-modernizr-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'hero' => [
+			'id'        => 'briz-hero-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_hero.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-flowtype-js', 'briz-animate-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],

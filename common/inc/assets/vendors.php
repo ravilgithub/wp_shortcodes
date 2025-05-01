@@ -63,6 +63,13 @@ $assets = [
 			'deps' => [],
 			'ver'  => '4.1.1'
 		],
+
+		'animate' => [
+			'id'   => 'briz-animate-css',
+			'src'  => PLUGIN_URL . 'assets/vendors/animate/animate.min.css',
+			'deps' => [],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -168,6 +175,27 @@ $assets = [
 			'src'  => PLUGIN_URL . 'assets/vendors/threesixty/threesixty.min.js',
 			'deps' => [ 'jquery' ],
 			'ver'  => '2.0.5'
+		],
+
+		'flowtype' => [
+			'id'   => 'briz-flowtype-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/flowtype/flowtype.js',
+			'deps' => [ 'jquery' ],
+			'ver'  => '1.1'
+		],
+
+		'modernizr' => [
+			'id'   => 'briz-modernizr-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/modernizr/modernizr.js',
+			'deps' => [],
+			'ver'  => '2.8.3'
+		],
+
+		'animate' => [
+			'id'   => 'briz-animate-js',
+			'src'  => PLUGIN_URL . 'assets/vendors/animate/animate-css.js',
+			'deps' => [ 'jquery' ],
+			'ver'  => '1.0.0'
 		],
 	]
 ];
