@@ -86,24 +86,26 @@ trait ProductHoverContent {
 			 *	 3. Миниатюра товара - "shop_thumbnail"
 			 */
 			$full_size_image = esc_url( wp_get_attachment_image_src( $attachment_id, 'full' )[ 0 ] );
+			$full_size_image_srcset = esc_attr( wp_get_attachment_image_srcset( $attachment_id, 'full' ) );
 			list( $thumbnail, $thumbnail_width, $thumbnail_height ) = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
 			$thumbnail = esc_url( $thumbnail );
 			$aspect_ratio = ( $thumbnail_height !== 0 ) ? $thumbnail_width / $thumbnail_height : 'auto';
 
-			// Указывется при редактировании картинки в медиабиблиотеке
+			// Указывается при редактировании картинки в медиа библиотеке
 			$title = get_post_field( 'post_title', $attachment_id );
 			$data_caption = get_post_field( 'post_excerpt', $attachment_id );
 
 			$slides .= apply_filters(
 				'shortcode_briz_tax_template_product_hover_content_gallery_slide_html',
 				sprintf(
-					'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
+					'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s" data-lg-img-srcset="%7$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
 					$full_size_image,
 					$first_slide,
 					$title,
 					$thumbnail,
 					$data_caption,
-					$aspect_ratio
+					$aspect_ratio,
+					$full_size_image_srcset,
 				),
 				$post,
 				$product,

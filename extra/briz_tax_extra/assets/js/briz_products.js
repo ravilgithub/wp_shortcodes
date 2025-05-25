@@ -8,6 +8,13 @@ test.init( document, 'mouseup', 'products' );
 
 const products = {
   ctx: '.briz-products-tmpl',
+  inAction: null,
+  events: {
+    click: [
+      'tabs',
+      'slideChange',
+    ],
+  },
 
   selectors: {
     tab: 'tab-item',
@@ -94,7 +101,6 @@ const products = {
         .forEach( el => {
           slider.init( el, this.sliderAtts, true );
           this.buttons_preloader( el );
-
           el
             .querySelectorAll( this.selectors.itemSlider )
             .forEach( item => {
@@ -102,6 +108,45 @@ const products = {
             } );
         } );
     } );
+  },
+
+
+  /**
+   * Смена большой картинки карточки товара при нажатии на миниатюру товара.
+   *
+   * @param {Event Object} evt
+   *
+   * @return {void}
+   * @since 0.0.1
+   */
+  slideChange( evt ) {
+    const slide = evt.target.parentNode,
+    lgImgSrc = slide.dataset.lgImgSrc,
+    lgImgSrcSet = slide.dataset.lgImgSrcset;
+
+    if ( ! lgImgSrc || ! lgImgSrcSet || this.inAction )
+      return false;
+
+    this.inAction = 1;
+    this.toggleClass( slide );
+
+    const thumb = slide.closest( '.product' ),
+          lgImg = thumb.querySelector( '.product-image img' );
+
+    thumb.classList.add( 'img-change-on-action' );
+
+    const tmpImg = new Image();
+    tmpImg.src = lgImgSrc;
+    tmpImg.srcset = lgImgSrcSet;
+    tmpImg
+      .decode()
+      .then( () => {
+        lgImg.setAttribute( 'src', lgImgSrc );
+        lgImg.setAttribute( 'srcset', lgImgSrcSet );
+        thumb.classList.remove( 'img-change-on-action' );
+        this.inAction = 0;
+      } )
+      .catch( err => console.log( err ) );
   },
 
 
@@ -143,7 +188,12 @@ const products = {
    * @since 0.0.1
    */
   setEvent( inst ) {
-    inst.addEventListener( 'click', this.tabs.bind( this ), false );
+    for( let type in this.events ) {
+      console.log(type);
+      for( let handler of this.events[ type ] ) {
+        inst.addEventListener( type, this[ handler ].bind( this ), false );
+      }
+    }
   },
 
 
@@ -219,7 +269,7 @@ const products = {
 
 
   /**
-   * Нахождение сестренских элементов.
+   * Нахождение сестринских элементов.
    *
    * @param {DOM Object} el - активный элемент.
    * @return {void}
