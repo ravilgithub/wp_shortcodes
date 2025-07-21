@@ -28,7 +28,7 @@ $hero_meta_fields = [
 			'image' => [
 				'type'    => 'media_button',
 				'title'   => 'Позиция контента',
-				'desc'    => 'Тип позиционирования контента слайда',
+				'desc'    => 'Изображение записи контента (только для "Позиция контента = right")',
 				'value'   => '',
 				'options' => [
 					'title'    => 'Выбрать изображение',
@@ -40,7 +40,7 @@ $hero_meta_fields = [
 		]
 	],
 	[
-		'title'  => 'Изображение контента',
+		'title'  => 'Текст контента',
 		'fields' => [
 			'editor' => [
 				'type'  => 'wp_editor',
@@ -64,9 +64,9 @@ $hero_meta_fields = [
 		]
 	],
 	[
-		'title'  => 'Свободный элемент',
+		'title'  => 'Свободный элемент 1',
 		'fields' => [
-			'free' => [
+			'free_1' => [
 				'type'  => 'group',
 				'title' => 'Свободно позиционируемый элемент',
 				'desc'  => 'Свободно позиционируемый элемент',
@@ -84,13 +84,23 @@ $hero_meta_fields = [
 							'button'   => [ 'text' => 'Insert' ]
 						]
 					],
+					'unit' => [
+						'type'    => 'select',
+						'title'   => 'Единица измерения',
+						'desc'    => 'Единица измерения',
+						'value'   => '%',
+						'options' => [
+							'percent' => '%',
+							'px'      => 'px',
+						]
+					],
 					'width' => [
 						'type'  => 'number',
 						'title' => 'Ширина',
 						'desc'  => 'Ширина элемента',
 						'value' => 50,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -101,7 +111,329 @@ $hero_meta_fields = [
 						'desc'  => 'Высота элемента',
 						'value' => 50,
 						'options' => [
+							'step' => 1,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'top' => [
+						'type'  => 'number',
+						'title' => 'Позиция по вертикали',
+						'desc'  => 'Позиция по вертикали',
+						'value' => 0,
+						'options' => [
 							'step' => 10,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'left' => [
+						'type'  => 'number',
+						'title' => 'Позиция по горизонтали',
+						'desc'  => 'Позиция по горизонтали',
+						'value' => 0,
+						'options' => [
+							'step' => 10,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'animation' => [
+						'type'  => 'select',
+						'title' => 'Анимация',
+						'desc'  => 'Выберите анимацию',
+						'value'   => 'fadeInUpBig',
+						'options' => [
+							'bounce' => 'bounce',
+							'flash' => 'flash',
+							'pulse' => 'pulse',
+							'rubberBand' => 'rubberBand',
+							'shake' => 'shake',
+							'swing' => 'swing',
+							'tada' => 'tada',
+							'wobble' => 'wobble',
+							'bounceIn' => 'bounceIn',
+							'bounceInDown' => 'bounceInDown',
+							'bounceInLeft' => 'bounceInLeft',
+							'bounceInRight' => 'bounceInRight',
+							'bounceInUp' => 'bounceInUp',
+							'bounceOut' => 'bounceOut',
+							'bounceOutDown' => 'bounceOutDown',
+							'bounceOutLeft' => 'bounceOutLeft',
+							'bounceOutRight' => 'bounceOutRight',
+							'bounceOutUp' => 'bounceOutUp',
+							'fadeIn' => 'fadeIn',
+							'fadeInDown' => 'fadeInDown',
+							'fadeInDownBig' => 'fadeInDownBig',
+							'fadeInLeft' => 'fadeInLeft',
+							'fadeInLeftBig' => 'fadeInLeftBig',
+							'fadeInRight' => 'fadeInRight',
+							'fadeInRightBig' => 'fadeInRightBig',
+							'fadeInUp' => 'fadeInUp',
+							'fadeInUpBig' => 'fadeInUpBig',
+							'fadeOut' => 'fadeOut',
+							'fadeOutDown' => 'fadeOutDown',
+							'fadeOutDownBig' => 'fadeOutDownBig',
+							'fadeOutLeft' => 'fadeOutLeft',
+							'fadeOutLeftBig' => 'fadeOutLeftBig',
+							'fadeOutRight' => 'fadeOutRight',
+							'fadeOutRightBig' => 'fadeOutRightBig',
+							'fadeOutUp' => 'fadeOutUp',
+							'fadeOutUpBig' => 'fadeOutUpBig',
+							'flip' => 'flip',
+							'flipInX' => 'flipInX',
+							'flipInY' => 'flipInY',
+							'flipOutX' => 'flipOutX',
+							'flipOutY' => 'flipOutY',
+							'lightSpeedIn' => 'lightSpeedIn',
+							'lightSpeedOut' => 'lightSpeedOut',
+							'rotateIn' => 'rotateIn',
+							'rotateInDownLeft' => 'rotateInDownLeft',
+							'rotateInDownRight' => 'rotateInDownRight',
+							'rotateInUpLeft' => 'rotateInUpLeft',
+							'rotateInUpRight' => 'rotateInUpRight',
+							'rotateOut' => 'rotateOut',
+							'rotateOutDownLeft' => 'rotateOutDownLeft',
+							'rotateOutDownRight' => 'rotateOutDownRight',
+							'rotateOutUpLeft' => 'rotateOutUpLeft',
+							'rotateOutUpRight' => 'rotateOutUpRight',
+							'hinge' => 'hinge',
+							'rollIn' => 'rollIn',
+							'rollOut' => 'rollOut',
+							'zoomIn' => 'zoomIn',
+							'zoomInDown' => 'zoomInDown',
+							'zoomInLeft' => 'zoomInLeft',
+							'zoomInRight' => 'zoomInRight',
+							'zoomInUp' => 'zoomInUp',
+							'zoomOut' => 'zoomOut',
+							'zoomOutDown' => 'zoomOutDown',
+							'zoomOutLeft' => 'zoomOutLeft',
+							'zoomOutRight' => 'zoomOutRight',
+							'zoomOutUp' => 'zoomOutUp',
+							'slideInDown' => 'slideInDown',
+							'slideInLeft' => 'slideInLeft',
+							'slideInRight' => 'slideInRight',
+							'slideInUp' => 'slideInUp',
+							'slideOutDown' => 'slideOutDown',
+							'slideOutLeft' => 'slideOutLeft',
+							'slideOutRight' => 'slideOutRight',
+							'slideOutUp' => 'slideOutUp',
+						]
+					],
+				],
+			]
+		]
+	],
+	[
+		'title'  => 'Свободный элемент 2',
+		'fields' => [
+			'free_2' => [
+				'type'  => 'group',
+				'title' => 'Свободно позиционируемый элемент',
+				'desc'  => 'Свободно позиционируемый элемент',
+				'color' => 'yellow',
+				'value' => [
+					'image' => [
+						'type'    => 'media_button',
+						'title'   => 'Изображение элемента',
+						'desc'    => 'Изображение элемента',
+						'value'   => '',
+						'options' => [
+							'title'    => 'Выбрать изображение',
+							'library'  => [ 'type' => 'image' ],
+							'multiple' => 0,
+							'button'   => [ 'text' => 'Insert' ]
+						]
+					],
+					'unit' => [
+						'type'    => 'select',
+						'title'   => 'Единица измерения',
+						'desc'    => 'Единица измерения',
+						'value'   => '%',
+						'options' => [
+							'percent' => '%',
+							'px'      => 'px',
+						]
+					],
+					'width' => [
+						'type'  => 'number',
+						'title' => 'Ширина',
+						'desc'  => 'Ширина элемента',
+						'value' => 50,
+						'options' => [
+							'step' => 1,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'height' => [
+						'type'  => 'number',
+						'title' => 'Высота',
+						'desc'  => 'Высота элемента',
+						'value' => 50,
+						'options' => [
+							'step' => 1,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'top' => [
+						'type'  => 'number',
+						'title' => 'Позиция по вертикали',
+						'desc'  => 'Позиция по вертикали',
+						'value' => 0,
+						'options' => [
+							'step' => 10,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'left' => [
+						'type'  => 'number',
+						'title' => 'Позиция по горизонтали',
+						'desc'  => 'Позиция по горизонтали',
+						'value' => 0,
+						'options' => [
+							'step' => 10,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'animation' => [
+						'type'  => 'select',
+						'title' => 'Анимация',
+						'desc'  => 'Выберите анимацию',
+						'value'   => 'fadeInUpBig',
+						'options' => [
+							'bounce' => 'bounce',
+							'flash' => 'flash',
+							'pulse' => 'pulse',
+							'rubberBand' => 'rubberBand',
+							'shake' => 'shake',
+							'swing' => 'swing',
+							'tada' => 'tada',
+							'wobble' => 'wobble',
+							'bounceIn' => 'bounceIn',
+							'bounceInDown' => 'bounceInDown',
+							'bounceInLeft' => 'bounceInLeft',
+							'bounceInRight' => 'bounceInRight',
+							'bounceInUp' => 'bounceInUp',
+							'bounceOut' => 'bounceOut',
+							'bounceOutDown' => 'bounceOutDown',
+							'bounceOutLeft' => 'bounceOutLeft',
+							'bounceOutRight' => 'bounceOutRight',
+							'bounceOutUp' => 'bounceOutUp',
+							'fadeIn' => 'fadeIn',
+							'fadeInDown' => 'fadeInDown',
+							'fadeInDownBig' => 'fadeInDownBig',
+							'fadeInLeft' => 'fadeInLeft',
+							'fadeInLeftBig' => 'fadeInLeftBig',
+							'fadeInRight' => 'fadeInRight',
+							'fadeInRightBig' => 'fadeInRightBig',
+							'fadeInUp' => 'fadeInUp',
+							'fadeInUpBig' => 'fadeInUpBig',
+							'fadeOut' => 'fadeOut',
+							'fadeOutDown' => 'fadeOutDown',
+							'fadeOutDownBig' => 'fadeOutDownBig',
+							'fadeOutLeft' => 'fadeOutLeft',
+							'fadeOutLeftBig' => 'fadeOutLeftBig',
+							'fadeOutRight' => 'fadeOutRight',
+							'fadeOutRightBig' => 'fadeOutRightBig',
+							'fadeOutUp' => 'fadeOutUp',
+							'fadeOutUpBig' => 'fadeOutUpBig',
+							'flip' => 'flip',
+							'flipInX' => 'flipInX',
+							'flipInY' => 'flipInY',
+							'flipOutX' => 'flipOutX',
+							'flipOutY' => 'flipOutY',
+							'lightSpeedIn' => 'lightSpeedIn',
+							'lightSpeedOut' => 'lightSpeedOut',
+							'rotateIn' => 'rotateIn',
+							'rotateInDownLeft' => 'rotateInDownLeft',
+							'rotateInDownRight' => 'rotateInDownRight',
+							'rotateInUpLeft' => 'rotateInUpLeft',
+							'rotateInUpRight' => 'rotateInUpRight',
+							'rotateOut' => 'rotateOut',
+							'rotateOutDownLeft' => 'rotateOutDownLeft',
+							'rotateOutDownRight' => 'rotateOutDownRight',
+							'rotateOutUpLeft' => 'rotateOutUpLeft',
+							'rotateOutUpRight' => 'rotateOutUpRight',
+							'hinge' => 'hinge',
+							'rollIn' => 'rollIn',
+							'rollOut' => 'rollOut',
+							'zoomIn' => 'zoomIn',
+							'zoomInDown' => 'zoomInDown',
+							'zoomInLeft' => 'zoomInLeft',
+							'zoomInRight' => 'zoomInRight',
+							'zoomInUp' => 'zoomInUp',
+							'zoomOut' => 'zoomOut',
+							'zoomOutDown' => 'zoomOutDown',
+							'zoomOutLeft' => 'zoomOutLeft',
+							'zoomOutRight' => 'zoomOutRight',
+							'zoomOutUp' => 'zoomOutUp',
+							'slideInDown' => 'slideInDown',
+							'slideInLeft' => 'slideInLeft',
+							'slideInRight' => 'slideInRight',
+							'slideInUp' => 'slideInUp',
+							'slideOutDown' => 'slideOutDown',
+							'slideOutLeft' => 'slideOutLeft',
+							'slideOutRight' => 'slideOutRight',
+							'slideOutUp' => 'slideOutUp',
+						]
+					],
+				],
+			]
+		]
+	],
+	[
+		'title'  => 'Свободный элемент 3',
+		'fields' => [
+			'free_3' => [
+				'type'  => 'group',
+				'title' => 'Свободно позиционируемый элемент',
+				'desc'  => 'Свободно позиционируемый элемент',
+				'color' => 'yellow',
+				'value' => [
+					'image' => [
+						'type'    => 'media_button',
+						'title'   => 'Изображение элемента',
+						'desc'    => 'Изображение элемента',
+						'value'   => '',
+						'options' => [
+							'title'    => 'Выбрать изображение',
+							'library'  => [ 'type' => 'image' ],
+							'multiple' => 0,
+							'button'   => [ 'text' => 'Insert' ]
+						]
+					],
+					'unit' => [
+						'type'    => 'select',
+						'title'   => 'Единица измерения',
+						'desc'    => 'Единица измерения',
+						'value'   => '%',
+						'options' => [
+							'percent' => '%',
+							'px'      => 'px',
+						]
+					],
+					'width' => [
+						'type'  => 'number',
+						'title' => 'Ширина',
+						'desc'  => 'Ширина элемента',
+						'value' => 50,
+						'options' => [
+							'step' => 1,
+							'min'  => 0,
+							'max'  => ''
+						]
+					],
+					'height' => [
+						'type'  => 'number',
+						'title' => 'Высота',
+						'desc'  => 'Высота элемента',
+						'value' => 50,
+						'options' => [
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
