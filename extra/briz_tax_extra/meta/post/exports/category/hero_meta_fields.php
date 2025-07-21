@@ -122,7 +122,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по вертикали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -133,7 +133,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по горизонтали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -283,7 +283,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по вертикали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -294,7 +294,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по горизонтали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -444,7 +444,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по вертикали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
@@ -455,7 +455,7 @@ $hero_meta_fields = [
 						'desc'  => 'Позиция по горизонтали',
 						'value' => 0,
 						'options' => [
-							'step' => 10,
+							'step' => 1,
 							'min'  => 0,
 							'max'  => ''
 						]
