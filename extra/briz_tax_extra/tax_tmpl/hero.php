@@ -218,7 +218,7 @@
 	?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="showcase section hero-page
+				class="showcase section hero-page promo-slider promo-slider--demo
 				<?php echo esc_attr( $this->tmpl_name ); ?>
 				<?php echo esc_attr( $class ); ?>
 				<?php echo $section_class; ?>"
@@ -271,21 +271,11 @@
 					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 				>
-					<div class="<?php echo $content_width_class; ?>">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="slider-box">
-									<div class="swiper-navigation">
-										<div class="swiper-button-prev-custom"></div>
-										<div class="swiper-button-next-custom"></div>
-										<div class="swiper-pagination-custom"></div>
-									</div> <!-- .swiper-navigation -->
-
-									<div
-										class="swiper"
-										data-slider-custom-atts="<?php echo $slider_atts; ?>"
-									>
-										<div class="swiper-wrapper">
+					<div
+						class="swiper"
+						data-slider-custom-atts="<?php echo $slider_atts; ?>"
+					>
+						<div class="swiper-wrapper">
 	<?php
 		}
 
@@ -308,12 +298,11 @@
 		public function get_after( $posts ) {
 			extract( $this->atts );
 	?>
-										</div> <!-- .swiper-wrapper -->
-									</div> <!-- .swiper -->
-								</div> <!-- .slider-box -->
-							</div> <!-- .col-sm-12 -->
-						</div> <!-- .row -->
-					</div> <!-- .container [ -fluid ] -->
+						</div> <!-- .swiper-wrapper -->
+						<div class="swiper-button-prev-custom"></div>
+						<div class="swiper-button-next-custom"></div>
+						<div class="swiper-pagination-custom"></div>
+					</div> <!-- .swiper -->
 				</div> <!-- .section-content-wrap -->
 			</section> <!-- .briz-hero-tmpl -->
 	<?php
@@ -336,72 +325,84 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
-			// $placeholder = PLUGIN_URL . '/img/placeholder/hero/placeholder.png';
 			foreach ( $posts[ 'data' ] as $data ) :
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
 
-					// $img_url = $placeholder;
-					$img_url = '';
-					$img_title = '';
-					$img_alt = '';
-					$aspect_ratio = 'inherit';
-					if ( has_post_thumbnail() ) {
-						$attach_id = get_post_thumbnail_id( $post_id );
-						list( $img_url, $img_width, $img_height ) = wp_get_attachment_image_src( $attach_id, 'full' );
-						// $img_url = esc_url( get_the_post_thumbnail_url() );
-						$img_title = esc_attr__( get_the_title( $attach_id ), $this->lang_domain );
-						$img_alt = esc_attr__( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ), $this->lang_domain );
-						// $img_caption = esc_attr( wp_get_attachment_caption( $attach_id ) );
-						// $img_caption = esc_attr( get_the_excerpt( $attach_id ) );
-						$aspect_ratio = $img_width / $img_height;
+					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+					$opts = get_post_meta( $post_id, $meta_key, true );
+
+					$screen = 'left';
+					$content_image_src = '';
+					$content_image_animation = 'fadeIn';
+					$content_image_delay = 0;
+					$content_image_duration = 0;
+					$free_images = [];
+					if ( is_array( $opts ) ) {
+						$screen = $opts[ 'screen' ] ?? $screen;
+
+						if ( // проверить на наличие image
+							! empty( $image = $opts[ 'content_image' ][ 'image' ] ) &&
+							$attach_id = (int) json_decode( $image )[0]
+						) {
+							$content_image_src = esc_url( wp_get_attachment_image_url( $attach_id, 'full' ) );
+							$img_title = esc_attr__( get_the_title( $attach_id ), $this->lang_domain );
+							$img_alt = esc_attr__( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ), $this->lang_domain );
+						}
+
+						$content_image_animation = $opts[ 'content_image' ][ 'animation' ] ?? $content_image_animation;
+						$content_image_delay = $opts[ 'content_image' ][ 'delay' ] ?? $content_image_delay;
+						$content_image_duration = $opts[ 'content_image' ][ 'duration' ] ?? $content_image_duration;
+
+						$free_images = $opts[ 'free_images' ] ?? $free_images;
 					}
 
-					$post_title = __( get_the_title(), $this->lang_domain );
-					$post_content = __( get_the_content( '' ), $this->lang_domain );
-					$post_link = esc_url( get_permalink() );
-					$post_more_link_text = __( 'Readmore...', $this->lang_domain );
+					$slider_bg_url = '';
+					if ( has_post_thumbnail() ) {
+						$slider_bg_url = esc_url( get_the_post_thumbnail_url() );
+					}
+
+					$post_content = get_the_content( '' );
+
+					switch($screen) {
+						case 'left': $slide_inner_modifier = 'left'; break;
+						case 'center': $slide_inner_modifier = 'center'; break;
+						default: $slide_inner_modifier = 'evenly';
+					}
 	?>
-					<div class="swiper-slide">
-						<div class="slide-inner-wrap">
-							<div class="hero-img">
-								<div class="swiper-lazy-preloader-custom"></div>
-								<img
-										class="swiper-lazy"
-										src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-										data-src="<?php echo esc_url( $img_url ); ?>"
-										title="<?php echo $img_title; ?>"
-										alt="<?php echo $img_alt; ?>"
-										style="aspect-ratio: <?php echo $aspect_ratio; ?>;"
-									/>
-							</div>
-							<div class="hero-caption">
-								<h4>
-									<a href="<?php echo $post_link; ?>">
-										<?php echo $post_title; ?>
-									</a>
-								</h4>
+					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
+						<div class="swiper-lazy-preloader-custom"></div>
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="promo-slider__slide-inner promo-slider__slide-inner--<?php echo $slide_inner_modifier ?>">
+	<?php
+										include_once PLUGIN_PATH . "extra/briz_tax_extra/tax_tmpl/related/promo-slider/slide-content/$screen.php";
 
-								<?php echo $post_content; ?>
+										foreach ( $free_images as $free_image ) {
+											if ( // проверить на наличие src
+												empty( $image = json_decode( $free_image[ 'image' ] ) ) ||
+												! $attach_id = (int) $image[0]
+											) continue;
 
-								<a
-									href="<?php echo $post_link; ?>"
-									class="more-link"
-								><?php echo $post_more_link_text; ?></a>
-
-								<ul class="meta-data clearfix">
-									<li class="comments"><i class="fa fa-comment-o"></i>
-										<?php echo get_comments_number(); ?>
-										comments
-									</li>
-
-									<li class="data">
-										<i class="fa fa-clock-o"></i>
-										<?php the_time( 'F j Y' ); ?>
-									</li>
-								</ul>
+											printf(
+												'<div class="promo-slider__slide-content-item promo-slider__slide-content-item--free" style="width: %2$d%1$s; height: %3$d%1$s; top: %4$d%1$s; left: %5$d%1$s;"><img class="image image--responsive animated" src="%6$s" data-anim-name="%7$s" data-anim-delay="%8$fs" data-anim-duration="%9$fs" /></div>',
+												esc_attr( $free_image[ 'unit' ] ?? '%' ),
+												esc_attr( $free_image[ 'width' ] ?? 50 ),
+												esc_attr( $free_image[ 'height' ] ?? 50 ),
+												esc_attr( $free_image[ 'top' ] ?? 0 ),
+												esc_attr( $free_image[ 'left' ] ?? 0 ),
+												esc_url( wp_get_attachment_image_url( $attach_id, 'full' ) ),
+												esc_attr( $free_image[ 'animation' ] ?? 'fadeIn' ),
+												esc_attr( $free_image[ 'delay' ] ?? 0 ),
+												esc_attr( $free_image[ 'duration' ] ?? 0 )
+											);
+										}
+	?>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
