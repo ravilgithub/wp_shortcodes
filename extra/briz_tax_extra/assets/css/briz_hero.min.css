@@ -1,3 +1,216 @@
+
+
+.briz-hero-tmpl .section-caption-wrap {
+	padding: 100px 0;
+	line-height: 1.6;
+	text-align: center;
+}
+
+.briz-hero-tmpl .section-caption-wrap h2 {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #333;
+	text-transform: uppercase;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer {
+	display: inline-block;
+	position: relative;
+	margin: 32px auto 0;
+	background-color: transparent;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:before {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: -90px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:after {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: 30px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: relative;
+	background-color: transparent;
+	border-style: solid;
+	border-width: 1px;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
+	content: "";
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	left: 1px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: transparent;
+}
+
+.briz-hero-tmpl .section-caption-wrap p {
+	margin-top: 32px;
+	margin-bottom: 0;
+	color: #999;
+}
+
+
+/**
+ * Spacer color
+ */
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:after {
+	border-color: #ee4444;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
+	border-color: #ee4444;
+}
+
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
+	border-color: #ee4444;
+}
+
+
+/* Slide spacer */
+.promo-slider--demo .spacer {
+	display: inline-block;
+	position: relative;
+	background-color: transparent;
+}
+
+.promo-slider--demo .spacer:before {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: -90px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.promo-slider--demo .spacer:after {
+	content: "";
+	display: block;
+	width: 80px;
+	height: 3px;
+	position: absolute;
+	top: 50%;
+	left: 30px;
+	margin-top: -1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	background-color: transparent;
+}
+
+.promo-slider--demo .spacer .diamond {
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: relative;
+	background-color: transparent;
+	border-style: solid;
+	border-width: 1px;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+.promo-slider--demo .spacer .diamond:after {
+	content: "";
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	left: 1px;
+	border-style: solid;
+	border-width: 1px;
+	background-color: transparent;
+}
+
+
+/**
+ * Slide spacer color
+ */
+.promo-slider--demo .spacer:before, .promo-slider--demo .spacer:after {
+	border-color: #ee4444;
+}
+
+.promo-slider--demo .spacer .diamond {
+	border-color: #ee4444;
+}
+
+.promo-slider--demo .spacer .diamond:after {
+	border-color: #ee4444;
+}
+
+
+
+/* Color */
+.briz-hero-tmpl .section-caption-wrap h2 span {
+	color: #ee4444;
+}
+
+.briz-hero-tmpl .section-content-wrap .hero-item-wrap:hover .icon-wrap i {
+	color: #ee4444;
+}
+
+.briz-hero-tmpl .section-content-wrap .hero-item-wrap .content-wrap a {
+	color: #ee4444;
+}
+
+.briz-hero-tmpl .section-content-wrap .hero-item-wrap .content-wrap a:hover {
+	color: #ea1515;
+}
+
+
+/* Переводы */
+
+html[lang=ru-RU] .promo-slider .en {
+	display: none;
+}
+
+html[lang=en-US] .promo-slider .ru {
+	display: none;
+}
+
+
+/* General */
+
 .promo-slider .text--fz-0 {
 	font-size: 0em;
 }

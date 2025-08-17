@@ -25,7 +25,7 @@ const hero = {
 	 * @since 0.0.1
 	 */
 	setSlideTextSize( swiper ) { // Slider
-		$( '[class^=container]', swiper.el ).flowtype( {
+		jQuery( '[class^=container]', swiper.el ).flowtype( {
 			minimum: 1,
 			maximum: 1200,
 			minFont: 1,
@@ -185,7 +185,7 @@ const hero = {
 	setVideoIframe( swiper ) { // Slider
 		const autoplayOn = null !== this.swiperAutoplayStatus ? this.swiperAutoplayStatus : swiper.autoplay.running;
 
-		$( '.mfp-iframe', swiper.el ).magnificPopup( {
+		jQuery( '.mfp-iframe', swiper.el ).magnificPopup( {
 			type: 'iframe',
 			mainClass: 'bri-mfp-video-iframe',
 
