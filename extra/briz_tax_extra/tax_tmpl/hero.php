@@ -2,6 +2,10 @@
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
 	use Briz_Shortcodes\common\Helper;
 
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit; // Exit if accessed directly
+	}
+
 	/**
 	 * Hero template.
 	 *
