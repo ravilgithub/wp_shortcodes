@@ -383,7 +383,7 @@
 								<div class="col-xs-12">
 									<div class="promo-slider__slide-inner promo-slider__slide-inner--<?php echo $slide_inner_modifier ?>">
 	<?php
-										include_once PLUGIN_PATH . "extra/briz_tax_extra/tax_tmpl/related/promo-slider/slide-content/$screen.php";
+										include_once PLUGIN_PATH . "extra/briz_tax_extra/tax_tmpl/related/promo_slider/slide_content/$screen.php";
 
 										foreach ( $free_images as $free_image ) {
 											if ( // проверить на наличие src
