@@ -1,6 +1,12 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
+
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit; // Exit if accessed directly
+	}
+
 	use Briz_Shortcodes\common\Helper;
+	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions;
 
 	/**
 	 * Hero template.
@@ -19,6 +25,8 @@
 	 * @author Ravil
 	 */
 	class Hero {
+		use Actions;
+
 		private $tmpl_name = 'briz-hero-tmpl';
 		public $content;
 		public $atts;
@@ -49,6 +57,7 @@
 			$this->lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
 			$this->redefine_script_tag();
+			$this->add_actions();
 		}
 
 
@@ -218,7 +227,7 @@
 	?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="showcase section hero-page
+				class="showcase section hero-page promo-slider promo-slider--demo
 				<?php echo esc_attr( $this->tmpl_name ); ?>
 				<?php echo esc_attr( $class ); ?>
 				<?php echo $section_class; ?>"
@@ -271,21 +280,11 @@
 					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 				>
-					<div class="<?php echo $content_width_class; ?>">
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="slider-box">
-									<div class="swiper-navigation">
-										<div class="swiper-button-prev-custom"></div>
-										<div class="swiper-button-next-custom"></div>
-										<div class="swiper-pagination-custom"></div>
-									</div> <!-- .swiper-navigation -->
-
-									<div
-										class="swiper"
-										data-slider-custom-atts="<?php echo $slider_atts; ?>"
-									>
-										<div class="swiper-wrapper">
+					<div
+						class="swiper"
+						data-slider-custom-atts="<?php echo $slider_atts; ?>"
+					>
+						<div class="swiper-wrapper">
 	<?php
 		}
 
@@ -308,12 +307,11 @@
 		public function get_after( $posts ) {
 			extract( $this->atts );
 	?>
-										</div> <!-- .swiper-wrapper -->
-									</div> <!-- .swiper -->
-								</div> <!-- .slider-box -->
-							</div> <!-- .col-sm-12 -->
-						</div> <!-- .row -->
-					</div> <!-- .container [ -fluid ] -->
+						</div> <!-- .swiper-wrapper -->
+						<div class="swiper-button-prev-custom"></div>
+						<div class="swiper-button-next-custom"></div>
+						<div class="swiper-pagination-custom"></div>
+					</div> <!-- .swiper -->
 				</div> <!-- .section-content-wrap -->
 			</section> <!-- .briz-hero-tmpl -->
 	<?php
@@ -336,72 +334,45 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
-			// $placeholder = PLUGIN_URL . '/img/placeholder/hero/placeholder.png';
 			foreach ( $posts[ 'data' ] as $data ) :
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
 
-					// $img_url = $placeholder;
-					$img_url = '';
-					$img_title = '';
-					$img_alt = '';
-					$aspect_ratio = 'inherit';
-					if ( has_post_thumbnail() ) {
-						$attach_id = get_post_thumbnail_id( $post_id );
-						list( $img_url, $img_width, $img_height ) = wp_get_attachment_image_src( $attach_id, 'full' );
-						// $img_url = esc_url( get_the_post_thumbnail_url() );
-						$img_title = esc_attr__( get_the_title( $attach_id ), $this->lang_domain );
-						$img_alt = esc_attr__( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ), $this->lang_domain );
-						// $img_caption = esc_attr( wp_get_attachment_caption( $attach_id ) );
-						// $img_caption = esc_attr( get_the_excerpt( $attach_id ) );
-						$aspect_ratio = $img_width / $img_height;
+					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
+					$opts = get_post_meta( $post_id, $meta_key, true );
+
+					$screen = 'left';
+					if ( is_array( $opts ) ) {
+						$screen = $opts[ 'screen' ] ?? $screen;
 					}
 
-					$post_title = __( get_the_title(), $this->lang_domain );
-					$post_content = __( get_the_content( '' ), $this->lang_domain );
-					$post_link = esc_url( get_permalink() );
-					$post_more_link_text = __( 'Readmore...', $this->lang_domain );
+					$slider_bg_url = '';
+					if ( has_post_thumbnail() ) {
+						$slider_bg_url = esc_url( get_the_post_thumbnail_url() );
+					}
 	?>
-					<div class="swiper-slide">
-						<div class="slide-inner-wrap">
-							<div class="hero-img">
-								<div class="swiper-lazy-preloader-custom"></div>
-								<img
-										class="swiper-lazy"
-										src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-										data-src="<?php echo esc_url( $img_url ); ?>"
-										title="<?php echo $img_title; ?>"
-										alt="<?php echo $img_alt; ?>"
-										style="aspect-ratio: <?php echo $aspect_ratio; ?>;"
-									/>
-							</div>
-							<div class="hero-caption">
-								<h4>
-									<a href="<?php echo $post_link; ?>">
-										<?php echo $post_title; ?>
-									</a>
-								</h4>
+					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
+						<div class="swiper-lazy-preloader-custom"></div>
+						<div class="container">
+							<div class="row">
+								<div class="col-xs-12">
+	<?php
+									/**
+									 * @see Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions
+									 */
 
-								<?php echo $post_content; ?>
+									// Inner HTML Open
+									do_action( 'shortcode_briz_tax_promo_slide_before_content', $screen, $opts, $query, $this->lang_domain );
 
-								<a
-									href="<?php echo $post_link; ?>"
-									class="more-link"
-								><?php echo $post_more_link_text; ?></a>
+									// Content HTML
+									do_action( 'shortcode_briz_tax_promo_slide_content', $screen, $opts, $query, $this->lang_domain );
 
-								<ul class="meta-data clearfix">
-									<li class="comments"><i class="fa fa-comment-o"></i>
-										<?php echo get_comments_number(); ?>
-										comments
-									</li>
-
-									<li class="data">
-										<i class="fa fa-clock-o"></i>
-										<?php the_time( 'F j Y' ); ?>
-									</li>
-								</ul>
+									// Inner HTML Close
+									do_action( 'shortcode_briz_tax_promo_slide_after_content', $screen, $opts, $query, $this->lang_domain );
+	?>
+								</div>
 							</div>
 						</div>
 					</div>
