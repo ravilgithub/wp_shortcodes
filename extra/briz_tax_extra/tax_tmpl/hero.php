@@ -1,10 +1,12 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
-	use Briz_Shortcodes\common\Helper;
 
 	if ( ! defined( 'ABSPATH' ) ) {
 		exit; // Exit if accessed directly
 	}
+
+	use Briz_Shortcodes\common\Helper;
+	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions;
 
 	/**
 	 * Hero template.
@@ -23,6 +25,8 @@
 	 * @author Ravil
 	 */
 	class Hero {
+		use Actions;
+
 		private $tmpl_name = 'briz-hero-tmpl';
 		public $content;
 		public $atts;
@@ -53,6 +57,7 @@
 			$this->lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
 			$this->redefine_script_tag();
+			$this->add_actions();
 		}
 
 
@@ -339,41 +344,13 @@
 					$opts = get_post_meta( $post_id, $meta_key, true );
 
 					$screen = 'left';
-					$content_image_src = '';
-					$content_image_animation = 'fadeIn';
-					$content_image_delay = 0;
-					$content_image_duration = 0;
-					$free_images = [];
 					if ( is_array( $opts ) ) {
 						$screen = $opts[ 'screen' ] ?? $screen;
-
-						if ( // проверить на наличие image
-							! empty( $image = $opts[ 'content_image' ][ 'image' ] ) &&
-							$attach_id = (int) json_decode( $image )[0]
-						) {
-							$content_image_src = esc_url( wp_get_attachment_image_url( $attach_id, 'full' ) );
-							$img_title = esc_attr__( get_the_title( $attach_id ), $this->lang_domain );
-							$img_alt = esc_attr__( get_post_meta( $attach_id, '_wp_attachment_image_alt', true ), $this->lang_domain );
-						}
-
-						$content_image_animation = $opts[ 'content_image' ][ 'animation' ] ?? $content_image_animation;
-						$content_image_delay = $opts[ 'content_image' ][ 'delay' ] ?? $content_image_delay;
-						$content_image_duration = $opts[ 'content_image' ][ 'duration' ] ?? $content_image_duration;
-
-						$free_images = $opts[ 'free_images' ] ?? $free_images;
 					}
 
 					$slider_bg_url = '';
 					if ( has_post_thumbnail() ) {
 						$slider_bg_url = esc_url( get_the_post_thumbnail_url() );
-					}
-
-					$post_content = get_the_content( '' );
-
-					switch($screen) {
-						case 'left': $slide_inner_modifier = 'left'; break;
-						case 'center': $slide_inner_modifier = 'center'; break;
-						default: $slide_inner_modifier = 'evenly';
 					}
 	?>
 					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
@@ -381,31 +358,20 @@
 						<div class="container">
 							<div class="row">
 								<div class="col-xs-12">
-									<div class="promo-slider__slide-inner promo-slider__slide-inner--<?php echo $slide_inner_modifier ?>">
 	<?php
-										include_once PLUGIN_PATH . "extra/briz_tax_extra/tax_tmpl/related/promo_slider/slide_content/$screen.php";
+									/**
+									 * @see Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions
+									 */
 
-										foreach ( $free_images as $free_image ) {
-											if ( // проверить на наличие src
-												empty( $image = json_decode( $free_image[ 'image' ] ) ) ||
-												! $attach_id = (int) $image[0]
-											) continue;
+									// Inner HTML Open
+									do_action( 'shortcode_briz_tax_promo_slide_before_content', $screen, $opts, $query, $this->lang_domain );
 
-											printf(
-												'<div class="promo-slider__slide-content-item promo-slider__slide-content-item--free" style="width: %2$d%1$s; height: %3$d%1$s; top: %4$d%1$s; left: %5$d%1$s;"><img class="image image--responsive animated" src="%6$s" data-anim-name="%7$s" data-anim-delay="%8$fs" data-anim-duration="%9$fs" /></div>',
-												esc_attr( $free_image[ 'unit' ] ?? '%' ),
-												esc_attr( $free_image[ 'width' ] ?? 50 ),
-												esc_attr( $free_image[ 'height' ] ?? 50 ),
-												esc_attr( $free_image[ 'top' ] ?? 0 ),
-												esc_attr( $free_image[ 'left' ] ?? 0 ),
-												esc_url( wp_get_attachment_image_url( $attach_id, 'full' ) ),
-												esc_attr( $free_image[ 'animation' ] ?? 'fadeIn' ),
-												esc_attr( $free_image[ 'delay' ] ?? 0 ),
-												esc_attr( $free_image[ 'duration' ] ?? 0 )
-											);
-										}
+									// Content HTML
+									do_action( 'shortcode_briz_tax_promo_slide_content', $screen, $opts, $query, $this->lang_domain );
+
+									// Inner HTML Close
+									do_action( 'shortcode_briz_tax_promo_slide_after_content', $screen, $opts, $query, $this->lang_domain );
 	?>
-									</div>
 								</div>
 							</div>
 						</div>
