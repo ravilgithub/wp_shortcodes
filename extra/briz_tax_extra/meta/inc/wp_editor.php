@@ -57,7 +57,7 @@
 
 	<div class="briz-meta-field-inner">
 		<?php
-			echo $value;
+			// echo $value;
 			wp_editor( $value, $key, $args );
 		?>
 		<button type="button" class="button briz-reset-default"><?php _e( 'Reset', $this->lang_domain ); ?></button>

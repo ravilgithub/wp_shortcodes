@@ -35,6 +35,7 @@ use Briz_Shortcodes\common\Helper;
 
 define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'UPLOAD_URL', wp_get_upload_dir()[ 'baseurl' ] );
 
 require_once 'common/helpers.php';
 
@@ -45,6 +46,8 @@ require_once 'extra/briz_tax_extra/template_select.php';
 
 require_once 'extra/briz_tax_extra/tax_tmpl/related/products/actions.php';
 require_once 'extra/briz_tax_extra/tax_tmpl/related/products/filters.php';
+
+require_once 'extra/briz_tax_extra/tax_tmpl/related/promo_slider/actions.php';
 
 require_once 'shortcodes.php';
 
