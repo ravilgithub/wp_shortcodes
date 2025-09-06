@@ -411,6 +411,10 @@
 /**
  * BEGIN COLOR
  */
+.briz-subscribe-tmpl .section-caption-wrap h2 span {
+	color: #ee4444;
+}
+
 /* BEGIN CUSTOM FORM COLOR */
 .briz-subscribe-tmpl .section-content-wrap .subscribe-form .input-wrap .form-group label:after {
 	background-color: #ee4444;
