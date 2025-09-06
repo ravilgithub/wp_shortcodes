@@ -86,7 +86,8 @@
 /**
  * Spacer color
  */
-.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:after {
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:before,
+.briz-hero-tmpl .section-caption-wrap .briz-caption-spacer:after {
 	border-color: #ee4444;
 }
 
