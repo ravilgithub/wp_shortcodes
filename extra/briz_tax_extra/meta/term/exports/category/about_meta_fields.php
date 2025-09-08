@@ -13,7 +13,7 @@ $about_meta_fields = [
 			'options' => [
 				'title'    => 'Insert a media',
 				'library'  => [ 'type' => 'image' ],
-				'multiple' => 1,
+				'multiple' => true,
 				'button'   => [ 'text' => 'Insert' ]
 			]
 		],

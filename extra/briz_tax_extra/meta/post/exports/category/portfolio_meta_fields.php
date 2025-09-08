@@ -100,7 +100,7 @@ $portfolio_meta_fields = [
 														'options' => [
 															'title'    => 'Insert a media',
 															'library'  => [ 'type' => 'image' ],
-															'multiple' => 0,
+															'multiple' => false,
 															'button'   => [ 'text' => 'Insert' ]
 														]
 													],
@@ -294,7 +294,7 @@ $portfolio_meta_fields = [
 						'options' => [
 							'title'    => 'Insert a media',
 							'library'  => [ 'type' => 'image' ],
-							'multiple' => 0,
+							'multiple' => false,
 							'button'   => [ 'text' => 'Insert' ]
 						]
 					],
@@ -506,7 +506,7 @@ $portfolio_meta_fields = [
 										'options' => [
 											'title'    => 'Insert a media',
 											'library'  => [ 'type' => 'image' ],
-											'multiple' => 0,
+											'multiple' => false,
 											'button'   => [ 'text' => 'Insert' ]
 										]
 									],
@@ -761,7 +761,7 @@ $portfolio_meta_fields = [
 				'options' => [
 					'title'    => 'Insert a media',
 					'library'  => [ 'type' => 'image' ],
-					'multiple' => 0,
+					'multiple' => false,
 					'button'   => [ 'text' => 'Insert' ]
 				]
 			],
@@ -774,7 +774,7 @@ $portfolio_meta_fields = [
 				'options' => [
 					'title'    => 'Insert a media',
 					'library'  => [ 'type' => 'image' ],
-					'multiple' => 0,
+					'multiple' => false,
 					'button'   => [ 'text' => 'Insert' ]
 				]
 			],
@@ -787,7 +787,7 @@ $portfolio_meta_fields = [
 				'options' => [
 					'title'    => 'Insert a media',
 					'library'  => [ 'type' => 'audio' ],
-					'multiple' => 1,
+					'multiple' => true,
 					'button'   => [ 'text' => 'Insert' ]
 				]
 			],
@@ -800,7 +800,7 @@ $portfolio_meta_fields = [
 				'options' => [
 					'title'    => 'Insert a media',
 					'library'  => [ 'type' => 'video' ],
-					'multiple' => 1,
+					'multiple' => true,
 					'button'   => [ 'text' => 'Insert' ]
 				]
 			],
