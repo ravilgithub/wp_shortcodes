@@ -154,8 +154,8 @@ trait ProductButtonsGroup {
 		if ( ! isset( $yith_woocompare ) )
 			return false;
 
-		$button_text = get_option( 'yith_woocompare_button_text', __( 'Compare', 'yith-woocommerce-compare' ) );
-		$product_id = $product->get_id();
+		$button_text = esc_html( get_option( 'yith_woocompare_button_text', __( 'Compare', 'yith-woocommerce-compare' ) ) );
+		$product_id = esc_attr( $product->get_id() );
 
 		$class = '';
 		if (
@@ -194,9 +194,9 @@ trait ProductButtonsGroup {
 	public static function shortcode_briz_tax_template_product_quickview() {
 		global $post, $product;
 		$product_id = esc_attr( $product->get_id() );
-		$post_type = get_post_type( $product_id );
+		$post_type = esc_attr( get_post_type( $product_id ) );
 		$style = ( 'product_variation' === $post_type ) ? 'visibility: hidden;' : '';
-		$text = __( 'Quick view', 'woocommerce' );
+		$text = esc_html__( 'Quick view', 'woocommerce' );
 
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_quickview_html',
