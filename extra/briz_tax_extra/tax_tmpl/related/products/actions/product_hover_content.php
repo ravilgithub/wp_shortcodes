@@ -93,12 +93,13 @@ trait ProductHoverContent {
 
 			// Указывается при редактировании картинки в медиа библиотеке
 			$title = get_post_field( 'post_title', $attachment_id );
+			$alt = esc_attr__( get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ), self::$lang_domain );
 			$data_caption = get_post_field( 'post_excerpt', $attachment_id );
 
 			$slides .= apply_filters(
 				'shortcode_briz_tax_template_product_hover_content_gallery_slide_html',
 				sprintf(
-					'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s" data-lg-img-srcset="%7$s"><img src="%4$s" alt="%3$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
+					'<div data-lg-img-src="%1$s" class="swiper-slide bri-archive-product-item-gallery__image %2$s" title="%3$s" data-background-image="%4$s" data-lg-img-srcset="%7$s"><img src="%4$s" alt="%8$s" title="%3$s" data-caption="%5$s" style="aspect-ratio:%6$s;" /></div>',
 					$full_size_image,
 					$first_slide,
 					$title,
@@ -106,6 +107,7 @@ trait ProductHoverContent {
 					$data_caption,
 					$aspect_ratio,
 					$full_size_image_srcset,
+					$alt,
 				),
 				$post,
 				$product,

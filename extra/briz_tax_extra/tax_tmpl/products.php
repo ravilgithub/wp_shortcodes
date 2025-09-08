@@ -310,7 +310,7 @@
 									$term_id = esc_attr( $child->term_id );
 									$term_posts_count = esc_attr( $child->count );
 									$term_slug = esc_attr( $child->slug );
-									$term_name = __( $child->name, self::$lang_domain );
+									$term_name = esc_html__( $child->name, self::$lang_domain );
 ?>
 									<li
 										class="tab-item <?php echo $is_first; ?>"

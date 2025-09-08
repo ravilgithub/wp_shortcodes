@@ -40,8 +40,8 @@ trait ProductLink {
 			$post,
 			$product,
 			$link,
-			$title,
-			$text
+			esc_attr( $title ),
+			esc_html( $text )
 		);
 	}
 

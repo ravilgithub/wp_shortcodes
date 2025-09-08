@@ -272,7 +272,7 @@
 					if ( array_key_exists( 'video_url', $opts ) && ! empty( $opts[ 'video_url' ] ) ) :
 						$video_url = esc_url( $opts[ 'video_url' ] );
 ?>
-						<a href="<?php echo $video_url; ?>" class="icon-play_icon mfp-iframe"></a>
+						<a href="<?php echo $video_url; ?>" class="fontello icon-play_icon mfp-iframe"></a>
 <?php
 					endif;
 ?>					

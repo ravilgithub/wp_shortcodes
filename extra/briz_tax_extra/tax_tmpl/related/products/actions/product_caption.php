@@ -76,7 +76,7 @@ trait ProductCaption {
 		global $post, $product;
 
 		$link = esc_url( get_the_permalink() );
-		$title = __( get_the_title(), self::$lang_domain );
+		$title = esc_attr__( get_the_title(), self::$lang_domain );
 
 		echo apply_filters(
 			'shortcode_briz_tax_template_product_caption_title_html',

@@ -326,76 +326,10 @@
 
 
 /**
- * Spacer
- */
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer {
-	display: inline-block;
-	position: relative;
-	margin: 32px auto 0;
-	background-color: transparent;
-}
-
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:before {
-	content: "";
-	display: block;
-	width: 80px;
-	height: 3px;
-	position: absolute;
-	top: 50%;
-	left: -90px;
-	margin-top: -1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	background-color: transparent;
-}
-
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:after {
-	content: "";
-	display: block;
-	width: 80px;
-	height: 3px;
-	position: absolute;
-	top: 50%;
-	left: 30px;
-	margin-top: -1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	background-color: transparent;
-}
-
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
-	display: block;
-	width: 20px;
-	height: 20px;
-	position: relative;
-	background-color: transparent;
-	border-style: solid;
-	border-width: 1px;
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
-	content: "";
-	position: absolute;
-	top: 1px;
-	right: 1px;
-	bottom: 1px;
-	left: 1px;
-	border-style: solid;
-	border-width: 1px;
-	background-color: transparent;
-}
-
-
-/**
  * Spacer color
  */
-.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:after {
+.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:before,
+.briz-subscribe-tmpl .section-caption-wrap .briz-caption-spacer:after {
 	border-color: #ee4444;
 }
 
@@ -411,6 +345,10 @@
 /**
  * BEGIN COLOR
  */
+.briz-subscribe-tmpl .section-caption-wrap h2 span {
+	color: #ee4444;
+}
+
 /* BEGIN CUSTOM FORM COLOR */
 .briz-subscribe-tmpl .section-content-wrap .subscribe-form .input-wrap .form-group label:after {
 	background-color: #ee4444;

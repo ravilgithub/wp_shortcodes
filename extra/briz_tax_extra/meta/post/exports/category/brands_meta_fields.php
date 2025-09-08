@@ -18,7 +18,7 @@ $brands_meta_fields = [
 				'options' => [
 					'title'    => 'Insert a media',
 					'library'  => [ 'type' => [ 'image', 'video', 'audio', 'application' ] ],
-					'multiple' => 0,
+					'multiple' => false,
 					'button'   => [ 'text' => 'Insert' ]
 				]
 			],
