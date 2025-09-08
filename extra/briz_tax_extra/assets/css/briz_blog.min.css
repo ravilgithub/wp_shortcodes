@@ -236,76 +236,10 @@
 
 
 /**
- * Spacer
- */
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer {
-	display: inline-block;
-	position: relative;
-	margin: 32px auto 0;
-	background-color: transparent;
-}
-
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:before {
-	content: "";
-	display: block;
-	width: 80px;
-	height: 3px;
-	position: absolute;
-	top: 50%;
-	left: -90px;
-	margin-top: -1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	background-color: transparent;
-}
-
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:after {
-	content: "";
-	display: block;
-	width: 80px;
-	height: 3px;
-	position: absolute;
-	top: 50%;
-	left: 30px;
-	margin-top: -1px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-top-width: 1px;
-	border-bottom-width: 1px;
-	background-color: transparent;
-}
-
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer .diamond {
-	display: block;
-	width: 20px;
-	height: 20px;
-	position: relative;
-	background-color: transparent;
-	border-style: solid;
-	border-width: 1px;
-	-webkit-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer .diamond:after {
-	content: "";
-	position: absolute;
-	top: 1px;
-	right: 1px;
-	bottom: 1px;
-	left: 1px;
-	border-style: solid;
-	border-width: 1px;
-	background-color: transparent;
-}
-
-
-/**
  * Spacer color
  */
-.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:after {
+.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:before,
+.briz-blog-tmpl .section-caption-wrap .briz-caption-spacer:after {
 	border-color: #ee4444;
 }
 

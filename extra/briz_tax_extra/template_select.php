@@ -99,24 +99,11 @@ class Tax_TMPL {
 		$tmpls_path = plugin_dir_path( __FILE__ ) . $this->dir;
 		$tmpls_path = apply_filters( "briz_tax_tmpl_path", $tmpls_path );
 
-		// Helper::debug( $tmpls_path, '200px' );
-
-		$it = new \RecursiveIteratorIterator( 
-			new \RecursiveDirectoryIterator( $tmpls_path )
-		);
-
-		foreach ( $it as $obj ) {
-			if ( ! $it->isDot() ) {
-				extract( pathinfo( $obj ) );
-
-				if ( 'php' != $extension )
-					continue;
-
-				$this->files[ $filename ] = "{$dirname}/{$basename}";
+		foreach ( new \DirectoryIterator( $tmpls_path ) as $obj ) {
+			if ( $obj->isFile() && $obj->getExtension() == 'php' ) {
+				$this->files[ $obj->getBasename( '.php' ) ] = $obj->getRealPath();
 			}
 		}
-
-		// Helper::debug( $this->files, '200px' );
 	}
 
 

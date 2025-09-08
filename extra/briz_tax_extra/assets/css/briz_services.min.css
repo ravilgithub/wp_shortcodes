@@ -146,7 +146,8 @@
 /**
  * Spacer color
  */
-.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:before, .briz-services-tmpl .section-caption-wrap .briz-caption-spacer:after {
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:before,
+.briz-services-tmpl .section-caption-wrap .briz-caption-spacer:after {
 	border-color: #ee4444;
 }
 
