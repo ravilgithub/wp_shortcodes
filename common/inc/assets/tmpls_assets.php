@@ -99,6 +99,12 @@ $assets = [
 			'deps' => [ 'briz-bootstrap-css', 'briz-swiper-css', 'briz-magnific-popup-css', 'briz-fontawesome-css', 'briz-animate-css' ],
 			'ver'  => '1.0.0'
 		],
+		'experience' => [
+			'id'   => 'briz-experience-tmpl-css',
+			'src'  => PLUGIN_URL . 'extra/briz_tax_extra/assets/css/briz_experience.min.css',
+			'deps' => [ 'briz-bootstrap-css', 'briz-fontawesome-css' ],
+			'ver'  => '1.0.0'
+		],
 	],
 
 	'js' => [
@@ -205,6 +211,13 @@ $assets = [
 			'id'        => 'briz-hero-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_hero.js',
 			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-flowtype-js', 'briz-animate-js' ],
+			'ver'       => '1.0.0',
+			'in_footer' => true
+		],
+		'experience' => [
+			'id'        => 'briz-experience-tmpl-js',
+			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_experience.js',
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
