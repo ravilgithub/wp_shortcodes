@@ -45,26 +45,28 @@ require 'exports/category/pricing_meta_fields.php';
 require 'exports/category/video_meta_fields.php';
 require 'exports/category/subscribe_meta_fields.php';
 require 'exports/category/hero_meta_fields.php';
+require 'exports/category/experience_meta_fields.php';
 
 /* Product category */
 require 'exports/product_cat/products_meta_fields.php';
 
 $opts = [
 	'category' => [
-		'portfolio' => $portfolio_meta_fields,
-		'services'  => $services_meta_fields,
-		'features'  => $features_meta_fields,
-		'stickers'  => $stickers_meta_fields,
-		'about'     => $about_meta_fields,
-		'facts'     => $facts_meta_fields,
-		'solutions' => $solutions_meta_fields,
-		'team'      => $team_meta_fields,
-		'review'    => $review_meta_fields,
-		'brands'    => $brands_meta_fields,
-		'pricing'   => $pricing_meta_fields,
-		'video'     => $video_meta_fields,
-		'subscribe' => $subscribe_meta_fields,
-		'hero'      => $hero_meta_fields,
+		'portfolio'  => $portfolio_meta_fields,
+		'services'   => $services_meta_fields,
+		'features'   => $features_meta_fields,
+		'stickers'   => $stickers_meta_fields,
+		'about'      => $about_meta_fields,
+		'facts'      => $facts_meta_fields,
+		'solutions'  => $solutions_meta_fields,
+		'team'       => $team_meta_fields,
+		'review'     => $review_meta_fields,
+		'brands'     => $brands_meta_fields,
+		'pricing'    => $pricing_meta_fields,
+		'video'      => $video_meta_fields,
+		'subscribe'  => $subscribe_meta_fields,
+		'hero'       => $hero_meta_fields,
+		'experience' => $experience_meta_fields,
 	],
 
 	'product_cat' => [

@@ -45,6 +45,7 @@ require 'exports/category/services_meta_fields.php';
 require 'exports/category/video_meta_fields.php';
 require 'exports/category/subscribe_meta_fields.php';
 require 'exports/category/hero_meta_fields.php';
+require 'exports/category/experience_meta_fields.php';
 
 /* Product category */
 require 'exports/product_cat/__to_all__products_meta_fields.php';
@@ -68,6 +69,7 @@ $opts = [
 		'video'      => $video_meta_fields,
 		'subscribe'  => $subscribe_meta_fields,
 		'hero'       => $hero_meta_fields,
+		'experience' => $experience_meta_fields,
 	],
 
 	'product_cat' => [
