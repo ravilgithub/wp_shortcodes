@@ -112,7 +112,7 @@ $assets = [
 		'portfolio' => [
 			'id'        => 'briz-portfolio-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_portfolio.js',
-			'deps'      => [ 'jquery', 'imagesloaded', 'briz-bootstrap-js', 'briz-magnific-popup-js', 'briz-isotop-js' ],
+			'deps'      => [ 'jquery', 'imagesloaded', 'briz-bootstrap-js', 'briz-magnific-popup-js', 'briz-isotop-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
@@ -203,14 +203,14 @@ $assets = [
 		'products' => [
 			'id'        => 'briz-products-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_products.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js', 'briz-imagesloaded-js', 'briz-modernizr-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-photoswipe-js', 'briz-threesixty-js', 'briz-imagesloaded-js', 'briz-modernizr-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
 		'hero' => [
 			'id'        => 'briz-hero-tmpl-js',
 			'src'       => PLUGIN_URL . 'extra/briz_tax_extra/assets/js/briz_hero.js',
-			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-flowtype-js', 'briz-animate-js' ],
+			'deps'      => [ 'jquery', 'briz-bootstrap-js', 'briz-swiper-js', 'briz-magnific-popup-js', 'briz-flowtype-js', 'briz-animate-js', 'briz-parallax-js' ],
 			'ver'       => '1.0.0',
 			'in_footer' => true
 		],
