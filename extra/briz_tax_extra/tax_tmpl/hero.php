@@ -34,6 +34,7 @@
 		public $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
+		public $content_width_class = 'container';
 
 
 		/**
@@ -152,7 +153,6 @@
 			$header_description_text = '';
 			$header_bg_color = '';
 			$content_bg_color = '';
-			$content_width_class = 'container';
 
 			if ( is_array( $opts ) ) {
 				if (
@@ -221,7 +221,7 @@
 				}
 
 				if ( array_key_exists( 'content_wide', $opts ) ) {
-					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
+					$this->content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $this->content_width_class;
 				}
 			}
 	?>
@@ -355,7 +355,7 @@
 	?>
 					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
 						<div class="swiper-lazy-preloader-custom"></div>
-						<div class="container">
+						<div class="<?php echo $this->content_width_class; ?>">
 							<div class="row">
 								<div class="col-xs-12">
 	<?php
