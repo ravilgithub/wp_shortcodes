@@ -112,5 +112,15 @@ $video_meta_fields = [
 			'desc'  => 'Цвет фона контента',
 			'value' => '#b0c4de'
 		],
+		'content_wide' => [
+			'type'  => 'checkbox',
+			'title' => 'Широкий контент',
+			'desc'  => 'Контент на всю ширину экрана.',
+			'empty' => true,
+			'value' => '',
+			'options' => [
+				'on' => 'On'
+			]
+		],
 	]
 ];
