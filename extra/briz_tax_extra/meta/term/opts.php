@@ -31,7 +31,6 @@
 /* Category */
 require 'exports/category/__to_all__meta_fields.php';
 require 'exports/category/facts_meta_fields.php';
-require 'exports/category/about_meta_fields.php';
 require 'exports/category/solutions_meta_fields.php';
 require 'exports/category/stickers_meta_fields.php';
 require 'exports/category/review_meta_fields.php';
@@ -55,7 +54,6 @@ $opts = [
 	'category' => [
 		'__to_all__' => $__to_all__meta_fields,
 		'facts'      => $facts_meta_fields,
-		'about'      => $about_meta_fields,
 		'solutions'  => $solutions_meta_fields,
 		'stickers'   => $stickers_meta_fields,
 		'review'     => $review_meta_fields,
