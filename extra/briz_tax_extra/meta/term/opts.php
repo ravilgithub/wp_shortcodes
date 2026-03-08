@@ -47,7 +47,6 @@ require 'exports/category/hero_meta_fields.php';
 require 'exports/category/experience_meta_fields.php';
 
 /* Product category */
-require 'exports/product_cat/__to_all__products_meta_fields.php';
 require 'exports/product_cat/products_meta_fields.php';
 
 $opts = [
@@ -71,7 +70,7 @@ $opts = [
 	],
 
 	'product_cat' => [
-		'__to_all__' => $__to_all__products_meta_fields,
+		'__to_all__' => $__to_all__meta_fields,
 		'products'   => $products_meta_fields,
 	]
 ];
