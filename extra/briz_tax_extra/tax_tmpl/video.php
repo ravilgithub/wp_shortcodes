@@ -85,8 +85,7 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
-			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 			$section_class = '';
@@ -260,13 +259,11 @@
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
-					$post_id = get_the_id();
-
 					if ( 'publish' !== get_post()->post_status )
 						continue;
 
-					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
-					$opts = get_post_meta( $post_id, $meta_key, true );
+					$post_id = get_the_id();
+					$opts = Helper::get_post_meta( $post_id, __CLASS__, $query );
 					$post_title = __( get_the_title(), $this->lang_domain );
 					
 					if ( array_key_exists( 'video_url', $opts ) && ! empty( $opts[ 'video_url' ] ) ) :

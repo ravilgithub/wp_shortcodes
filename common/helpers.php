@@ -347,6 +347,23 @@ class Helper {
 
 
 	/**
+	 * Get taxonomy name.
+	 *
+	 * Имя таксономии.
+	 *
+	 * @param WP Query Object $query - объект запроса.
+	 *
+	 * @return String                - имя таксономии.
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public static function get_tax_name( $query ) {
+		return $query->query[ 'tax_query' ][ 0 ][ 'taxonomy' ];
+	}
+
+
+	/**
 	 * We form the name of the meta field of the post,
 	 * consisting of the name of the taxonomy to which the
 	 * term of the post belongs and the name of the template class.
@@ -364,7 +381,7 @@ class Helper {
 	 * @author Ravil
 	 */
 	public static function get_post_meta_key( $class_name, $query ) {
-		$tax_name = $query->query[ 'tax_query' ][ 0 ][ 'taxonomy' ];
+		$tax_name = self::get_tax_name( $query );
 		$class_name = explode( '\\', $class_name );
 		$class_name = strtolower( array_pop( $class_name ) );
 		return '_' . $tax_name . '_' . $class_name;
@@ -372,7 +389,50 @@ class Helper {
 
 
 	/**
-	* Debug Only.
+	 * Get term meta fields.
+	 *
+	 * Мета поля термина.
+	 *
+	 * @param Integer $term_id       - идентификатор термина.
+	 * @param String $class_name     - имя класса шаблона.
+	 * @param WP Query Object $query - объект запроса.
+	 *
+	 * @return Array                 - мета поля термина
+	 *
+	 * @since 0.0.1
+	 * @author Ravil
+	 */
+	public static function get_term_meta( $term_id, $class_name, $query ) {
+		$tax_name = self::get_tax_name( $query );
+		$__to_all__ = get_term_meta( $term_id, "_{$tax_name}___to_all__", true );
+		$meta_key = self::get_post_meta_key( $class_name, $query );
+		$opts = get_term_meta( $term_id, $meta_key, true );
+		return wp_parse_args( $__to_all__, $opts );
+	}
+
+
+	/**
+	 * Get post meta fields.
+	 *
+	 * Мета поля записи.
+	 *
+	 * @param Integer $post_id       - идентификатор записи.
+	 * @param String $class_name     - имя класса шаблона.
+	 * @param WP Query Object $query - объект запроса.
+	 *
+	 * @return Array                 - мета поля записи
+	*
+	 * @since 0.0.1
+	 * @author Ravil
+	*/
+	public static function get_post_meta( $post_id, $class_name, $query ) {
+		$meta_key = self::get_post_meta_key( $class_name, $query );
+		return get_post_meta( $post_id, $meta_key, true );
+	}
+
+
+	/**
+	 * Debug Only.
 	*/
 	public static function get_registered_styles () {
 		$registered_styles = array_keys( $GLOBALS['wp_styles']->registered );

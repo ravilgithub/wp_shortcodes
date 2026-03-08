@@ -129,8 +129,7 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
-			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 			$slider_atts = [];
@@ -348,6 +347,7 @@
 					$img_title = '';
 					$img_alt = '';
 					$aspect_ratio = 'inherit';
+
 					if ( has_post_thumbnail() ) {
 						$attach_id = get_post_thumbnail_id( $post_id );
 						list( $img_url, $img_width, $img_height ) = wp_get_attachment_image_src( $attach_id, 'full' );

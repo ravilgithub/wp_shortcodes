@@ -151,6 +151,15 @@ class Term_Meta extends Meta {
 		$meta[ 'id' ] = $id;
 		$meta[ 'wp_object' ] = $term;
 
+		if (
+			array_key_exists( '__to_all__', $this->opts[ $tax_slug ] ) &&
+			$fields = $this->opts[ $tax_slug ][ '__to_all__' ]
+		) {
+			$meta[ 'fields' ] = $fields[ 'fields' ];
+			$meta[ 'tmpl' ] = '__to_all__';
+			$this->fields_iterator( $meta );
+		}
+
 		if ( '' !== $tmpl_path && -1 != $tmpl_path ) {
 			$tmpl_info = pathinfo( $tmpl_path );
 			$tmpl_name = $tmpl_info[ 'filename' ];
@@ -163,15 +172,6 @@ class Term_Meta extends Meta {
 				$meta[ 'tmpl' ] = $tmpl_name;
 				$this->fields_iterator( $meta );
 			}
-		}
-
-		if (
-			array_key_exists( '__to_all__', $this->opts[ $tax_slug ] ) &&
-			$fields = $this->opts[ $tax_slug ][ '__to_all__' ]
-		) {
-			$meta[ 'fields' ] = $fields[ 'fields' ];
-			$meta[ 'tmpl' ] = '__to_all__';
-			$this->fields_iterator( $meta );
 		}
 	}
 
