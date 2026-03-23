@@ -6,6 +6,9 @@
  * @see Briz_Tax_Shortcode::register_assets()
  * @link ~/inc/shortcode_briz_tax.php
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $assets = [
 	'css' => [
 		/************ TMPL CSS ************/

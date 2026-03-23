@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "__to_all__".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $__to_all__meta_fields = [
 	'fields' => [
 		'header' => [

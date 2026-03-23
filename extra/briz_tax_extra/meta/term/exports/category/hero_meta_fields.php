@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "hero".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $hero_meta_fields = [
 	'fields' => [
 		'slider_params' => [

@@ -1,9 +1,7 @@
 <?php
 namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit;
 
 require_once 'filters/plugin_woocommerce_template.php';
 

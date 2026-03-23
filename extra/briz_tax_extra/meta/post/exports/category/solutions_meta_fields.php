@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $solutions_meta_fields = [
 	[
 		'title'  => 'Section settings',

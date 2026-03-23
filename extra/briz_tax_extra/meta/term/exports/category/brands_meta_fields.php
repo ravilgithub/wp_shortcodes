@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "brands".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $brands_meta_fields = [
 	'fields' => [
 		'slider_params' => [

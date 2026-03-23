@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "pricing".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $pricing_meta_fields = [
 	'fields' => [
 		'trigger_bg_color_enable' => [

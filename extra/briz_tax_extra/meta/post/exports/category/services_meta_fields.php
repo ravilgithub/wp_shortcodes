@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $services_meta_fields = [
 	[
 		'title'  => 'Services',

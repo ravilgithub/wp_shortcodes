@@ -3,6 +3,8 @@
 	use Briz_Shortcodes\inc\Briz_Tax_Shortcode;
 	use Briz_Shortcodes\common\Helper;
 
+	defined( 'ABSPATH' ) || exit;
+
 	/**
 	 * Portfolio template.
 	 *

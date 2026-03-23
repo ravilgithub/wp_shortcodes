@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "team".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $team_meta_fields = [
 	'fields' => [
 		'slider_params' => [

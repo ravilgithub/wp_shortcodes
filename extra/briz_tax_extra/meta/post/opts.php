@@ -30,6 +30,8 @@
  *
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /* Category */
 require 'exports/category/portfolio_meta_fields.php';
 require 'exports/category/services_meta_fields.php';

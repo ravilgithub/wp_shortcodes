@@ -1,9 +1,7 @@
 <?php
 namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit;
 
 require_once 'actions/slide.php';
 

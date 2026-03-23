@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "review".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $review_meta_fields = [
 	'fields' => [
 		'slider_params' => [

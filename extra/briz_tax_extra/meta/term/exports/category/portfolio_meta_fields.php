@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "portfolio".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $portfolio_meta_fields = [
 	'fields' => [
 		'tab_bg_color_enable' => [

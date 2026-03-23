@@ -14,6 +14,8 @@
  * @author Ravil
  */
 
+	defined( 'ABSPATH' ) || exit;
+
 	$default = json_encode( $params[ 'value' ] );
 	$current = json_encode( $value );
 	$empty = array_key_exists( 'empty', $params ) ? $params[ 'empty' ] : false;

@@ -3,6 +3,8 @@ namespace Briz_Shortcodes\extra\briz_tax_extra\meta\post;
 use Briz_Shortcodes\extra\briz_tax_extra\meta\Meta;
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The class adds meta boxes for posts.
  *

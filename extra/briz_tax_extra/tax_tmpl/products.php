@@ -1,15 +1,11 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
-
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly
-	}
-
 	use Briz_Shortcodes\inc\Briz_Tax_Shortcode;
 	use Briz_Shortcodes\common\Helper;
-
 	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\Actions;
 	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\products\Filters;
+
+	defined( 'ABSPATH' ) || exit;
 
 	/**
 	 * Products template.

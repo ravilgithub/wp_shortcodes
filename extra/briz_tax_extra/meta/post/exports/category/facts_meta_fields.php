@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $facts_meta_fields = [
 	[
 		'title'  => 'Card 1',

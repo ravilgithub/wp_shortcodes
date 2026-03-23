@@ -1,12 +1,9 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
-
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly
-	}
-
 	use Briz_Shortcodes\common\Helper;
 	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions;
+
+	defined( 'ABSPATH' ) || exit;
 
 	/**
 	 * Hero template.

@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $products_meta_fields = [
 	[
 		'title'  => 'Product video',

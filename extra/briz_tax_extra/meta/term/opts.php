@@ -25,8 +25,10 @@
  *   }
  *  }
  * }
- *
- */
+*
+*/
+
+defined( 'ABSPATH' ) || exit;
 
 /* Category */
 require 'exports/category/__to_all__meta_fields.php';

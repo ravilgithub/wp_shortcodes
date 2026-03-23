@@ -2,6 +2,9 @@
 /**
  * Мета поля термина "blog".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $blog_meta_fields = [
 	'fields' => [
 		'slider_params' => [

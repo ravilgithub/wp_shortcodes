@@ -1,6 +1,8 @@
 <?php
 namespace Briz_Shortcodes\common;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Helper class for "briz_tax" shortcodes.
  *

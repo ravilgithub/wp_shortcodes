@@ -1,8 +1,10 @@
 <?php
-
 /**
  * Мета поля термина "products".
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $products_meta_fields = [
 	'fields' => [
 		'tab_bg_color_enable' => [
