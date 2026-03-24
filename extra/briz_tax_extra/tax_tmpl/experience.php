@@ -1,14 +1,13 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
 	use Briz_Shortcodes\common\Helper;
-	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions;
 
 	defined( 'ABSPATH' ) || exit;
 
 	/**
-	 * Hero template.
+	 * Experience template.
 	 *
-	 * Формирование вывода шаблона "hero".
+	 * Формирование вывода шаблона "experience".
 	 *
 	 * @property String $tmpl_name        - имя шаблона.
 	 * @property String $content          - контент шорткода.
@@ -21,17 +20,14 @@
 	 * @since 0.0.1
 	 * @author Ravil
 	 */
-	class Hero {
-		use Actions;
-
-		private $tmpl_name = 'briz-hero-tmpl';
+	class Experience {
+		private $tmpl_name = 'briz-experience-tmpl';
 		public $content;
 		public $atts;
 		public $id;
 		public $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
-		public $content_width_class = 'container';
 
 
 		/**
@@ -54,8 +50,6 @@
 			$this->id = $id;
 			$this->lang_domain = $lang_domain;
 			$this->curr_term_id = $curr_term_id;
-			$this->redefine_script_tag();
-			$this->add_actions();
 		}
 
 
@@ -72,49 +66,6 @@
 		public function add_tmpl_assets() {
 			wp_enqueue_style( $this->tmpl_name . '-css' );
 			wp_enqueue_script( $this->tmpl_name . '-js' );
-		}
-
-
-		/**
-		 * Adding a filter to override the attributes of the 'script' tag.
-		 *
-		 * Добавление фильтра для переопределения атрибутов тега 'script'.
-		 *
-		 * @return void
-		 *
-		 * @since 0.0.1
-		 * @author Ravil
-		 * */
-		public function redefine_script_tag() {
-			add_filter( 'script_loader_tag', [ $this, 'set_module_attr' ], 10, 3 );
-		}
-
-
-		/**
-		 * We indicate that the script is a module and, accordingly
-		 * will be able to import
-		 * functionality from other modules.
-		 *
-		 * Указываем, что скрипт - это модуль и соответственно
-		 * будет иметь возможность импортировать
-		 * функционал из других модулей.
-		 *
-		 * @param String $tag    - HTML код тега <script>.
-		 * @param String $handle - Название скрипта (рабочее название),
-		 *                         указываемое первым параметром в
-		 *                         функции wp_enqueue_script().
-		 * @param String $src    - Ссылка на скрипт.
-		 *
-		 * @return String $tag   - HTML код тега <script>.
-		 *
-		 * @since 0.0.1
-		 * @author Ravil
-		 * */
-		public function set_module_attr( $tag, $handle, $src ) {
-			$module_handle = $this->tmpl_name . '-js';
-			if ( $module_handle === $handle )
-				$tag = '<script type="module" src="' . $src . '" id="' . $module_handle . '-js"></script>';
-			return $tag;
 		}
 
 
@@ -139,7 +90,6 @@
 			$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
-			$slider_atts = [];
 			$section_class = '';
 			$header = false;
 			$header_first = '';
@@ -149,33 +99,13 @@
 			$header_description_text = '';
 			$header_bg_color = '';
 			$content_bg_color = '';
+			$content_width_class = 'container';
 
 			if ( is_array( $opts ) ) {
-				if (
-					array_key_exists( 'slider_params', $opts ) &&
-					! empty( $opts[ 'slider_params' ] )
-				) {
-					$slider_atts = esc_attr( json_encode( $opts[ 'slider_params' ] ) );
-
-					if (
-						array_key_exists( 'limit', $this->atts ) &&
-						array_key_exists( 'total_posts', $posts ) &&
-						array_key_exists( 'slidesPerView', $opts[ 'slider_params' ] )
-					) {
-						$limit = ( int ) $this->atts[ 'limit' ];
-						$total = ( int ) $posts[ 'total_posts' ];
-						$view  = ( int ) $opts[ 'slider_params' ][ 'slidesPerView' ];
-
-						if ( ( -1 == $limit && $view < $total ) || $view < $limit ) {
-							$section_class .= ' slider-with-navigation';
-						}
-					}
-				}
-
 				if ( array_key_exists( 'header', $opts ) ) {
 					if ( $opts[ 'header' ] ) {
 						$header = true;
-						$section_class .= ' section-with-header';
+						$section_class = 'section-with-header';
 					}
 				}
 
@@ -217,21 +147,21 @@
 				}
 
 				if ( array_key_exists( 'content_wide', $opts ) ) {
-					$this->content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $this->content_width_class;
+					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
 				}
 			}
-	?>
+?>
 			<section
 				id="<?php echo esc_attr( $this->id ); ?>"
-				class="showcase section hero-page promo-slider promo-slider--demo
-				<?php echo esc_attr( $this->tmpl_name ); ?>
-				<?php echo esc_attr( $class ); ?>
-				<?php echo $section_class; ?>"
+				class="showcase section experience-page
+					<?php echo esc_attr( $this->tmpl_name ); ?>
+					<?php echo esc_attr( $class ); ?>
+					<?php echo esc_attr( $section_class ); ?>"
 				data-shortcode-term-id="<?php echo esc_attr( $this->curr_term_id ); ?>"
 			>
-	<?php
+<?php
 			if ( $header ) :
-	?>
+?>
 				<div
 					class="section-caption-wrap"
 					style="<?php echo $header_bg_color; ?>"
@@ -239,49 +169,49 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-	<?php
+<?php
 							if ( $header_first ||  $header_last ) :
-	?>
+?>
 								<h2>
 									<?php echo $header_first; ?>
 									<span>
 										<?php echo $header_last; ?>
 									</span>
 								</h2>
-	<?php
+<?php
 							endif;
 							if ( $header_spacer ) :
-	?>
+?>
 								<div class="briz-caption-spacer">
 									<div class="diamond"></div>
 								</div>
-	<?php
+<?php
 							endif;
 							if ( $header_description && $header_description_text ) :
-	?>
+?>
 								<p><?php echo $header_description_text; ?></p>
-	<?php
+<?php
 							endif;
-	?>
+?>
 							</div> <!-- .col- -->
 						</div> <!-- .row -->
 					</div> <!-- .container -->
 				</div> <!-- .section-caption-wrap -->
-	<?php
+<?php
 			endif;
-	?>
+?>
 				<div
 					class="section-content-wrap <?php echo esc_attr( $attachment ); ?>"
 					style="<?php echo esc_attr( $bg ), $content_bg_color; ?>"
 					data-parallax="<?php echo esc_attr( $parallax_data ); ?>"
 					data-image-src="<?php echo esc_attr( $parallax_img_src ); ?>"
 				>
-					<div
-						class="swiper"
-						data-slider-custom-atts="<?php echo $slider_atts; ?>"
-					>
-						<div class="swiper-wrapper">
-	<?php
+					<div class="<?php echo $content_width_class; ?>">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="content-inner">
+									<div class="time-line"></div>
+<?php
 		}
 
 
@@ -302,15 +232,14 @@
 		 */
 		public function get_after( $posts ) {
 			extract( $this->atts );
-	?>
-						</div> <!-- .swiper-wrapper -->
-						<div class="swiper-button-prev-custom"></div>
-						<div class="swiper-button-next-custom"></div>
-						<div class="swiper-pagination-custom"></div>
-					</div> <!-- .swiper -->
+?>
+								</div> <!-- content-inner -->
+							</div> <!-- .col-sm-12 -->
+						</div> <!-- .row -->
+					</div> <!-- .container [ -fluid ] -->
 				</div> <!-- .section-content-wrap -->
-			</section> <!-- .briz-hero-tmpl -->
-	<?php
+			</section> <!-- .briz-experience-tmpl -->
+<?php
 		}
 
 
@@ -330,49 +259,57 @@
 		 * @author Ravil
 		 */
 		public function get_content( $posts ) {
+			if ( empty( $posts[ 'data' ] ) )
+				return;
+
 			foreach ( $posts[ 'data' ] as $data ) :
+				$child = $data[ 'child' ];
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
 					$opts = Helper::get_post_meta( $post_id, __CLASS__, $query );
 
-					$screen = 'left';
+					$n = 0;
+					$max = 3;
 
-					if ( is_array( $opts ) ) {
-						$screen = $opts[ 'screen' ] ?? $screen;
-					}
+					foreach ( $opts as $opt ) :
+						if ( array_key_exists( 'enable', $opt ) && ! $opt[ 'enable' ] )
+							continue;
 
-					$slider_bg_url = '';
+						$n = $n >= $max ? 1 : $n+1;
+						$icon = '';
+						$icon_color = '';
+						$year = '';
+						$title = '';
+						$description = '';
 
-					if ( has_post_thumbnail() ) {
-						$slider_bg_url = esc_url( get_the_post_thumbnail_url() );
-					}
-	?>
-					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
-						<div class="swiper-lazy-preloader-custom"></div>
-						<div class="<?php echo $this->content_width_class; ?>">
-							<div class="row">
-								<div class="col-xs-12">
-	<?php
-									/**
-									 * @see Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions
-									 */
+						if ( array_key_exists( 'icon', $opt ) )
+							$icon = $opt[ 'icon' ] ? esc_attr( $opt[ 'icon' ] ) : $icon;
 
-									// Inner HTML Open
-									do_action( 'shortcode_briz_tax_promo_slide_before_content', $screen, $opts, $query, $this->lang_domain );
+						if ( array_key_exists( 'icon_color', $opt ) )
+							$icon_color = $opt[ 'icon_color' ] ? esc_attr( $opt[ 'icon_color' ] ) : $icon_color;
 
-									// Content HTML
-									do_action( 'shortcode_briz_tax_promo_slide_content', $screen, $opts, $query, $this->lang_domain );
+						if ( array_key_exists( 'year', $opt ) )
+							$year = $opt[ 'year' ] ? __( $opt[ 'year' ], $this->lang_domain  ) : $year;
 
-									// Inner HTML Close
-									do_action( 'shortcode_briz_tax_promo_slide_after_content', $screen, $opts, $query, $this->lang_domain );
-	?>
-								</div>
-							</div>
+						if ( array_key_exists( 'title', $opt ) )
+							$title = $opt[ 'title' ] ? __( $opt[ 'title' ], $this->lang_domain  ) : $title;
+
+						if ( array_key_exists( 'description', $opt ) )
+							$description = $opt[ 'description' ] ? __( $opt[ 'description' ], $this->lang_domain  ) : $description;
+?>
+						<div class="experience-content-item">
+							<span
+								class="fa fa-<?php echo $icon; ?> experience-icon-<?php echo $n; ?>"
+								style="background-color: <?php echo $icon_color; ?>;"
+							></span>
+							<h5 class="time-line-date"><?php echo $year; ?></h5>
+							<h5 class="time-line-title"><?php echo $title; ?></h5>
+							<p><?php echo $description; ?></p>
 						</div>
-					</div>
-	<?php
+<?php
+					endforeach;
 				endwhile;
 				wp_reset_postdata();
 				endif;

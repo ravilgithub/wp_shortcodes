@@ -2,6 +2,8 @@
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
 	use Briz_Shortcodes\common\Helper;
 
+	defined( 'ABSPATH' ) || exit;
+
 	/**
 	 * Review template.
 	 *
@@ -131,8 +133,7 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
-			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 			$slider_atts = [];
@@ -345,9 +346,8 @@
 				$query = $data[ 'query' ];
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
-					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
 					$post_id = get_the_id();
-					$opts = get_post_meta( $post_id, $meta_key, true );
+					$opts = Helper::get_post_meta( $post_id, __CLASS__, $query );
 
 					if ( ! is_array( $opts ) )
 						return;

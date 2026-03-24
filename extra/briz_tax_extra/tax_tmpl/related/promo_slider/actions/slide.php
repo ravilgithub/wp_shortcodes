@@ -1,12 +1,8 @@
 <?php
 namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\actions;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Promo Slide Content Actions.

@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $review_meta_fields = [
 	[
 		'title'  => 'Review',

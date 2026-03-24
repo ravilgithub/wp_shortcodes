@@ -14,6 +14,8 @@
  * @author Ravil
  */
 
+	defined( 'ABSPATH' ) || exit;
+
 	$args = array_merge(
 		[
 			'textarea_name'    => $key, //нужно указывать!

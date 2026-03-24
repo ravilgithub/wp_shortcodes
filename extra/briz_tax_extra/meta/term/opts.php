@@ -25,13 +25,14 @@
  *   }
  *  }
  * }
- *
- */
+*
+*/
+
+defined( 'ABSPATH' ) || exit;
 
 /* Category */
 require 'exports/category/__to_all__meta_fields.php';
 require 'exports/category/facts_meta_fields.php';
-require 'exports/category/about_meta_fields.php';
 require 'exports/category/solutions_meta_fields.php';
 require 'exports/category/stickers_meta_fields.php';
 require 'exports/category/review_meta_fields.php';
@@ -45,16 +46,15 @@ require 'exports/category/services_meta_fields.php';
 require 'exports/category/video_meta_fields.php';
 require 'exports/category/subscribe_meta_fields.php';
 require 'exports/category/hero_meta_fields.php';
+require 'exports/category/experience_meta_fields.php';
 
 /* Product category */
-require 'exports/product_cat/__to_all__products_meta_fields.php';
 require 'exports/product_cat/products_meta_fields.php';
 
 $opts = [
 	'category' => [
 		'__to_all__' => $__to_all__meta_fields,
 		'facts'      => $facts_meta_fields,
-		'about'      => $about_meta_fields,
 		'solutions'  => $solutions_meta_fields,
 		'stickers'   => $stickers_meta_fields,
 		'review'     => $review_meta_fields,
@@ -68,10 +68,11 @@ $opts = [
 		'video'      => $video_meta_fields,
 		'subscribe'  => $subscribe_meta_fields,
 		'hero'       => $hero_meta_fields,
+		'experience' => $experience_meta_fields,
 	],
 
 	'product_cat' => [
-		'__to_all__' => $__to_all__products_meta_fields,
+		'__to_all__' => $__to_all__meta_fields,
 		'products'   => $products_meta_fields,
 	]
 ];

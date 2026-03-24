@@ -82,6 +82,10 @@
 	color: #999;
 }
 
+.briz-hero-tmpl .section-content-wrap.bg-fixed {
+  background-attachment: fixed;
+}
+
 
 /**
  * Spacer color

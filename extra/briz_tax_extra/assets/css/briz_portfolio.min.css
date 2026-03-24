@@ -83,6 +83,10 @@
 	color: #999;
 }
 
+.briz-portfolio-tmpl .section-content-wrap.bg-fixed {
+  background-attachment: fixed;
+}
+
 .briz-portfolio-tmpl .section-tabs-wrap {
 	padding-top: 45px;
 	padding-bottom: 45px;

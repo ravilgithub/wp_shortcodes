@@ -14,6 +14,8 @@
  * @author Ravil
  */
 
+	defined( 'ABSPATH' ) || exit;
+
 	$defaults = [
 		'title'    => 'Insert a media',
 		'library'  => [ 'type' => 'image' ],
