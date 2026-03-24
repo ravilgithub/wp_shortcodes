@@ -14,6 +14,8 @@
  * @author Ravil
  */
 
+	defined( 'ABSPATH' ) || exit;
+
 	$empty = array_key_exists( 'empty', $params ) ? $params[ 'empty' ] : false;
 	$hideClass = '';
 ?>

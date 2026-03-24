@@ -3,6 +3,8 @@ namespace Briz_Shortcodes\inc;
 use Briz_Shortcodes\Shortcodes;
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Класс реализует шорткод "briz_blockquote",
  * который позволяет формировать

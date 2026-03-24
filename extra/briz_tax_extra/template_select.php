@@ -2,6 +2,8 @@
 namespace Briz_Shortcodes\extra\briz_tax_extra;
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The class adds a selection of available templates for the terms being created or modified.
  *

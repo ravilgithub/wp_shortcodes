@@ -30,12 +30,13 @@
  *
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /* Category */
 require 'exports/category/portfolio_meta_fields.php';
 require 'exports/category/services_meta_fields.php';
 require 'exports/category/features_meta_fields.php';
 require 'exports/category/stickers_meta_fields.php';
-require 'exports/category/about_meta_fields.php';
 require 'exports/category/facts_meta_fields.php';
 require 'exports/category/solutions_meta_fields.php';
 require 'exports/category/team_meta_fields.php';
@@ -56,7 +57,6 @@ $opts = [
 		'services'   => $services_meta_fields,
 		'features'   => $features_meta_fields,
 		'stickers'   => $stickers_meta_fields,
-		'about'      => $about_meta_fields,
 		'facts'      => $facts_meta_fields,
 		'solutions'  => $solutions_meta_fields,
 		'team'       => $team_meta_fields,

@@ -6,6 +6,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $experience_meta_fields = [
     [
         'title'  => 'Событие 1',

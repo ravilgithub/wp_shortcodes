@@ -1,3 +1,26 @@
+<?php
+/**
+ * Slide layout.
+ *
+ * HTML разметка слайда.
+ *
+ * @param String $post_content - контент слайда.
+ * @param String $content_image_src - путь к изображению.
+ * @param String $img_title - заголовок изображения.
+ * @param String $img_alt - альтернативный текст для изображения.
+ * @param String $content_image_animation - тип анимации для изображения.
+ * @param String $content_image_delay - задержка анимации для изображения.
+ * @param String $content_image_duration - продолжительность анимации для изображения.
+ *
+ * @return void
+ *
+ * @since 0.0.1
+ * @author Ravil
+ */
+
+    defined( 'ABSPATH' ) || exit;
+?>
+
 <div
     class="
         promo-slider__slide-content

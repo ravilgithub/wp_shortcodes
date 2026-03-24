@@ -2,6 +2,8 @@
 namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Services template.
  *
@@ -84,8 +86,7 @@ class Services {
 	public function get_before( $posts ) {
 		extract( $this->atts );
 
-		$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
-		$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+		$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 		list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 		$section_class = '';
@@ -262,8 +263,8 @@ class Services {
 
 			if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 				$post_id = get_the_id();
-				$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
-				$opts = get_post_meta( $post_id, $meta_key, true );
+				$opts = Helper::get_post_meta( $post_id, __CLASS__, $query );
+
 				$post_title = __( get_the_title(), $this->lang_domain );
 				$post_excerpt = __( get_the_excerpt(), $this->lang_domain );
 				$post_link = esc_url( get_permalink() );

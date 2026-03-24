@@ -15,9 +15,7 @@
 
 namespace Briz_Shortcodes;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit;
 
 use Briz_Shortcodes\inc\Briz_List_Shortcode;
 use Briz_Shortcodes\inc\Briz_Dropcap_Shortcode;

@@ -1,12 +1,9 @@
 <?php
 	namespace Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl;
-
-	if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly
-	}
-
 	use Briz_Shortcodes\common\Helper;
 	use Briz_Shortcodes\extra\briz_tax_extra\tax_tmpl\related\promo_slider\Actions;
+
+	defined( 'ABSPATH' ) || exit;
 
 	/**
 	 * Hero template.
@@ -34,6 +31,7 @@
 		public $lang_domain;
 		public $curr_term_id;
 		public $all_posts_count = 0;
+		public $content_width_class = 'container';
 
 
 		/**
@@ -138,8 +136,7 @@
 		public function get_before( $posts ) {
 			extract( $this->atts );
 
-			$meta_key = Helper::get_post_meta_key( __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
-			$opts = get_term_meta( $this->curr_term_id, $meta_key, true );
+			$opts = Helper::get_term_meta( $this->curr_term_id, __CLASS__, $posts[ 'data' ][ 0 ][ 'query' ] );
 			list( $bg, $attachment, $parallax_data, $parallax_img_src ) = Helper::get_bg_atts( $opts, true, 'bg_img', 'bg_attachment' );
 
 			$slider_atts = [];
@@ -152,7 +149,6 @@
 			$header_description_text = '';
 			$header_bg_color = '';
 			$content_bg_color = '';
-			$content_width_class = 'container';
 
 			if ( is_array( $opts ) ) {
 				if (
@@ -221,7 +217,7 @@
 				}
 
 				if ( array_key_exists( 'content_wide', $opts ) ) {
-					$content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $content_width_class;
+					$this->content_width_class = $opts[ 'content_wide' ] ? 'container-fluid' : $this->content_width_class;
 				}
 			}
 	?>
@@ -339,23 +335,23 @@
 
 				if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
 					$post_id = get_the_id();
-
-					$meta_key = Helper::get_post_meta_key( __CLASS__, $query );
-					$opts = get_post_meta( $post_id, $meta_key, true );
+					$opts = Helper::get_post_meta( $post_id, __CLASS__, $query );
 
 					$screen = 'left';
+
 					if ( is_array( $opts ) ) {
 						$screen = $opts[ 'screen' ] ?? $screen;
 					}
 
 					$slider_bg_url = '';
+
 					if ( has_post_thumbnail() ) {
 						$slider_bg_url = esc_url( get_the_post_thumbnail_url() );
 					}
 	?>
 					<div class="promo-slider__slide swiper-slide swiper-lazy" data-background="<?php echo $slider_bg_url; ?>">
 						<div class="swiper-lazy-preloader-custom"></div>
-						<div class="container">
+						<div class="<?php echo $this->content_width_class; ?>">
 							<div class="row">
 								<div class="col-xs-12">
 	<?php

@@ -2,6 +2,8 @@
 namespace Briz_Shortcodes;
 use Briz_Shortcodes\common\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The class implements the general functionality of shortcodes.
  *

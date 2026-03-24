@@ -5,6 +5,9 @@
  * Ключи дочерних элементов массивов "fields"
  * должны быть уникальным.
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $portfolio_meta_fields = [
 	[
 		'title'  => 'Тестовые настройки',

@@ -14,6 +14,8 @@
  * @author Ravil
  */
 
+	defined( 'ABSPATH' ) || exit;
+
 	$img_id = ( int ) $value;
 	$img_url = $params[ 'value' ];
 	$btn_class = 'hidden';

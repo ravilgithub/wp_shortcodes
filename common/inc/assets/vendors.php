@@ -5,6 +5,9 @@
  * @see Helper::register_shortcodes_vendors()
  * @link ~/common/helpers.php
  */
+
+defined( 'ABSPATH' ) || exit;
+
 $assets = [
 	'css' => [
 		/************ CSS ************/

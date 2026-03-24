@@ -13,6 +13,8 @@
  * @since 0.0.1
  * @author Ravil
  */
+
+	defined( 'ABSPATH' ) || exit;
 ?>
 
 <div class="form-field briz-meta-img-wrap">
